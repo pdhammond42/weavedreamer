@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- You may freely edit this file. See commented blocks below for -->
+<!-- some examples of how to customize the build. -->
+<!-- (If you delete it and reopen the project it will be recreated.) -->
+<project name="WeavingSimulator" default="default" basedir=".">
+<description>Builds, tests, and runs the project WeavingSimulator.</description>
+<import file="nbproject/build-impl.xml"/>
+<!--
+
+    There exist several targets which are by default empty and which can be 
+    used for execution of your tasks. These targets are usually executed 
+    before and after some main targets. They are: 
+
+      -pre-init:                 called before initialization of project properties
+      -post-init:                called after initialization of project properties
+      -pre-compile:              called before javac compilation
+      -post-compile:             called after javac compilation
+      -pre-compile-single:       called before javac compilation of single file
+      -post-compile-single:      called after javac compilation of single file
+      -pre-compile-test:         called before javac compilation of JUnit tests
+      -post-compile-test:        called after javac compilation of JUnit tests
+      -pre-compile-test-single:  called before javac compilation of single JUnit test
+      -post-compile-test-single: called after javac compilation of single JUunit test
+      -pre-jar:                  called before JAR building
+      -post-jar:                 called after JAR building
+      -post-clean:               called after cleaning build products
+
+    (Targets beginning with '-' are not intended to be called on their own.)
+
+    Example of inserting an obfuscator after compilation could look like this:
+
+        <target name="-post-compile">
+            <obfuscate>
+                <fileset dir="${build.classes.dir}"/>
+            </obfuscate>
+        </target>
+
+    For list of available properties check the imported 
+    nbproject/build-impl.xml file. 
+
+
+    Another way to customize the build is by overriding existing main targets.
+    The targets of interest are: 
+
+      -init-macrodef-javac:     defines macro for javac compilation
+      -init-macrodef-junit:     defines macro for junit execution
+      -init-macrodef-debug:     defines macro for class debugging
+      -init-macrodef-java:      defines macro for class execution
+      -do-jar-with-manifest:    JAR building (if you are using a manifest)
+      -do-jar-without-manifest: JAR building (if you are not using a manifest)
+      run:                      execution of project 
+      -javadoc-build:           Javadoc generation
+      test-report:              JUnit report generation
+
+    An example of overriding the target for project execution could look like this:
+
+        <target name="run" depends="WeavingSimulator-impl.jar">
+            <exec dir="bin" executable="launcher.exe">
+                <arg file="${dist.jar}"/>
+            </exec>
+        </target>
+
+    Notice that the overridden target depends on the jar target and not only on 
+    the compile target as the regular run target does. Again, for a list of available 
+    properties which you can use, check the target you are overriding in the
+    nbproject/build-impl.xml file. 
+
+    -->
+    
+    <target name="-pre-init">
+        <property name="release.tag" value="HEAD"/>
+        <property name="release.name" value="${ant.project.name}"/>
+        <property name="release.dir" value="release"/>
+        
+        <property name="default.javac.source" value="1.5"/>
+        <property name="default.javac.target" value="1.5"/>
+    </target>
+    
+    <target name="-post-init">
+        <!-- Enable building outside of netbeans.  When built under netbeans, 
+        these properties will be set in the init target, so the following
+        assignments will be ignored. -->
+        
+        <!-- Change this to point to where junit is installed -->
+        <property name="libs.junit.classpath" value="/usr/share/java/junit.jar"/>
+        
+        <!-- this is necessary to work around a bug in netbeans 5.0 RC2 -->
+        <property name="javadoc.additionalparam" value=""/>
+    </target>
+    
+    <target name="-post-clean">
+        <delete dir="${release.dir}"/>
+    </target>
+    
+    <!-- Generates a source zip file and binary jar file in the ${release.dir}
+     directory.  It makes the release based on the ${release.tag} property,
+     which is set to HEAD by default. Pass -Drelease.tag=REVISION to ant to
+     generate a release of REVISION. -->
+    <target name="release" depends="init"
+        description="Generate a source and binary release">
+        <loadfile property="cvs.root" srcfile="CVS/Root">
+            <filterchain>
+                <striplinebreaks/>
+            </filterchain>
+        </loadfile>
+        <property name="cvs.exportdir" 
+            value="${build.dir}/exports/${release.tag}"/>
+        <delete dir="${cvs.exportdir}"/>
+        <cvs command="export" tag="${release.tag}" cvsroot="${cvs.root}"
+            package="WeavingSimulator"
+            dest="${cvs.exportdir}"/>
+        <mkdir dir="${release.dir}"/>
+        <zip basedir="${cvs.exportdir}" 
+            destfile="${release.dir}/${release.name}-${release.tag}-src.zip"/>
+            
+        <!-- Now build the release and store the zipped distribution -->
+        <ant dir="${cvs.exportdir}/WeavingSimulator" target="jar"/>
+        <zip destfile="${release.dir}/${release.name}-${release.tag}.zip">
+            <zipfileset dir="${cvs.exportdir}/WeavingSimulator/dist"
+                prefix="${release.name}-${release.tag}"/>
+        </zip>
+    </target>
+    
+	<!--
+    <target name="-post-jar">
+        <signjar alias="isctest" storepass="iwacws" jar="${dist.jar}"/>
+    </target>
+    -->
+    
+    <target name="bsh" depends="init" description="Run Beanshell">
+        <java classname="bsh.Console" classpath="${run.classpath}" 
+            fork="true"/>
+    </target>
+</project>

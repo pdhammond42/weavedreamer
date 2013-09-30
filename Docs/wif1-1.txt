@@ -1,0 +1,896 @@
+=============BEGINNING OF DOCUMENT=================
+
+WEAVING INFORMATION FILE (WIF) SPECIFICATION
+VERSION 1.1    
+APRIL 20, 1997
+
+===================================================
+
+CONTENTS:
+
+I.   COPYRIGHT
+II.  VERSION HISTORY AND CONTACT INFORMATION
+III. WIF PHILOSOPHY
+IV.  WIF SPECIFICATION NARRATIVE
+V.   THE WIF FORMAT SPECIFICATION
+VI.  PRIMARY REVISIONS IN EACH VERSION 
+
+APPENDIX 
+
+A: UNOFFICIAL PROGRAMMERS' COMMENTS: RAVI NIELSEN
+
+_______________________________________________________
+
+I.  COPYRIGHT 
+
+This document is Copyright (c) 1996, 1997 by Ravi Nielsen.
+All Rights Reserved.
+
+You may download and print this document for your own use. 
+
+You may not copy, distribute, or publish this document 
+electronically or on paper without the express permission of the 
+author. 
+
+You may freely use the WIF Specification itself in any weaving 
+program you develop, provided your program includes all sections 
+described below under Minimum Requirements--including but not 
+limited to the WIF section and the Version, Date, and Developers 
+contact information. 
+
+_______________________________________________________
+
+
+II.  VERSION HISTORY AND CONTACT INFORMATION:
+
+VERSION 1.0
+MARCH 3, 1996
+
+VERSION 1.0 DEVELOPED BY:
+      RAVI NIELSEN, PATTERNLAND WEAVE SIMULATOR
+      BOB KEATES,   FIBERWORKS PCW
+      ROB SINKLER,  SWIFTWEAVE
+
+  written by:
+      RAVI NIELSEN, MAPLE HILL SOFTWARE
+
+---------------------------------------
+
+VERSION 1.1   
+APRIL 20, 1997
+
+WIF VERSION 1.1 DEVELOPERS
+
+In response to interest in the continued development of the 
+WIF specification, an email list was created in February 1997.
+The Version 1.1 specification is a result of discussions 
+conducted through the WIF list. While agreement may not have
+been unanimous on all changes in the 1.1 specification, no list
+participants expressed serious objection to any of the accepted
+changes. 
+
+VERSION 1.1 EMAIL ADDRESSES 
+
+Members of list 'WIF' as of April 20, 1997:
+
+Ravi Nielsen <ravi@mhsoft.com> (Patternland)
+Rob Sinkler <shrub@slip.net>   (Swiftweave)
+Bob Keates <fiberworks.pcw@sympatico.ca> (Fiberworks)
+Dana Cartwright <dana.cartwright@weavemaker.com> (WeaveMaker)
+Bjorn Myhre <100102.3713@compuserve.com> (WeavePoint)
+Jane Eisenstein <janee@world.std.com>   (QD WIF)
+Sally Breckenridge <sallyb@weaveit.com> (Weaveit)
+Mark Kloosterman <markk@sofkin.ca> (ProWeave)
+Mitch Eatough <ender@blarg.net> (conversion program)
+Dini Cameron <dini.cameron@sympatico.ca> (ProWeave)
+Peter Straus <avl@sunset.net> (AVL programs)
+_______________________________________________________
+
+III.  WIF PHILOSOPHY
+
+RATIONALE
+
+Prior to WIF each weaving program used its own format for storing 
+weave information.  Each format is especially suited to the 
+individual program, but does not lend itself to translation 
+across programs.  In addition files are machine readable only. 
+WIF is designed to bridge the gap between programs. 
+
+CRITERIA
+
+The Weaving Information File (WIF) specification is designed to 
+meet the following criteria: 
+
+1.  It can evolve and change as the need arises, without 
+rendering earlier versions unreadable by new programs nor later 
+versions unreadable by older programs. 
+
+2.  It can be understood by a human reader. 
+
+3.  It can be read by any computer capable of reading an ASCII 
+text file. 
+
+To meet the above criteria, the WIF takes the form of a Microsoft 
+Windows ".INI" file.  But it departs from this standard in at 
+least one important way.  WIF files are not limited to 64K, as 
+are Windows 3.1 ini files.  This means that standard Windows 3.1 
+functions can NOT be used to process WIF files.  Programmers must 
+write their own utilities to read and write WIF files. 
+_______________________________________________________ 
+
+
+IV.  WIF SPECIFICATION NARRATIVE
+
+The WIF specification consists of a set of English language 
+Section and Key names and agreements on how the data will be 
+presented.  Where several possible data formats exist, preference 
+will be given to the format that meets all three criteria. 
+Efficiency is sacrificed in favor of readability by humans. 
+Specifically, efficient bit sensitive numbers are abandoned in 
+favor of comma separated arrays understandable by a weaver. 
+
+SECTION AND KEY NAMES
+
+The INI file specification dictates that section names are in 
+brackets [section name] and key names are followed by an equals 
+sign and the data:  Keyname=data. 
+
+Data key names should not be duplicated in a single WIF file.  
+WIF reader implementations might favor either the first or last 
+of duplicates, leading to ambiguity.  Even though duplicate key 
+names are an error in the file, programs should be able to deal 
+with the error without crashing. 
+
+COMMENTS
+
+Comments may be freely included if prefaced by a semicolon at the 
+beginning of the line.  Comments may also be included following a 
+numeric entry or boolean entry.  While not required, these 
+comments should be prefixed by a semicolon.  Key lines containing 
+a text string may not contain a comment. 
+
+
+INFORMATIONAL AND DATA SECTIONS
+
+For the purpose of the WIF specification, sections are defined as 
+"INFORMATIONAL" and "DATA" Sections.  The [CONTENTS] section is a 
+special Informational Section that lists all other included 
+Sections with the exception of [TRANSLATIONS] and [WIF], which 
+appear separately, preferable at the beginning of the file.  
+(Support for the Translations section has been suspended with 
+Version 1.1.)  Each section which a program has included in a 
+given WIF file must be listed in [CONTENTS] as a boolean Keyline 
+with a value of true (yes).  This tells the processing program 
+that the section exists.  Sections which are not implemented by a 
+program or which are not included in the current file are NOT 
+required to be listed in the [CONTENTS] section--but may still be 
+listed with a value of false. WIF reader programs should set the 
+default value for all sections to false prior to reading 
+[CONTENTS].  
+ 
+
+UPPER AND LOWER CASE
+
+By convention, Section names are upper case and Key Names are 
+upper/lower case.  But programs must process all section and key 
+names in a case insensitive manner.  Specifically, the section 
+names which appear as key names under [CONTENTS] may commonly 
+appear in upper case, since they are also Section names. 
+
+ORDER INDEPENDENCE
+
+Programs that process WIF files may not depend on a specific 
+order of section names, nor of key lines within sections.  Note 
+that this precludes the use of the Windows 
+ReadPrivateProfileString with a nil Key to put all lines in a 
+section into a buffer.  While the order of Key lines in data 
+sections like [THREADING] might be expected to be written in 
+numeric order, the WIF standard says that each Key must be 
+evaluated in case this order is not followed. 
+
+This stated, however, some programs may work most efficiently 
+with a preferred Section order.  See "Unofficial Programmer's 
+Comments: Ravi Nielsen" following the official specification. 
+
+
+PRIVATE SECTIONS
+
+Version 1.1 supports the addition of Private sections which 
+contain data specific to a particular program--data which may or 
+may not be relevant to other programs.  There may be cases where 
+a program may wish to support another program's private sections, 
+AND include private sections of its own.  For this reason, 
+private sections must include a unique "Source ID" in their name, 
+so that programs may distinguish between their own and another 
+program's private sections.  
+
+The only requirement is that a Source ID must be unique--not 
+conflict with other developer's programs.   If you want to, you 
+may optionally "register" you Source ID to help avoid inadvertant 
+duplications of IDs.  
+
+Here is a listing of current registered Source IDs:  
+
+Maple Hill Software:  MHSPWSW
+Swiftweave:           SWve
+
+(Send your request to register your ID to ravi@mhsoft.com.)
+
+Private sections must follow this format:
+
+                [PRIVATE <SourceID> <SectionName>]
+
+SPACING AND THICKNESS VALUES
+
+If a program only supports one out of Thickness and Spacing, the 
+correct section to read from a file that has both Spacing and 
+Thickness is Spacing, even if the program calls that quantity 
+Thickness for its own purposes.  Corollary: a program that 
+supports only thickness (in its own internal terminology) should 
+write its data to the Spacing section or to be completely 
+unambiguous, write both Spacing and Thickness sections with 
+identical data. 
+
+
+DEFAULT VALUES AND SPARSE DATA SECTIONS
+
+Programs must be able to handle missing keylines in the Data 
+Sections.  The WARP and WEFT sections provide the default color, 
+spacing, and thickness values to use for each warp and weft 
+thread.  All shaft and treadle values should be preinitialized to 
+zero, indicating that the warp or weft thread or the tieup is 
+unused.  Programs should then create the number of threads 
+specified in WARP and WEFT and with the default characteristics 
+before reading the data sections.  Individual thread data which 
+does not deviate from these defaults may have been omitted from 
+the respective data section (sparse data).  In other words, a 
+thread looks like the characteristics specified in WARP and WEFT 
+unless you find a keyline in a data section which says otherwise. 
+
+On writing a WIF file, Programs may omit keylines equal to the 
+default values already specified in WARP and WEFT.  
+Implementation of sparse data sections is optional; programs may 
+continue to write out all data. 
+
+_______________________________________________________
+
+
+V.  THE WIF FORMAT SPECIFICATION
+
+Minimum WIF Requirements
+
+Every WIF file must include two sections, WIF, and Contents.  It 
+should also contain those keylines within each section which are 
+marked required in the specification below.  
+
+The [CONTENTS] section must list as a keyline with a value "true" 
+all other sections which appear in the current WIF file.  
+
+The boolean values of the sections listed as Keylines determine 
+whether the Section itself exists.  Only Keylines in the CONTENTS 
+section with a value of true are required.  If the Section 
+Keyline is omitted, the section does not exist in the current WIF 
+file.  Some WIF files list all possible sections with values of 
+true or false indicating whether the section exists. 
+
+Throughout the WIF file, optional boolean values are to be 
+assumed FALSE by the reader if not present in the section. 
+
+;- Obsolete keylines are marked obsolete with a semicolon and 
+minus sign.  They are included in the specification for 
+completeness.  Programs should not issue error messages upon 
+reading obsolete keylines.  Obviously, obsolete keylines need not 
+be generated in new WIF files.  
+
+----------------------------------------
+
+WIF Symbol data type
+=1     ; (ASCII numeral)
+=X     ; (ASCII character)
+='X'   ; '(ASCII character)'
+=#219  ; #(integer) (0,255) ;ASCII character 219
+
+The space character must be represented as ' ' or #32.
+The "#" character must be represented as '#' or #35.
+
+
+;============================================================
+;- In V.1.0 Translations was part of Minimum Section Requirements.
+;- Translations not implemented, and support suspended at V1.1
+;- Translations section may be omitted. 
+
+;- [TRANSLATIONS]      ;optional/reserved 
+;- Language=English    ;optional constant (ASCII string)
+
+;============Begin Minimum Section Requirements============
+
+[WIF]
+Version=1.1                 ;required constant (real)
+Date=April 20, 1997         ;required constant (ASCII string)
+Developers=wif@mhsoft.com   ;required (ASCII string) (current email contact) 
+Source Program=             ;required (ASCII string) 
+Source Version=             ;optional (ASCII string)
+
+[CONTENTS]
+; only sections which exist in the file are required
+
+;==============end minimum requirements=================
+
+; Informational sections
+COLOR PALETTE=       ;optional (boolean) ({true,on,yes,1} {false,off,no,0})
+WARP SYMBOL PALETTE= ;optional (boolean) ({true,on,yes,1} {false,off,no,0})
+WEFT SYMBOL PALETTE= ;optional (boolean) ({true,on,yes,1} {false,off,no,0})
+TEXT=                ;optional (boolean) ({true,on,yes,1} {false,off,no,0})  
+WEAVING=             ;optional (boolean) ({true,on,yes,1} {false,off,no,0})
+WARP=                ;optional (boolean) ({true,on,yes,1} {false,off,no,0})
+WEFT=                ;optional (boolean) ({true,on,yes,1} {false,off,no,0})
+;-   bitmap support not implemented but keywords reserved for future
+;-   BITMAP IMAGE=   ;reserved (boolean) ({true,on,yes,1} {false,off,no,0})
+;-   BITMAP FILE=    ;reserved (boolean) ({true,on,yes,1} {false,off,no,0})
+
+;Beginning of Data Sections
+NOTES=               ;optional (boolean) ({true,on,yes,1} {false,off,no,0})
+TIEUP=               ;optional (boolean) ({true,on,yes,1} {false,off,no,0})
+
+; Color and Symbol tables
+COLOR TABLE=         ;optional (boolean) ({true,on,yes,1} {false,off,no,0})
+WARP SYMBOL TABLE=   ;optional (boolean) ({true,on,yes,1} {false,off,no,0}) 
+WEFT SYMBOL TABLE=   ;optional (boolean) ({true,on,yes,1} {false,off,no,0})
+; Warp Data Sections
+THREADING=           ;optional (boolean) ({true,on,yes,1} {false,off,no,0})
+WARP THICKNESS=      ;optional (boolean) ({true,on,yes,1} {false,off,no,0})
+WARP THICKNESS ZOOM= ;optional (boolean) ({true,on,yes,1} {false,off,no,0}) 
+WARP SPACING=        ;optional (boolean) ({true,on,yes,1} {false,off,no,0})
+WARP SPACING ZOOM=   ;optional (boolean) ({true,on,yes,1} {false,off,no,0})
+WARP COLORS=         ;optional (boolean) ({true,on,yes,1} {false,off,no,0})
+WARP SYMBOLS=        ;optional (boolean) ({true,on,yes,1} {false,off,no,0})
+; Weft Data Sections
+TREADLING=           ;optional (boolean) ({true,on,yes,1} {false,off,no,0})
+LIFTPLAN=            ;optional (boolean) ({true,on,yes,1} {false,off,no,0})
+WEFT THICKNESS=      ;optional (boolean) ({true,on,yes,1} {false,off,no,0})
+WEFT THICKNESS ZOOM= ;optional (boolean) ({true,on,yes,1} {false,off,no,0})
+WEFT SPACING=        ;optional (boolean) ({true,on,yes,1} {false,off,no,0})
+WEFT SPACING ZOOM=   ;optional (boolean) ({true,on,yes,1} {false,off,no,0})
+WEFT COLORS=         ;optional (boolean) ({true,on,yes,1} {false,off,no,0})
+WEFT SYMBOLS=        ;optional (boolean) ({true,on,yes,1} {false,off,no,0})
+ 
+;-    Bitmap Data not implemented.  Keyword reserved for future.
+;-    BITMAP IMAGE DATA=   ;reserved (boolean) ({true,on,yes,1} {false,off,no,0})
+
+PRIVATE <SourceID> <SectionName>=  
+                     ;optional (boolean) ({true,on,yes,1} {false,off,no,0})
+
+;-----------End Contents Section-----------------
+
+[COLOR PALETTE]
+Entries=n    ;required (integer) ( >0 ) 
+; maximum number of entries in color table
+;-    Form=RGB     ;obsolete constant (ASCII string)
+;-    Color palette entries must be specified as RGB triplets 
+Range=       ;required (integer,integer) (>=0, > first value)
+; the range of allowable values contained in the RGB triplet palette entries
+
+[WARP SYMBOL PALETTE]
+Entries=n    ;required (integer) ( >0 )
+; maximum number of entries in warp symbol table
+
+[WEFT SYMBOL PALETTE]
+; maximum number of entries in weft symbol table
+Entries=n    ;required (integer) ( >0 )
+
+[TEXT]
+; provides information about the weaving and artist
+Title=     ;optional (ASCII string)
+; title of the Weaving
+Author=    ;optional (ASCII string)
+; name of the artist
+Address=   ;optional (ASCII string)
+; address of the artist
+EMail=     ;optional (ASCII string)
+; email of the artist
+Telephone= ;optional (ASCII string)
+; voice number of the artist
+FAX=       ;optional (ASCII string)
+; FAX number of the artist
+
+[WEAVING]
+; information on the weaving
+Shafts=      ;required (integer) ( >0 )
+Treadles=    ;required (integer) ( >0 )
+Rising Shed= ;optional (boolean) ({true,on,yes,1} {false,off,no,0})
+;-   Profile=     ;obsolete (boolean) ({true,on,yes,1} {false,off,no,0})
+
+[WARP]
+; This section provides information on the warp as a whole and 
+; defines the characteristics of the default warp thread.
+; See narrative on DEFAULT VALUES AND SPARSE DATA SECTIONS
+
+Threads=        ;required (integer) ( >0 )
+;the number of threads in the threading section
+
+;-    Colors=         ;obsolete V 1.1  (integer) ( >0)
+;-    Palette=yes     ;obsolete constant (boolean)     
+;-    with V1.1 the Warp Colors section must reference the color table
+;-    ColorMix=       ;obsolete V1.1 
+;-    color mix in the colors section no longer supported
+
+Color=    ;optional  (1 or 4 integers)([Palette Ndx],[R,G,B])
+          ;{[0<Palette Ndx<=[Color Palette].Entries],
+          ;[Color Palette].Range.From<=RGB<=[Color Palette].Range.To]}
+; This key can hold two values, Palette Ndx and optional R,G,B. 
+; Palette Ndx is a valid index into the Warp Color Table. 
+; Use the Palette NDX value to initialize the warp threads' color 
+; variable.
+; Use the optional RGB values for the warp color in two-color drafts.  
+
+Symbol=         ;optional (valid WIF symbol data type)
+; Use for warp symbol in two-symbol drafts
+
+Symbol Number=  ;optional (integer) ( >0 )
+; an index into the Warp Symbol Table
+; Use to initialize the warp threads' symbol number variable.
+ 
+Units=          ;required if spacing or thickness is used (ASCII String)
+                ;({"Decipoints","Inches","Centimeters"})
+; units in which spacing and thickness are measured
+
+Spacing=        ;optional (real) ( >=0 )
+; base spacing for warp
+; Use to initialize the warp threads' spacing variable.
+
+Thickness=      ;optional (real) ( >=0 )
+; base thickness for warp
+; Use to initialize the warp threads' thickness variable.
+
+Spacing Zoom=   ;optional (integer) ( >=0 )
+; zoom factor applied to base for variable spacing draft
+; Use to initialize the warp threads' spacing zoom variable.
+
+Thickness Zoom= ;optional (integer) ( >=0 )
+; zoom factor applied to base for variable spacing draft
+; Use to initialize the warp threads' thickness zoom variable.
+
+[WEFT]
+; this section describes the weft.  See the comments under
+; Warp for more information on each line.
+Threads=        ;required (integer) ( >0 )
+
+;-   Colors=         ;obsolete V 1.1  (integer) ( >0)
+;-   Palette=yes     ;obsolete constant (boolean) 
+;-   ColorMix=       ;obsolete V1.1 
+
+Color=          ;optional  (1 or 4 integers)([Palette Ndx],R,G,B)
+Symbol=         ;optional (valid WIF symbol data type)
+Symbol Number=  ;optional (integer) ( >0 )
+Units=          ;required if spacing or thickness is used (ASCII String)
+                ;({"Decipoints","Inches","Centimeters"})
+Spacing=        ;optional (real) ( >=0 )
+Thickness=      ;optional (real) ( >=0 )
+Spacing Zoom=   ;optional (integer) ( >=0 )
+Thickness Zoom= ;optional (integer) ( >=0 )
+
+
+[NOTES]
+;Each line is prefaced by its line number.
+1=     ;optional (ASCII String)
+...
+n=     ;optional (ASCII String)
+
+[TIEUP]
+; The shafts tied to each treadle are separated by commas
+; programs that store a tieup in a bit sensitive number must
+; convert the comma separated string.  Maximum number of
+; values is specified under [Weaving].Shafts
+; Treadles with a value of Shaft zero are unused.
+; Treadles without keylines retain their preinitialized value of zero.
+
+1=     ;optional (integer, integer, ...) ( >0 ) ;treadle=shaft,shaft,shaft
+...
+n=     ;optional (integer, integer, ...) ( >0 )
+
+[COLOR TABLE]
+; Each entry must take the form of an RGB triplet with values in
+; the range specified under the [COLOR PALETTE] section.
+
+1=        ;required (integer,integer,integer) ([Color Palette].Range)
+...
+n=        ;required (integer,integer,integer) ([Color Palette].Range)
+
+
+[WARP SYMBOL TABLE]
+; The maximum number of entries is specified under 
+; [Warp Symbol Palette].
+
+1=           ;required (WIF Symbol data type)
+...
+n=           ;required (WIF Symbol data type)
+
+
+[WEFT SYMBOL TABLE]
+; The maximum number of entries is specified under 
+; [Weft Symbol Palette].
+
+1=           ;required (WIF Symbol data type)
+...
+n=           ;required (WIF Symbol data type)
+
+
+[THREADING]
+; The threading for the warp.
+; Valid formats include single shaft numbers and
+; multiple shaft numbers separated by commas
+; Example:
+; 1=1,5 means Warp 1 goes through heddles in both Shafts 1 and 5
+; Threads with a value of Shaft zero are unused.
+; Threads without keylines retain their preinitialized value of zero.
+
+1=   ;optional (integer,integer,...) ( >=0 ) ;end=shaft,shaft...
+...
+n=   ;optional (integer,integer,...) ( >=0 )
+
+
+[WARP THICKNESS]
+; the thickness of each warp thread in the specified unit.
+; Threads without keylines retain their preinitialized value 
+; of [WARP].Warp Thickness
+
+1=   ;optional (real) ( >=0 )
+...
+n=   ;optional (real) ( >=0 )
+
+
+[WARP THICKNESS ZOOM]
+; A magnification factor to be applied to the base thickness.
+; Threads without keylines retain their preinitialized value 
+; of [WARP].Warp Thickness Zoom
+
+1=   ;optional (integer) ( >=0 )
+...
+n=   ;optional (integer) ( >=0 )
+
+
+[WARP SPACING]
+; the spacing in the selected unit within which each warp thread exists
+; Threads without keylines retain their preinitialized value 
+; of [WARP].Warp Spacing
+
+1=   ;optional (real) ( >=0 )
+...
+n=   ;optional (real) ( >=0 )
+
+
+[WARP SPACING ZOOM]
+; a magnification factor to be applied to the base spacing
+; Threads without keylines retain their preinitialized value 
+; of [WARP].Warp Spacing Zoom
+
+1=   ;optional (integer) ( >=0 )
+...
+n=   ;optional (integer) ( >=0 )
+
+
+[WARP COLORS]
+; The palette color for each thread.
+; Programs should read only one integer.
+; Some WIF files may use the format (PaletteNdx,R,G,B). 
+; The R,G,B values are obsolete with V1.1 and should be ignored.
+; Threads without keylines retain their preinitialized value 
+; of [WARP].Color.{Palette Ndx}
+
+1=   ;optional (integer) (valid color table index)
+...
+n=   ;optional (integer) (valid color table index)
+
+
+[WARP SYMBOLS]
+; index into the Warp Symbol Table
+; Threads without keylines retain their preinitialized value 
+; of [WARP].Symbol Number.
+
+1=   ;optional (integer) (valid symbol table index)
+...
+n=   ;optional (integer) (valid symbol table index)
+
+
+[TREADLING]
+; The treadling for the weft.
+; Valid formats include single treadle numbers and
+; multiple treadle numbers separated by commas.
+; Threads with a value of Treadle 0 are unused.
+; Threads without keylines retain their preinitialized value of zero.
+
+1=   ;optional (integer,integer,...) (>=0,>0,...) ;pick=treadle,treadle,...
+...
+n=   ;optional (integer,integer,...) (>=0,>0,...)
+
+[LIFTPLAN]
+; The shafts raised (if Rising Shed) for each weft row
+; Threads with a value of Shaft 0 are unused
+; Threads without keylines retain their preinitialized value of zero.
+
+1=   ;optional (integer,integer,...) (>=0,>0,...) ;pick=shaft,shaft,...
+...
+n=   ;optional (integer,integer,...) (>=0,>0,...)
+
+
+[WEFT THICKNESS]
+; the thickness of each weft thread in the specified unit.
+; Threads without keylines retain their preinitialized value 
+; of [WEFT].Thickness
+
+1=   ;optional (real) ( >=0 )
+...
+n=   ;optional (real) ( >=0 )
+
+
+[WEFT THICKNESS ZOOM]
+; a magnification factor to be applied to the base thickness
+; Threads without keylines retain their preinitialized value 
+; of [WEFT].Thickness Zoom
+
+1=   ;optional (integer) ( >=0 )
+...
+n=   ;optional (integer) ( >=0 )
+
+
+[WEFT SPACING]
+; the spacing in the selected unit within which each weft thread exists
+; Threads without keylines retain their preinitialized value 
+; of [WEFT].Spacing
+
+1=   ;optional (real) ( >=0 )
+...
+n=   ;optional (real) ( >=0 )
+
+
+[WEFT SPACING ZOOM]
+; a magnification factor to be applied to the base spacing
+; Threads without keylines retain their preinitialized value 
+; of [WEFT].Spacing Zoom
+
+1=   ;optional (integer) ( >=0 )
+...
+n=   ;optional (integer) ( >=0 )
+
+
+[WEFT COLORS]
+; The palette color for each thread.
+; see Warp Colors section for comments
+; Threads without keylines retain their preinitialized value 
+; of [WEFT].Color.{Palette Ndx}
+
+1=   ;optional (integer) (valid color table index)
+...
+n=   ;optional (integer) (valid color table index)
+
+
+[WEFT SYMBOLS]
+; index into the Weft Symbol Table
+; Threads without keylines retain their preinitialized value 
+; of [WEFT].Symbol Number.
+
+1=   ;optional (integer) (valid symbol table index)
+...
+n=   ;optional (integer) (valid symbol table index)
+
+
+[PRIVATE <SourceID> <SectionName>]
+; So that programs that choose to skip private data can
+; accurately determine the beginning of the next section
+; no line may begin with open brace '[' or <whitespace>'['
+
+
+;------------END SUPPORTED WIF SECTIONS--------------------
+
+;The following sections illustrate support for
+;Bitmap Image and Bitmap File sections if they were ever to
+;be implemented by the WIF developers.  Note that
+;to date, no programs have implemented support for bitmaps.
+;and support as been suspended as of WIF V1.1
+
+
+[BITMAP FILE] ; support suspended at V1.1
+Platform=    ;required (ASCII String)({"PC","MAC","UNIX})
+Format=      ;required (ASCII String)({"BMP","PCX","TIFF","GIF"})
+Path=        ;optional (ASCII String)   
+File=        ;required (ASCII String)   
+
+
+[BITMAP IMAGE] support suspended at V1.1
+Pixelcolumns= ;required (integer) 
+Pixelrows=    ;required (integer) 
+Pixeldepth=   ;required (integer) 
+; if pixeldepth>1, planes=1
+Planes=       ;required (integer) 
+; if planes>1, pixeldepth=1
+
+[BITMAP IMAGE DATA] support suspended at V1.1
+1=ff,ff,fc,1e,3c,78,. . . . . .
+2=. . . . .
+
+49=. . . .      ; data for plane 2 starts here
+
+
+_______________________________________________________
+
+
+VI. PRIMARY REVISIONS IN EACH VERSION 
+
+VERSION 1.1
+
+Support for Translations suspended.
+
+Support for ColorMix in Warp and Weft Colors sections dropped.
+
+Palette keyword now obsolete; value always true
+
+Palette reference manditory for Warp and Weft Colors. 
+
+Colors keyword dropped.
+
+Design section dropped.
+
+Additional specificity added to specification, including optional
+or required notations for each keyline.
+
+Private Sections added to specification.
+
+Default Values specified with specific support for sparse data 
+sections. 
+
+Keyline "Symbol Number" added for default symbol number.
+
+
+======END OFFICIAL WIF DOCUMENTATION======
+
+
+APPENDIX 
+
+A: UNOFFICIAL PROGRAMMERS' COMMENTS: RAVI NIELSEN
+
+The following notes address issues which fall outside the 
+official WIF standard.  They are presented in that light by the 
+author, Ravi Nielsen, and represent issues which relate 
+specifically to Patternland Weave Simulator and perhaps other 
+programs which may in the future use a similar coding strategy. 
+
+1.  PREFERRED SECTION ORDER
+
+Programs which read WIF files must not rely on the order of 
+Sections within the file or the order of data lines within 
+sections. 
+
+However, some programs (including Patternland) use a multi-
+pass sequential read approach, while other programs use 
+completely order-independent Windows-style INI file 
+functions modified to support files larger than 64K. 
+
+Programs which use the sequential read approach are most 
+efficient if the "Information" Sections describing the 
+"Data" Sections come first in the file. Patternland uses a 
+"smart" 4-pass model. (The first pass for Translations section is 
+now obsolete.)  WIF files can be optimized for these programs by 
+placing the Information Sections first.  The following list is a 
+suggested order for a WIF file optimized for sequential read. 
+When files are written in this order, they can be read in one 
+pass sequentially without resetting to the beginning.  The order 
+of sections within each "pass" is not important. 
+
+;-   1st pass: suspended unless/until Translations supported
+
+;-   suspended  TRANSLATIONS 
+
+2nd pass:
+
+WIF
+CONTENTS
+COLOR PALETTE
+WARP SYMBOL PALETTE
+WEFT SYMBOL PALETTE
+
+3rd pass:
+  TEXT
+  WEAVING
+  WARP (this gives me a thread count to show the user)
+  WEFT  (likewise)
+;-   reserved  BITMAP IMAGE (could present user with size of bitmap)
+;-   reserved  BITMAP FILE (could present user with name of bitmap file)
+
+At this point a user selection dialog may be presented 
+containing detailed information about the file, allowing the 
+user to select what to read. 
+
+
+4th pass, all the remaining data sections.
+
+Commentary:
+
+By reading Translations first, keynames in the WIF section 
+can be translated, however support for translations has been
+suspended. 
+
+Because the Color_Palette section contains the RGB 
+Range specification, and the Warp and Weft sections 
+contain colors, the Color Palette section must be read 
+first. 
+
+Once I've read the CONTENTS section I know which of the Pass 
+3 major sections to expect.  The group is considered 
+complete once I have all the ones listed "yes" in CONTENTS. 
+
+Patternland code assigns a pass group number to each 
+section.  As I read the file, if I come upon a section in a 
+higher group before I'm done with the current group, the 
+program resets to the beginning of the file before reading 
+the next group of sections.  If, however, the file was 
+written with sections grouped as above, I never have to 
+start over and do one continuous sequential read--except for 
+pausing after Groups 1-3 to present the user with an 
+information and options dialog box.  While this approach may 
+seem involved, I believe it to be much faster than 
+independently finding each Section/Keyname and reading its 
+data. 
+
+
+2. MULTI-LINE TITLES
+
+Patternland supports multiline Titles; WIF does not.
+
+Patternland replaces CRLF with // on writing a Title to a 
+WIF file and replaces // with a CRLF on reading a WIF file.  
+If a program supports multiline titles, the programmer may 
+wish to adopt this convention. 
+
+New lines are represented by double slashes as per this 
+example: 
+
+[TEXT]
+Title=A multiline Title//New Line 2//New Line 3
+
+
+3.  USER OPTIONS
+
+A program that supports WIF files may wish to take advantage 
+of the flexibility the specificiation provides for 
+extracting specific sections from the file.  A program may 
+present the user with a Dialog box on reading a WIF file 
+after processing the Informational Sections and learning the 
+details of what the file contains; or on writing the file 
+before the writing begins.  Following are some of the 
+options Patternland provides the user.
+
+Range
+  Saving a WIF: Dialog presents the current Warp and Weft limits.
+    
+    From and To ranges are always written out as Threads 1 
+    to Threads [To-From+1]. 
+
+  Reading a WIF:  Dialog presents the ranges contained in 
+  the file, i.e., 1 to Threads. 
+
+New/Overwrite/Insert/Add  AT Thread.
+
+  New:  At Thread is forced to 1.  Current weaving is erased 
+  and thread ranges are read in starting with 1. 
+
+  Overwrite:  At Thread is enabled.  Thread ranges are read 
+  in and replace threads starting with respective warp and 
+  weft At Thread values. If range exceeds current weaving, 
+  additional threads are added. 
+
+  Insert:  At Thread is enabled.  Thread ranges are read in 
+  and inserted starting with respective warp and weft At 
+  Thread values. 
+
+  Add: At Thread is disabled.  Reads last thread in current 
+  warp and weft. Thread ranges are read in and added to the 
+  end of the current weaving. 
+
+Checkboxes are presented for the user to individually select 
+  most of the components of the file.
+
+A View option allows the user to view the TEXT information 
+  prior to loading the file.
+
+=======================END OF DOCUMENT======================
+

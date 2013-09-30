@@ -1,0 +1,18 @@
+* Support reading WIF files
+
+* Support for writing WIF
+
+* Allow starting with an existing sample pattern instead of a blank
+  pattern.  Once I have WIF read support, this can be done by
+  including public domain patterns with the program which can be
+  opened as starting patterns.  See here for an online archive of WIF files:
+  http://www.handweaving.net/Home.aspx
+
+* Make it easy to set the color of multiple rows or columns at once.
+
+* When displaying patterns, have the option of not displaying grid
+  lines where the thread is supposed to be continuous.  For example if
+  a warp thread is on top of several weft threads, it should appear as
+  a single stretch of thread.  Currently it looks like the pattern is
+  on graph paper; the grid lines are always there.
+

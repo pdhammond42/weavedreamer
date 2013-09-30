@@ -1,0 +1,98 @@
+﻿Weaving Software Specification:
+
+A loom has m harnesses, also called shafts.
+Each harness has n heddles.  Each harness does not need to have the same number of heddles, and there’s no limit to how many heddles can be put on a given harness.
+The threads on the loom are called the warp.
+Each thread in the warp is threaded through one heddle on one of the harnesses.	
+The treadles are used to raise some combination of harnesses.  Each treadle can be connected 1 or more harnesses.
+Weaving is done by raising different combinations of harnesses, which causes a subset of the warp threads to be lifted, and then putting the weft threads through.
+Each thread in the warp can be a different color.
+Should be possible to replicate sections of the warp.
+There are two patterns involved: first, there’s the pattern of how the warp is threaded through the heddles; second, there’s the pattern of what order the harnesses are raised in to weave.  Actually three patterns, since the warp threads can be different colors too, so there’s a pattern of colors also.
+
+Now, the question is what is the best way to represent this.  For the warp setup, I’d say represent everything as attributes of each warp thread.  Each warp thread will have the following attributes:
+
+Warp Thread:
+Position: from 0 to n - 1, where n is the number of warp threads.
+Color: color of the thread
+Harness: which harness lifts this thread.
+
+A Warp Pattern will be a set of adjacent warp thread specifications, and can itself be made up of warp patterns.  The reason it can contain warp patterns is to support repeating patterns.  
+
+That takes care of setting up the warp.  Now we come to the Weft.  The weft is created by lifting different sets of harnesses, which cause a set of warp threads to be lifted, and then putting a shuttle containing the weft thread between the lifted warp threads and non-lifted warp threads.  Then a different set of harnesses is lifted, and the shuttle is passed through in the other direction.  So a Weft Pattern is a sequence of harness-lift instructions.  Like a warp pattern, a weft pattern can itself contain weft patterns, to represent repeating patterns.  
+
+A Weaving Pattern contains the following attributes:
+
+Weaving Pattern:
+Harnesses: the number of harnesses being used.
+Warp Pattern: the warp pattern
+Weft Pattern: the weft pattern
+
+Ok, I’ve coded the data structures.  Now I need to think about the user interface.  The three major components are Weaving Pattern, Warp Pattern, and Weft Pattern.
+Weaving Pattern UI:
+A weaving pattern is the top level component that can be created.  It contains:
+Name
+Warp Pattern: top level warp pattern
+Weft Pattern: top level weft pattern
+List of Warp Patterns
+List of Weft Patterns:
+
+These can all be entered simply using a set of fields.
+
+Warp Pattern:
+Ok, one UI I could use for this, is to show the threads vertically.  Then, along each thread, have n checkboxes, where n is the number of harnesses.  Really they should be radio buttons, since only one per thread can be selected.  Above the radio buttons will be a single color selector button.  It should be possible to insert threads or warp patterns at any point.  I could do this by implementing a right-click menu on a thread, which provides the option of inserting a thread or pattern to the left or right of that thread.
+
+Weft Pattern:
+
+Ok, I got new information.  Here’s the standard way of depicting a weaving pattern.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+The top section is the Threading Draft.  Each column is a warp thread, and each row is a harness.  The darkened square shows which harness the thread is connected to.  Above each column is a color, showing the color of the thread.
+
+The upper right section is the Tie Up, which shows how the treadles are connected to the harnesses.  Each row represents a harness, and each column is a treadle.
+
+The right section is the Treadling Draft.  Each row represents a step, and each column is a treadle.  The filled in square shows which treadle to push for that step.
+
+Finally, the large middle section is a graph showing what the fabric will look like.
+
+So, that’s how I’ll design my user interface.  This also changes the underlying representation.  Instead of the weft pattern directly specifying which harnesses to lift for each step, it’s broken into two components; the tie up, and the treadling draft, which together specify the same thing.
+
+Another change mom suggested, is she doesn’t have much use for patterns that contain patterns.  So, I can simplify my model.  Though I guess this doesn’t complicate my model much so I may leave it in.  In any case I won’t include it in the UI in the first version of the program.
+
+I think I’ll simplify the whole data structure.  Now it’ll look like this:
+
+Weaving Draft:
+Name
+num Harnesses
+Threading draft: list of {color, harness id} tuples for each thread
+tie up draft: list for each treadle, which harnesses it’s connected to
+treadling draft: for each step, which treadle to push
+
+For rendering, I can use a weaving draft renderer class.  This can either be an abstract class with a drawCell abstract function, which paints one square of the grid, or it could be a concrete class which delegates to a cell drawer class.  For some reason I like the abstract class version better, but I’m not sure I have a good reason.
+
+
+
+
+Things to do
+Change the way colors work.  There should be a palette associated with a weaving pattern.  Each thread will have its color as an index into the palette.  The palette can be set up using the normal color chooser.
+Add print functionality.
+Add ability to create patterns from format used in weaving magazines.
+Make mode where string outlines are shown, rather than just straight grid lines.
+Support WIF format.

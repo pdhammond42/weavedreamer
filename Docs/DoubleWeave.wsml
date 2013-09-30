@@ -1,0 +1,657 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<java version="1.5.0_07" class="java.beans.XMLDecoder"> 
+ <object class="com.jenkins.weavingsimulator.datatypes.WeavingDraft"> 
+  <void property="ends"> 
+   <void method="add"> 
+    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd"> 
+     <void property="color"> 
+      <object id="Color0" class="java.awt.Color"> 
+       <int>51</int> 
+       <int>51</int> 
+       <int>255</int> 
+       <int>255</int> 
+      </object> 
+     </void> 
+     <void property="harnessId"> 
+      <int>3</int> 
+     </void> 
+    </object> 
+   </void> 
+   <void method="add"> 
+    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd"> 
+     <void property="color"> 
+      <object id="Color1" class="java.awt.Color"> 
+       <int>255</int> 
+       <int>0</int> 
+       <int>51</int> 
+       <int>255</int> 
+      </object> 
+     </void> 
+     <void property="harnessId"> 
+      <int>2</int> 
+     </void> 
+    </object> 
+   </void> 
+   <void method="add"> 
+    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd"> 
+     <void property="color"> 
+      <object id="Color2" class="java.awt.Color"> 
+       <int>51</int> 
+       <int>255</int> 
+       <int>51</int> 
+       <int>255</int> 
+      </object> 
+     </void> 
+     <void property="harnessId"> 
+      <int>1</int> 
+     </void> 
+    </object> 
+   </void> 
+   <void method="add"> 
+    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd"> 
+     <void property="color"> 
+      <object id="Color3" class="java.awt.Color"> 
+       <int>255</int> 
+       <int>255</int> 
+       <int>255</int> 
+       <int>255</int> 
+      </object> 
+     </void> 
+    </object> 
+   </void> 
+   <void method="add"> 
+    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd"> 
+     <void property="color"> 
+      <object idref="Color0"/> 
+     </void> 
+     <void property="harnessId"> 
+      <int>3</int> 
+     </void> 
+    </object> 
+   </void> 
+   <void method="add"> 
+    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd"> 
+     <void property="color"> 
+      <object idref="Color1"/> 
+     </void> 
+     <void property="harnessId"> 
+      <int>2</int> 
+     </void> 
+    </object> 
+   </void> 
+   <void method="add"> 
+    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd"> 
+     <void property="color"> 
+      <object idref="Color2"/> 
+     </void> 
+     <void property="harnessId"> 
+      <int>1</int> 
+     </void> 
+    </object> 
+   </void> 
+   <void method="add"> 
+    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd"> 
+     <void property="color"> 
+      <object idref="Color3"/> 
+     </void> 
+    </object> 
+   </void> 
+   <void method="add"> 
+    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd"> 
+     <void property="color"> 
+      <object idref="Color0"/> 
+     </void> 
+     <void property="harnessId"> 
+      <int>3</int> 
+     </void> 
+    </object> 
+   </void> 
+   <void method="add"> 
+    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd"> 
+     <void property="color"> 
+      <object idref="Color1"/> 
+     </void> 
+     <void property="harnessId"> 
+      <int>2</int> 
+     </void> 
+    </object> 
+   </void> 
+   <void method="add"> 
+    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd"> 
+     <void property="color"> 
+      <object idref="Color2"/> 
+     </void> 
+     <void property="harnessId"> 
+      <int>1</int> 
+     </void> 
+    </object> 
+   </void> 
+   <void method="add"> 
+    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd"> 
+     <void property="color"> 
+      <object idref="Color3"/> 
+     </void> 
+    </object> 
+   </void> 
+   <void method="add"> 
+    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd"> 
+     <void property="color"> 
+      <object idref="Color0"/> 
+     </void> 
+     <void property="harnessId"> 
+      <int>3</int> 
+     </void> 
+    </object> 
+   </void> 
+   <void method="add"> 
+    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd"> 
+     <void property="color"> 
+      <object idref="Color1"/> 
+     </void> 
+     <void property="harnessId"> 
+      <int>2</int> 
+     </void> 
+    </object> 
+   </void> 
+   <void method="add"> 
+    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd"> 
+     <void property="color"> 
+      <object idref="Color2"/> 
+     </void> 
+     <void property="harnessId"> 
+      <int>1</int> 
+     </void> 
+    </object> 
+   </void> 
+   <void method="add"> 
+    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd"> 
+     <void property="color"> 
+      <object idref="Color3"/> 
+     </void> 
+    </object> 
+   </void> 
+   <void method="add"> 
+    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd"> 
+     <void property="color"> 
+      <object idref="Color0"/> 
+     </void> 
+     <void property="harnessId"> 
+      <int>3</int> 
+     </void> 
+    </object> 
+   </void> 
+   <void method="add"> 
+    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd"> 
+     <void property="color"> 
+      <object idref="Color1"/> 
+     </void> 
+     <void property="harnessId"> 
+      <int>2</int> 
+     </void> 
+    </object> 
+   </void> 
+   <void method="add"> 
+    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd"> 
+     <void property="color"> 
+      <object idref="Color2"/> 
+     </void> 
+     <void property="harnessId"> 
+      <int>1</int> 
+     </void> 
+    </object> 
+   </void> 
+   <void method="add"> 
+    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd"> 
+     <void property="color"> 
+      <object idref="Color3"/> 
+     </void> 
+    </object> 
+   </void> 
+   <void method="add"> 
+    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd"> 
+     <void property="color"> 
+      <object idref="Color0"/> 
+     </void> 
+     <void property="harnessId"> 
+      <int>3</int> 
+     </void> 
+    </object> 
+   </void> 
+   <void method="add"> 
+    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd"> 
+     <void property="color"> 
+      <object idref="Color1"/> 
+     </void> 
+     <void property="harnessId"> 
+      <int>2</int> 
+     </void> 
+    </object> 
+   </void> 
+   <void method="add"> 
+    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd"> 
+     <void property="color"> 
+      <object idref="Color2"/> 
+     </void> 
+     <void property="harnessId"> 
+      <int>1</int> 
+     </void> 
+    </object> 
+   </void> 
+   <void method="add"> 
+    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd"> 
+     <void property="color"> 
+      <object idref="Color3"/> 
+     </void> 
+    </object> 
+   </void> 
+   <void method="add"> 
+    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd"> 
+     <void property="color"> 
+      <object idref="Color0"/> 
+     </void> 
+     <void property="harnessId"> 
+      <int>3</int> 
+     </void> 
+    </object> 
+   </void> 
+   <void method="add"> 
+    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd"> 
+     <void property="color"> 
+      <object idref="Color1"/> 
+     </void> 
+     <void property="harnessId"> 
+      <int>2</int> 
+     </void> 
+    </object> 
+   </void> 
+   <void method="add"> 
+    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd"> 
+     <void property="color"> 
+      <object idref="Color2"/> 
+     </void> 
+     <void property="harnessId"> 
+      <int>1</int> 
+     </void> 
+    </object> 
+   </void> 
+   <void method="add"> 
+    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd"> 
+     <void property="color"> 
+      <object idref="Color3"/> 
+     </void> 
+    </object> 
+   </void> 
+   <void method="add"> 
+    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd"> 
+     <void property="color"> 
+      <object idref="Color0"/> 
+     </void> 
+     <void property="harnessId"> 
+      <int>3</int> 
+     </void> 
+    </object> 
+   </void> 
+   <void method="add"> 
+    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd"> 
+     <void property="color"> 
+      <object idref="Color1"/> 
+     </void> 
+     <void property="harnessId"> 
+      <int>2</int> 
+     </void> 
+    </object> 
+   </void> 
+   <void method="add"> 
+    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd"> 
+     <void property="color"> 
+      <object idref="Color2"/> 
+     </void> 
+     <void property="harnessId"> 
+      <int>1</int> 
+     </void> 
+    </object> 
+   </void> 
+   <void method="add"> 
+    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd"> 
+     <void property="color"> 
+      <object idref="Color3"/> 
+     </void> 
+    </object> 
+   </void> 
+   <void method="add"> 
+    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd"> 
+     <void property="color"> 
+      <object idref="Color0"/> 
+     </void> 
+     <void property="harnessId"> 
+      <int>3</int> 
+     </void> 
+    </object> 
+   </void> 
+   <void method="add"> 
+    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd"> 
+     <void property="color"> 
+      <object idref="Color1"/> 
+     </void> 
+     <void property="harnessId"> 
+      <int>2</int> 
+     </void> 
+    </object> 
+   </void> 
+   <void method="add"> 
+    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd"> 
+     <void property="color"> 
+      <object idref="Color2"/> 
+     </void> 
+     <void property="harnessId"> 
+      <int>1</int> 
+     </void> 
+    </object> 
+   </void> 
+   <void method="add"> 
+    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd"> 
+     <void property="color"> 
+      <object idref="Color3"/> 
+     </void> 
+    </object> 
+   </void> 
+   <void method="add"> 
+    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd"> 
+     <void property="color"> 
+      <object idref="Color0"/> 
+     </void> 
+     <void property="harnessId"> 
+      <int>3</int> 
+     </void> 
+    </object> 
+   </void> 
+   <void method="add"> 
+    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd"> 
+     <void property="color"> 
+      <object idref="Color1"/> 
+     </void> 
+     <void property="harnessId"> 
+      <int>2</int> 
+     </void> 
+    </object> 
+   </void> 
+   <void method="add"> 
+    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd"> 
+     <void property="color"> 
+      <object idref="Color2"/> 
+     </void> 
+     <void property="harnessId"> 
+      <int>1</int> 
+     </void> 
+    </object> 
+   </void> 
+   <void method="add"> 
+    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd"> 
+     <void property="color"> 
+      <object idref="Color3"/> 
+     </void> 
+    </object> 
+   </void> 
+  </void> 
+  <void property="name"> 
+   <string>New Draft</string> 
+  </void> 
+  <void property="numHarnesses"> 
+   <int>4</int> 
+  </void> 
+  <void property="picks"> 
+   <void method="add"> 
+    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick"> 
+     <void property="color"> 
+      <object id="Color4" class="java.awt.Color"> 
+       <int>255</int> 
+       <int>255</int> 
+       <int>0</int> 
+       <int>255</int> 
+      </object> 
+     </void> 
+     <void property="treadleId"> 
+      <int>0</int> 
+     </void> 
+    </object> 
+   </void> 
+   <void method="add"> 
+    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick"> 
+     <void property="color"> 
+      <object id="Color5" class="java.awt.Color"> 
+       <int>204</int> 
+       <int>0</int> 
+       <int>204</int> 
+       <int>255</int> 
+      </object> 
+     </void> 
+     <void property="treadleId"> 
+      <int>1</int> 
+     </void> 
+    </object> 
+   </void> 
+   <void method="add"> 
+    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick"> 
+     <void property="color"> 
+      <object idref="Color4"/> 
+     </void> 
+     <void property="treadleId"> 
+      <int>2</int> 
+     </void> 
+    </object> 
+   </void> 
+   <void method="add"> 
+    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick"> 
+     <void property="color"> 
+      <object idref="Color5"/> 
+     </void> 
+     <void property="treadleId"> 
+      <int>3</int> 
+     </void> 
+    </object> 
+   </void> 
+   <void method="add"> 
+    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick"> 
+     <void property="color"> 
+      <object idref="Color4"/> 
+     </void> 
+     <void property="treadleId"> 
+      <int>0</int> 
+     </void> 
+    </object> 
+   </void> 
+   <void method="add"> 
+    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick"> 
+     <void property="color"> 
+      <object idref="Color5"/> 
+     </void> 
+     <void property="treadleId"> 
+      <int>1</int> 
+     </void> 
+    </object> 
+   </void> 
+   <void method="add"> 
+    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick"> 
+     <void property="color"> 
+      <object idref="Color4"/> 
+     </void> 
+     <void property="treadleId"> 
+      <int>2</int> 
+     </void> 
+    </object> 
+   </void> 
+   <void method="add"> 
+    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick"> 
+     <void property="color"> 
+      <object idref="Color5"/> 
+     </void> 
+     <void property="treadleId"> 
+      <int>3</int> 
+     </void> 
+    </object> 
+   </void> 
+   <void method="add"> 
+    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick"> 
+     <void property="color"> 
+      <object idref="Color4"/> 
+     </void> 
+     <void property="treadleId"> 
+      <int>0</int> 
+     </void> 
+    </object> 
+   </void> 
+   <void method="add"> 
+    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick"> 
+     <void property="color"> 
+      <object idref="Color5"/> 
+     </void> 
+     <void property="treadleId"> 
+      <int>1</int> 
+     </void> 
+    </object> 
+   </void> 
+   <void method="add"> 
+    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick"> 
+     <void property="color"> 
+      <object idref="Color4"/> 
+     </void> 
+     <void property="treadleId"> 
+      <int>2</int> 
+     </void> 
+    </object> 
+   </void> 
+   <void method="add"> 
+    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick"> 
+     <void property="color"> 
+      <object idref="Color5"/> 
+     </void> 
+     <void property="treadleId"> 
+      <int>3</int> 
+     </void> 
+    </object> 
+   </void> 
+   <void method="add"> 
+    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick"> 
+     <void property="color"> 
+      <object idref="Color4"/> 
+     </void> 
+     <void property="treadleId"> 
+      <int>0</int> 
+     </void> 
+    </object> 
+   </void> 
+   <void method="add"> 
+    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick"> 
+     <void property="color"> 
+      <object idref="Color5"/> 
+     </void> 
+     <void property="treadleId"> 
+      <int>1</int> 
+     </void> 
+    </object> 
+   </void> 
+   <void method="add"> 
+    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick"> 
+     <void property="color"> 
+      <object idref="Color4"/> 
+     </void> 
+     <void property="treadleId"> 
+      <int>2</int> 
+     </void> 
+    </object> 
+   </void> 
+   <void method="add"> 
+    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick"> 
+     <void property="color"> 
+      <object idref="Color5"/> 
+     </void> 
+     <void property="treadleId"> 
+      <int>3</int> 
+     </void> 
+    </object> 
+   </void> 
+   <void method="add"> 
+    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick"> 
+     <void property="color"> 
+      <object idref="Color4"/> 
+     </void> 
+     <void property="treadleId"> 
+      <int>0</int> 
+     </void> 
+    </object> 
+   </void> 
+   <void method="add"> 
+    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick"> 
+     <void property="color"> 
+      <object idref="Color5"/> 
+     </void> 
+     <void property="treadleId"> 
+      <int>1</int> 
+     </void> 
+    </object> 
+   </void> 
+   <void method="add"> 
+    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick"> 
+     <void property="color"> 
+      <object idref="Color4"/> 
+     </void> 
+     <void property="treadleId"> 
+      <int>2</int> 
+     </void> 
+    </object> 
+   </void> 
+   <void method="add"> 
+    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick"> 
+     <void property="color"> 
+      <object idref="Color5"/> 
+     </void> 
+     <void property="treadleId"> 
+      <int>3</int> 
+     </void> 
+    </object> 
+   </void> 
+  </void> 
+  <void property="treadles"> 
+   <void method="add"> 
+    <object class="com.jenkins.weavingsimulator.datatypes.Treadle"> 
+     <void method="add"> 
+      <int>3</int> 
+     </void> 
+    </object> 
+   </void> 
+   <void method="add"> 
+    <object class="com.jenkins.weavingsimulator.datatypes.Treadle"> 
+     <void method="add"> 
+      <int>3</int> 
+     </void> 
+     <void method="add"> 
+      <int>1</int> 
+     </void> 
+     <void method="add"> 
+      <int>2</int> 
+     </void> 
+    </object> 
+   </void> 
+   <void method="add"> 
+    <object class="com.jenkins.weavingsimulator.datatypes.Treadle"> 
+     <void method="add"> 
+      <int>1</int> 
+     </void> 
+    </object> 
+   </void> 
+   <void method="add"> 
+    <object class="com.jenkins.weavingsimulator.datatypes.Treadle"> 
+     <void method="add"> 
+      <int>3</int> 
+     </void> 
+     <void method="add"> 
+      <int>1</int> 
+     </void> 
+     <void method="add"> 
+      <int>0</int> 
+     </void> 
+    </object> 
+   </void> 
+  </void> 
+ </object> 
+</java> 
