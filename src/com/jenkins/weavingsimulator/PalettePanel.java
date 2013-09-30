@@ -1,0 +1,172 @@
+/*
+ * PalettePanel.java
+ * 
+ * Created on January 15, 2005, 11:36 PM
+ *  
+ * Copyright 2005 Adam P. Jenkins
+ * 
+ * This file is part of WeavingSimulator
+ * 
+ * WeavingSimulator is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ * 
+ * WeavingSimulator is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with WeavingSimulator; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+
+
+package com.jenkins.weavingsimulator;
+
+import com.jenkins.weavingsimulator.datatypes.Palette;
+import com.jenkins.weavingsimulator.models.EditingSession;
+import com.jenkins.weavingsimulator.models.PaletteModel;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import javax.swing.Box;
+import javax.swing.JButton;
+import javax.swing.JColorChooser;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.event.ListSelectionListener;
+
+
+/**
+ *
+ * @author ajenkins
+ */
+public class PalettePanel extends JPanel {
+    private EditingSession session;
+    
+    private GridControl paletteGrid;
+    private JDialog colorChooserDialog;
+    private JColorChooser colorChooser;
+    private JButton changeColorBtn;
+    private JButton resetBtn;
+    
+    /** Creates a new instance of PalettePanel */
+    public PalettePanel() {
+        initComponents();
+    }
+    
+    private void initComponents() {
+        setLayout(new BorderLayout());
+    
+        ActionListener okListener = new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                session.getPalette().setColor(
+                        session.getPalette().getSelection(),
+                        colorChooser.getColor());
+            }
+        };
+        ActionListener cancelListener = new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            }
+        };
+        
+        colorChooser = new JColorChooser();
+        colorChooserDialog = JColorChooser.createDialog(this,
+                "Choose Palette Color",
+                true, // modal dialog
+                colorChooser,
+                okListener,
+                cancelListener);
+        
+        changeColorBtn = new JButton("Change");
+        changeColorBtn.setToolTipText(
+                "Change color of the currently selected palette entry");
+        changeColorBtn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (session.getPalette().getSelection() != -1)
+                    colorChooserDialog.setVisible(true);
+            }
+        });
+        changeColorBtn.setEnabled(false);
+        
+        resetBtn = new JButton("Reset");
+        resetBtn.setToolTipText(
+                "Reset palette to the colors currently used in pattern.");
+        resetBtn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                session.resetPalette();
+            }
+        });
+        resetBtn.setEnabled(false);
+        
+        Box buttons = Box.createVerticalBox();
+        buttons.add(Box.createVerticalGlue());
+        buttons.add(changeColorBtn);
+        buttons.add(Box.createVerticalStrut(10));
+        buttons.add(resetBtn);
+        buttons.add(Box.createVerticalGlue());
+        
+        add(buttons, BorderLayout.WEST);
+        
+        paletteGrid = new GridControl();
+        paletteGrid.setSquareWidth(20);
+        paletteGrid.setDefaultEditor(Color.class, null);
+        paletteGrid.getSelectionModel().addListSelectionListener(
+                new PaletteSelectionListener());
+        paletteGrid.setEnabled(false);
+        
+        add(paletteGrid, BorderLayout.CENTER);
+    }
+    
+    private class PaletteSelectionListener implements ListSelectionListener {
+        public void valueChanged(javax.swing.event.ListSelectionEvent e) {
+            if (e.getValueIsAdjusting())
+                return;
+  
+            // getSelectedRow can return -1, but that's ok because -1 means the
+            // same thing to setSelection -- nothing is selected.
+            session.getPalette().setSelection(paletteGrid.getSelectedRow());
+        }
+        
+    }
+
+    public EditingSession getSession() {
+        return session;
+    }
+
+    public void setSession(EditingSession session) {
+        if (this.session != null)
+            throw new IllegalStateException("Can't reset session");
+        this.session = session;
+        paletteGrid.setModel(new PaletteModel(session.getPalette()));
+        session.addPropertyChangeListener(EditingSession.PALETTE_PROPERTY,
+                new PropertyChangeListener() {
+            public void propertyChange(PropertyChangeEvent ev) {
+                paletteGrid.setModel(new PaletteModel((Palette)ev.getNewValue()));
+            }
+        });
+        
+        
+        changeColorBtn.setEnabled(true);
+        resetBtn.setEnabled(true);
+        paletteGrid.setEnabled(true);
+    }
+    
+    public static void main(String[] args) {
+        JFrame frame = new JFrame("PalettePanel Test");
+        PalettePanel panel = new PalettePanel();
+        EditingSession session = new EditingSession();
+        session.setPalette(new Palette(10));
+        panel.setSession(session);
+        frame.add(panel);
+        frame.pack();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
+    }
+}
