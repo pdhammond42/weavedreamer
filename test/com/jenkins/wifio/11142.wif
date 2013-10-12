@@ -1,0 +1,95 @@
+[WIF]
+;META-BEGIN
+;Title=05 zu 05, 027
+;Source=Old German Pattern Book, Untitled and Unbound
+;Place=Germany
+;Date=Unknown
+;Categories=
+;WarpThreads=5
+;WeftThreads=5
+;WarpRepeats=3
+;WeftRepeats=3
+;META-END
+Date=April 09, 2004
+Developers=arahne@arahne.si
+Source program=ArahWeave 4.0g
+Version=1.1
+[CONTENTS]
+COLOR PALETTE=no
+COLOR TABLE=no
+LIFTPLAN=yes
+THREADING=yes
+TIEUP=yes
+WARP=yes
+WARP COLORS=no
+WEAVING=yes
+WEFT=yes
+WEFT COLORS=no
+[WEAVING]
+Rising Shed=Yes
+Shafts=5
+Treadles=5
+[WARP]
+Spacing=0.0185
+Thickness=0.0213
+Threads=15
+Units=Centimeters
+[WEFT]
+Spacing=0.0333
+Thickness=0.0246
+Threads=15
+Units=Centimeters
+[TIEUP]
+1=1,2,4
+2=1,2,3
+3=2,3,5
+4=3,4,5
+5=1,4,5
+[THREADING]
+1=1
+2=2
+3=3
+4=4
+5=5
+6=1
+7=2
+8=3
+9=4
+10=5
+11=1
+12=2
+13=3
+14=4
+15=5
+[TREADLING]
+1=1
+2=2
+3=3
+4=4
+5=5
+6=1
+7=2
+8=3
+9=4
+10=5
+11=1
+12=2
+13=3
+14=4
+15=5
+[LIFTPLAN]
+1=1,2,4
+2=1,2,3
+3=2,3,5
+4=3,4,5
+5=1,4,5
+6=1,2,4
+7=1,2,3
+8=2,3,5
+9=3,4,5
+10=1,4,5
+11=1,2,4
+12=1,2,3
+13=2,3,5
+14=3,4,5
+15=1,4,5

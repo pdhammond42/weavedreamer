@@ -1,5 +1,3 @@
-* Support reading WIF files
-
 * Support for writing WIF
 
 * Allow starting with an existing sample pattern instead of a blank
@@ -15,4 +13,18 @@
   a warp thread is on top of several weft threads, it should appear as
   a single stretch of thread.  Currently it looks like the pattern is
   on graph paper; the grid lines are always there.
+
+* Undo
+
+* Click and drag to effectively click over multiple cells.
+
+* Labels on the controls. I had no idea what the palette was.
+
+* Zoom the display
+
+* Scroll wheel should move faster
+
+* Look and feel is ancient.
+
+
 
