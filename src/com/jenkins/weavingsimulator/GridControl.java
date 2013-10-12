@@ -27,8 +27,13 @@ package com.jenkins.weavingsimulator;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
 import javax.swing.AbstractCellEditor;
 import javax.swing.JButton;
@@ -57,7 +62,7 @@ public class GridControl extends JTable {
         super(model);
         init();
     }
-    
+        
     private void init() {
         setDefaultRenderer(Color.class, new ColorRenderer());
         
@@ -66,6 +71,33 @@ public class GridControl extends JTable {
         
         setRowHeight(squareWidth);
         setGridColor(Color.GRAY);
+        
+        addMouseMotionListener (new MouseMotionListener() {
+			public void mouseDragged(MouseEvent arg0) {
+				doDrag (arg0.getPoint());
+			}
+			public void mouseMoved(MouseEvent arg0) {
+			}
+			});
+        addMouseListener (new MouseListener() {
+
+			public void mouseClicked(MouseEvent e) {
+			}
+
+			public void mouseEntered(MouseEvent e) {
+			}
+
+			public void mouseExited(MouseEvent e) {
+			}
+
+			public void mousePressed(MouseEvent e) {
+			}
+
+			public void mouseReleased(MouseEvent e) {
+				endDrag();
+			}
+        
+        });
     }
     
     /** Getter for property squareWidth.
@@ -128,6 +160,42 @@ public class GridControl extends JTable {
                 }
             }
         }
+    }
+    
+    Point dragStart = null;
+    Point dragEnd = null;
+    
+    public void paintComponent (Graphics g) {
+    	super.paintComponent(g);
+    	if (dragStart != null && dragEnd != null) {
+    		g.setColor(Color.black);
+    		g.drawLine(dragStart.x, dragStart.y, dragEnd.x, dragEnd.y);
+    	}
+    }
+    public void doDrag (Point point) {
+    	if (dragStart == null) {
+			dragStart = point;
+    	} else {
+    		dragEnd = point;
+    		repaint();
+    	}
+    }
+    
+    public void endDrag () {
+    	if (dragStart != null && dragEnd != null) {
+    		final int cellX0 = dragStart.x / squareWidth;
+    		final int cellY0 = dragStart.y / squareWidth;
+    		final int cellX1 = dragEnd.x / squareWidth;
+    		final int cellY1 = dragEnd.y / squareWidth;
+    		final int diffX = cellX1 - cellX0;
+    		final int diffY = cellY1 - cellY0;
+    		final int steps = Math.max(Math.abs(diffX), Math.abs(diffY))+1;
+    		for (int i = 0; i < steps; i++) {
+    			setValueAt (true, cellY0 + i*diffY/(steps-1), cellX0+i*diffX/(steps-1));
+    		}	
+    	}
+    	dragStart = null;
+    	dragEnd = null;
     }
     
     private static class ColorRenderer implements javax.swing.table.TableCellRenderer 
@@ -199,6 +267,6 @@ public class GridControl extends JTable {
                 editorComponent.setBackground(Color.WHITE);
             return editorComponent;
         }
-        
+       
     }
 }

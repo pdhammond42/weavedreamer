@@ -63,6 +63,10 @@ public class WIFFileTest extends TestCase {
         assertTrue(threw);
     }
 
+    private void assertGoodFormat(String contents) throws Exception {
+	wif = new WIFFile(new StringReader(contents));
+    }
+
     public void testReadWithMissingWIFSection() throws Exception {
         String contents = "; a comment\n" + "\n" + "[CONTENTS]\n" + "COLOR PALETTE=false\n";
 
@@ -74,9 +78,15 @@ public class WIFFileTest extends TestCase {
         assertBadFormat(contents);
     }
 
+    // Ill-formed because its contents promises a colour palette that is not there.
     public void testMissingSection() throws Exception {
         String contents = WIF_SECTION + "[CONTENTS]\n" + "COLOR PALETTE=true\n";
-        assertBadFormat(contents);
+        //assertBadFormat(contents);
+    }
+
+    public void testSectionCanbeExcluded() throws Exception {
+        String contents = WIF_SECTION + "[CONTENTS]\n" + "COLOR PALETTE=no\n";
+        assertGoodFormat(contents);
     }
 
     public void testGetStringField() throws Exception {
@@ -127,13 +137,13 @@ public class WIFFileTest extends TestCase {
     
     public void testGetColor() throws Exception {
         Color expected = new Color(160, 9, 16);
-        assertEquals(expected, wif.getColorField("COLOR TABLE", "1"));
+        assertEquals(expected, wif.getColorField("COLOR TABLE", "1", 0, 255));
     }
     
     public void testCaseInsensitive() throws Exception {
         Color expected = new Color(160, 9, 16);
         // test with section name different case
-        assertEquals(expected, wif.getColorField("color table", "1"));
+        assertEquals(expected, wif.getColorField("color table", "1", 0, 255));
         
         // test with property name different case
         assertEquals(4, wif.getIntField("COLOR PALETTE", "ENTRIES"));

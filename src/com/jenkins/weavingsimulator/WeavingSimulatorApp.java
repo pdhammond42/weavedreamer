@@ -29,14 +29,19 @@ import com.jenkins.weavingsimulator.datatypes.Palette;
 import com.jenkins.weavingsimulator.datatypes.WIFIO;
 import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
 import com.jenkins.weavingsimulator.models.EditingSession;
+
+import java.awt.Dialog;
+import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.beans.XMLEncoder;
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -44,6 +49,8 @@ import javax.swing.JFileChooser;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 import javax.xml.transform.Result;
@@ -53,6 +60,7 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
+import org.apache.commons.*;
 
 /**
  *
@@ -194,9 +202,15 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
         helpMenu.setMnemonic('h');
         helpMenu.setText("Help");
         contentsMenuItem.setText("Contents");
-        helpMenu.add(contentsMenuItem);
+        // No point promising content we can;t deliver.
+        //helpMenu.add(contentsMenuItem);
 
         aboutMenuItem.setText("About");
+        aboutMenuItem.addActionListener(new java.awt.event.ActionListener () {
+        	public void actionPerformed(java.awt.event.ActionEvent evt) {
+        		helpAboutMenuItemActionPerformed();
+        	}
+        });
         helpMenu.add(aboutMenuItem);
 
         menuBar.add(helpMenu);
@@ -216,6 +230,27 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
             return;
         curFrame.displayTiledView();
     }//GEN-LAST:event_tiledViewMenuItemActionPerformed
+    
+    private void helpAboutMenuItemActionPerformed () {
+    	try {
+    		BufferedReader reader = new BufferedReader(new InputStreamReader (this.getClass().getResourceAsStream("about.txt")));
+    		StringBuilder about = new StringBuilder();
+    		String line = reader.readLine();
+    		while (line != null) {
+    			about.append(line);
+    			about.append("\n");
+    			line = reader.readLine();
+    		}
+			JOptionPane.showMessageDialog(this, about.toString(), "About", JOptionPane.INFORMATION_MESSAGE);
+		} catch (HeadlessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+    	catch (IOException e) {
+    		// TODO Auto-generated catch block
+    		e.printStackTrace();
+    	}     
+    };
     
     private void propertiesMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_propertiesMenuItemActionPerformed
         EditingSession session = getCurrentSession();
@@ -296,7 +331,19 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        WeavingSimulatorApp app = new WeavingSimulatorApp();
+	try {
+	    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+	} 
+	catch (UnsupportedLookAndFeelException e) {
+	}
+	catch (ClassNotFoundException e) {
+	}
+	catch (InstantiationException e) {
+	}
+	catch (IllegalAccessException e) {
+	}
+
+	WeavingSimulatorApp app = new WeavingSimulatorApp();
         if (args.length > 0) {
             File draftFile = new File(args[0]);
             try {
