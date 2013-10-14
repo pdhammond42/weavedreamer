@@ -33,6 +33,7 @@ import com.jenkins.weavingsimulator.models.EditingSession;
 import java.awt.Dialog;
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.beans.XMLEncoder;
 import java.io.BufferedReader;
@@ -45,6 +46,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.prefs.*;
 import javax.swing.JFileChooser;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
@@ -73,7 +75,14 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
     /** Creates new form WeavingSimulatorApp */
     public WeavingSimulatorApp() {
         initComponents();
-        fileChooser = new JFileChooser();
+        initManualComponents();
+        Preferences prefs = Preferences.userNodeForPackage(this.getClass());
+        setBounds(prefs.getInt("x", getX()),
+        		prefs.getInt("y", getY()),
+        		prefs.getInt("w", getWidth()),
+        		prefs.getInt("h", getHeight()));
+        
+        fileChooser = new JFileChooser(prefs.get("last_browse", ""));
         fileChooser.addChoosableFileFilter(new DraftFileFilter());
     }
     
@@ -223,7 +232,58 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
         setLocation((screenSize.width-400)/2,(screenSize.height-400)/2);
     }//GEN-END:initComponents
     
-    private void tiledViewMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tiledViewMenuItemActionPerformed
+    private void initManualComponents() {
+    	// Since I dont' have a GUI disigner at the moment, but
+    	// might get one later, keep manually added controls separate.
+    	
+    	javax.swing.JMenu viewMenu = new javax.swing.JMenu();
+    	viewMenu.setMnemonic('v');
+        viewMenu.setText("View");
+
+        javax.swing.JMenuItem zoomInMenuItem = new javax.swing.JMenuItem();
+        zoomInMenuItem.setText("Zoom In");
+        zoomInMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                zoomInItemActionPerformed(evt);
+            }
+        });
+        viewMenu.add(zoomInMenuItem);
+        
+        javax.swing.JMenuItem zoomOutMenuItem = new javax.swing.JMenuItem();
+        zoomOutMenuItem.setText("Zoom Out");
+        zoomOutMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                zoomOutItemActionPerformed(evt);
+            }
+        });
+        viewMenu.add(zoomOutMenuItem);
+
+        //There appears to be  no way to insert into a menu bar.
+        menuBar = new javax.swing.JMenuBar();
+        menuBar.add(fileMenu);
+        menuBar.add(editMenu);
+        menuBar.add(viewMenu);
+        menuBar.add(helpMenu);
+        setJMenuBar(menuBar);
+    }
+    
+    protected void zoomInItemActionPerformed(ActionEvent evt) {
+        WeavingDraftWindow curFrame =
+                (WeavingDraftWindow)mainDesktop.getSelectedFrame();
+        if (curFrame == null)
+            return;
+        curFrame.zoomIn();
+	}
+
+	protected void zoomOutItemActionPerformed(ActionEvent evt) {
+        WeavingDraftWindow curFrame =
+                (WeavingDraftWindow)mainDesktop.getSelectedFrame();
+        if (curFrame == null)
+            return;
+        curFrame.zoomOut();
+	}
+
+	private void tiledViewMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tiledViewMenuItemActionPerformed
         WeavingDraftWindow curFrame =
                 (WeavingDraftWindow)mainDesktop.getSelectedFrame();
         if (curFrame == null)
@@ -289,11 +349,11 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
     private void newMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newMenuItemActionPerformed
         WeavingDraft draft = new WeavingDraft("New Draft");
         WeavingDraftPropertiesDialog dlg =
-        new WeavingDraftPropertiesDialog(this, true);
+        		new WeavingDraftPropertiesDialog(this, true);
         
         if (!dlg.editProperties(draft))
             return;
-        
+        dlg.saveDefaults();
         openWeavingDraftWindow(draft, null);
     }//GEN-LAST:event_newMenuItemActionPerformed
     
@@ -304,6 +364,14 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
     
     /** Exit the Application */
     private void exitForm(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_exitForm
+    	Preferences prefs = Preferences.userNodeForPackage(this.getClass());
+    	if (fileChooser.getSelectedFile() != null && fileChooser.getSelectedFile().getParent() != null) {  
+    		prefs.put("last_browse", fileChooser.getSelectedFile().getParent());
+    	}
+    	prefs.putInt("x", getX());
+    	prefs.putInt("y", getY());
+    	prefs.putInt("w", getWidth());
+    	prefs.putInt("h", getHeight());
         closeAllFrames();
         System.exit(0);
     }//GEN-LAST:event_exitForm

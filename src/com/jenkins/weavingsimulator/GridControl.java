@@ -41,6 +41,8 @@ import javax.swing.JComponent;
 import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
 
+import com.jenkins.weavingsimulator.GridControl.EditedValueProvider;
+
 
 /** GridControl is a specialized JTable in which all cells are square.  Instead
  * of setting setting the row height and column width, you set the squareWidth 
@@ -67,7 +69,16 @@ public class GridControl extends JTable {
         setDefaultRenderer(Color.class, new ColorRenderer());
         
         setDefaultRenderer(Boolean.class, new BooleanRenderer());
-        setDefaultEditor(Boolean.class, new BooleanEditor());
+        setDefaultEditor(Boolean.class, null);
+        
+        // Default is to do Boolean things. Caller can override this.
+        editedValueProvider = new EditedValueProvider () {
+        	public Object getValue() {
+        		return true;
+        	}
+        };
+        
+        setCellSelectionEnabled(false);
         
         setRowHeight(squareWidth);
         setGridColor(Color.GRAY);
@@ -82,6 +93,10 @@ public class GridControl extends JTable {
         addMouseListener (new MouseListener() {
 
 			public void mouseClicked(MouseEvent e) {
+				if (editedValueProvider != null) {
+					setValueAt (editedValueProvider.getValue(), e.getPoint().y / squareWidth, 
+							e.getPoint().x / squareWidth);
+				}
 			}
 
 			public void mouseEntered(MouseEvent e) {
@@ -113,13 +128,20 @@ public class GridControl extends JTable {
      *
      */
     public void setSquareWidth(int squareWidth) {
-        this.squareWidth = squareWidth;
         for (int i = 0; i < getModel().getColumnCount(); i++) {
             javax.swing.table.TableColumn col = getColumnModel().getColumn(i);
-            col.setMinWidth(squareWidth);
-            col.setMaxWidth(squareWidth);
+            // Order is important here...
+            if (squareWidth < this.squareWidth) {
+            	col.setMinWidth(squareWidth);
+            	col.setMaxWidth(squareWidth);
+            } else {
+                col.setMaxWidth(squareWidth);
+                col.setMinWidth(squareWidth);
+            }
+            col.setWidth(squareWidth);
         }
         setRowHeight(squareWidth);
+        this.squareWidth = squareWidth;
     }
     
     /** Invoked when a column is added to the table column model.
@@ -134,36 +156,10 @@ public class GridControl extends JTable {
         column.setMinWidth(squareWidth);
         column.setMaxWidth(squareWidth);
     }    
-    
-    /** Invoked when editing is finished. The changes are saved and the
-     * editor is discarded.  This implementation is present so that if 
-     * a block of cells are selected, then when editing finishes, all the 
-     * selected cells get set to edit value instead of just the edited cell.
-     *
-     * @param  e  the event received
-     * @see javax.swing.event.CellEditorListener
-     *
-     */
-    public void editingStopped(javax.swing.event.ChangeEvent e) {
-        javax.swing.table.TableCellEditor editor = getCellEditor();
-        Object value = null;
-        if (editor != null)
-            value = editor.getCellEditorValue();
         
-        super.editingStopped(e);
-        
-        if (getCellSelectionEnabled()) {
-            for (int row = 0; row < getRowCount(); row++) {
-                for (int col = 0; col < getColumnCount(); col++) {
-                    if (isCellSelected(row, col))
-                        setValueAt(value, row, col);
-                }
-            }
-        }
-    }
-    
     Point dragStart = null;
     Point dragEnd = null;
+	private EditedValueProvider editedValueProvider;
     
     public void paintComponent (Graphics g) {
     	super.paintComponent(g);
@@ -190,12 +186,27 @@ public class GridControl extends JTable {
     		final int diffX = cellX1 - cellX0;
     		final int diffY = cellY1 - cellY0;
     		final int steps = Math.max(Math.abs(diffX), Math.abs(diffY))+1;
-    		for (int i = 0; i < steps; i++) {
-    			setValueAt (true, cellY0 + i*diffY/(steps-1), cellX0+i*diffX/(steps-1));
-    		}	
+    		if (editedValueProvider != null) {
+    			setValueAt (editedValueProvider.getValue(), cellY0, cellX0);
+    			for (int i = 1; i < steps; i++) {
+    				setValueAt (editedValueProvider.getValue(), cellY0 + i*diffY/(steps-1), cellX0+i*diffX/(steps-1));
+    			}	
+    		}
     	}
     	dragStart = null;
     	dragEnd = null;
+    }
+    
+    public interface EditedValueProvider {
+    	Object getValue();
+    }
+    
+    /** Provide an object that will return the new value of edited cells.
+     * Provide a null reference to disable editing.
+     * @param p the provider of values.
+     */
+    public void setEditValueProvider (EditedValueProvider p) {
+    	editedValueProvider = p;
     }
     
     private static class ColorRenderer implements javax.swing.table.TableCellRenderer 
@@ -233,40 +244,5 @@ public class GridControl extends JTable {
                 label.setBackground(Color.WHITE);
             return label;
         }        
-    }
-    
-    private static class BooleanEditor 
-            extends AbstractCellEditor
-            implements TableCellEditor
-    {
-        private JComponent editorComponent;
-        private boolean currentValue;
-        
-        BooleanEditor() {
-            JButton b = new JButton("");
-            editorComponent = b;
-            b.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    currentValue = !currentValue;
-                    fireEditingStopped();
-                }
-            });
-        }
-        
-        public Object getCellEditorValue() {
-            return currentValue;
-        }
-
-        public Component getTableCellEditorComponent(
-                JTable table, Object value, boolean isSelected, int row, int column) 
-        {
-            currentValue = (Boolean)value;
-            if (currentValue)
-                editorComponent.setBackground(Color.BLACK);
-            else
-                editorComponent.setBackground(Color.WHITE);
-            return editorComponent;
-        }
-       
     }
 }

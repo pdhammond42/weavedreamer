@@ -28,6 +28,10 @@ package com.jenkins.weavingsimulator.datatypes;
 import java.awt.Color;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -38,7 +42,7 @@ import java.util.List;
  *
  * @author ajenkins
  */
-public class Palette {
+public class Palette implements Serializable {
     /**
      * Default color for palette entries, if a color hasn't been set
      */
@@ -185,6 +189,14 @@ public class Palette {
         selection = i;
         propertyChangeSupport.firePropertyChange("selection", 
                 oldSelection, selection);
+    }
+    
+    public void writeObject(ObjectOutputStream os) throws IOException {
+    	os.writeObject(colors);
+    }
+    
+    public void readObject (ObjectInputStream os) throws IOException, ClassNotFoundException {
+    	colors = (List<Color>)(os.readObject());
     }
 }
 
