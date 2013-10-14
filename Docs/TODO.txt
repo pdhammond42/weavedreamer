@@ -1,11 +1,5 @@
 * Support for writing WIF
 
-* Allow starting with an existing sample pattern instead of a blank
-  pattern.  Once I have WIF read support, this can be done by
-  including public domain patterns with the program which can be
-  opened as starting patterns.  See here for an online archive of WIF files:
-  http://www.handweaving.net/Home.aspx
-
 * Make it easy to set the color of multiple rows or columns at once.
 
 * When displaying patterns, have the option of not displaying grid
@@ -16,15 +10,7 @@
 
 * Undo
 
-* Click and drag to effectively click over multiple cells.
-
 * Labels on the controls. I had no idea what the palette was.
 
-* Zoom the display
-
-* Scroll wheel should move faster
-
-* Look and feel is ancient.
-
-
+* Palette editing, save & load.
 

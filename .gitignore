@@ -2,3 +2,7 @@ freeweave*.zip
 TEST*
 *#
 *~
+bin
+build
+doc
+dist

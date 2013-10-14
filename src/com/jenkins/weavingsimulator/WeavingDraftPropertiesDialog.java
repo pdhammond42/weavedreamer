@@ -26,6 +26,7 @@
 package com.jenkins.weavingsimulator;
 
 import java.text.ParseException;
+import java.util.prefs.Preferences;
 
 /** A Dialog to edit the properties of a WeavingDraft.  To use this class,
  * create an instance, and then call editProperties(weavingDraft).
@@ -210,16 +211,25 @@ public class WeavingDraftPropertiesDialog extends javax.swing.JDialog {
      */    
     public boolean editProperties(com.jenkins.weavingsimulator.datatypes.WeavingDraft draft) {
         this.draft = draft;
-        numWarpEndsField.setValue(new Integer(draft.getEnds().size()));
-        numWeftPicksField.setValue(new Integer(draft.getPicks().size()));
-        numHarnessesField.setValue(new Integer(draft.getNumHarnesses()));
-        numTreadlesField.setValue(new Integer(draft.getTreadles().size()));
+        numWarpEndsField.setValue(value_or_default(draft.getEnds().size(), "ends", 20));
+        numWeftPicksField.setValue(value_or_default(draft.getPicks().size(), "picks", 20));
+        numHarnessesField.setValue(value_or_default(draft.getNumHarnesses(), "harnesses", 4));
+        numTreadlesField.setValue(value_or_default(draft.getTreadles().size(), "treadles", 6));
         editFinished = false;
         
         setVisible(true);
         return editFinished;
     }
     
+    public void saveDefaults() {
+    	if (draft != null) {
+    		Preferences prefs = Preferences.userNodeForPackage(this.getClass());
+    		prefs.putInt("harnesses", ((Number)numHarnessesField.getValue()).intValue());
+    		prefs.putInt("treadles", ((Number)numTreadlesField.getValue()).intValue());
+    		prefs.putInt("ends", ((Number)numWarpEndsField.getValue()).intValue());
+    		prefs.putInt("picks", ((Number)numWeftPicksField.getValue()).intValue());
+    	}
+    }
     /**
      * @param args the command line arguments
      */
@@ -236,6 +246,13 @@ public class WeavingDraftPropertiesDialog extends javax.swing.JDialog {
             }
         });
         dlg.setVisible(true);
+    }
+    
+    private Integer value_or_default (int value, String default_key, int deflt) {
+    	// Returns  anew Integer with value, unless value is 0, then returns
+    	// the preferences value for default_key if available, or deflt.
+    	if (value != 0) return new Integer(value);
+    	return new Integer (Preferences.userNodeForPackage(this.getClass()).getInt(default_key, deflt));
     }
     
     // formatter for JFormattedTextField which only allows integers >= 0.

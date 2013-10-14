@@ -54,7 +54,6 @@ public class PalettePanel extends JPanel {
     private JDialog colorChooserDialog;
     private JColorChooser colorChooser;
     private JButton changeColorBtn;
-    private JButton resetBtn;
     
     /** Creates a new instance of PalettePanel */
     public PalettePanel() {
@@ -95,30 +94,20 @@ public class PalettePanel extends JPanel {
         });
         changeColorBtn.setEnabled(false);
         
-        resetBtn = new JButton("Reset");
-        resetBtn.setToolTipText(
-                "Reset palette to the colors currently used in pattern.");
-        resetBtn.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                session.resetPalette();
-            }
-        });
-        resetBtn.setEnabled(false);
-        
         Box buttons = Box.createVerticalBox();
         buttons.add(Box.createVerticalGlue());
         buttons.add(changeColorBtn);
         buttons.add(Box.createVerticalStrut(10));
-        buttons.add(resetBtn);
         buttons.add(Box.createVerticalGlue());
         
         add(buttons, BorderLayout.WEST);
         
         paletteGrid = new GridControl();
         paletteGrid.setSquareWidth(20);
-        paletteGrid.setDefaultEditor(Color.class, null);
+        paletteGrid.setEditValueProvider (null);
         paletteGrid.getSelectionModel().addListSelectionListener(
                 new PaletteSelectionListener());
+        paletteGrid.setCellSelectionEnabled(true);
         paletteGrid.setEnabled(false);
         
         add(paletteGrid, BorderLayout.CENTER);
@@ -132,6 +121,7 @@ public class PalettePanel extends JPanel {
             // getSelectedRow can return -1, but that's ok because -1 means the
             // same thing to setSelection -- nothing is selected.
             session.getPalette().setSelection(paletteGrid.getSelectedRow());
+            changeColorBtn.setEnabled (paletteGrid.getSelectedRow() != -1);
         }
         
     }
@@ -152,9 +142,6 @@ public class PalettePanel extends JPanel {
             }
         });
         
-        
-        changeColorBtn.setEnabled(true);
-        resetBtn.setEnabled(true);
         paletteGrid.setEnabled(true);
     }
     
