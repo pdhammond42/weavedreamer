@@ -366,4 +366,23 @@ public class WeavingDraftTest extends TestCase {
         // case 7: warp connected to harness which is not lifted
         assertEquals(Color.BLUE, draft.getVisibleColor(1, 2));
     }
+    
+    public void testIsWarpVisible() {
+    	// Simplest weave: 2 harnesses, 2 ends, 2 picks.
+    	// Pick 0 uses treadle 0 wjhich lifts harness 0,
+    	// so end 0 is visible and end 1 is hidden.
+    	draft.setNumHarnesses(2);
+        draft.getEnds().add(new WarpEnd(Color.WHITE, 0));
+        draft.getEnds().add(new WarpEnd(Color.RED, 1));
+        draft.getTreadles().add(new Treadle(Arrays.asList(0)));
+        draft.getTreadles().add(new Treadle(Arrays.asList(1)));
+        draft.getPicks().add(new WeftPick(Color.PINK, 0));
+        draft.getPicks().add(new WeftPick(Color.BLUE, 1));
+        
+        assertTrue (draft.isWarpVisible(0,0));
+        assertFalse (draft.isWarpVisible(1,0));
+        
+        assertFalse (draft.isWarpVisible(0,1));
+        assertTrue (draft.isWarpVisible(1,1));
+    }
 }

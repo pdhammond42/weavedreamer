@@ -10,7 +10,7 @@
 
 * Undo
 
-* Labels on the controls. I had no idea what the palette was.
-
 * Palette editing, save & load.
+
+* Stop overwriting WIF with or own format.
 

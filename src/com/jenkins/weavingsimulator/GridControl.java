@@ -42,6 +42,7 @@ import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
 
 import com.jenkins.weavingsimulator.GridControl.EditedValueProvider;
+import com.jenkins.weavingsimulator.models.WeavingPatternCellModel;
 
 
 /** GridControl is a specialized JTable in which all cells are square.  Instead
@@ -67,6 +68,7 @@ public class GridControl extends JTable {
         
     private void init() {
         setDefaultRenderer(Color.class, new ColorRenderer());
+        setDefaultRenderer(WeavingPatternCellModel.class, new DraftRenderer());
         
         setDefaultRenderer(Boolean.class, new BooleanRenderer());
         setDefaultEditor(Boolean.class, null);
@@ -224,6 +226,28 @@ public class GridControl extends JTable {
                 label.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
             else
                 label.setBorder(null);
+            return label;
+        }        
+    }
+    
+    private static class DraftRenderer implements javax.swing.table.TableCellRenderer 
+    {
+        javax.swing.JLabel label = new javax.swing.JLabel();
+        
+        DraftRenderer() {
+            label.setOpaque(true);
+        }
+        public Component getTableCellRendererComponent(JTable table, Object value, 
+            boolean isSelected, boolean hasFocus, int row, int column) 
+        {
+        	WeavingPatternCellModel cell = (WeavingPatternCellModel)value;
+            label.setBackground(cell.color());
+            label.setBorder(javax.swing.BorderFactory.createMatteBorder(
+            		0, 
+            		0,	
+            		cell.nextRowBorder() ? 1 : 0,
+               		cell.nextColumnBorder() ? 1 : 0,
+            		Color.black));
             return label;
         }        
     }
