@@ -27,6 +27,7 @@ package com.jenkins.weavingsimulator;
 import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
 import com.jenkins.weavingsimulator.models.*;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
@@ -61,13 +62,14 @@ public class WeavingDraftWindow extends javax.swing.JInternalFrame {
 		WeavingDraft draft = new WeavingDraft("");
 		weavingPatternGrid.setModel(new WeavingPatternModel(draft));
 		weavingPatternGrid.setSquareWidth(squareWidth);
+		weavingPatternGrid.setIntercellSpacing(new Dimension(0,0));
 
 		threadingDraftGrid.setModel(new ThreadingDraftModel(draft));
 		threadingDraftGrid.setSquareWidth(squareWidth);
 
 		warpEndColorGrid.setModel(new WarpEndColorModel(draft));
 		warpEndColorGrid.setSquareWidth(squareWidth);
-		warpEndColorGrid.setEditValueProvider (new ColorEditProvider());
+		warpEndColorGrid.setEditValueProvider(new ColorEditProvider());
 
 		tieUpGrid.setModel(new TieUpModel(draft));
 		tieUpGrid.setSquareWidth(squareWidth);
@@ -77,21 +79,20 @@ public class WeavingDraftWindow extends javax.swing.JInternalFrame {
 
 		pickColorGrid.setModel(new StepColorModel(draft));
 		pickColorGrid.setSquareWidth(squareWidth);
-		pickColorGrid.setEditValueProvider (new ColorEditProvider());
+		pickColorGrid.setEditValueProvider(new ColorEditProvider());
 	}
 
-	private class ColorEditProvider implements  GridControl.EditedValueProvider {	
+	private class ColorEditProvider implements GridControl.EditedValueProvider {
 		public Object getValue() {
 			int selection = session.getPalette().getSelection();
 			if (selection != -1) {
 				return session.getPalette().getColor(selection);
-			}				
-			else {
+			} else {
 				return null;
 			}
-		}		
+		}
 	};
-	
+
 	/**
 	 * This method is called from within the constructor to initialize the form.
 	 * WARNING: Do NOT modify this code. The content of this method is always

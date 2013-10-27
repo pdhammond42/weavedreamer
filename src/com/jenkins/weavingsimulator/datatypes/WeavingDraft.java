@@ -317,21 +317,37 @@ public class WeavingDraft {
     public Color getVisibleColor(int warpThread, int weftThread) {        
         WarpEnd end = getEnds().get(warpThread);
         WeftPick pick = getPicks().get(weftThread);
+
+        return isWarpVisible(warpThread, weftThread) ? 
+        		end.getColor() : pick.getColor();
+    }
+    
+    /**
+     * Returns true if the warp is visible at the given end, pick position, or
+     * false if the weft is visible.
+     * @param warpThread number of the warp thread
+     * @param weftThread number of the weft thread
+     * @return true if the warp is visible
+     */
+    public boolean isWarpVisible (int warpThread, int weftThread) {
+        WarpEnd end = getEnds().get(warpThread);
+        WeftPick pick = getPicks().get(weftThread);
         
         if (end.getHarnessId() == -1) {
             if (pick.getTreadleId() == -1)
-                return end.getColor();
+                return true;
             else
-                return pick.getColor();
+                return false;
         } else if (pick.getTreadleId() == -1)
-            return end.getColor();
+            return true;
         else {
             Treadle treadle = getTreadles().get(pick.getTreadleId());
             if (treadle.contains(end.getHarnessId()))
-                return end.getColor();
+                return true;
             else
-                return pick.getColor();
+                return false;
         }
+    	
     }
     
     /** validates that newStep is in the correct range.
