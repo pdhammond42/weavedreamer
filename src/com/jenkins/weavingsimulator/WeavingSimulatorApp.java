@@ -84,6 +84,7 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
         
         fileChooser = new JFileChooser(prefs.get("last_browse", ""));
         fileChooser.addChoosableFileFilter(new DraftFileFilter());
+        wifFilter = new WifFileFilter();
     }
     
     /** This method is called from within the constructor to
@@ -233,7 +234,7 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
     }//GEN-END:initComponents
     
     private void initManualComponents() {
-    	// Since I dont' have a GUI disigner at the moment, but
+    	// Since I don't have a GUI designer at the moment, but
     	// might get one later, keep manually added controls separate.
     	
     	javax.swing.JMenu viewMenu = new javax.swing.JMenu();
@@ -450,9 +451,14 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
     
     private void saveAsWeavingDraft(EditingSession session) {
         WeavingDraft draft = session.getDraft();
+    	fileChooser.removeChoosableFileFilter(wifFilter);
+    	fileChooser.setSelectedFile(new File(""));
         int res = fileChooser.showSaveDialog(this);
         if (res == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
+        	if (!file.getName().endsWith(DRAFT_EXTENSION)) {
+        		file = new File(file.getPath() + DRAFT_EXTENSION);
+        	}
             try {
                 OutputStream outs = new java.io.FileOutputStream(file);
                 writeWeavingDraft(draft, outs);
@@ -467,6 +473,7 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
     
     private void openWeavingDraft(File file) throws IOException {
         if (file == null) {
+        	fileChooser.addChoosableFileFilter(wifFilter);
             int res = fileChooser.showOpenDialog(this);
             if (res == JFileChooser.APPROVE_OPTION)
                 file = fileChooser.getSelectedFile();
@@ -500,7 +507,10 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
         WeavingDraftWindow win = new WeavingDraftWindow();
         EditingSession session = new EditingSession();
         session.setDraft(draft);
-        session.setFile(file);
+        // Until we can save a WIF, don't consider a draft loaded from WIF to have
+        // a file for saving.
+        if (file != null && ! (file.getName().toLowerCase().endsWith(WIF_EXTENSION))) 
+        	session.setFile(file);
         session.setDraftModified(false);
         session.setPalette(new Palette(10));
         session.resetPalette();
@@ -575,8 +585,7 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
          */
         public boolean accept(File f) {
             String name = f.getName().toLowerCase();
-            return f.isDirectory() || name.endsWith(DRAFT_EXTENSION) 
-                    || name.endsWith(WIF_EXTENSION);
+            return f.isDirectory() || name.endsWith(DRAFT_EXTENSION);
         }
         
         /** The description of this filter. For example: "JPG and GIF Images"
@@ -585,6 +594,25 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
          */
         public String getDescription() {
             return "Weaving Draft Files";
+        }
+    }
+    
+    private class WifFileFilter extends javax.swing.filechooser.FileFilter {
+        
+        /** Whether the given file is accepted by this filter.
+         *
+         */
+        public boolean accept(File f) {
+            String name = f.getName().toLowerCase();
+            return f.isDirectory() || name.endsWith(WIF_EXTENSION);
+        }
+        
+        /** The description of this filter. For example: "JPG and GIF Images"
+         * @see FileView#getName
+         *
+         */
+        public String getDescription() {
+            return "Weaving Interchange Files";
         }
     }
     
@@ -606,6 +634,7 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
     private javax.swing.JMenuItem deleteMenuItem;
     // End of variables declaration//GEN-END:variables
     
+    private WifFileFilter wifFilter;
     private int newFileNum = 0;
     private JFileChooser fileChooser;
 }

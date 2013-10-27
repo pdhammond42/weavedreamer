@@ -29,19 +29,12 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Point;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
-import javax.swing.AbstractCellEditor;
-import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JTable;
-import javax.swing.table.TableCellEditor;
 
-import com.jenkins.weavingsimulator.GridControl.EditedValueProvider;
 import com.jenkins.weavingsimulator.models.WeavingPatternCellModel;
 
 

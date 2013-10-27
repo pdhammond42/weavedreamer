@@ -369,7 +369,7 @@ public class WeavingDraftTest extends TestCase {
     
     public void testIsWarpVisible() {
     	// Simplest weave: 2 harnesses, 2 ends, 2 picks.
-    	// Pick 0 uses treadle 0 wjhich lifts harness 0,
+    	// Pick 0 uses treadle 0 which lifts harness 0,
     	// so end 0 is visible and end 1 is hidden.
     	draft.setNumHarnesses(2);
         draft.getEnds().add(new WarpEnd(Color.WHITE, 0));
