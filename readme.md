@@ -20,6 +20,15 @@ Unpack the zip archive. Either
 - or right click the .jar file and select the option along the lines of 
 "Open with Java runtime".
 
+Changes in 0.2.1
+----------------
+- More robust WIF import.
+- Floats show as continuous in the draft. 
+- Consecutive cells can be selected by dragging. 
+- Palette can be chosen when creating a new draft. Currently there are only built-in palettes supported. 
+This is a beta release. To do:
+- Creating and saving custom palettes. 
+- Testing!
 
 Changes in 0.2
 --------------
