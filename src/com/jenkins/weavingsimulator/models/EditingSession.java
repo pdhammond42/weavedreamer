@@ -26,17 +26,10 @@
 package com.jenkins.weavingsimulator.models;
 
 import com.jenkins.weavingsimulator.datatypes.Palette;
-import com.jenkins.weavingsimulator.datatypes.WeftPick;
-import com.jenkins.weavingsimulator.datatypes.WarpEnd;
 import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
-import java.awt.Color;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.File;
-import java.util.ArrayList;
-
-import java.util.HashSet;
-import java.util.Set;
 
 
 /**
@@ -50,11 +43,6 @@ public class EditingSession {
     public static final String PALETTE_PROPERTY = "palette";
     
     private PropertyChangeSupport propertySupport;
-
-    /**
-     * Holds value of property palette.
-     */
-    private Palette palette;
 
     /**
      * Holds value of property draft.
@@ -100,7 +88,7 @@ public class EditingSession {
      */
     public Palette getPalette() {
 
-        return this.palette;
+        return this.draft.getPalette();
     }
 
     /**
@@ -109,8 +97,8 @@ public class EditingSession {
      */
     public void setPalette(Palette palette) {
 
-        Palette oldPalette = this.palette;
-        this.palette = palette;
+        Palette oldPalette = this.draft.getPalette();
+        this.draft.setPalette(palette);
         propertySupport.firePropertyChange (PALETTE_PROPERTY, oldPalette, palette);
     }
 
@@ -173,25 +161,5 @@ public class EditingSession {
         this.draftModified = draftModified;
         propertySupport.firePropertyChange (DRAFT_MODIFIED_PROPERTY, 
                 oldDraftModified, draftModified);
-    }
-
-    /**
-     * Resets the palette to contain only the colors that are currently being
-     * used in the WeavingDraft.
-     */
-    public void resetPalette() {
-        if (palette == null || draft == null)
-            return;
-        
-        Set<Color> colors = new HashSet<Color>();
-        for (WarpEnd end : draft.getEnds())
-            colors.add(end.getColor());
-        for (WeftPick pick : draft.getPicks())
-            colors.add(pick.getColor());
-        int oldSize = palette.getNumColors();
-        palette.setColors(new ArrayList<Color>(colors));
-        // want palette to stay at least the same size
-        if (palette.getNumColors() < oldSize)
-            palette.setNumColors(oldSize);
     }
 }

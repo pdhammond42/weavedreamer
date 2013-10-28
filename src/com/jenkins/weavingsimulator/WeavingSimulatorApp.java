@@ -30,7 +30,7 @@ import com.jenkins.weavingsimulator.datatypes.WIFIO;
 import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
 import com.jenkins.weavingsimulator.models.EditingSession;
 
-import java.awt.Dialog;
+import java.awt.Color;
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -44,6 +44,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.prefs.*;
@@ -62,7 +65,6 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
-import org.apache.commons.*;
 
 /**
  *
@@ -319,7 +321,7 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
             return;
         WeavingDraftPropertiesDialog dlg =
                 new WeavingDraftPropertiesDialog(this, true);
-        dlg.editProperties(session.getDraft());
+        dlg.editProperties(session.getDraft(), loadPalettes());
     }//GEN-LAST:event_propertiesMenuItemActionPerformed
     
     private void saveAsMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveAsMenuItemActionPerformed
@@ -352,9 +354,10 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
         WeavingDraftPropertiesDialog dlg =
         		new WeavingDraftPropertiesDialog(this, true);
         
-        if (!dlg.editProperties(draft))
+        if (!dlg.editProperties(draft, loadPalettes()))
             return;
         dlg.saveDefaults();
+        //getCurrentSession().setPalette(dlg.getSelectedPalette());
         openWeavingDraftWindow(draft, null);
     }//GEN-LAST:event_newMenuItemActionPerformed
     
@@ -394,6 +397,34 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
             try { wins[i].setClosed(true); }
             catch (java.beans.PropertyVetoException e) {}
         }
+    }
+    
+    private List<Palette> loadPalettes() {
+    	// First cut, some hard-coded palettes.
+		List<Palette> palettes = new ArrayList<Palette>();
+		palettes.add(new Palette(Arrays.asList(
+				Color.black, Color.darkGray, Color.lightGray, Color.white), 
+				"Monochrome"));
+		palettes.add(new Palette(Arrays.asList(
+				new Color(78, 146, 88), new Color( 48, 103, 84), new Color(108, 196, 23), new Color(204, 251, 93), 
+				new Color( 0, 128, 128), new Color(237, 218, 116), new Color(178, 194, 72), new Color(120, 199, 199)
+				), "Spring"));
+		palettes.add(new Palette(Arrays.asList(
+				new Color(255, 166, 47), new Color(197, 137, 23), new Color(248, 128, 23), new Color(192, 64, 0), 
+				new Color(243, 229, 171), new Color(255, 243, 128), new Color(248, 114, 23), new Color(153, 0, 18)
+				), "Summer"));
+		palettes.add(new Palette(Arrays.asList(
+				new Color(228,228,149), new Color(204,128,51), new Color(205, 127, 50), new Color(175, 120, 23),
+				new Color(127, 70, 44), new Color(128, 101, 23), new Color(73, 61, 38), new Color(193, 154, 107)
+				), "Autumn"));
+		palettes.add(new Palette(Arrays.asList(
+				new Color(0, 255, 255), new Color( 62, 169, 159), new Color(59, 185, 255), new Color(43, 96, 222 ), 
+				new Color( 43, 56, 86), new Color(109, 123, 141), new Color(102, 99, 98 ), new Color(94, 125, 126)
+				), "Winter"));
+		palettes.add(new Palette(Arrays.asList(
+				Color.white, Color.red, Color.black, Color.green, Color.yellow, Color.blue
+				), "80s"));
+		return palettes;
     }
     
     /**
@@ -512,8 +543,6 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
         if (file != null && ! (file.getName().toLowerCase().endsWith(WIF_EXTENSION))) 
         	session.setFile(file);
         session.setDraftModified(false);
-        session.setPalette(new Palette(10));
-        session.resetPalette();
         win.setSession(session);
         
         if (file == null)
@@ -574,8 +603,11 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
         dec.close();
         if (draft == null)
             throw new IOException("Failed to read Weaving Draft");
-        else
-            return draft;
+        if (draft.getPalette() == null) {
+        	// Read from older version before palette was persisted.
+        	draft.createPalette();
+        }
+        return draft;
     }
     
     private class DraftFileFilter extends javax.swing.filechooser.FileFilter {

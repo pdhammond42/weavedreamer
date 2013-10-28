@@ -27,8 +27,11 @@ package com.jenkins.weavingsimulator.datatypes;
 
 import java.awt.Color;
 import java.beans.PropertyChangeSupport;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -79,6 +82,8 @@ public class WeavingDraft {
     
     /** Holds value of property numHarnesses. */
     private int numHarnesses = 0;
+    
+    private Palette palette;
     
     /** Holds value of property doValidation.   If this property is false, then
      * certain validations in property set functions, that depend on the value
@@ -302,6 +307,23 @@ public class WeavingDraft {
                 oldNumHarnesses, numHarnesses);
     }
     
+    /**
+     * Sets the palette used by this draft. In the present design this is simply
+     * held and persisted by the draft; ends and picks still deal with actual colors
+     * which are not directly tied to this palette.  In future this might be changed
+     * to defien ends and picks in terms of palette index.
+     * @param palette
+     */
+    public void setPalette (Palette palette) {
+        Palette oldPalette = this.palette;
+        this.palette = palette; 
+        propertyChangeSupport.firePropertyChange("palette", oldPalette, palette);
+    }
+    
+    public Palette getPalette() {
+    	return this.palette;
+    }
+    
     /** Setter for property doValidation.
      * @param doValidation New value of property doValidation.
      *
@@ -346,8 +368,22 @@ public class WeavingDraft {
                 return true;
             else
                 return false;
-        }
-    	
+        }	
+    }
+    
+    /**
+     * Attempt to create a new palette using the colors currently in use.
+     * Intended for use after loading an old draft that does not have a palette.
+     */
+    public void createPalette() {
+    	Set<Color> colors = new HashSet<Color>();
+    	for (WarpEnd end : ends) {
+    		colors.add(end.getColor());
+    	}
+    	for (WeftPick pick : picks) {
+    		colors.add(pick.getColor());
+    	}
+    	palette = new Palette(new ArrayList<Color>(colors), "custom");
     }
     
     /** validates that newStep is in the correct range.

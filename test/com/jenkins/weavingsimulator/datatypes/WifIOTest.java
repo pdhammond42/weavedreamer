@@ -139,9 +139,10 @@ public class WifIOTest extends TestCase {
     			"2=1\n";
     	WIFIO io = new WIFIO();
     	WeavingDraft draft = io.readWeavingDraft(new StringReader(twill));
-    	assertEquals(2, draft.getPicks().size());
-    	assertEquals(Color.green, draft.getPicks().get(0).getColor());
-    	assertEquals(Color.red, draft.getEnds().get(0).getColor());
+    	assertThat(draft.getPicks().size(), is(2));
+    	assertThat(draft.getPicks().get(0).getColor(), is(Color.green));
+    	assertThat(draft.getEnds().get(0).getColor(), is(Color.red));
+    	assertThat(draft.getPalette().getColors(), contains (Color.red, Color.green));
     }
     
     public void testActualNumberOfThreadsTakesPriority () throws IOException {
@@ -286,8 +287,9 @@ public class WifIOTest extends TestCase {
     			"2=2\n";
     	WIFIO io = new WIFIO();
     	WeavingDraft draft = io.readWeavingDraft(new StringReader(twill));
-    	assertEquals(2, draft.getEnds().size());
-    	assertEquals(Color.red, draft.getEnds().get(0).getColor());
+    	assertThat(draft.getEnds().size(), is(2));
+    	assertThat(draft.getEnds().get(0).getColor(), is(Color.red));
+    	assertThat(draft.getPalette().getColors(), contains(Color.red, Color.green));
     }
     
     public void testColorPaletteButNoTableIsError () throws IOException {

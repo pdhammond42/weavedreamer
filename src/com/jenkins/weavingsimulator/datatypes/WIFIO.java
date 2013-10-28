@@ -33,6 +33,8 @@ public class WIFIO {
         	draft.setNumHarnesses(wif.getIntField("WEAVING", "Shafts"));
         
         List<Color> palette = readPalette(wif);
+        draft.setPalette(new Palette(palette, ""));
+        
         if (wif.hasField("CONTENTS", "WARP")) {
         	List<WarpEnd> ends = readWarp(wif, palette);
         	draft.setEnds(ends);
