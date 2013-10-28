@@ -24,21 +24,19 @@
 
 package com.jenkins.weavingsimulator;
 
-import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
-import com.jenkins.weavingsimulator.models.*;
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 
-import javax.swing.AbstractCellEditor;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JTable;
-import javax.swing.table.TableCellEditor;
+import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
+import com.jenkins.weavingsimulator.models.EditingSession;
+import com.jenkins.weavingsimulator.models.StepColorModel;
+import com.jenkins.weavingsimulator.models.ThreadingDraftModel;
+import com.jenkins.weavingsimulator.models.TieUpModel;
+import com.jenkins.weavingsimulator.models.TreadlingDraftModel;
+import com.jenkins.weavingsimulator.models.WarpEndColorModel;
+import com.jenkins.weavingsimulator.models.WeavingPatternModel;
 
 /**
  * 

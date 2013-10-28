@@ -53,7 +53,7 @@ public class PaletteModelTest extends TestCase {
 
     protected void setUp() throws java.lang.Exception {
         palette = new Palette(
-                Arrays.asList(Color.RED, Color.GREEN, Color.BLUE));
+                Arrays.asList(Color.RED, Color.GREEN, Color.BLUE), "");
         model = new PaletteModel(palette);
         listener = new TestTableModelListener();
         model.addTableModelListener(listener);

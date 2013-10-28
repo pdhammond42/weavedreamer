@@ -26,7 +26,11 @@
 package com.jenkins.weavingsimulator;
 
 import java.text.ParseException;
+import java.util.List;
+import java.util.Vector;
 import java.util.prefs.Preferences;
+
+import com.jenkins.weavingsimulator.datatypes.Palette;
 
 /** A Dialog to edit the properties of a WeavingDraft.  To use this class,
  * create an instance, and then call editProperties(weavingDraft).
@@ -64,6 +68,8 @@ public class WeavingDraftPropertiesDialog extends javax.swing.JDialog {
         javax.swing.JPanel jPanel1 = new javax.swing.JPanel();
         okButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
+        
+        palettes_combo = new javax.swing.JComboBox(palettes);
 
         setTitle("Weaving Draft Properties");
         setResizable(false);
@@ -126,6 +132,19 @@ public class WeavingDraftPropertiesDialog extends javax.swing.JDialog {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         getContentPane().add(numWeftPicksField, gridBagConstraints);
 
+        javax.swing.JLabel palette_label = new  javax.swing.JLabel("Palette: ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.RELATIVE;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        getContentPane().add(palette_label, gridBagConstraints);
+        
+        palettes_combo.setPrototypeDisplayValue("about this wide");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        getContentPane().add(palettes_combo, gridBagConstraints);
+        
+        
         okButton.setText("OK");
         okButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -143,7 +162,7 @@ public class WeavingDraftPropertiesDialog extends javax.swing.JDialog {
         jPanel1.add(cancelButton);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.RELATIVE;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(10, 0, 0, 0);
         getContentPane().add(jPanel1, gridBagConstraints);
@@ -188,6 +207,11 @@ public class WeavingDraftPropertiesDialog extends javax.swing.JDialog {
                 while (numTreadles < draft.getTreadles().size())
                     draft.getTreadles().remove(draft.getTreadles().size() - 1);
             }
+            
+    		Palette p = (Palette)palettes_combo.getSelectedItem();
+    		if (p != null) {
+    			draft.setPalette(p);
+    		}
         }
         
         editFinished = true;
@@ -209,8 +233,16 @@ public class WeavingDraftPropertiesDialog extends javax.swing.JDialog {
      * @return true if user pressed Ok, false if user pressed Cancel
      * or otherwise closed the dialog.
      */    
-    public boolean editProperties(com.jenkins.weavingsimulator.datatypes.WeavingDraft draft) {
+    public boolean editProperties(com.jenkins.weavingsimulator.datatypes.WeavingDraft draft,
+    		List<Palette> palettes) {
         this.draft = draft;
+        this.palettes.clear();
+        if (draft.getPalette() != null) {
+        	this.palettes.add(draft.getPalette());
+        }
+        this.palettes.addAll(palettes);
+        palettes_combo.setSelectedItem(this.palettes.get(0));
+
         numWarpEndsField.setValue(value_or_default(draft.getEnds().size(), "ends", 20));
         numWeftPicksField.setValue(value_or_default(draft.getPicks().size(), "picks", 20));
         numHarnessesField.setValue(value_or_default(draft.getNumHarnesses(), "harnesses", 4));
@@ -306,4 +338,6 @@ public class WeavingDraftPropertiesDialog extends javax.swing.JDialog {
     private boolean editFinished;
     // used by JFormattedTextFields.
     private NonNegativeIntFormatter formatter = new NonNegativeIntFormatter();
+    private Vector<Palette> palettes = new Vector<Palette>();
+    private javax.swing.JComboBox palettes_combo;
 }

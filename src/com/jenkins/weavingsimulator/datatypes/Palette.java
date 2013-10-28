@@ -50,6 +50,7 @@ public class Palette implements Serializable {
     
     private List<Color> colors;
     private int selection = -1; // index into colors
+    private String name;
     
     private PropertyChangeSupport propertyChangeSupport =
             new PropertyChangeSupport(this);
@@ -65,12 +66,17 @@ public class Palette implements Serializable {
             colors.add(DEFAULT_COLOR);
     }
     
+    public Palette() {
+    	colors = new ArrayList<Color>();
+    }
+    
     /**
      * Constructs a palette with the colors in <CODE>colors</CODE>.
      * @param colors The palette will be initialized with a copy of <CODE>colors</CODE>.
      */
-    public Palette(List<Color> colors) {
+    public Palette(List<Color> colors, String name) {
         this.colors = new ArrayList<Color>(colors);
+        this.name = name;
     }
     
     /**
@@ -195,8 +201,13 @@ public class Palette implements Serializable {
     	os.writeObject(colors);
     }
     
-    public void readObject (ObjectInputStream os) throws IOException, ClassNotFoundException {
+    @SuppressWarnings("unchecked")
+	public void readObject (ObjectInputStream os) throws IOException, ClassNotFoundException {
     	colors = (List<Color>)(os.readObject());
+    }
+    
+    public String toString() {
+    	return name;
     }
 }
 

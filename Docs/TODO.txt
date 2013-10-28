@@ -1,16 +1,7 @@
 * Support for writing WIF
 
-* Make it easy to set the color of multiple rows or columns at once.
-
-* When displaying patterns, have the option of not displaying grid
-  lines where the thread is supposed to be continuous.  For example if
-  a warp thread is on top of several weft threads, it should appear as
-  a single stretch of thread.  Currently it looks like the pattern is
-  on graph paper; the grid lines are always there.
-
 * Undo
 
-* Palette editing, save & load.
-
-* Stop overwriting WIF with or own format.
+* Palette editing, save and load. Should be able to save custom palettes. The palette editor should allow adding colours, 
+not just changing, also giving the palette a name and saving it. 
 

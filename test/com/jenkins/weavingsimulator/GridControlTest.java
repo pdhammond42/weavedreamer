@@ -26,7 +26,6 @@ package com.jenkins.weavingsimulator;
 
 import java.awt.Point;
 
-import junit.framework.Assert;
 import junit.framework.TestCase;
 
 public class GridControlTest extends TestCase {

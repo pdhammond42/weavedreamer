@@ -24,7 +24,6 @@
 
 package com.jenkins.weavingsimulator.models;
 
-import java.awt.Color;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 

@@ -35,6 +35,9 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import static org.hamcrest.Matchers.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 
 /**
  *
@@ -384,5 +387,18 @@ public class WeavingDraftTest extends TestCase {
         
         assertFalse (draft.isWarpVisible(0,1));
         assertTrue (draft.isWarpVisible(1,1));
+    }
+    
+    public void testPaletteCanBeCreated() {
+    	draft.setNumHarnesses(2);
+        draft.getTreadles().add(new Treadle(Arrays.asList(0)));
+        draft.getTreadles().add(new Treadle(Arrays.asList(1)));
+        draft.getEnds().add(new WarpEnd(Color.WHITE, 0));
+        draft.getEnds().add(new WarpEnd(Color.RED, 1));
+        draft.getPicks().add(new WeftPick(Color.PINK, 0));
+        draft.getPicks().add(new WeftPick(Color.BLUE, 1));    
+        
+        draft.createPalette();
+        assertThat(draft.getPalette().getColors(), containsInAnyOrder(Color.white, Color.red, Color.pink, Color.blue));
     }
 }
