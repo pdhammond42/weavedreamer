@@ -26,17 +26,12 @@
 
 package com.jenkins.weavingsimulator.models;
 
-import com.jenkins.weavingsimulator.datatypes.Palette;
 import java.awt.Color;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.Arrays;
-import junit.framework.*;
-import static org.hamcrest.Matchers.*;
-import static org.hamcrest.MatcherAssert.assertThat;
+
+import junit.framework.TestCase;
+
+import com.jenkins.weavingsimulator.datatypes.Palette;
 
 /**
  *
@@ -117,18 +112,5 @@ public class PaletteModelTest extends TestCase {
     public void testNoExtraNotifications() {
         palette.setSelection(1);
         assertNull(listener.event);
-    }
-    
-    public void testSerialisation() throws IOException, ClassNotFoundException {
-    	// More of a test of my learning the library.
-    	ByteArrayOutputStream os = new ByteArrayOutputStream();
-    	ObjectOutputStream oos = new ObjectOutputStream(os);
-    	oos.writeObject(palette);
-    	
-    	ByteArrayInputStream is = new ByteArrayInputStream(os.toByteArray());
-    	ObjectInputStream ois = new ObjectInputStream(is);
-    	Palette p = (Palette)(ois.readObject());
-    	
-    	assertThat(p.getColors(), equalTo(palette.getColors()));
     }
 }

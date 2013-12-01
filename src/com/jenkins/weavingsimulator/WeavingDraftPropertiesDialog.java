@@ -25,12 +25,15 @@
 
 package com.jenkins.weavingsimulator;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.util.List;
 import java.util.Vector;
 import java.util.prefs.Preferences;
 
 import com.jenkins.weavingsimulator.datatypes.Palette;
+import com.jenkins.weavingsimulator.models.PalettePreviewModel;
 
 /** A Dialog to edit the properties of a WeavingDraft.  To use this class,
  * create an instance, and then call editProperties(weavingDraft).
@@ -43,6 +46,12 @@ public class WeavingDraftPropertiesDialog extends javax.swing.JDialog {
     public WeavingDraftPropertiesDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        palettes_combo.addActionListener(new ActionListener (){
+			public void actionPerformed(ActionEvent arg0) {
+				paletteGrid.setModel(new PalettePreviewModel((Palette)palettes_combo.getSelectedItem()));
+			}
+        });
+        
         java.awt.Dimension dim = getPreferredSize();
         dim.setSize(dim.width + 20, dim.height + 20);
         setSize(dim);
@@ -144,6 +153,12 @@ public class WeavingDraftPropertiesDialog extends javax.swing.JDialog {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         getContentPane().add(palettes_combo, gridBagConstraints);
         
+        paletteGrid = new GridControl();
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        getContentPane().add(paletteGrid, gridBagConstraints);
+        paletteGrid.setSquareWidth(10);
         
         okButton.setText("OK");
         okButton.addActionListener(new java.awt.event.ActionListener() {
@@ -340,4 +355,5 @@ public class WeavingDraftPropertiesDialog extends javax.swing.JDialog {
     private NonNegativeIntFormatter formatter = new NonNegativeIntFormatter();
     private Vector<Palette> palettes = new Vector<Palette>();
     private javax.swing.JComboBox palettes_combo;
+    private GridControl paletteGrid;
 }

@@ -88,7 +88,7 @@ public class GridControl extends JTable {
         addMouseListener (new MouseListener() {
 
 			public void mouseClicked(MouseEvent e) {
-				if (editedValueProvider != null) {
+				if (e.getClickCount() == 1 && editedValueProvider != null) {
 					setValueAt (editedValueProvider.getValue(), e.getPoint().y / squareWidth, 
 							e.getPoint().x / squareWidth);
 				}
