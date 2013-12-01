@@ -50,6 +50,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.prefs.*;
+
 import javax.swing.JFileChooser;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
@@ -77,7 +78,6 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
     /** Creates new form WeavingSimulatorApp */
     public WeavingSimulatorApp() {
         initComponents();
-        initManualComponents();
         Preferences prefs = Preferences.userNodeForPackage(this.getClass());
         setBounds(prefs.getInt("x", getX()),
         		prefs.getInt("y", getY()),
@@ -167,7 +167,7 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
         });
 
         fileMenu.add(saveAsMenuItem);
-
+        
         exitMenuItem.setMnemonic('x');
         exitMenuItem.setText("Exit");
         exitMenuItem.addActionListener(new java.awt.event.ActionListener() {
@@ -194,8 +194,37 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
 
         editMenu.add(propertiesMenuItem);
 
-        deleteMenuItem.setText("Delete");
-        editMenu.add(deleteMenuItem);
+        savePaletteMenuItem = new javax.swing.JMenuItem();
+        savePaletteMenuItem.setMnemonic('p');
+        savePaletteMenuItem.setText("Save Palette ...");
+        savePaletteMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                savePaletteItemActionPerformed(evt);
+            }
+        });
+        editMenu.add(savePaletteMenuItem);
+        
+        javax.swing.JMenu viewMenu = new javax.swing.JMenu();
+    	viewMenu.setMnemonic('v');
+        viewMenu.setText("View");
+
+        javax.swing.JMenuItem zoomInMenuItem = new javax.swing.JMenuItem();
+        zoomInMenuItem.setText("Zoom In");
+        zoomInMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                zoomInItemActionPerformed(evt);
+            }
+        });
+        viewMenu.add(zoomInMenuItem);
+        
+        javax.swing.JMenuItem zoomOutMenuItem = new javax.swing.JMenuItem();
+        zoomOutMenuItem.setText("Zoom Out");
+        zoomOutMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                zoomOutItemActionPerformed(evt);
+            }
+        });
+        viewMenu.add(zoomOutMenuItem);
 
         tiledViewMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_T,
             Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
@@ -207,7 +236,7 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
             }
         });
 
-        editMenu.add(tiledViewMenuItem);
+        viewMenu.add(tiledViewMenuItem);
 
         menuBar.add(editMenu);
 
@@ -235,42 +264,15 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
         setLocation((screenSize.width-400)/2,(screenSize.height-400)/2);
     }//GEN-END:initComponents
     
-    private void initManualComponents() {
-    	// Since I don't have a GUI designer at the moment, but
-    	// might get one later, keep manually added controls separate.
-    	
-    	javax.swing.JMenu viewMenu = new javax.swing.JMenu();
-    	viewMenu.setMnemonic('v');
-        viewMenu.setText("View");
-
-        javax.swing.JMenuItem zoomInMenuItem = new javax.swing.JMenuItem();
-        zoomInMenuItem.setText("Zoom In");
-        zoomInMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                zoomInItemActionPerformed(evt);
-            }
-        });
-        viewMenu.add(zoomInMenuItem);
-        
-        javax.swing.JMenuItem zoomOutMenuItem = new javax.swing.JMenuItem();
-        zoomOutMenuItem.setText("Zoom Out");
-        zoomOutMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                zoomOutItemActionPerformed(evt);
-            }
-        });
-        viewMenu.add(zoomOutMenuItem);
-
-        //There appears to be  no way to insert into a menu bar.
-        menuBar = new javax.swing.JMenuBar();
-        menuBar.add(fileMenu);
-        menuBar.add(editMenu);
-        menuBar.add(viewMenu);
-        menuBar.add(helpMenu);
-        setJMenuBar(menuBar);
-    }
     
-    protected void zoomInItemActionPerformed(ActionEvent evt) {
+    protected void savePaletteItemActionPerformed(ActionEvent evt) {
+    	String name = javax.swing.JOptionPane.showInputDialog("Name your palette");
+    	if (name != null) {
+    		savePalette(name, getCurrentSession().getPalette());
+    	}
+	}
+
+	protected void zoomInItemActionPerformed(ActionEvent evt) {
         WeavingDraftWindow curFrame =
                 (WeavingDraftWindow)mainDesktop.getSelectedFrame();
         if (curFrame == null)
@@ -400,33 +402,36 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
     }
     
     private List<Palette> loadPalettes() {
-    	// First cut, some hard-coded palettes.
-		List<Palette> palettes = new ArrayList<Palette>();
-		palettes.add(new Palette(Arrays.asList(
-				Color.black, Color.darkGray, Color.lightGray, Color.white), 
-				"Monochrome"));
-		palettes.add(new Palette(Arrays.asList(
-				new Color(78, 146, 88), new Color( 48, 103, 84), new Color(108, 196, 23), new Color(204, 251, 93), 
-				new Color( 0, 128, 128), new Color(237, 218, 116), new Color(178, 194, 72), new Color(120, 199, 199)
-				), "Spring"));
-		palettes.add(new Palette(Arrays.asList(
-				new Color(255, 166, 47), new Color(197, 137, 23), new Color(248, 128, 23), new Color(192, 64, 0), 
-				new Color(243, 229, 171), new Color(255, 243, 128), new Color(248, 114, 23), new Color(153, 0, 18)
-				), "Summer"));
-		palettes.add(new Palette(Arrays.asList(
-				new Color(228,228,149), new Color(204,128,51), new Color(205, 127, 50), new Color(175, 120, 23),
-				new Color(127, 70, 44), new Color(128, 101, 23), new Color(73, 61, 38), new Color(193, 154, 107)
-				), "Autumn"));
-		palettes.add(new Palette(Arrays.asList(
-				new Color(0, 255, 255), new Color( 62, 169, 159), new Color(59, 185, 255), new Color(43, 96, 222 ), 
-				new Color( 43, 56, 86), new Color(109, 123, 141), new Color(102, 99, 98 ), new Color(94, 125, 126)
-				), "Winter"));
-		palettes.add(new Palette(Arrays.asList(
-				Color.white, Color.red, Color.black, Color.green, Color.yellow, Color.blue
-				), "80s"));
-		return palettes;
+    	List<Palette> palettes = null;
+    	try {
+    		palettes = Palette.loadPalettes(Preferences.userNodeForPackage(this.getClass()).node("Palettes"));
+    	} catch (IOException e) {
+    	}
+    	catch (BackingStoreException e) {
+    	}
+    	if (palettes == null || palettes.size() == 0) {
+    		palettes = Palette.getDefaultPalettes();
+    	}
+    	return palettes;
     }
     
+	private void savePalette(String name, Palette palette) {
+		Preferences prefs = Preferences.userNodeForPackage(this.getClass()).node("Palettes");
+		List<Palette> palettes = loadPalettes();
+		// Save a clone, since the most likely case is we are saving 
+		// a palette from an existing draft which may have no name or
+		// a different name.
+		palettes.add(new Palette(palette.getColors(), name));
+		
+		try {
+			Palette.savePalettes(palettes, prefs);
+		} catch (BackingStoreException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
     /**
      * @param args the command line arguments
      */
@@ -665,6 +670,7 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
     private javax.swing.JMenu helpMenu;
     private javax.swing.JMenuItem deleteMenuItem;
     // End of variables declaration//GEN-END:variables
+    private javax.swing.JMenuItem savePaletteMenuItem;
     
     private WifFileFilter wifFilter;
     private int newFileNum = 0;

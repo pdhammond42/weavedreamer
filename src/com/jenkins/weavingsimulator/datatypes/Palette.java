@@ -28,13 +28,18 @@ package com.jenkins.weavingsimulator.datatypes;
 import java.awt.Color;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.prefs.BackingStoreException;
+import java.util.prefs.Preferences;
 
 /**
  * A Palette is a class representing a set of colors, along with a currently
@@ -208,6 +213,113 @@ public class Palette implements Serializable {
     
     public String toString() {
     	return name;
+    }
+    
+
+    @Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((colors == null) ? 0 : colors.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Palette other = (Palette) obj;
+		if (colors == null) {
+			if (other.colors != null)
+				return false;
+		} else if (!colors.equals(other.colors))
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		return true;
+	}
+
+	/**
+     * Saves the given palettes into a preferences node, replacing any rpevious content.
+     * Adding a layer of indirection between here and preferences would be more extensible, 
+     * but I don't want to extend it right now.
+     * @param palettes A list of palettes to store.
+     * @param prefs Where to store them
+     * @throws BackingStoreException 
+     * @throws IOException 
+     */
+    public static void savePalettes(List<Palette> palettes, Preferences prefs) throws BackingStoreException, IOException {
+    	prefs.clear();
+    	int key = 0;
+    	for(Palette p: palettes) {
+        	ByteArrayOutputStream os = new ByteArrayOutputStream();
+        	ObjectOutputStream oos = new ObjectOutputStream(os);
+        	oos.writeObject(p);    		
+        	prefs.putByteArray(String.format("%04d", key++), os.toByteArray());
+    	}
+    }
+    
+    /**
+     * Loads palettes from the given preferences node. 
+     * @param prefs Where to load from
+     * @return The palettes
+     * @throws BackingStoreException 
+     * @throws IOException 
+     */
+    public static List<Palette> loadPalettes (Preferences prefs) throws BackingStoreException, IOException {
+		List<Palette> palettes = new ArrayList<Palette>();
+		String[] keys = prefs.keys();
+		Arrays.sort(keys);
+		for (String key: keys) {
+	    	ByteArrayInputStream is = new ByteArrayInputStream(prefs.getByteArray(key, null));
+	    	ObjectInputStream ois = new ObjectInputStream(is);			
+	    	try {
+	    		palettes.add((Palette)(ois.readObject()));
+	    	} catch (ClassNotFoundException e) {
+	    		// This really should never happen...
+	    	}
+		}
+		return palettes;
+    }
+    
+    /**
+     * Returns a default set of palettes. This is what the user gets offered in a new setup,
+     * where no palettes are saved, and also if palette storage gets corrupted.
+     * @return
+     */
+    public static List<Palette> getDefaultPalettes() {
+		List<Palette> palettes = new ArrayList<Palette>();
+		palettes.add(new Palette(Arrays.asList(
+				Color.black, Color.darkGray, Color.lightGray, Color.white), 
+				"Monochrome"));
+		palettes.add(new Palette(Arrays.asList(
+				new Color(78, 146, 88), new Color( 48, 103, 84), new Color(108, 196, 23), new Color(204, 251, 93), 
+				new Color( 0, 128, 128), new Color(237, 218, 116), new Color(178, 194, 72), new Color(120, 199, 199)
+				), "Spring"));
+		palettes.add(new Palette(Arrays.asList(
+				new Color(255, 166, 47), new Color(197, 137, 23), new Color(248, 128, 23), new Color(192, 64, 0), 
+				new Color(243, 229, 171), new Color(255, 243, 128), new Color(248, 114, 23), new Color(153, 0, 18)
+				), "Summer"));
+		palettes.add(new Palette(Arrays.asList(
+				new Color(228,228,149), new Color(204,128,51), new Color(205, 127, 50), new Color(175, 120, 23),
+				new Color(127, 70, 44), new Color(128, 101, 23), new Color(73, 61, 38), new Color(193, 154, 107)
+				), "Autumn"));
+		palettes.add(new Palette(Arrays.asList(
+				new Color(0, 255, 255), new Color( 62, 169, 159), new Color(59, 185, 255), new Color(43, 96, 222 ), 
+				new Color( 43, 56, 86), new Color(109, 123, 141), new Color(102, 99, 98 ), new Color(94, 125, 126)
+				), "Winter"));
+		palettes.add(new Palette(Arrays.asList(
+				Color.white, Color.red, Color.black, Color.green, Color.yellow, Color.blue
+				), "80s"));    	
+		return palettes;
     }
 }
 

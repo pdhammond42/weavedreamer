@@ -26,9 +26,21 @@
 
 package com.jenkins.weavingsimulator.datatypes;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
+
 import java.awt.Color;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.prefs.BackingStoreException;
+import java.util.prefs.Preferences;
+
 import junit.framework.*;
 
 /**
@@ -137,5 +149,33 @@ public class PaletteTest extends TestCase {
                 4, -1, -1);
     }
     
+    public void testSerialisation() throws IOException, ClassNotFoundException {
+    	// More of a test of my learning the library.
+    	ByteArrayOutputStream os = new ByteArrayOutputStream();
+    	ObjectOutputStream oos = new ObjectOutputStream(os);
+    	oos.writeObject(palette);
+    	
+    	ByteArrayInputStream is = new ByteArrayInputStream(os.toByteArray());
+    	ObjectInputStream ois = new ObjectInputStream(is);
+    	Palette p = (Palette)(ois.readObject());
+    	
+    	assertThat(p.getColors(), equalTo(palette.getColors()));
+    }
     
+    public void testPersistence () throws IOException, BackingStoreException {
+    	Preferences prefs = Preferences.userRoot().node("test/palette/preferences");
+    	// One palette can be saved and restored.
+    	List<Palette> palettes = new ArrayList<Palette>();
+    	palettes.add(new Palette(new ArrayList<Color>(), "One"));
+    	Palette.savePalettes(palettes, prefs);
+    	
+    	// Default palettes can be loaded
+    	List<Palette> restored = Palette.loadPalettes(prefs);
+    	assertThat(restored, equalTo(palettes));
+    	
+    	// save replaces existing saved palettes. Palettes are restored in order.
+    	List<Palette> defaults = Palette.getDefaultPalettes();
+    	Palette.savePalettes(defaults, prefs);    	
+    	assertThat(Palette.loadPalettes(prefs), equalTo(defaults));
+    }
 }
