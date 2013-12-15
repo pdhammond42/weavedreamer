@@ -24,12 +24,33 @@
 
 package com.jenkins.weavingsimulator;
 
+import java.awt.Component;
 import java.awt.Point;
+import java.awt.event.MouseEvent;
 
 import junit.framework.TestCase;
 
 public class GridControlTest extends TestCase {
-	public void testDragDown () {
+	
+	private MouseEvent leftDragEvent (Component source, Point pos) {
+		return new MouseEvent (source, 
+				MouseEvent.MOUSE_DRAGGED,
+				0,
+				MouseEvent.BUTTON1_DOWN_MASK,
+				pos.x, pos.y,
+				0, false);
+	}
+	
+	private MouseEvent rightDragEvent (Component source, Point pos) {
+		return new MouseEvent (source, 
+				MouseEvent.MOUSE_DRAGGED,
+				0,
+				MouseEvent.BUTTON3_DOWN_MASK,
+				pos.x, pos.y,
+				0, false);
+	}
+	
+	public void testLeftDragDown () {
 		javax.swing.table.TableModel model = new javax.swing.table.DefaultTableModel(
 				new Object[][] {
 						{false,false,false},
@@ -46,8 +67,8 @@ public class GridControlTest extends TestCase {
 		Point cell_r1c0 = new Point (5, 15);
 		Point cell_r5c0 = new Point (5, 55);
 		GridControl grid = new GridControl(model);
-		grid.doDrag(cell_r1c0);
-		grid.doDrag(cell_r5c0);
+		grid.doDrag(leftDragEvent(grid, cell_r1c0));
+		grid.doDrag(leftDragEvent(grid, cell_r5c0));
 		grid.endDrag();
 		assertFalse((Boolean) model.getValueAt(0,0));
 		assertTrue((Boolean) model.getValueAt(1,0));
@@ -58,7 +79,7 @@ public class GridControlTest extends TestCase {
 		assertFalse((Boolean) model.getValueAt(6,0));
 	}
 
-	public void testDragUp () {
+	public void testLeftDragUp () {
 		javax.swing.table.TableModel model = new javax.swing.table.DefaultTableModel(
 				new Object[][] {
 						{false,false,false},
@@ -75,8 +96,8 @@ public class GridControlTest extends TestCase {
 		Point cell_r1c0 = new Point (5, 15);
 		Point cell_r5c0 = new Point (5, 55);
 		GridControl grid = new GridControl(model);
-		grid.doDrag(cell_r5c0);
-		grid.doDrag(cell_r1c0);
+		grid.doDrag(leftDragEvent(grid, cell_r5c0));
+		grid.doDrag(leftDragEvent(grid, cell_r1c0));
 		grid.endDrag();
 		assertFalse((Boolean) model.getValueAt(0,0));
 		assertTrue((Boolean) model.getValueAt(1,0));
@@ -87,7 +108,7 @@ public class GridControlTest extends TestCase {
 		assertFalse((Boolean) model.getValueAt(6,0));
 	}
 	
-	public void testDragRight () {
+	public void testLeftDragRight () {
 		javax.swing.table.TableModel model = new javax.swing.table.DefaultTableModel(
 				new Object[][] {
 						{false,false,false},
@@ -104,8 +125,8 @@ public class GridControlTest extends TestCase {
 		Point cell_r1c0 = new Point (5, 15);
 		Point cell_r1c2 = new Point (25, 15);
 		GridControl grid = new GridControl(model);
-		grid.doDrag(cell_r1c0);
-		grid.doDrag(cell_r1c2);
+		grid.doDrag(leftDragEvent(grid, cell_r1c0));
+		grid.doDrag(leftDragEvent(grid, cell_r1c2));
 		grid.endDrag();
 		assertFalse((Boolean) model.getValueAt(0,0));
 		assertTrue((Boolean) model.getValueAt(1,0));
@@ -113,7 +134,7 @@ public class GridControlTest extends TestCase {
 		assertTrue((Boolean) model.getValueAt(1,2));
 	}
 	
-	public void testDragLeft () {
+	public void testLeftDragLeft () {
 		javax.swing.table.TableModel model = new javax.swing.table.DefaultTableModel(
 				new Object[][] {
 						{false,false,false},
@@ -130,15 +151,16 @@ public class GridControlTest extends TestCase {
 		Point cell_r1c0 = new Point (5, 15);
 		Point cell_r1c2 = new Point (25, 15);
 		GridControl grid = new GridControl(model);
-		grid.doDrag(cell_r1c2);
-		grid.doDrag(cell_r1c0);
+		grid.doDrag(leftDragEvent(grid, cell_r1c2));
+		grid.doDrag(leftDragEvent(grid, cell_r1c0));
 		grid.endDrag();
 		assertFalse((Boolean) model.getValueAt(0,0));
 		assertTrue((Boolean) model.getValueAt(1,0));
 		assertTrue((Boolean) model.getValueAt(1,1));
 		assertTrue((Boolean) model.getValueAt(1,2));
 	}
-	public void testDragLeftDown () {
+	
+	public void testLeftDragLeftDown () {
 		javax.swing.table.TableModel model = new javax.swing.table.DefaultTableModel(
 				new Object[][] {
 						{false,false,false},
@@ -155,8 +177,8 @@ public class GridControlTest extends TestCase {
 		Point cell_r1c2 = new Point (25, 15);
 		Point cell_r3c0 = new Point (5, 35);
 		GridControl grid = new GridControl(model);
-		grid.doDrag(cell_r1c2);
-		grid.doDrag(cell_r3c0);
+		grid.doDrag(leftDragEvent(grid, cell_r1c2));
+		grid.doDrag(leftDragEvent(grid, cell_r3c0));
 		grid.endDrag();
 		assertFalse((Boolean) model.getValueAt(0,0));
 		assertTrue((Boolean) model.getValueAt(1,2));
@@ -164,4 +186,34 @@ public class GridControlTest extends TestCase {
 		assertTrue((Boolean) model.getValueAt(3,0));
 	}
 	
+	public void testRightDragDown () {
+		// Currently right drag does nothing.
+		javax.swing.table.TableModel model = new javax.swing.table.DefaultTableModel(
+				new Object[][] {
+						{false,false,false},
+						{false,false,false},
+						{false,false,false},
+						{false,false,false},
+						{false,false,false},
+						{false,false,false},
+						{false,false,false},
+						}, 
+				new Object[]{0,0,0});
+		// Each is by default 10 pixels square.
+		// Cell pixel positions 
+		Point cell_r1c0 = new Point (5, 15);
+		Point cell_r5c0 = new Point (5, 55);
+		GridControl grid = new GridControl(model);
+		grid.doDrag(rightDragEvent(grid, cell_r1c0));
+		grid.doDrag(rightDragEvent(grid, cell_r5c0));
+		grid.endDrag();
+		assertFalse((Boolean) model.getValueAt(0,0));
+		assertFalse((Boolean) model.getValueAt(1,0));
+		assertFalse((Boolean) model.getValueAt(2,0));
+		assertFalse((Boolean) model.getValueAt(3,0));
+		assertFalse((Boolean) model.getValueAt(4,0));
+		assertFalse((Boolean) model.getValueAt(5,0));
+		assertFalse((Boolean) model.getValueAt(6,0));
+	}
+
 }

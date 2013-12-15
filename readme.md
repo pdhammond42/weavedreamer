@@ -20,6 +20,11 @@ Unpack the zip archive. Either
 - or right click the .jar file and select the option along the lines of 
 "Open with Java runtime".
 
+Changes in 0.2.2
+----------------
+- Save and load palettes.
+- User Documentation
+
 Changes in 0.2.1
 ----------------
 - More robust WIF import.
