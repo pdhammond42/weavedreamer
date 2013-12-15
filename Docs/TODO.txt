@@ -2,6 +2,4 @@
 
 * Undo
 
-* Some sort of documentation. Maybe a Wiki page, with a copy of it packaged for offline use.
 
-* More tooltips

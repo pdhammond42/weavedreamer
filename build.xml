@@ -49,6 +49,11 @@
      <arg line="fetch_doc.py"/>
     </exec>
   </target>
+  <target name="tag">
+    <exec executable="git">
+     <arg line="-a ${version} -m 'Tagged by build system'"/>
+    </exec>
+  </target>
   <target name="package">
     <jar destfile="dist/WeavingSimulator.jar">
       <fileset dir="bin"/>
@@ -65,5 +70,5 @@
       <zipfileset dir="attachment" prefix="attachment"/>
     </zip>
   </target>
-  <target name="build" depends="build-project,test,doc,package"/>
+  <target name="build" depends="build-project,test,doc,tag,package"/>
 </project>

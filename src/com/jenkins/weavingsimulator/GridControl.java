@@ -80,7 +80,7 @@ public class GridControl extends JTable {
         
         addMouseMotionListener (new MouseMotionListener() {
 			public void mouseDragged(MouseEvent arg0) {
-				doDrag (arg0.getPoint());
+				doDrag (arg0);
 			}
 			public void mouseMoved(MouseEvent arg0) {
 			}
@@ -88,7 +88,9 @@ public class GridControl extends JTable {
         addMouseListener (new MouseListener() {
 
 			public void mouseClicked(MouseEvent e) {
-				if (e.getClickCount() == 1 && editedValueProvider != null) {
+				if (e.getClickCount() == 1 && 
+						e.getButton() == MouseEvent.BUTTON1 && 
+						editedValueProvider != null) {
 					setValueAt (editedValueProvider.getValue(), e.getPoint().y / squareWidth, 
 							e.getPoint().x / squareWidth);
 				}
@@ -163,12 +165,14 @@ public class GridControl extends JTable {
     		g.drawLine(dragStart.x, dragStart.y, dragEnd.x, dragEnd.y);
     	}
     }
-    public void doDrag (Point point) {
-    	if (dragStart == null) {
-			dragStart = point;
-    	} else {
-    		dragEnd = point;
-    		repaint();
+    public void doDrag (MouseEvent event) {
+    	if ((event.getModifiersEx() & MouseEvent.BUTTON1_DOWN_MASK) != 0) {
+	    	if (dragStart == null) {
+				dragStart = event.getPoint();
+	    	} else {
+	    		dragEnd = event.getPoint();
+	    		repaint();
+	    	}	
     	}
     }
     
