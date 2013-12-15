@@ -2,6 +2,6 @@
 
 * Undo
 
-* Palette editing, save and load. Should be able to save custom palettes. The palette editor should allow adding colours, 
-not just changing, also giving the palette a name and saving it. 
+* Some sort of documentation. Maybe a Wiki page, with a copy of it packaged for offline use.
 
+* More tooltips

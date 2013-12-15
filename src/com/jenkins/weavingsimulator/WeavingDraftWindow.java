@@ -30,6 +30,7 @@ import java.beans.PropertyChangeListener;
 import java.io.File;
 
 import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
+import com.jenkins.weavingsimulator.datatypes.WeftPick;
 import com.jenkins.weavingsimulator.models.EditingSession;
 import com.jenkins.weavingsimulator.models.StepColorModel;
 import com.jenkins.weavingsimulator.models.ThreadingDraftModel;
@@ -78,6 +79,12 @@ public class WeavingDraftWindow extends javax.swing.JInternalFrame {
 		pickColorGrid.setModel(new StepColorModel(draft));
 		pickColorGrid.setSquareWidth(squareWidth);
 		pickColorGrid.setEditValueProvider(new ColorEditProvider());
+		
+		treadlingDraftGrid.setToolTipText("Set treadle");
+		threadingDraftGrid.setToolTipText("Set shaft");
+		warpEndColorGrid.setToolTipText("Set warp colour");
+		pickColorGrid.setToolTipText("Set weft colour");
+		tieUpGrid.setToolTipText("Set tie-up");
 	}
 
 	private class ColorEditProvider implements GridControl.EditedValueProvider {

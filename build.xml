@@ -43,6 +43,12 @@
       <classpath refid="WeavingSimulator.classpath"/>
     </junit>
   </target>
+  <target name="doc">
+    <mkdir dir="attachment"/>
+    <exec executable="python" failonerror="true">
+     <arg line="fetch_doc.py"/>
+    </exec>
+  </target>
   <target name="package">
     <jar destfile="dist/WeavingSimulator.jar">
       <fileset dir="bin"/>
@@ -55,7 +61,9 @@
       <file file="dist/WeavingSimulator.jar"/>
       <zipfileset dir="libs" prefix="libs"/> 
       <file file="COPYING.txt"/>
+      <file file="help.html"/>
+      <zipfileset dir="attachment" prefix="attachment"/>
     </zip>
   </target>
-  <target name="build" depends="build-project,test,package"/>
+  <target name="build" depends="build-project,test,doc,package"/>
 </project>
