@@ -93,14 +93,14 @@ public class WeavingPatternModelTest extends TestCase {
     public void testGetValueAt() {
        for (int r = 0; r < 3; r++) {
            for (int c = 0; c < 6; c++) {
-               assertEquals("row="+r+",col="+c, draft.getVisibleColor(c, r), model.getValueAt(r, c));
+               assertEquals("row="+r+",col="+c, draft.getVisibleColor(c, r), ((WeavingPatternCellModel)model.getValueAt(r, c)).color());
            }
        }
     }
 
     public void testGetColumnClass() {
         for (int c = 0; c < model.getColumnCount(); c++)
-            assertEquals("col="+c, Color.class, model.getColumnClass(c));
+            assertEquals("col="+c, WeavingPatternCellModel.class, model.getColumnClass(c));
     }
     
     public void testNotifyOnNumHarnessesChanged() {
