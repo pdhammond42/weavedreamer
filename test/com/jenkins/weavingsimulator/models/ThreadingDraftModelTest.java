@@ -27,6 +27,7 @@
 package com.jenkins.weavingsimulator.models;
 
 import java.awt.Color;
+import java.util.Arrays;
 
 import javax.swing.table.TableModel;
 
@@ -44,7 +45,7 @@ import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
  */
 public class ThreadingDraftModelTest extends TestCase {
     private WeavingDraft draft;
-    private TableModel model;
+    private ThreadingDraftModel model;
     private TestTableModelListener listener;
     
     public ThreadingDraftModelTest(String testName) {
@@ -135,5 +136,25 @@ public class ThreadingDraftModelTest extends TestCase {
         draft.getPicks().add(new WeftPick(Color.BLUE, 0));
         
         assertNull(listener.event);
+    }
+    
+    public void testSetAndPasteSelection() {
+        draft.setEnds(Arrays.asList(
+        		new WarpEnd(Color.BLUE, 0), 
+        		new WarpEnd(Color.BLUE, 1), 
+        		new WarpEnd(Color.BLUE, 0), 
+        		new WarpEnd(Color.BLUE, 1), 
+        		new WarpEnd(Color.BLUE, 0), 
+        		new WarpEnd(Color.BLUE, 1)));
+
+    	model.setValueAt(true, 0, 0);
+    	model.setValueAt(true, 1, 1);
+    	model.setValueAt(true, 1, 2);
+    	
+    	model.setSelection(0, 0, 0, 3);
+    	model.pasteSelection (0, 3);
+    	assertTrue((Boolean) model.getValueAt(0, 3));
+    	assertTrue((Boolean) model.getValueAt(1, 4));
+    	assertTrue((Boolean) model.getValueAt(1, 5));
     }
 }

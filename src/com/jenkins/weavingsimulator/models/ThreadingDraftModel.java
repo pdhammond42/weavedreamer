@@ -27,6 +27,8 @@ package com.jenkins.weavingsimulator.models;
 
 import com.jenkins.weavingsimulator.datatypes.WarpEnd;
 import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
+import com.jenkins.weavingsimulator.datatypes.WeftPick;
+
 import java.beans.IndexedPropertyChangeEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -113,5 +115,28 @@ public class ThreadingDraftModel extends AbstractWeavingDraftModel {
     
     public Class<?> getColumnClass(int columnIndex) {
         return Boolean.class;
+    }
+    
+    private int selectionStart = 0;
+    private int selectionEnd = 0;
+    /** Sets the selection to be the columns [startColumn..endColumn)
+     *  
+     * @param startRow Unused 
+     * @param startColumn First column that is selected 
+     * @param endRow Unused
+     * @param endColumn One-past-last column selected.
+     */
+    public void setSelection (int startRow, int startColumn, int endRow, int endColumn) {
+    	selectionStart = startColumn;
+    	selectionEnd = endColumn;
+    }
+    
+    public void pasteSelection (int rowIndex, int columnIndex) {
+    	int offset = columnIndex - selectionStart;
+    	for (int column = selectionStart; column != selectionEnd; column++) {
+            WarpEnd to = draft.getEnds().get(column + offset);
+            WarpEnd from = draft.getEnds().get(column);
+            to.setHarnessId(from.getHarnessId());   	
+    	}
     }
 }

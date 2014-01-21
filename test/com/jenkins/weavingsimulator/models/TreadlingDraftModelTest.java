@@ -31,9 +31,12 @@ import com.jenkins.weavingsimulator.datatypes.Treadle;
 import com.jenkins.weavingsimulator.datatypes.WarpEnd;
 import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.Arrays;
 import javax.swing.table.TableModel;
 import junit.framework.TestCase;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
 
 /**
  *
@@ -41,7 +44,7 @@ import junit.framework.TestCase;
  */
 public class TreadlingDraftModelTest extends TestCase {
     private WeavingDraft draft;
-    private TableModel model;
+    private TreadlingDraftModel model;
     private TestTableModelListener listener;
     
     public TreadlingDraftModelTest(String testName) {
@@ -126,5 +129,25 @@ public class TreadlingDraftModelTest extends TestCase {
         draft.setName("somename");
         draft.getEnds().add(new WarpEnd(Color.BLACK, 1));
         assertNull(listener.event);
+    }
+    
+    public void testSetAndPasteSelection() {
+        draft.setPicks(Arrays.asList(
+                new WeftPick(Color.BLACK, 0), 
+                new WeftPick(Color.WHITE, 1),
+                new WeftPick(Color.WHITE, 1),
+                new WeftPick(Color.WHITE, 1),
+                new WeftPick(Color.WHITE, 1),
+                new WeftPick(Color.BLUE, 0)));
+
+    	model.setValueAt(true, 0, 0);
+    	model.setValueAt(true, 1, 1);
+    	model.setValueAt(true, 2, 1);
+    	
+    	model.setSelection(0, 0, 3, 0);
+    	model.pasteSelection (3, 0);
+    	assertTrue((Boolean) model.getValueAt(3, 0));
+    	assertTrue((Boolean) model.getValueAt(4, 1));
+    	assertTrue((Boolean) model.getValueAt(5, 1));
     }
 }

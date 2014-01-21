@@ -25,6 +25,8 @@
 package com.jenkins.weavingsimulator;
 
 import java.awt.Dimension;
+import java.awt.MenuItem;
+import java.awt.PopupMenu;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
