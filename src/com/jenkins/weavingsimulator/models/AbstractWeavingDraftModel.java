@@ -89,4 +89,24 @@ public abstract class AbstractWeavingDraftModel
         fireTableChanged(new TableModelEvent(this, 
             0, getRowCount() - 1, column));
     }
+    
+    /** Sets a selection into the model, which can later be duplicated by calling pasteSelection.
+     * The default implementation is a no-op. 
+     * Because this is implemented by the treadle and tie-up models, an implementation is likely to pay attention 
+     * to either X or Y, but not both.
+     * @param cellX0 Starting column of the selection
+     * @param cellY0 Starting row of the selection
+     * @param cellX1 Ending column of the selection
+     * @param cellY1 Ending row of the selection.
+     */
+    public void setSelection (int cellX0, int cellY0, int cellX1, int cellY1){
+    }
+    
+    /** If a selection has previously been set by setSelection, duplicates that seelction
+     * with its top left hand corner at cellX, cellY.
+     * @param cellX Starting column
+     * @param cellY Startin row
+     */
+    public void pasteSelection (int cellX, int cellY) {
+    }
 }

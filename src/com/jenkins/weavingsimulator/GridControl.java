@@ -25,16 +25,21 @@
 
 package com.jenkins.weavingsimulator;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.MenuItem;
 import java.awt.Point;
+import java.awt.PopupMenu;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
 import javax.swing.JTable;
 
+import com.jenkins.weavingsimulator.models.AbstractWeavingDraftModel;
 import com.jenkins.weavingsimulator.models.WeavingPatternCellModel;
 
 
@@ -92,6 +97,10 @@ public class GridControl extends JTable {
 						e.getButton() == MouseEvent.BUTTON1 && 
 						editedValueProvider != null) {
 					setValueAt (editedValueProvider.getValue(), e.getPoint().y / squareWidth, 
+							e.getPoint().x / squareWidth);
+				} else if (e.getClickCount() == 1 && 
+						e.getButton() == MouseEvent.BUTTON3) {
+					((AbstractWeavingDraftModel)getModel()).pasteSelection( e.getPoint().y / squareWidth, 
 							e.getPoint().x / squareWidth);
 				}
 			}
@@ -156,13 +165,23 @@ public class GridControl extends JTable {
         
     Point dragStart = null;
     Point dragEnd = null;
+    boolean isShiftDrag = false;
 	private EditedValueProvider editedValueProvider;
     
     public void paintComponent (Graphics g) {
     	super.paintComponent(g);
+    	Graphics2D g2 = (Graphics2D) g;
     	if (dragStart != null && dragEnd != null) {
-    		g.setColor(Color.black);
-    		g.drawLine(dragStart.x, dragStart.y, dragEnd.x, dragEnd.y);
+    		g2.setColor(Color.darkGray);
+    		if (isShiftDrag) {
+    			float[] dash1 = {10.0f};
+    			g2.setStroke(new BasicStroke(2, BasicStroke.CAP_BUTT,
+                        BasicStroke.JOIN_MITER,
+                        10.0f, dash1, 0.0f));
+    		} else {
+    			g2.setStroke (new BasicStroke(2));
+    		}
+    		g2.drawLine(dragStart.x, dragStart.y, dragEnd.x, dragEnd.y);
     	}
     }
     public void doDrag (MouseEvent event) {
@@ -174,6 +193,7 @@ public class GridControl extends JTable {
 	    		repaint();
 	    	}	
     	}
+    	isShiftDrag = (event.getModifiersEx() & MouseEvent.SHIFT_DOWN_MASK) != 0;
     }
     
     public void endDrag () {
@@ -182,15 +202,19 @@ public class GridControl extends JTable {
     		final int cellY0 = dragStart.y / squareWidth;
     		final int cellX1 = dragEnd.x / squareWidth;
     		final int cellY1 = dragEnd.y / squareWidth;
-    		final int diffX = cellX1 - cellX0;
-    		final int diffY = cellY1 - cellY0;
-    		final int steps = Math.max(Math.abs(diffX), Math.abs(diffY))+1;
-    		if (editedValueProvider != null) {
-    			setValueAt (editedValueProvider.getValue(), cellY0, cellX0);
-    			for (int i = 1; i < steps; i++) {
-    				setValueAt (editedValueProvider.getValue(), cellY0 + i*diffY/(steps-1), cellX0+i*diffX/(steps-1));
-    			}	
-    		}
+    		if (isShiftDrag) {
+    			((AbstractWeavingDraftModel)getModel()).setSelection(cellY0, cellX0, cellY1, cellX1);
+    		} else {
+	    		final int diffX = cellX1 - cellX0;
+	    		final int diffY = cellY1 - cellY0;
+	    		final int steps = Math.max(Math.abs(diffX), Math.abs(diffY))+1;
+	    		if (editedValueProvider != null) {
+	    			setValueAt (editedValueProvider.getValue(), cellY0, cellX0);
+	    			for (int i = 1; i < steps; i++) {
+	    				setValueAt (editedValueProvider.getValue(), cellY0 + i*diffY/(steps-1), cellX0+i*diffX/(steps-1));
+	    			}	
+	    		}
+	    	}
     	}
     	dragStart = null;
     	dragEnd = null;

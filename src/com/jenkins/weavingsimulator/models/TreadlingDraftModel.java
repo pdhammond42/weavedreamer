@@ -149,4 +149,26 @@ public class TreadlingDraftModel extends AbstractWeavingDraftModel {
         return Boolean.class;
     }
     
+    private int selectionStart = 0;
+    private int selectionEnd = 0;
+    /** Sets the selection to be the rows [startRow..endRow)
+     *  
+     * @param startRow First row that is selected
+     * @param startColumn Unused
+     * @param endRow One-past-last row selected.
+     * @param endColumn Unused
+     */
+    public void setSelection (int startRow, int startColumn, int endRow, int endColumn) {
+    	selectionStart = startRow;
+    	selectionEnd = endRow;
+    }
+    
+    public void pasteSelection (int rowIndex, int columnIndex) {
+    	int offset = rowIndex - selectionStart;
+    	for (int row = selectionStart; row != selectionEnd; row++) {
+            WeftPick to = draft.getPicks().get(row + offset);
+            WeftPick from = draft.getPicks().get(row);
+            to.setTreadleId(from.getTreadleId());   	
+    	}
+    }
 }
