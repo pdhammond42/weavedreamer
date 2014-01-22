@@ -46,6 +46,15 @@ import com.jenkins.weavingsimulator.models.WeavingPatternCellModel;
 /** GridControl is a specialized JTable in which all cells are square.  Instead
  * of setting setting the row height and column width, you set the squareWidth 
  * property.
+ * 
+ * This class implements drag behaviour to select and operate on multiple cells
+ * at once. There are two drag modes: with and without shift, both on button 1.
+ * Without shift, it displays a preview line of the drag path, then on end drag 
+ * requests the model to set all cells crossed by the path. With shift, it updates 
+ * the model on each drag with the selection. It is up to the model to implement
+ * the selection. The reason for the difference is that setting the cells directly 
+ * leaves cells changed even if the drag moves away from them. We probably could
+ * provide some sort of restore, but I can't see how so this works.
  *
  * @author  ajenkins
  */
@@ -62,6 +71,15 @@ public class GridControl extends JTable {
     public GridControl(javax.swing.table.TableModel model) {
         super(model);
         init();
+    }
+    
+    private boolean allowDrag = true;
+    /** 
+     * Sets whether dragging will be allowed in this grid (default is on).
+     * @param allow Allow dragging if true.
+     */
+    public void setAllowDrag(boolean allow) {
+    	allowDrag = allow;
     }
         
     private void init() {
@@ -85,7 +103,7 @@ public class GridControl extends JTable {
         
         addMouseMotionListener (new MouseMotionListener() {
 			public void mouseDragged(MouseEvent arg0) {
-				doDrag (arg0);
+				if (allowDrag) doDrag (arg0);
 			}
 			public void mouseMoved(MouseEvent arg0) {
 			}
@@ -168,58 +186,68 @@ public class GridControl extends JTable {
     boolean isShiftDrag = false;
 	private EditedValueProvider editedValueProvider;
     
+	/** Overridden to draw the preview line during drag operations. 
+	 * 
+	 */
     public void paintComponent (Graphics g) {
     	super.paintComponent(g);
     	Graphics2D g2 = (Graphics2D) g;
-    	if (dragStart != null && dragEnd != null) {
+    	if (dragStart != null && dragEnd != null && !isShiftDrag) {
     		g2.setColor(Color.darkGray);
-    		if (isShiftDrag) {
-    			float[] dash1 = {10.0f};
-    			g2.setStroke(new BasicStroke(2, BasicStroke.CAP_BUTT,
-                        BasicStroke.JOIN_MITER,
-                        10.0f, dash1, 0.0f));
-    		} else {
-    			g2.setStroke (new BasicStroke(2));
-    		}
+    		g2.setStroke (new BasicStroke(2));
     		g2.drawLine(dragStart.x, dragStart.y, dragEnd.x, dragEnd.y);
     	}
     }
+    
     public void doDrag (MouseEvent event) {
     	if ((event.getModifiersEx() & MouseEvent.BUTTON1_DOWN_MASK) != 0) {
+        	isShiftDrag = (event.getModifiersEx() & MouseEvent.SHIFT_DOWN_MASK) != 0;
 	    	if (dragStart == null) {
 				dragStart = event.getPoint();
 	    	} else {
 	    		dragEnd = event.getPoint();
-	    		repaint();
+	    		if (isShiftDrag) {
+	    			((AbstractWeavingDraftModel)getModel()).setSelection(dragStart.y / squareWidth, 
+	    					dragStart.x / squareWidth, 
+	    					dragEnd.y / squareWidth, 
+	    					dragEnd.x / squareWidth);		
+	    		} else {
+	    			repaint();
+	    		}
 	    	}	
     	}
-    	isShiftDrag = (event.getModifiersEx() & MouseEvent.SHIFT_DOWN_MASK) != 0;
     }
     
     public void endDrag () {
-    	if (dragStart != null && dragEnd != null) {
+    	if (dragStart != null && dragEnd != null && !isShiftDrag) {
     		final int cellX0 = dragStart.x / squareWidth;
     		final int cellY0 = dragStart.y / squareWidth;
     		final int cellX1 = dragEnd.x / squareWidth;
-    		final int cellY1 = dragEnd.y / squareWidth;
-    		if (isShiftDrag) {
-    			((AbstractWeavingDraftModel)getModel()).setSelection(cellY0, cellX0, cellY1, cellX1);
-    		} else {
-	    		final int diffX = cellX1 - cellX0;
-	    		final int diffY = cellY1 - cellY0;
-	    		final int steps = Math.max(Math.abs(diffX), Math.abs(diffY))+1;
-	    		if (editedValueProvider != null) {
-	    			setValueAt (editedValueProvider.getValue(), cellY0, cellX0);
-	    			for (int i = 1; i < steps; i++) {
-	    				setValueAt (editedValueProvider.getValue(), cellY0 + i*diffY/(steps-1), cellX0+i*diffX/(steps-1));
-	    			}	
-	    		}
-	    	}
+	    	final int cellY1 = dragEnd.y / squareWidth;
+	    	final int diffX = cellX1 - cellX0;
+		    final int diffY = cellY1 - cellY0;
+		    final int steps = Math.max(Math.abs(diffX), Math.abs(diffY))+1;
+		    if (editedValueProvider != null) {
+		    	setValueAt (editedValueProvider.getValue(), cellY0, cellX0);
+		    	for (int i = 1; i < steps; i++) {
+		    		setValueAt (editedValueProvider.getValue(), cellY0 + i*diffY/(steps-1), cellX0+i*diffX/(steps-1));
+		    	}	
+		   	}	
     	}
     	dragStart = null;
     	dragEnd = null;
     }
     
+    /**	 
+     * This is nothing to do with conventional JTable cell editing.
+     * It returns a value to be set into a selected cell. The caller is 
+     * responsible for setting up an object that returns the appropriate type for the
+     * model's setValueAt method.
+     * The GridControl holds a single instance of this interface. 
+     * When a cell is clicked, or dragged over, its value is set according to the
+     * value returned. 
+     *  
+     */
     public interface EditedValueProvider {
     	Object getValue();
     }

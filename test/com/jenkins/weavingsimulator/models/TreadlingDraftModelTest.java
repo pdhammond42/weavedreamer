@@ -31,9 +31,7 @@ import com.jenkins.weavingsimulator.datatypes.Treadle;
 import com.jenkins.weavingsimulator.datatypes.WarpEnd;
 import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
 import java.awt.Color;
-import java.util.ArrayList;
 import java.util.Arrays;
-import javax.swing.table.TableModel;
 import junit.framework.TestCase;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -80,13 +78,17 @@ public class TreadlingDraftModelTest extends TestCase {
     }
 
     public void testGetValueAt() {
-        for (int row = 0; row < model.getRowCount(); row++) {
-            for (int col = 0; col < model.getColumnCount(); col++) {
-                assertEquals("row="+row+",col="+col,
-                        draft.getPicks().get(row).getTreadleId() == col,
-                        model.getValueAt(row, col));
-            }
-        }
+    	model.setSelection(2, 0, 3, 0);
+    	draft.getPicks().get(0).setTreadleId(0);
+    	draft.getPicks().get(1).setTreadleId(1);
+    	draft.getPicks().get(2).setTreadleId(0);
+    	
+    	assertThat((Color)model.getValueAt(0, 0), equalTo(Color.BLACK));
+    	assertThat((Color)model.getValueAt(0, 1), equalTo(Color.WHITE));
+    	assertThat((Color)model.getValueAt(1, 0), equalTo(Color.WHITE));
+    	assertThat((Color)model.getValueAt(1, 1), equalTo(Color.BLACK));
+    	assertThat((Color)model.getValueAt(2, 0), equalTo(Color.BLACK));
+    	assertThat((Color)model.getValueAt(2, 1), equalTo(Color.LIGHT_GRAY));    	
     }
 
     public void testSetValueAt() {
@@ -105,7 +107,7 @@ public class TreadlingDraftModelTest extends TestCase {
 
     public void testGetColumnClass() {
         for (int col = 0; col < model.getColumnCount(); col++) {
-            assertEquals("col="+col, Boolean.class, model.getColumnClass(col));
+            assertEquals("col="+col, Color.class, model.getColumnClass(col));
         }
     }
     
@@ -146,8 +148,9 @@ public class TreadlingDraftModelTest extends TestCase {
     	
     	model.setSelection(0, 0, 3, 0);
     	model.pasteSelection (3, 0);
-    	assertTrue((Boolean) model.getValueAt(3, 0));
-    	assertTrue((Boolean) model.getValueAt(4, 1));
-    	assertTrue((Boolean) model.getValueAt(5, 1));
+    	
+    	assertThat(model.getValueAt(3, 0), equalTo(model.getValueAt(0, 0)));
+    	assertThat(model.getValueAt(4, 1), equalTo(model.getValueAt(1, 1)));
+    	assertThat(model.getValueAt(5, 1), equalTo(model.getValueAt(2, 1)));
     }
 }
