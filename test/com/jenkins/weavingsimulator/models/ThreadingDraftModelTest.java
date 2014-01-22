@@ -29,8 +29,6 @@ package com.jenkins.weavingsimulator.models;
 import java.awt.Color;
 import java.util.Arrays;
 
-import javax.swing.table.TableModel;
-
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
@@ -38,7 +36,8 @@ import com.jenkins.weavingsimulator.datatypes.WeftPick;
 import com.jenkins.weavingsimulator.datatypes.Treadle;
 import com.jenkins.weavingsimulator.datatypes.WarpEnd;
 import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
-
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
 /**
  *
  * @author ajenkins
@@ -79,14 +78,14 @@ public class ThreadingDraftModelTest extends TestCase {
     }
 
     public void testGetValueAt() {
-        for (int harness = 0; harness < model.getRowCount(); harness++) {
-            for (int end = 0; end < model.getColumnCount(); end++) {
-                boolean expected = 
-                        draft.getEnds().get(end).getHarnessId() == harness;
-                assertEquals("harness="+harness+", end="+end, 
-                        Boolean.valueOf(expected), model.getValueAt(harness, end));
-            }
-        }
+    	model.setSelection (0,1,0,2);
+    	draft.getEnds().get(0).setHarnessId(1);
+    	draft.getEnds().get(1).setHarnessId(0);
+    	
+    	assertThat ((Color)model.getValueAt(0, 0), equalTo(Color.WHITE));
+    	assertThat ((Color)model.getValueAt(0, 1), equalTo(Color.BLACK));    	
+    	assertThat ((Color)model.getValueAt(1, 0), equalTo(Color.BLACK));
+    	assertThat ((Color)model.getValueAt(1, 1), equalTo(Color.LIGHT_GRAY));
     }
 
     public void testSetValueAt() {
@@ -105,7 +104,7 @@ public class ThreadingDraftModelTest extends TestCase {
 
     public void testGetColumnClass() {
         for (int col = 0; col < model.getColumnCount(); col++)
-            assertEquals("class for column "+col, Boolean.class, model.getColumnClass(col));
+            assertEquals("class for column "+col, Color.class, model.getColumnClass(col));
     }
     
     /// Test if tableListener is notified when a setValueAt is called
@@ -153,8 +152,8 @@ public class ThreadingDraftModelTest extends TestCase {
     	
     	model.setSelection(0, 0, 0, 3);
     	model.pasteSelection (0, 3);
-    	assertTrue((Boolean) model.getValueAt(0, 3));
-    	assertTrue((Boolean) model.getValueAt(1, 4));
-    	assertTrue((Boolean) model.getValueAt(1, 5));
+    	assertThat(model.getValueAt(0, 3), equalTo(model.getValueAt(0,0)));
+    	assertThat(model.getValueAt(1, 4), equalTo(model.getValueAt(1,1)));
+    	assertThat(model.getValueAt(1, 5), equalTo(model.getValueAt(1,2)));
     }
 }

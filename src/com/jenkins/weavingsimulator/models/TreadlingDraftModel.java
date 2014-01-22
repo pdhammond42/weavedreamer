@@ -25,6 +25,7 @@
 
 package com.jenkins.weavingsimulator.models;
 
+import java.awt.Color;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -36,7 +37,9 @@ import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
  * draft displays which treadle should be pushed for each pick in the pattern.
  * So this TableModel represents each treadle by a column, and pick by a row.
  * For each row, the column representing the treadle to push is black, and the
- * rest of the squares are white.
+ * rest of the squares are white, except the selection is indicated with grey.
+ * This means the getValueAt returns a Color , but setValueAt takes a boolean.
+ * Odd but it works. 
  *
  * @author  ajenkins
  */
@@ -96,21 +99,23 @@ public class TreadlingDraftModel extends AbstractWeavingDraftModel {
      *
      * @param	rowIndex	the row whose value is to be queried
      * @param	columnIndex 	the column whose value is to be queried
-     * @return	the value Object at the specified cell
+     * @return	the value Object (color) at the specified cell
      *
      */
     public Object getValueAt(int rowIndex, int columnIndex) {
         int pick = draft.getPicks().get(rowIndex).getTreadleId();
         if (pick == columnIndex)
-            return Boolean.TRUE;
+            return Color.BLACK;
+        else if (rowIndex >= selectionStart && rowIndex < selectionEnd)
+            return Color.LIGHT_GRAY;
         else
-            return Boolean.FALSE;
+        	return Color.WHITE;
     }
     
     /** Sets the value in the cell at <code>columnIndex</code> and
      * <code>rowIndex</code> to <code>aValue</code>.
      *
-     * @param	aValue		 the new value
+     * @param	aValue		 the new value (boolean)
      * @param	rowIndex	 the row whose value is to be changed
      * @param	columnIndex 	 the column whose value is to be changed
      * @see #getValueAt
@@ -146,7 +151,7 @@ public class TreadlingDraftModel extends AbstractWeavingDraftModel {
      *
      */
     public Class<?> getColumnClass(int columnIndex) {
-        return Boolean.class;
+        return Color.class;
     }
     
     private int selectionStart = 0;
@@ -161,6 +166,7 @@ public class TreadlingDraftModel extends AbstractWeavingDraftModel {
     public void setSelection (int startRow, int startColumn, int endRow, int endColumn) {
     	selectionStart = startRow;
     	selectionEnd = endRow;
+    	fireTableDataChanged();
     }
     
     public void pasteSelection (int rowIndex, int columnIndex) {

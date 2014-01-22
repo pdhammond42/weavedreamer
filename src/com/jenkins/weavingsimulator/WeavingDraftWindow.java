@@ -25,14 +25,11 @@
 package com.jenkins.weavingsimulator;
 
 import java.awt.Dimension;
-import java.awt.MenuItem;
-import java.awt.PopupMenu;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 
 import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
-import com.jenkins.weavingsimulator.datatypes.WeftPick;
 import com.jenkins.weavingsimulator.models.EditingSession;
 import com.jenkins.weavingsimulator.models.StepColorModel;
 import com.jenkins.weavingsimulator.models.ThreadingDraftModel;
@@ -64,6 +61,7 @@ public class WeavingDraftWindow extends javax.swing.JInternalFrame {
 		weavingPatternGrid.setModel(new WeavingPatternModel(draft));
 		weavingPatternGrid.setSquareWidth(squareWidth);
 		weavingPatternGrid.setIntercellSpacing(new Dimension(0,0));
+		weavingPatternGrid.setAllowDrag(false);
 
 		threadingDraftGrid.setModel(new ThreadingDraftModel(draft));
 		threadingDraftGrid.setSquareWidth(squareWidth);
@@ -126,9 +124,6 @@ public class WeavingDraftWindow extends javax.swing.JInternalFrame {
 
 		jPanel1.setLayout(new java.awt.GridBagLayout());
 
-		warpEndColorGrid.setModel(new javax.swing.table.DefaultTableModel(
-				new Object[][] { { null, null, null, null } }, new String[] {
-						"Title 1", "Title 2", "Title 3", "Title 4" }));
 		gridBagConstraints = new java.awt.GridBagConstraints();
 		gridBagConstraints.gridx = 1;
 		gridBagConstraints.gridy = 0;
@@ -136,11 +131,6 @@ public class WeavingDraftWindow extends javax.swing.JInternalFrame {
 		gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
 		jPanel1.add(warpEndColorGrid, gridBagConstraints);
 
-		threadingDraftGrid.setModel(new javax.swing.table.DefaultTableModel(
-				new Object[][] { { null, null, null, null },
-						{ null, null, null, null }, { null, null, null, null },
-						{ null, null, null, null } }, new String[] { "Title 1",
-						"Title 2", "Title 3", "Title 4" }));
 		gridBagConstraints = new java.awt.GridBagConstraints();
 		gridBagConstraints.gridx = 1;
 		gridBagConstraints.gridy = 1;
@@ -148,11 +138,6 @@ public class WeavingDraftWindow extends javax.swing.JInternalFrame {
 		gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
 		jPanel1.add(threadingDraftGrid, gridBagConstraints);
 
-		tieUpGrid.setModel(new javax.swing.table.DefaultTableModel(
-				new Object[][] { { null, null, null, null },
-						{ null, null, null, null }, { null, null, null, null },
-						{ null, null, null, null } }, new String[] { "Title 1",
-						"Title 2", "Title 3", "Title 4" }));
 		gridBagConstraints = new java.awt.GridBagConstraints();
 		gridBagConstraints.gridx = 2;
 		gridBagConstraints.gridy = 1;
@@ -160,11 +145,6 @@ public class WeavingDraftWindow extends javax.swing.JInternalFrame {
 		gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
 		jPanel1.add(tieUpGrid, gridBagConstraints);
 
-		weavingPatternGrid.setModel(new javax.swing.table.DefaultTableModel(
-				new Object[][] { { null, null, null, null },
-						{ null, null, null, null }, { null, null, null, null },
-						{ null, null, null, null } }, new String[] { "Title 1",
-						"Title 2", "Title 3", "Title 4" }));
 		weavingPatternGrid.setRowSelectionAllowed(false);
 		gridBagConstraints = new java.awt.GridBagConstraints();
 		gridBagConstraints.gridx = 1;
@@ -172,11 +152,6 @@ public class WeavingDraftWindow extends javax.swing.JInternalFrame {
 		gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
 		jPanel1.add(weavingPatternGrid, gridBagConstraints);
 
-		treadlingDraftGrid.setModel(new javax.swing.table.DefaultTableModel(
-				new Object[][] { { null, null, null, null },
-						{ null, null, null, null }, { null, null, null, null },
-						{ null, null, null, null } }, new String[] { "Title 1",
-						"Title 2", "Title 3", "Title 4" }));
 		gridBagConstraints = new java.awt.GridBagConstraints();
 		gridBagConstraints.gridx = 2;
 		gridBagConstraints.gridy = 2;
@@ -184,9 +159,6 @@ public class WeavingDraftWindow extends javax.swing.JInternalFrame {
 		gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
 		jPanel1.add(treadlingDraftGrid, gridBagConstraints);
 
-		pickColorGrid.setModel(new javax.swing.table.DefaultTableModel(
-				new Object[][] { { null }, { null }, { null }, { null } },
-				new String[] { "Title 1" }));
 		gridBagConstraints = new java.awt.GridBagConstraints();
 		gridBagConstraints.gridx = 3;
 		gridBagConstraints.gridy = 2;

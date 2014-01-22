@@ -203,6 +203,7 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
             }
         });
         editMenu.add(savePaletteMenuItem);
+        menuBar.add(editMenu);
         
         javax.swing.JMenu viewMenu = new javax.swing.JMenu();
     	viewMenu.setMnemonic('v');
@@ -235,10 +236,8 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
                 tiledViewMenuItemActionPerformed(evt);
             }
         });
-
         viewMenu.add(tiledViewMenuItem);
-
-        menuBar.add(editMenu);
+        menuBar.add(viewMenu);
 
         helpMenu.setMnemonic('h');
         helpMenu.setText("Help");
@@ -253,7 +252,6 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
         	}
         });
         helpMenu.add(aboutMenuItem);
-
         menuBar.add(helpMenu);
 
         setJMenuBar(menuBar);

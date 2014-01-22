@@ -27,8 +27,8 @@ package com.jenkins.weavingsimulator.models;
 
 import com.jenkins.weavingsimulator.datatypes.WarpEnd;
 import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
-import com.jenkins.weavingsimulator.datatypes.WeftPick;
 
+import java.awt.Color;
 import java.beans.IndexedPropertyChangeEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -39,7 +39,10 @@ import java.beans.PropertyChangeListener;
  * represent one harness.  An element value of true means the warp thread
  * represented by that column is connected to the harness represented by that
  * row.
- *
+ * Each selected cell is coloured black on a white background, 
+ * except the selection is indicated with grey.
+ * This means the getValueAt returns a Color , but setValueAt takes a boolean.
+ * Odd but it works. 
  * @author  ajenkins
  */
 public class ThreadingDraftModel extends AbstractWeavingDraftModel {
@@ -99,7 +102,13 @@ public class ThreadingDraftModel extends AbstractWeavingDraftModel {
      */
     public Object getValueAt(int rowIndex, int columnIndex) {
         WarpEnd end = draft.getEnds().get(columnIndex);
-        return Boolean.valueOf(end.getHarnessId() == rowIndex);
+        if (end.getHarnessId() == rowIndex) {
+        	return Color.BLACK;
+        } else if (columnIndex >= selectionStart && columnIndex < selectionEnd) {
+        	return Color.LIGHT_GRAY;
+        } else {
+        	return Color.WHITE;
+        }
     }
         
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
@@ -114,7 +123,7 @@ public class ThreadingDraftModel extends AbstractWeavingDraftModel {
     }
     
     public Class<?> getColumnClass(int columnIndex) {
-        return Boolean.class;
+        return Color.class;
     }
     
     private int selectionStart = 0;
