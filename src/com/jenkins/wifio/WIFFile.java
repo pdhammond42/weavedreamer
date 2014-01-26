@@ -105,6 +105,20 @@ public class WIFFile {
 			throw new WIFException("Value '" + value + "' is not a boolean");
 	}
 
+	/** Returns the boolean value of the field Key in Section.
+	 * If the key or the section do not exist it returns deflt. (unlike the
+	 * two parameter version which will throw). 
+	 * @param section Section to get value from
+	 * @param key Key of value to get
+	 * @param deflt Value to return if the value is not found
+	 * @return The value, or deflt.
+	 */
+	public boolean getBooleanField(String section, String key, boolean deflt) {
+		if (hasField(section, key))
+			return getBooleanField(section, key);
+		return deflt;
+	}
+	
 	public double getDoubleField(String section, String key) {
 		String value = getKey(section, key);
 		try {
