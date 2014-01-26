@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- This Ant build script is the easiest way to build the application. The 
 default target "build" will build the .jar file and run the unit tests.
-The top level target "dist" will do these, then package the application
+The top level target "release" will do these, then package the application
 into a zip file with documentation ready for upload for release. This requires
 extra dependencies and creates a Git tag, so should not be used all the time. -->
 
@@ -56,6 +56,15 @@ extra dependencies and creates a Git tag, so should not be used all the time. --
       <classpath refid="WeavingSimulator.classpath"/>
     </junit>
   </target>
+  <target name="javadoc">
+    <javadoc access="public" author="true" destdir="doc" source="1.6" sourcepath="src" splitindex="true" use="true" version="true">
+      <classpath refid="WeavingSimulator.classpath"/>
+      <package name="com.jenkins.weavingsimulator.models"/>
+      <package name="com.jenkins.wifio"/>
+      <package name="com.jenkins.weavingsimulator"/>
+      <package name="com.jenkins.weavingsimulator.datatypes"/>	
+     </javadoc>
+  </target>
   <target name="doc">
     <mkdir dir="attachment"/>
     <exec executable="python" failonerror="true">
@@ -76,6 +85,6 @@ extra dependencies and creates a Git tag, so should not be used all the time. --
       <zipfileset dir="attachment" prefix="attachment" />
     </zip>
   </target>
-  <target name="build" depends="build-project,test"/>
+  <target name="build" depends="build-project,test,javadoc"/>
   <target name="release" depends="build,doc,tag,package"/>
 </project>
