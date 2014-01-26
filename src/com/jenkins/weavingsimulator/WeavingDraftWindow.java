@@ -62,6 +62,7 @@ public class WeavingDraftWindow extends javax.swing.JInternalFrame {
 		weavingPatternGrid.setSquareWidth(squareWidth);
 		weavingPatternGrid.setIntercellSpacing(new Dimension(0,0));
 		weavingPatternGrid.setAllowDrag(false);
+		weavingPatternGrid.setShowGrid(false);
 
 		threadingDraftGrid.setModel(new ThreadingDraftModel(draft));
 		threadingDraftGrid.setSquareWidth(squareWidth);
