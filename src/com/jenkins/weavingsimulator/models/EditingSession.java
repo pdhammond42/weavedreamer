@@ -27,6 +27,9 @@ package com.jenkins.weavingsimulator.models;
 
 import com.jenkins.weavingsimulator.datatypes.Palette;
 import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
+
+import java.beans.IndexedPropertyChangeEvent;
+import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.File;
@@ -59,8 +62,22 @@ public class EditingSession {
      */
     private boolean draftModified;
     
+    /**
+     * The palette may get changed directly on the draft. The session
+     * needs to propagate this.
+     */
+    private PropertyChangeListener draftPaletteChangedListener;
+    
+    
     public EditingSession() {
         propertySupport = new PropertyChangeSupport(this);
+        draftPaletteChangedListener = new PropertyChangeListener() {
+            public void propertyChange(PropertyChangeEvent e) {
+            	if (e.getPropertyName() == "palette") 
+            		propertySupport.firePropertyChange (PALETTE_PROPERTY, 
+            				e.getOldValue(), e.getNewValue());
+            }
+        };
     }
     
     
@@ -120,6 +137,7 @@ public class EditingSession {
         WeavingDraft oldDraft = this.draft;
         this.draft = draft;
         propertySupport.firePropertyChange (DRAFT_PROPERTY, oldDraft, draft);
+        this.draft.addPropertyChangeListener("palette", draftPaletteChangedListener);
     }
 
     /**
