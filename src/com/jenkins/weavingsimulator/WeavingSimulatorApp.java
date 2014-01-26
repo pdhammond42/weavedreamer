@@ -29,8 +29,8 @@ import com.jenkins.weavingsimulator.datatypes.Palette;
 import com.jenkins.weavingsimulator.datatypes.WIFIO;
 import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
 import com.jenkins.weavingsimulator.models.EditingSession;
+import com.jenkins.wifio.WIFException;
 
-import java.awt.Color;
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -44,8 +44,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -520,7 +518,18 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
             InputStream ins = new java.io.FileInputStream(file);
             if (file.getName().toLowerCase().endsWith(WIF_EXTENSION)) {
                 WIFIO io = new WIFIO();
-                draft = io.readWeavingDraft(ins);
+                try {
+                	draft = io.readWeavingDraft(ins);
+                }
+                catch(WIFException e) {
+                	reportWifFailure (file);
+                    return;
+                }
+                catch (NullPointerException e)
+                {
+                	reportWifFailure(file);
+                	return;
+                }
             } 
             else {
                 draft = readWeavingDraft(ins);
@@ -533,6 +542,15 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
         }
         
         openWeavingDraftWindow(draft, file);
+    }
+    
+    private void reportWifFailure (File file) {
+        JOptionPane.showMessageDialog(this, 
+        		"The file could not be opened.\n" +
+        		"This may be because it uses features of WIF that are not yet\n" +
+        		"supported. Please send a copy of the file to \n" +
+        		"peterhammond@users.sf.net so we can investigate the problem.", 
+        		"Save Error", JOptionPane.ERROR_MESSAGE);
     }
     
     /** Opens a new WeavingDraftWindow displaying draft.  If file is not

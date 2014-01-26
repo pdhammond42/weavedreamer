@@ -35,22 +35,22 @@ public class WIFIO {
         List<Color> palette = readPalette(wif);
         draft.setPalette(new Palette(palette, ""));
         
-        if (wif.hasField("CONTENTS", "WARP")) {
+        if (wif.getBooleanField("CONTENTS", "WARP", false)) {
         	List<WarpEnd> ends = readWarp(wif, palette);
         	draft.setEnds(ends);
         }
         
-        if (wif.hasField("CONTENTS", "TIEUP")) {
+        if (wif.getBooleanField("CONTENTS", "TIEUP", false)) {
         	List<Treadle> treadles = readTieup(wif);        
         	draft.setTreadles(treadles);
         }
         
-        if(wif.hasField("CONTENTS", "LIFTPLAN")) {
+        if(wif.getBooleanField("CONTENTS", "LIFTPLAN", false)) {
         	List<Treadle> treadles = readLiftplan(wif);
         	draft.setTreadles(treadles);
         }
         
-        if (wif.hasField("CONTENTS", "WEFT")) {
+        if (wif.getBooleanField("CONTENTS", "WEFT", false)) {
         	List<WeftPick> picks = readWeft(wif, palette);        
         	draft.setPicks(picks);
         }
@@ -64,7 +64,7 @@ public class WIFIO {
 
     private List<Color> readPalette(WIFFile wif) throws RuntimeException {
     	ArrayList<Color> palette = new ArrayList<Color>(0);
-    	if (wif.hasField("CONTENTS", "COLOR PALETTE") && wif.getBooleanField("CONTENTS", "COLOR PALETTE")) {
+    	if (wif.getBooleanField("CONTENTS", "COLOR PALETTE", false)) {
     		if (!wif.hasField("CONTENTS", "COLOR TABLE"))
     			throw new WIFException("A WIF with a COLOR PALETTE must also have a COLOR TABLE");
     		int numColors = wif.getIntField("COLOR PALETTE", "Entries");
@@ -145,7 +145,7 @@ public class WIFIO {
     }
 
     private List<WeftPick> readWeft(WIFFile wif, List<Color> palette) throws RuntimeException {
-    	boolean liftplan = wif.hasField("CONTENTS", "LIFTPLAN");
+    	boolean liftplan = wif.getBooleanField("CONTENTS", "LIFTPLAN", false);
         int numPicks = wif.getIntField("WEFT", "Threads");
         List<WeftPick> picks = new ArrayList<WeftPick>(numPicks);
         for (int i = 0; i < numPicks; i++) {

@@ -333,6 +333,22 @@ public class WifIOTest extends TestCase {
     	} catch (WIFException e) {
     	
     	}
+    }
+    
+    public void testNegativeSectionInContentsIsOK() throws IOException {
+    	String nothing = minimal + 
+    			"Weaving=0\n" +
+    			"Tieup=0\n"+
+    			"Threading=0\n"+
+    			"Treadling=0\n"+
+    			"Warp=0\n"+
+    			"Weft=0\n"+
+    			"Color palette=0\n"+
+    			"Liftplan=0\n";
+    			
+    	WIFIO io = new WIFIO();
+    	WeavingDraft draft = io.readWeavingDraft(new StringReader(nothing));
 
+    	assertThat(draft.getEnds().size(), is(0));
     }
 };
