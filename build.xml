@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- This Ant build script is the easiest way to build the application. The 
+default target "build" will build the .jar file and run the unit tests.
+The top level target "dist" will do these, then package the application
+into a zip file with documentation ready for upload for release. This requires
+extra dependencies and creates a Git tag, so should not be used all the time. -->
+
 <project basedir="." default="build" name="WeavingSimulator">
   <path id="WeavingSimulator.classpath">
     <pathelement location="bin"/>
@@ -32,7 +38,13 @@
       <src path="test"/>
       <classpath refid="WeavingSimulator.classpath"/>
     </javac>
-  </target>
+    <jar destfile="dist/WeavingSimulator.jar">
+      <fileset dir="bin"/>
+      <manifest>
+	<attribute name="Main-Class" value="com.jenkins.weavingsimulator.WeavingSimulatorApp"/>
+	<attribute name="Class-Path" value="libs/ini4j-compat.jar libs/ini4j.jar libs/jakarta-commons-lang-2.1.jar"/>
+      </manifest>
+    </jar>  </target>
   <target name="test">
     <junit fork="yes" printsummary="withOutAndErr" haltonfailure="true">
       <formatter type="xml"/>
@@ -56,20 +68,14 @@
     </exec>
   </target>
   <target name="package">
-    <jar destfile="dist/WeavingSimulator.jar">
-      <fileset dir="bin"/>
-      <manifest>
-	<attribute name="Main-Class" value="com.jenkins.weavingsimulator.WeavingSimulatorApp"/>
-	<attribute name="Class-Path" value="libs/ini4j-compat.jar libs/ini4j.jar libs/jakarta-commons-lang-2.1.jar"/>
-      </manifest>
-    </jar>
     <zip destfile="freeweave_${version}.zip">
       <file file="dist/WeavingSimulator.jar"/>
-      <zipfileset dir="libs" prefix="libs"/> 
+      <zipfileset dir="libs" prefix="libs" excludes="hamcrest-all-1.3.jar"/> 
       <file file="COPYING.txt"/>
       <file file="help.html"/>
-      <zipfileset dir="attachment" prefix="attachment"/>
+      <zipfileset dir="attachment" prefix="attachment" />
     </zip>
   </target>
-  <target name="build" depends="build-project,test,doc,tag,package"/>
+  <target name="build" depends="build-project,test"/>
+  <target name="release" depends="build,doc,tag,package"/>
 </project>

@@ -105,7 +105,7 @@ public abstract class AbstractWeavingDraftModel
     /** If a selection has previously been set by setSelection, duplicates that seelction
      * with its top left hand corner at cellX, cellY.
      * @param cellX Starting column
-     * @param cellY Startin row
+     * @param cellY Starting row
      */
     public void pasteSelection (int cellX, int cellY) {
     }
