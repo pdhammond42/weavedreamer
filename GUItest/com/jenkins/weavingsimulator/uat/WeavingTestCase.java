@@ -1,18 +1,19 @@
 package com.jenkins.weavingsimulator.uat;
 
-import junit.framework.TestCase;
+
+import org.uispec4j.UISpec4J;
+import org.uispec4j.UISpecTestCase;
+import org.uispec4j.interception.MainClassAdapter;
 
 import com.jenkins.weavingsimulator.WeavingSimulatorApp;
 
-class WeavingTestCase extends TestCase {
-   protected AppDriver weavingUI;
-
+class WeavingTestCase extends UISpecTestCase {
    public void setUp() {
-       WeavingSimulatorApp.main(new String[]{});
-       weavingUI = new AppDriver();
+	   System.err.println(System.getProperty("awt.toolkit"));
+	   setAdapter(new MainClassAdapter(WeavingSimulatorApp.class, new String[0]));
    }
 
    public void tearDown() {
-       weavingUI.dispose();
+    
    }
 }
