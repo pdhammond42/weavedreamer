@@ -94,6 +94,7 @@ public class PalettePanel extends JPanel {
             }
         });
         addColorBtn.setEnabled(true);
+        addColorBtn.setName("addColorBtn");
                 
         paletteGrid = new GridControl();
         paletteGrid.setSquareWidth(20);
@@ -122,6 +123,7 @@ public class PalettePanel extends JPanel {
                 "Click to select color. Double click to change.");
         add(paletteGrid, BorderLayout.CENTER);
         add(addColorBtn, BorderLayout.PAGE_END);
+        paletteGrid.setName("paletteGrid");
     }
     
     private class PaletteSelectionListener implements ListSelectionListener {

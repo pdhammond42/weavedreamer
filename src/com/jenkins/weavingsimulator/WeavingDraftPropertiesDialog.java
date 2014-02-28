@@ -68,12 +68,16 @@ public class WeavingDraftPropertiesDialog extends javax.swing.JDialog {
 
         javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
         numHarnessesField = new javax.swing.JFormattedTextField(formatter);
+        numHarnessesField.setName("numHarnessesField");
         javax.swing.JLabel jLabel2 = new javax.swing.JLabel();
         numTreadlesField = new javax.swing.JFormattedTextField(formatter);
+        numTreadlesField.setName("numTreadlesField");
         javax.swing.JLabel jLabel3 = new javax.swing.JLabel();
         numWarpEndsField = new javax.swing.JFormattedTextField(formatter);
+        numWarpEndsField.setName("numWarpEndsField");
         javax.swing.JLabel jLabel4 = new javax.swing.JLabel();
         numWeftPicksField = new javax.swing.JFormattedTextField(formatter);
+        numWeftPicksField.setName("numWeftPicksField");
         javax.swing.JPanel jPanel1 = new javax.swing.JPanel();
         okButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
@@ -317,7 +321,8 @@ public class WeavingDraftPropertiesDialog extends javax.swing.JDialog {
          */
         public Object stringToValue(String text) throws ParseException {
             Number val = format.parse(text);
-            if (val.intValue() < 0)
+        	System.err.println("val " + val);
+        	if (val.intValue() < 0)
                 throw new ParseException("Negative numbers not allowed", 0);
             return val;
         }
@@ -330,6 +335,7 @@ public class WeavingDraftPropertiesDialog extends javax.swing.JDialog {
          *
          */
         public String valueToString(Object value) throws ParseException {
+        	System.err.println("text " + value);
             if (value == null)
                 return "";
             else
