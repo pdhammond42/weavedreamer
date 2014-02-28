@@ -1,195 +1,143 @@
 package com.jenkins.weavingsimulator.uat;
 
-import javax.swing.InputMap;
-import javax.swing.JButton;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.KeyStroke;
+import org.uispec4j.Trigger;
+import org.uispec4j.Window;
+import org.uispec4j.Table;
+import org.uispec4j.TextBox;
+import org.uispec4j.Button;
+import org.uispec4j.interception.WindowHandler;
+import org.uispec4j.interception.WindowInterceptor;
 
-import com.objogate.wl.Query;
-import com.objogate.wl.internal.PropertyQuery;
-import com.objogate.wl.swing.AWTEventQueueProber;
-import com.objogate.wl.swing.driver.JButtonDriver;
-import com.objogate.wl.swing.driver.JFrameDriver;
-import com.objogate.wl.swing.driver.JMenuBarDriver;
-import com.objogate.wl.swing.driver.JMenuDriver;
-import com.objogate.wl.swing.driver.JMenuItemDriver;
-import com.objogate.wl.swing.driver.JTableDriver;
-import com.objogate.wl.swing.driver.JTextFieldDriver;
-import com.objogate.wl.swing.gesture.GesturePerformer;
-
-import static com.objogate.wl.swing.matcher.ComponentMatchers.*;
-import static org.hamcrest.Matchers.*;
-
-public class AppDriver extends JFrameDriver {
-	@SuppressWarnings("unchecked")
-    public AppDriver() {
-        super(new GesturePerformer(), new AWTEventQueueProber(), named("Weaving Simulator"), showingOnScreen());
+public class AppDriver{
+	private Window mainWindow;
+    public AppDriver(Window mainWindow) {
+    	this.mainWindow=mainWindow;
     }
 
-	public void clickFileNewMenu () {
-		// We should be able to use file.clickLeftButtonOn,
-		// but it fails to find the center of New. Works for the other buttons.
-		// Until I ever find out why, this workaround works.
-		JMenuDriver file = fileMenu();
-		file.click();
-		JMenuItemDriver b = file.menuItem(withButtonText("New"));
-		b.moveMouseToOffset(5, 10);
-		b.click();
+    public void newDraft(final int harnesses, final int treadles, final int ends, final int picks) {
+    	WindowInterceptor
+    	.init(mainWindow.getMenuBar()
+    			.getMenu("File")
+    			.getSubMenu("New")
+    			.triggerClick())
+    			.process(new WindowHandler() {
+    				public Trigger process(Window window) {
+    					window.getTextBox("numTreadlesField").setText(Integer.toString(treadles));
+    					window.getTextBox("numHarnessesField").setText(Integer.toString(harnesses));
+    					window.getTextBox("numWarpEndsField").setText(Integer.toString(ends));
+    					window.getTextBox("numWeftPicksField").setText(Integer.toString(picks));
+    					return window.getButton("OK").triggerClick();
+    				}
+    			})
+    			.run();
+    }
+
+	public PropertiesWindow clickFileNewMenu () {
+		return new PropertiesWindow(WindowInterceptor.getModalDialog(
+				mainWindow.getMenuBar()
+				.getMenu("File")
+				.getSubMenu("New")
+				.triggerClick()));
 	}
-	
-	public PropertiesWindow propertiesWindow() {
-		return new PropertiesWindow(this);
-	}
-	
+		
 	public void hasHarnesses (int h) {
-		tieUpGrid().has(rowCount(), equalTo(h));
-		threadingDraftGrid().has(rowCount(), equalTo(h));
+		tieUpGrid().rowCountEquals(h);
+		threadingDraftGrid().rowCountEquals(h);
 	}
 	
 	public void hasEnds(int e) {
-		threadingDraftGrid().has(columnCount(), equalTo(e));
-		weavingPatternGrid().has(columnCount(), equalTo(e));
-		warpEndColorGrid().has(columnCount(), equalTo(e));
+		threadingDraftGrid().columnCountEquals(e);
+		weavingPatternGrid().columnCountEquals(e);
+		warpEndColorGrid().columnCountEquals(e);
 	}
 	
 	public void hasPicks(int p) {
-		pickColorGrid().has(rowCount(), equalTo(p));
-		weavingPatternGrid().has(rowCount(), equalTo(p));
-		treadlingDraftGrid().has(rowCount(), equalTo(p));
+		pickColorGrid().rowCountEquals(p);
+		weavingPatternGrid().rowCountEquals(p);
+		treadlingDraftGrid().rowCountEquals(p);
 	}
 	
 	public void hasTreadles(int t) {
-		treadlingDraftGrid().has(columnCount(), equalTo(t));
-		tieUpGrid().has(columnCount(), equalTo(t));
+		treadlingDraftGrid().columnCountEquals(t);
+		tieUpGrid().columnCountEquals(t);
 	}
 	
-	@SuppressWarnings("unchecked")
-	private JMenuDriver fileMenu() {
-		return new JMenuBarDriver(this).menu(withButtonText("File"));
+	private Table weavingPatternGrid(){
+		return mainWindow.getTable("weavingPatternGrid");
 	}
 	
-	private JTableDriver weavingPatternGrid(){
-		return grid("weavingPatternGrid");
+	private Table threadingDraftGrid(){
+		return mainWindow.getTable("threadingDraftGrid");
 	}
 	
-	private JTableDriver threadingDraftGrid(){
-		return grid("threadingDraftGrid");
+	private Table warpEndColorGrid(){
+		return mainWindow.getTable("warpEndColorGrid");
 	}
 	
-	private JTableDriver warpEndColorGrid(){
-		return grid("warpEndColorGrid");
-	}
-	
-	private JTableDriver treadlingDraftGrid(){
-		return grid("treadlingDraftGrid");
+	private Table treadlingDraftGrid(){
+		return mainWindow.getTable("treadlingDraftGrid");
 	}
 
-	private JTableDriver pickColorGrid(){
-		return grid("pickColorGrid");
+	private Table pickColorGrid(){
+		return mainWindow.getTable("pickColorGrid");
 	}
 	
-	private JTableDriver tieUpGrid(){
-		return grid("tieUpGrid");
-	}
-	
-	private JTableDriver grid(String name) {
-		return new JTableDriver(this, the(JTable.class, named(name)));
+	private Table tieUpGrid(){
+		return mainWindow.getTable("tieUpGrid");
 	}
 	
 	public class PropertiesWindow {
-		JFrameDriver driver;
+		Window window;
 		
-		public PropertiesWindow(AppDriver app) {
-			driver = app;
+		public PropertiesWindow(Window w) {
+			window = w;
 		}
 		
 		public void setTreadles(String t) {
-			replaceText(treadles(), t);
+			treadles().setText(t);
 		}
 		
 		public void setHarnesses(String t) {
-			replaceText(harnesses(), t);
+			harnesses().setText(t);
 		}
 		
 		public void setEnds(String t) {
-			replaceText(ends(), t);
+			ends().setText(t);
 		}
 		
 		public void setPicks(String t) {
-			replaceText(picks() ,t);
+			picks().setText(t);
 		}
 		
 		public void clickOk() {
 			ok().click();
 		}
 		
-		private JTextFieldDriver treadles() {
-			return field("numTreadlesField");	
+		private TextBox treadles() {
+			return window.getTextBox("numTreadlesField");	
 		}
 		
-		private JTextFieldDriver harnesses() {
-			return field("numHarnessesField");	
+		private TextBox harnesses() {
+			return window.getTextBox("numHarnessesField");	
 		}
 
-		private JTextFieldDriver ends() {
-			return field("numWarpEndsField");	
+		private TextBox ends() {
+			return window.getTextBox("numWarpEndsField");	
 		}
 
-		private JTextFieldDriver picks() {
-			return field("numWeftPicksField");	
-		}
-
-		private JTextFieldDriver field(String name) {
-			return new JTextFieldDriver (driver, 
-					the(JTextField.class, named(name)));				
+		private TextBox picks() {
+			return window.getTextBox("numWeftPicksField");	
 		}
 		
-		private JButtonDriver ok() {
-			return new JButtonDriver(driver, the (JButton.class, withButtonText("OK")));
+		private Button ok() {
+			return window.getButton("OK");
 		}
 	}
 	
-	private static void pause(int t) {
+	public static void pause(int t) {
 		try {
-			Thread.sleep(1000);
+			Thread.sleep(t);
 		} catch (InterruptedException e) {
 		}
 	}
-	
-    public static Query<JTable, Integer> rowCount() {
-        return new PropertyQuery<JTable, Integer>("row count") {
-            public Integer query(JTable component) {
-                return component.getRowCount();
-            }
-        };
-    }
-
-    public static Query<JTable, Integer> columnCount() {
-        return new PropertyQuery<JTable, Integer>("column count") {
-            public Integer query(JTable component) {
-                return component.getColumnCount();
-            }
-        };
-    }
-    
-    public static void replaceText (JTextFieldDriver f, String s) {
-    	// JTextFieldDriver.replaceAllText does not seem to replace text
-    	// very reliably. After a couple of runs, trying to create a 
-    	// 242424 x 202020 thread draft tends to take a while.
-    	
-    	f.replaceAllText(s);
-    	f.hasText(s);
-    	/*
-        f.focusWithMouse();
-    	System.err.println("clear");
-        f.clearText();
-    	System.err.println("cleared");
-        f.isEmpty();
-
-        f.typeText(s);
-    	System.err.println("typed");
-        f.hasText(s);
-        */
-    }
 }

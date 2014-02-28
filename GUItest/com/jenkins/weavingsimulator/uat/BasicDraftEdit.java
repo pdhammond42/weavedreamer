@@ -2,16 +2,21 @@ package com.jenkins.weavingsimulator.uat;
 
 public class BasicDraftEdit extends WeavingTestCase {
 	public void testNewDraft() {
-		weavingUI.clickFileNewMenu();
-		weavingUI.propertiesWindow().setTreadles("12");
-		weavingUI.propertiesWindow().setHarnesses("8");
-		weavingUI.propertiesWindow().setEnds("24");
-		weavingUI.propertiesWindow().setPicks("20");
-		weavingUI.propertiesWindow().clickOk();
 		
-		weavingUI.hasTreadles(12);
-		weavingUI.hasHarnesses(8);
-		weavingUI.hasEnds(24);
-		weavingUI.hasPicks(20);
+		AppDriver ui = new AppDriver(getMainWindow());
+		
+		AppDriver.PropertiesWindow props = ui.clickFileNewMenu();
+
+		props.setTreadles("12");
+		props.setHarnesses("8");
+		props.setEnds("24");
+		props.setPicks("20");
+		props.clickOk();
+
+		AppDriver.pause(1000);
+		ui.hasTreadles(12);
+		ui.hasHarnesses(8);
+		ui.hasEnds(24);
+		ui.hasPicks(20);
 	}
 }

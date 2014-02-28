@@ -32,6 +32,10 @@ import java.util.List;
 import java.util.Vector;
 import java.util.prefs.Preferences;
 
+import javax.swing.JDialog;
+
+import abbot.util.Properties;
+
 import com.jenkins.weavingsimulator.datatypes.Palette;
 import com.jenkins.weavingsimulator.models.PalettePreviewModel;
 
@@ -45,6 +49,11 @@ public class WeavingDraftPropertiesDialog extends javax.swing.JDialog {
     /** Creates new form WeavingDraftPropertiesDialog */
     public WeavingDraftPropertiesDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        // Apparently UISpec4J breaks modality. Sems to be using hte HEadless toolkit which doesn;t support it.
+        if (modal)
+        	setModalityType(JDialog.DEFAULT_MODALITY_TYPE);
+    	System.err.println("Is modal " + modal + ", " + getModalityType());
+    	
         initComponents();
         palettes_combo.addActionListener(new ActionListener (){
 			public void actionPerformed(ActionEvent arg0) {
@@ -268,7 +277,9 @@ public class WeavingDraftPropertiesDialog extends javax.swing.JDialog {
         numTreadlesField.setValue(value_or_default(draft.getTreadles().size(), "treadles", 6));
         editFinished = false;
         
+    	System.err.println("Showing properties " + getModalityType());
         setVisible(true);
+    	System.err.println("Returning");
         return editFinished;
     }
     
@@ -321,7 +332,6 @@ public class WeavingDraftPropertiesDialog extends javax.swing.JDialog {
          */
         public Object stringToValue(String text) throws ParseException {
             Number val = format.parse(text);
-        	System.err.println("val " + val);
         	if (val.intValue() < 0)
                 throw new ParseException("Negative numbers not allowed", 0);
             return val;
@@ -335,7 +345,6 @@ public class WeavingDraftPropertiesDialog extends javax.swing.JDialog {
          *
          */
         public String valueToString(Object value) throws ParseException {
-        	System.err.println("text " + value);
             if (value == null)
                 return "";
             else
