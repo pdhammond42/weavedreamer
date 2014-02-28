@@ -63,23 +63,29 @@ public class WeavingDraftWindow extends javax.swing.JInternalFrame {
 		weavingPatternGrid.setIntercellSpacing(new Dimension(0,0));
 		weavingPatternGrid.setAllowDrag(false);
 		weavingPatternGrid.setShowGrid(false);
+		weavingPatternGrid.setName("weavingPatternGrid");
 
 		threadingDraftGrid.setModel(new ThreadingDraftModel(draft));
 		threadingDraftGrid.setSquareWidth(squareWidth);
+		threadingDraftGrid.setName("threadingDraftGrid");
 
 		warpEndColorGrid.setModel(new WarpEndColorModel(draft));
 		warpEndColorGrid.setSquareWidth(squareWidth);
 		warpEndColorGrid.setEditValueProvider(new ColorEditProvider());
-
+		warpEndColorGrid.setName("warpEndColorGrid");
+		
 		tieUpGrid.setModel(new TieUpModel(draft));
 		tieUpGrid.setSquareWidth(squareWidth);
-
+		tieUpGrid.setName("tieUpGrid");
+		
 		treadlingDraftGrid.setModel(new TreadlingDraftModel(draft));
 		treadlingDraftGrid.setSquareWidth(squareWidth);
-
+		treadlingDraftGrid.setName("treadlingDraftGrid");
+		
 		pickColorGrid.setModel(new StepColorModel(draft));
 		pickColorGrid.setSquareWidth(squareWidth);
 		pickColorGrid.setEditValueProvider(new ColorEditProvider());
+		pickColorGrid.setName("pickColorGrid");
 		
 		treadlingDraftGrid.setToolTipText("Set treadle");
 		threadingDraftGrid.setToolTipText("Set shaft");

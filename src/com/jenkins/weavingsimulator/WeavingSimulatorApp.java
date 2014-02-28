@@ -76,6 +76,7 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
     /** Creates new form WeavingSimulatorApp */
     public WeavingSimulatorApp() {
         initComponents();
+        setName("Weaving Simulator");
         Preferences prefs = Preferences.userNodeForPackage(this.getClass());
         setBounds(prefs.getInt("x", getX()),
         		prefs.getInt("y", getY()),
