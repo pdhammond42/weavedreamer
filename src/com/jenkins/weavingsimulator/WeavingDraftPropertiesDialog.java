@@ -34,8 +34,6 @@ import java.util.prefs.Preferences;
 
 import javax.swing.JDialog;
 
-import abbot.util.Properties;
-
 import com.jenkins.weavingsimulator.datatypes.Palette;
 import com.jenkins.weavingsimulator.models.PalettePreviewModel;
 

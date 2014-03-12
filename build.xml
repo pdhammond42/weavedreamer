@@ -81,6 +81,24 @@ extra dependencies and creates a Git tag, so should not be used all the time. --
 			<zipfileset dir="attachment" prefix="attachment" />
 		</zip>
 	</target>
+	<target name="guitest">
+		<unzip src="freeweave_${version}.zip" dest="GUItest/temp" />
+		<junit fork="yes" printsummary="withOutAndErr" haltonfailure="true">
+			<formatter type="xml" />
+			<batchtest todir="GUItest">
+				<fileset dir="GUItest" casesensitive="yes">
+					<include name="**/*Test.java" />
+				</fileset>
+			</batchtest>
+			<classpath>
+				<path id="GUITest.classpath">
+					<pathelement location="GUItest/temp/WeavingSimulator.jar" />
+					<pathelement location="libs/uispec4j-2.4-jdk16.jar" />
+					<pathelement location="build/GUItest"/>
+				</path>
+			</classpath>
+		</junit>
+	</target>
 	<target name="build" depends="build-project,test,javadoc" />
-	<target name="release" depends="build,doc,tag,package" />
+	<target name="release" depends="build,doc,tag,package,guitest" />
 </project>

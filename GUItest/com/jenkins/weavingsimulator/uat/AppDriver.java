@@ -197,6 +197,7 @@ public class AppDriver{
 		
 		public void setEnds(String t) {
 			ends().setText(t);
+	
 		}
 		
 		public void setPicks(String t) {
