@@ -3,7 +3,7 @@ package com.jenkins.weavingsimulator.uat;
 import java.awt.Color;
 import java.io.File;
 
-public class BasicDraftEdit extends WeavingTestCase {
+public class BasicDraftEditTest extends WeavingTestCase {
 	public void testNewDraft() {
 		AppDriver ui = new AppDriver(getMainWindow());
 		
