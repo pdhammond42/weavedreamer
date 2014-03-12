@@ -1,7 +1,5 @@
 package com.jenkins.weavingsimulator.uat;
 
-
-import org.uispec4j.UISpec4J;
 import org.uispec4j.UISpecTestCase;
 import org.uispec4j.interception.MainClassAdapter;
 
@@ -9,7 +7,6 @@ import com.jenkins.weavingsimulator.WeavingSimulatorApp;
 
 class WeavingTestCase extends UISpecTestCase {
    public void setUp() {
-	   System.err.println(System.getProperty("awt.toolkit"));
 	   setAdapter(new MainClassAdapter(WeavingSimulatorApp.class, new String[0]));
    }
 
