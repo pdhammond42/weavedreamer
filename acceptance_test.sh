@@ -5,6 +5,10 @@
 # The Abbot scripts must use the same directory as this extracts to 
 # to find the application. Currently that is not verified and is 
 # fragile.
+# The Abbot libraries from http://sourceforge.net/projects/abbot/
+# have been incorporated into the source tree in libs/abbot-1.3.0.
+# Some of the libraries distributed with Abbot are omitted for 
+# compactness. In particular I assume JUnit is already available.
 
 JAVA_LIB=/usr/share/java
 
@@ -15,17 +19,16 @@ show_usage_and_quit() {
   exit
 }
 
-if [ ! $1 -o ! -e $1 ] 
+if [ ! $1 -a -e $1 ] 
 then
   show_usage_and_quit
 fi
 
-TMPDIR=test/temp
+TMPDIR=GUItest/temp
 if [ -e $TMPDIR ] 
 then
   rm -rf $TMPDIR
 fi	
 unzip $1 -d $TMPDIR
 
-java -classpath libs/abbot-1.3.0/costello.jar:$JAVA_LIB/junit.jar junit.extensions.abbot.ScriptTestSuite test/acceptance
-
+$JAVA_LIB/jdk1.6.0_35/jre/bin/java -classpath $JAVA_LIB/junit.jar:build/GUItest:$TMPDIR/WeavingSimulator.jar:libs/uispec4j-2.4-jdk16.jar junit.textui.TestRunner com.jenkins.weavingsimulator.uat.BasicDraftEdit

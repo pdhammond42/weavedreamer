@@ -92,6 +92,8 @@ public class WeavingDraftWindow extends javax.swing.JInternalFrame {
 		warpEndColorGrid.setToolTipText("Set warp colour");
 		pickColorGrid.setToolTipText("Set weft colour");
 		tieUpGrid.setToolTipText("Set tie-up");
+		
+		setName("WeavingDraftWindow");
 	}
 
 	private class ColorEditProvider implements GridControl.EditedValueProvider {

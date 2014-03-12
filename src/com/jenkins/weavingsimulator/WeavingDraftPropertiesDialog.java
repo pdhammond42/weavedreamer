@@ -49,11 +49,7 @@ public class WeavingDraftPropertiesDialog extends javax.swing.JDialog {
     /** Creates new form WeavingDraftPropertiesDialog */
     public WeavingDraftPropertiesDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-        // Apparently UISpec4J breaks modality. Sems to be using hte HEadless toolkit which doesn;t support it.
-        if (modal)
-        	setModalityType(JDialog.DEFAULT_MODALITY_TYPE);
-    	System.err.println("Is modal " + modal + ", " + getModalityType());
-    	
+  	
         initComponents();
         palettes_combo.addActionListener(new ActionListener (){
 			public void actionPerformed(ActionEvent arg0) {
@@ -277,9 +273,7 @@ public class WeavingDraftPropertiesDialog extends javax.swing.JDialog {
         numTreadlesField.setValue(value_or_default(draft.getTreadles().size(), "treadles", 6));
         editFinished = false;
         
-    	System.err.println("Showing properties " + getModalityType());
         setVisible(true);
-    	System.err.println("Returning");
         return editFinished;
     }
     

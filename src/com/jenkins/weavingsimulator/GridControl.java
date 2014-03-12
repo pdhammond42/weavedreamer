@@ -198,6 +198,7 @@ public class GridControl extends JTable {
     }
     
     public void doDrag (MouseEvent event) {
+    	System.err.println("doDrag " + event.getX() + ", " + event.getY());
     	if ((event.getModifiersEx() & MouseEvent.BUTTON1_DOWN_MASK) != 0) {
         	isShiftDrag = (event.getModifiersEx() & MouseEvent.SHIFT_DOWN_MASK) != 0;
 	    	if (dragStart == null) {
@@ -217,6 +218,7 @@ public class GridControl extends JTable {
     }
     
     public void endDrag () {
+    	System.err.println("endDrag");
     	if (dragStart != null && dragEnd != null && !isShiftDrag) {
     		final int cellX0 = dragStart.x / squareWidth;
     		final int cellY0 = dragStart.y / squareWidth;
