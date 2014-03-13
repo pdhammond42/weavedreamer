@@ -2,16 +2,28 @@ package com.jenkins.weavingsimulator.uat;
 
 import java.awt.Color;
 import java.io.File;
+import java.util.prefs.BackingStoreException;
+import java.util.prefs.Preferences;
+
+import org.hamcrest.MatcherAssert;
+
+import com.jenkins.weavingsimulator.WeavingSimulatorApp;
+
+import static org.hamcrest.Matchers.*;
+
 
 public class BasicDraftEditTest extends WeavingTestCase {
+	// Colours used in the 103.wif test piece.
+	private final Color orange = new Color(0xcc674f);
+	private final Color blue = new Color(0x66ccff);
+	
 	public void testNewDraft() {
-		AppDriver ui = new AppDriver(getMainWindow());
 		
 		final int harnesses = 12;
 		final int treadles = 8;
 		final int ends = 22;
 		final int picks = 18;
-		ui.newDraft(harnesses, treadles, ends, picks);
+		ui.newDraft(harnesses, treadles, ends, picks, "Monochrome");
 
 		ui.hasHarnesses(harnesses);
 		ui.hasTreadles(treadles);
@@ -20,8 +32,7 @@ public class BasicDraftEditTest extends WeavingTestCase {
 	}
 
 	public void testEditWeave() {
-		AppDriver ui = new AppDriver(getMainWindow());
-		ui.newDraft(4, 6, 20, 20);
+		ui.newDraft(4, 6, 20, 20, "Monochrome");
 		
 		ui.toggleTieup (0, 0);
 		ui.toggleTieup (1, 0);
@@ -78,13 +89,8 @@ public class BasicDraftEditTest extends WeavingTestCase {
 	}
 	
 	public void testLoadAndSave() {
-		AppDriver ui = new AppDriver(getMainWindow());
-		
 		File leftover = new File("testdata/103.wsml");
 		if (leftover.exists()) leftover.delete();
-		
-		final Color orange = new Color(0xcc674f);
-		final Color blue = new Color(0x66ccff);
 		
 		ui.open("testdata/103.wif");
 		ui.draftIs(0, 0, orange);
@@ -96,5 +102,73 @@ public class BasicDraftEditTest extends WeavingTestCase {
 		ui.open("testdata/103.wsml");
 		ui.draftIs(0, 0, orange);
 		ui.draftIs(0, 1, blue);		
+	}
+	
+	public void testEditProperties () {
+		ui.open("testdata/103.wif");
+		
+		final int harnesses = 12;
+		final int treadles = 8;
+		final int ends = 22;
+		final int picks = 18;
+		ui.editDraftProperties(harnesses, treadles, ends, picks, "Spring");
+
+		ui.hasHarnesses(harnesses);
+		ui.hasTreadles(treadles);
+		ui.hasEnds(ends);
+		ui.hasPicks(picks);
+	}
+	
+	public void testSavePalette () {
+		// Rather ugly having this here but it works.
+		try {
+			Preferences.userNodeForPackage(WeavingSimulatorApp.class).node("Palettes").clear();
+		} catch (BackingStoreException e) {
+		}
+		
+		final String testPaletteName ="blue and orange";
+		
+		ui.open("testdata/103.wif");
+		
+		ui.savePalette(testPaletteName);
+		ui.close();
+		
+		ui.newDraft(4, 6, 20, 20, testPaletteName);
+		ui.paletteIs(0, blue);
+		ui.paletteIs(1, orange);
+	}
+	
+	public void testZoom() {
+		ui.open("testdata/103.wif");
+		
+		final int initialZoom = ui.zoomLevel();
+		
+		ui.zoomIn();
+		MatcherAssert.assertThat(ui.zoomLevel(), greaterThan(initialZoom));
+		
+		ui.zoomOut();
+		MatcherAssert.assertThat(ui.zoomLevel(), equalTo(initialZoom));
+		
+		ui.zoomOut();
+		MatcherAssert.assertThat(ui.zoomLevel(), lessThan(initialZoom));
+
+		// Zoom back in is allowed to miss by 1 pixel due to rounding an odd value.
+		ui.zoomIn();
+		MatcherAssert.assertThat(ui.zoomLevel(),
+				allOf(greaterThan(initialZoom-2), lessThan(initialZoom+1)));	
+	}
+	
+	public void testTileView() {
+		ui.open("testdata/103.wif");
+
+		AppDriver.TiledView tiledView = ui.showTiledView();	
+		tiledView.hasColour(0, 0, orange);
+		tiledView.hasColour(0, 1, blue);
+		tiledView.hasColour(0, 32, orange);
+		tiledView.hasColour(32, 1, blue);
+	}
+	
+	public void testHelpAbout () {
+		ui.checkAboutBox();
 	}
 }

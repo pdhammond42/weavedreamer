@@ -1,12 +1,10 @@
 package com.jenkins.weavingsimulator.uat;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Point;
 
 import javax.swing.JDesktopPane;
 import javax.swing.JFormattedTextField;
-import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JRootPane;
 import javax.swing.JTable;
@@ -17,6 +15,7 @@ import org.uispec4j.Window;
 import org.uispec4j.Table;
 import org.uispec4j.TextBox;
 import org.uispec4j.Button;
+import org.uispec4j.interception.BasicHandler;
 import org.uispec4j.interception.WindowHandler;
 import org.uispec4j.interception.WindowInterceptor;
 import org.uispec4j.interception.FileChooserHandler;
@@ -31,22 +30,26 @@ public class AppDriver{
     // 
     // Actions 
     //
-    public void newDraft(final int harnesses, final int treadles, final int ends, final int picks) {
+    public void newDraft(final int harnesses, final int treadles, final int ends, final int picks, final String palette) {
     	WindowInterceptor
     	.init(mainWindow.getMenuBar()
     			.getMenu("File")
     			.getSubMenu("New")
     			.triggerClick())
-    			.process(new WindowHandler() {
-    				public Trigger process(Window window) {
-    					getJTextBox(window, "numTreadlesField").setValue(treadles);
-    					getJTextBox(window, "numHarnessesField").setValue(harnesses);
-    					getJTextBox(window, "numWarpEndsField").setValue(ends);
-    					getJTextBox(window, "numWeftPicksField").setValue(picks);
-    					return window.getButton("OK").triggerClick();
-    				}
-    			})
+    			.process(new PropertiesHandler (harnesses, 
+    					treadles, ends, picks, palette))
     			.run();
+    }
+    
+    public void editDraftProperties(final int harnesses, final int treadles, final int ends, final int picks, final String palette) {
+    	WindowInterceptor
+    	.init(mainWindow.getMenuBar()
+    			.getMenu("Edit")
+    			.getSubMenu("Edit Properties")
+    			.triggerClick())
+    			.process(new PropertiesHandler (harnesses, treadles, ends, picks, palette))
+    			.run();
+    	
     }
     
     public void saveAs (final String name) {
@@ -74,6 +77,24 @@ public class AppDriver{
     	JDesktopPane desktop =  (JDesktopPane) root.getContentPane().getComponent(0);
     	JInternalFrame frame = (JInternalFrame) desktop.getComponent(0);
     	new Window(frame).dispose();
+    }
+    
+    public void savePalette (final String name) {
+    	WindowInterceptor
+    	.init(mainWindow.getMenuBar()
+    			.getMenu("Edit")
+    			.getSubMenu("Save Palette")
+    			.triggerClick())
+    			.process(BasicHandler.init().setText(name).triggerButtonClick("OK"))
+    			.run();   	    	
+    }
+    
+    public TiledView showTiledView() {
+    	return new TiledView (WindowInterceptor.run(
+    			mainWindow.getMenuBar()
+    			.getMenu("View")
+    			.getSubMenu("Tiled View")
+    			.triggerClick()));
     }
     
     void toggleTieup(final int row, final int column) {
@@ -115,10 +136,64 @@ public class AppDriver{
     void dragThreadingColour(final int start, final int end) {
     	drag(warpEndColorGrid(), 0, start, 0, end);
     }
+    
+    void zoomIn() {
+    	mainWindow.getMenuBar()
+		.getMenu("View")
+		.getSubMenu("Zoom In")
+		.click();
+    }
+    
+    void zoomOut() {
+    	mainWindow.getMenuBar()
+		.getMenu("View")
+		.getSubMenu("Zoom Out")
+		.click();
+    }
+    
+    class TiledView {
+    	Window window;
+    	
+    	public TiledView (Window window) {
+    		this.window = window;
+    	}
+    	
+    	public void close () {
+    		window.dispose();
+    	}
+
+    	public void hasColour(int row, int column, Color color) {
+    		assertThat(window.getTable("grid").backgroundNear(row,  column, color));
+    	}
+    }
+    
+    //
+    // Accessors for external assertions
+    //
+    
+    public int zoomLevel () {
+    	return cellWidth(weavingPatternGrid());
+    }
+    
 	//
 	// Assertions
 	//
 		
+    public void checkAboutBox() {
+    	// This one is different from most of the test framework because it 
+    	// has to be done direct in the GUI test without any useful
+    	// indirection.
+    	WindowInterceptor
+    	.init(mainWindow.getMenuBar()
+    			.getMenu("Help")
+    			.getSubMenu("About")
+    			.triggerClick())
+    			.process(BasicHandler.init()
+    					.assertContainsText("Weaving Simulator 0.2")
+    					.triggerButtonClick("OK"))
+    			.run();   	
+    }
+    
 	public void hasHarnesses (int h) {
 		assertThat(tieUpGrid().rowCountEquals(h));
 		assertThat(threadingDraftGrid().rowCountEquals(h));
@@ -143,6 +218,10 @@ public class AppDriver{
 	
 	public void draftIs (final int row, final int column, final Color expected) {
 		assertThat(weavingPatternGrid().backgroundNear(row, column, expected));
+	}
+	
+	public void paletteIs(int index, Color color) {
+		assertThat (paletteGrid().backgroundNear(index, 0, color));
 	}
 	
 	//
@@ -180,58 +259,34 @@ public class AppDriver{
 		return mainWindow.getTable("paletteGrid");
 	}
 	
-	public class PropertiesWindow {
-		Window window;
-		
-		public PropertiesWindow(Window w) {
-			window = w;
-		}
-		
-		public void setTreadles(String t) {
-			treadles().setText(t);
-		}
-		
-		public void setHarnesses(String t) {
-			harnesses().setText(t);
-		}
-		
-		public void setEnds(String t) {
-			ends().setText(t);
-	
-		}
-		
-		public void setPicks(String t) {
-			picks().setText(t);
-		}
-		
-		public void clickOk() {
-			ok().click();
-		}
-		
-		private TextBox treadles() {
-			return window.getTextBox("numTreadlesField");	
-		}
-		
-		private TextBox harnesses() {
-			return window.getTextBox("numHarnessesField");	
-		}
-
-		private TextBox ends() {
-			return window.getTextBox("numWarpEndsField");	
-		}
-
-		private TextBox picks() {
-			return window.getTextBox("numWeftPicksField");	
-		}
-		
-		private Button ok() {
-			return window.getButton("OK");
-		}
-	}
-	
 	//
 	// Helpers
 	//
+	private class PropertiesHandler extends WindowHandler {
+		final int harnesses;
+		final int treadles;
+		final int ends;
+		final int picks;
+		final String palette;
+		
+		public PropertiesHandler (final int harnesses, final int treadles, final int ends, final int picks, final String palette) {
+			this.harnesses = harnesses;
+			this.treadles = treadles;
+			this.ends = ends;
+			this.picks = picks;
+			this.palette = palette;
+		}
+		
+		public Trigger process(Window window) {
+			getJTextBox(window, "numTreadlesField").setValue(treadles);
+			getJTextBox(window, "numHarnessesField").setValue(harnesses);
+			getJTextBox(window, "numWarpEndsField").setValue(ends);
+			getJTextBox(window, "numWeftPicksField").setValue(picks);
+			window.getComboBox("palettes_combo").select(palette);
+			return window.getButton("OK").triggerClick();
+		}
+	}
+	
 	private static void drag (Table table, final int startRow, final int startColumn, final int endRow, final int endColumn){
     	JTable jtable = table.getAwtComponent();
     	final int startX = xOfColumn(jtable, startColumn);
@@ -252,7 +307,7 @@ public class AppDriver{
 		do {
 			colOfPoint = table.columnAtPoint(point);
 			if (colOfPoint == column) return point.x;
-			point.x += 2;
+			point.x ++;
 		} while (colOfPoint != -1);
 		return 0;
 	}
@@ -263,9 +318,14 @@ public class AppDriver{
 		do {
 			rowOfPoint = table.rowAtPoint(point);
 			if (rowOfPoint == row) return point.y;
-			point.y += 2;
+			point.y ++;
 		} while (rowOfPoint != -1);
 		return 0;
+	}
+	
+	private static int cellWidth (Table table) {
+		final JTable jt = table.getAwtComponent();
+		return xOfColumn (jt, 1) - xOfColumn(jt, 0);
 	}
 	
 	public static void pause(int t) {

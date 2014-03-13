@@ -43,6 +43,7 @@ public class WeavingPatternPanel extends javax.swing.JPanel {
         TableModel model = new TiledTableModelAdapter(wmodel);
         weavingPatternGrid.setModel(model);
         weavingPatternGrid.setSquareWidth(10);
+        weavingPatternGrid.setName("grid");
     }
     
     /** This method is called from within the constructor to

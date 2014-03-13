@@ -6,11 +6,17 @@ import org.uispec4j.interception.MainClassAdapter;
 import com.jenkins.weavingsimulator.WeavingSimulatorApp;
 
 class WeavingTestCase extends UISpecTestCase {
-   public void setUp() {
-	   setAdapter(new MainClassAdapter(WeavingSimulatorApp.class, new String[0]));
-   }
 
-   public void tearDown() {
-    
-   }
+	protected AppDriver ui;
+	
+	public void setUp() {
+		setAdapter(new MainClassAdapter(WeavingSimulatorApp.class,
+				new String[0]));
+		
+		ui = new AppDriver(getMainWindow());
+	}
+
+	public void tearDown() {
+
+	}
 }

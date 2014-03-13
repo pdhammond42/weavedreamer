@@ -94,7 +94,8 @@ extra dependencies and creates a Git tag, so should not be used all the time. --
 				<path id="GUITest.classpath">
 					<pathelement location="GUItest/temp/WeavingSimulator.jar" />
 					<pathelement location="libs/uispec4j-2.4-jdk16.jar" />
-					<pathelement location="build/GUItest"/>
+					<pathelement location="build/GUItest" />
+					<pathelement location="libs/hamcrest-all-1.3.jar" />
 				</path>
 			</classpath>
 		</junit>
