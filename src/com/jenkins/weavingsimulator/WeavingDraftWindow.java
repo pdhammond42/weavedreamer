@@ -210,6 +210,7 @@ public class WeavingDraftWindow extends javax.swing.JInternalFrame {
 	public void displayTiledView() {
 		if (tiledViewFrame == null) {
 			wpanel = new WeavingPatternPanel();
+			wpanel.setName("draftPanel");
 			wpanel.setDraft(session.getDraft());
 			tiledViewFrame = new javax.swing.JFrame(getTitle());
 			tiledViewFrame.getContentPane().add(wpanel);

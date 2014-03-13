@@ -11,3 +11,4 @@ attachment
 help.html
 temp
 guitest.wsml
+testdata/*.wsml

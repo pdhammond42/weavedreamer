@@ -86,6 +86,7 @@ public class WeavingDraftPropertiesDialog extends javax.swing.JDialog {
         cancelButton = new javax.swing.JButton();
         
         palettes_combo = new javax.swing.JComboBox(palettes);
+        palettes_combo.setName("palettes_combo");
 
         setTitle("Weaving Draft Properties");
         setResizable(false);
