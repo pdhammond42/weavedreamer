@@ -103,8 +103,7 @@ public class TreadlingDraftModel extends AbstractWeavingDraftModel {
      *
      */
     public Object getValueAt(int rowIndex, int columnIndex) {
-        int pick = draft.getPicks().get(rowIndex).getTreadleId();
-        if (pick == columnIndex)
+        if (draft.getPicks().get(rowIndex).isTreadleSelected(columnIndex))
             return Color.BLACK;
         else if (rowIndex >= selectionStart && rowIndex < selectionEnd)
             return Color.LIGHT_GRAY;
@@ -174,7 +173,9 @@ public class TreadlingDraftModel extends AbstractWeavingDraftModel {
     	for (int row = selectionStart; row != selectionEnd; row++) {
             WeftPick to = draft.getPicks().get(row + offset);
             WeftPick from = draft.getPicks().get(row);
-            to.setTreadleId(from.getTreadleId());   	
+            for (int col = 0; col < draft.getTreadles().size(); col++) {
+            	if (from.isTreadleSelected(col)) to.setTreadleId(col);
+            }
     	}
     }
 }

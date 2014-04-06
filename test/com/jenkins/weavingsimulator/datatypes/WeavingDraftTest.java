@@ -261,10 +261,7 @@ public class WeavingDraftTest extends TestCase {
         draft.getPicks().add(new WeftPick(Color.WHITE, numTreadles - 1));
         draft.getTreadles().remove(numTreadles - 1);
         // now the newly added pick should have treadleId -1
-        assertEquals(-1, 
-                     draft.getPicks().get(draft.getPicks().size() - 1).getTreadleId());
-        
-        
+        assertFalse(draft.getPicks().get(draft.getPicks().size() - 1).isTreadleSelected(numTreadles-1));
     }
 
         
@@ -353,12 +350,13 @@ public class WeavingDraftTest extends TestCase {
         assertTrue(gotException);
         
         // case 3: warp end is not connected to a harness, and no treadle is
-        // specified for pick
-        assertEquals(Color.WHITE, draft.getVisibleColor(0, 0));
+        // specified for pick. The latter factor is irrelevant, a warp not
+        // attached to a harness will never be lifted.
+        assertEquals(Color.GREEN, draft.getVisibleColor(0, 0));
         
         // case 4: warp end is connected to a harness, no
         // treadle is specified for pick
-        assertEquals(Color.RED, draft.getVisibleColor(1, 0));
+        assertEquals(Color.GREEN, draft.getVisibleColor(1, 0));
                 
         // case 5: warp end not connected to harness, treadle specified
         assertEquals(Color.PINK, draft.getVisibleColor(0, 1));        

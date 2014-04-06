@@ -39,8 +39,6 @@ import javax.swing.JTable;
 
 import com.jenkins.weavingsimulator.models.AbstractWeavingDraftModel;
 import com.jenkins.weavingsimulator.models.WeavingPatternCellModel;
-import com.sun.media.sound.ModelAbstractChannelMixer;
-
 
 /** GridControl is a specialized JTable in which all cells are square.  Instead
  * of setting setting the row height and column width, you set the squareWidth 

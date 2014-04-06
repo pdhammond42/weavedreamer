@@ -241,7 +241,7 @@ public class WeavingDraft {
         }
         this.treadles = new ObservableList<Treadle>(treadles);
         this.treadles.addListChangeListener(treadlesChangedListener);
-        fixUpSteps();
+        if (oldTreadles != null) fixUpSteps(oldTreadles.size());
         for (Treadle treadle : this.treadles)
             treadle.addListChangeListener(treadleChangedListener);
 
@@ -356,18 +356,17 @@ public class WeavingDraft {
         WeftPick pick = getPicks().get(weftThread);
         
         if (end.getHarnessId() == -1) {
-            if (pick.getTreadleId() == -1)
-                return true;
-            else
                 return false;
-        } else if (pick.getTreadleId() == -1)
-            return true;
-        else {
-            Treadle treadle = getTreadles().get(pick.getTreadleId());
-            if (treadle.contains(end.getHarnessId()))
-                return true;
-            else
-                return false;
+        } else {
+        	// Return true if the end is attached to a harness that is selected
+        	// by the current pick's treadling.
+        	for (int treadle = 0; treadle < getTreadles().size(); treadle++) {
+        		if (getTreadles().get(treadle).contains(end.getHarnessId()) &&
+        			pick.isTreadleSelected(treadle)) {
+        			return true;
+        		}
+        	}
+        	return false;
         }	
     }
     
@@ -393,9 +392,7 @@ public class WeavingDraft {
         throws IllegalArgumentException 
     {
         if (doValidation) {
-            int treadleId = newPick.getTreadleId();
-            if (treadleId < -1 || treadleId >= treadles.size())
-                throw new IllegalArgumentException("Illegal pick value: " + treadleId);
+        	newPick.validate(treadles.size());
         }
     }
     
@@ -425,13 +422,15 @@ public class WeavingDraft {
     /** fix up picks that refer to out of range treadles, by setting them to -1. 
      * This should be called whenever the number of treadles changes.
      */
-    private void fixUpSteps() {
+    private void fixUpSteps(int oldCount) {
         // unset any picks that use the removed treadle
-        for (WeftPick pick : picks) {
-            if (pick.getTreadleId() >= treadles.size())
-                pick.setTreadleId(-1);
-        }
-        
+    	if (oldCount > treadles.size()) {
+    		for (WeftPick pick : picks) {
+    			for (int i = treadles.size(); i < oldCount; ++i)
+    			if (pick.isTreadleSelected(i))
+    				pick.setTreadleId(-1);
+    		}
+    	}
     }
 
     /** find the index of an object in a list, using identity instead of equals to compare. */
@@ -469,7 +468,7 @@ public class WeavingDraft {
         }
         
         public void itemRemoved(ListChangedEvent<Treadle> event) {
-            fixUpSteps();
+            fixUpSteps(treadles.size() + 1);
             propertyChangeSupport.firePropertyChange("treadles", null, treadles);
         }
     }
@@ -501,7 +500,7 @@ public class WeavingDraft {
         }
         
         public void itemRemoved(ListChangedEvent<Integer> event) {
-            fixUpSteps();
+            fixUpSteps(event.getOldValue());
             Treadle treadle = (Treadle)event.getSource();
             propertyChangeSupport.fireIndexedPropertyChange("treadles", identityIndexOf(treadles, treadle), 
                 treadle, null);
