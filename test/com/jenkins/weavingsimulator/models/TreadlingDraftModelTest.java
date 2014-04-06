@@ -92,9 +92,9 @@ public class TreadlingDraftModelTest extends TestCase {
     }
 
     public void testSetValueAt() {
-        assertEquals(1, draft.getPicks().get(1).getTreadleId());
+        assertTrue(draft.getPicks().get(1).isTreadleSelected(1));
         model.setValueAt(true, 1, 0);
-        assertEquals(0, draft.getPicks().get(1).getTreadleId());
+        assertTrue(draft.getPicks().get(1).isTreadleSelected(0));
     }
 
     public void testIsCellEditable() {

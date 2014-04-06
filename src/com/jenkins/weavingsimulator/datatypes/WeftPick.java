@@ -75,8 +75,8 @@ public class WeftPick {
      * @return Value of property treadleId.
      *
      */
-    public int getTreadleId() {
-        return this.treadleId;
+    public boolean isTreadleSelected (int treadleId) {
+        return this.treadleId == treadleId;
     }
     
     /** Setter for property treadleId.
@@ -114,4 +114,12 @@ public class WeftPick {
     public int hashCode() {
         return HashCodeBuilder.reflectionHashCode(this);
     }
+
+    /**
+     * Validates the object against the number of treadles in the draft.
+     * @param treadles
+     */
+	public void validate(int treadles) throws IllegalArgumentException {
+		if (treadleId >= treadles || treadleId < -1) throw new IllegalArgumentException ();
+	}
 }

@@ -32,8 +32,6 @@ import java.util.List;
 import java.util.Vector;
 import java.util.prefs.Preferences;
 
-import javax.swing.JDialog;
-
 import com.jenkins.weavingsimulator.datatypes.Palette;
 import com.jenkins.weavingsimulator.models.PalettePreviewModel;
 

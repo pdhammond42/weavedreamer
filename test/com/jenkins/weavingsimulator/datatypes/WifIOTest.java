@@ -248,12 +248,12 @@ public class WifIOTest extends TestCase {
     	
     	java.util.List<WeftPick> p = draft.getPicks();
     	assertThat(p, hasSize(6));
-    	assertThat(p.get(0).getTreadleId(), is(0));
-    	assertThat(p.get(1).getTreadleId(), is(1));
-    	assertThat(p.get(2).getTreadleId(), is(2));
-    	assertThat(p.get(3).getTreadleId(), is(3));
-    	assertThat(p.get(4).getTreadleId(), is(4));
-    	assertThat(p.get(5).getTreadleId(), is(5));
+    	assertThat(p.get(0).isTreadleSelected(0), is(true));
+    	assertThat(p.get(1).isTreadleSelected(1), is(true));
+    	assertThat(p.get(2).isTreadleSelected(2), is(true));
+    	assertThat(p.get(3).isTreadleSelected(3), is(true));
+    	assertThat(p.get(4).isTreadleSelected(4), is(true));
+    	assertThat(p.get(5).isTreadleSelected(5), is(true));
     }
     
     public void testActualNumberOfColoursTakesPriority () throws IOException {

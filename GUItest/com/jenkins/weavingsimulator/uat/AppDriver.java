@@ -1,5 +1,7 @@
 package com.jenkins.weavingsimulator.uat;
 
+import static org.uispec4j.assertion.UISpecAssert.assertThat;
+
 import java.awt.Color;
 import java.awt.Point;
 
@@ -10,16 +12,13 @@ import javax.swing.JRootPane;
 import javax.swing.JTable;
 
 import org.uispec4j.Mouse;
+import org.uispec4j.Table;
 import org.uispec4j.Trigger;
 import org.uispec4j.Window;
-import org.uispec4j.Table;
-import org.uispec4j.TextBox;
-import org.uispec4j.Button;
 import org.uispec4j.interception.BasicHandler;
+import org.uispec4j.interception.FileChooserHandler;
 import org.uispec4j.interception.WindowHandler;
 import org.uispec4j.interception.WindowInterceptor;
-import org.uispec4j.interception.FileChooserHandler;
-import static org.uispec4j.assertion.UISpecAssert.assertThat;
 
 public class AppDriver{
 	private Window mainWindow;
