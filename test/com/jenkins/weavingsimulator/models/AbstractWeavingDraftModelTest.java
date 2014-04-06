@@ -27,6 +27,8 @@
 package com.jenkins.weavingsimulator.models;
 
 import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
+
+import java.awt.Rectangle;
 import java.beans.PropertyChangeListener;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -124,6 +126,26 @@ public class AbstractWeavingDraftModelTest extends TestCase {
         assertTrue(listener.event.getLastRow() >= model.getRowCount() - 1);
     }
 
+    public void testFireCurrentCellUpdated() {
+        model.addTableModelListener(listener);
+        model.setCurrentCell(2, 3);
+        
+        assertEquals(new Rectangle (3, 2, -1, -1), model.getCurrentCell());
+    	assertEquals(AbstractWeavingDraftModel.CURSOR, listener.event.getType());
+    	assertEquals(3, listener.event.getColumn());
+    	assertEquals(2, listener.event.getFirstRow());
+    }
+    
+    public void testFireCurrentCellUpdatedForDrag() {
+        model.addTableModelListener(listener);
+        model.setCurrentCell(2, 3, 1, 5);
+        
+        assertEquals(new Rectangle (3, 2, 2, 1), model.getCurrentCell());
+    	assertEquals(AbstractWeavingDraftModel.CURSOR, listener.event.getType());
+    	assertEquals(3, listener.event.getColumn());
+    	assertEquals(2, listener.event.getFirstRow());
+    }
+        
     private class AbstractWeavingDraftModelImpl extends AbstractWeavingDraftModel {
 
         AbstractWeavingDraftModelImpl(WeavingDraft draft) {

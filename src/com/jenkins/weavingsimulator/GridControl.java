@@ -39,6 +39,7 @@ import javax.swing.JTable;
 
 import com.jenkins.weavingsimulator.models.AbstractWeavingDraftModel;
 import com.jenkins.weavingsimulator.models.WeavingPatternCellModel;
+import com.sun.media.sound.ModelAbstractChannelMixer;
 
 
 /** GridControl is a specialized JTable in which all cells are square.  Instead
@@ -104,20 +105,21 @@ public class GridControl extends JTable {
 				if (allowDrag) doDrag (arg0);
 			}
 			public void mouseMoved(MouseEvent arg0) {
+				final RowColumn p = toCell(arg0.getPoint());
+				((AbstractWeavingDraftModel)getModel()).setCurrentCell(p.row, p.column);		
 			}
 			});
         addMouseListener (new MouseListener() {
 
 			public void mouseClicked(MouseEvent e) {
+				final RowColumn p = toCell(e.getPoint());	
 				if (e.getClickCount() == 1 && 
 						e.getButton() == MouseEvent.BUTTON1 && 
 						editedValueProvider != null) {
-					setValueAt (editedValueProvider.getValue(), e.getPoint().y / squareWidth, 
-							e.getPoint().x / squareWidth);
+					setValueAt (editedValueProvider.getValue(), p.row, p.column);
 				} else if (e.getClickCount() == 1 && 
 						e.getButton() == MouseEvent.BUTTON3) {
-					((AbstractWeavingDraftModel)getModel()).pasteSelection( e.getPoint().y / squareWidth, 
-							e.getPoint().x / squareWidth);
+					((AbstractWeavingDraftModel)getModel()).pasteSelection(p.row, p.column);
 				}
 			}
 
@@ -204,11 +206,19 @@ public class GridControl extends JTable {
 				dragStart = event.getPoint();
 	    	} else {
 	    		dragEnd = event.getPoint();
+	    		final RowColumn start = toCell(dragStart);
+	    		final RowColumn end = toCell(dragEnd);
+	    		AbstractWeavingDraftModel model = null;
+	    		if (getModel() instanceof AbstractWeavingDraftModel) 
+	    			model = (AbstractWeavingDraftModel)getModel();
+	    		if (model != null) 
+	    			model.setCurrentCell(
+	    				start.row, start.column, 
+    					end.row, end.column);		
 	    		if (isShiftDrag) {
-	    			((AbstractWeavingDraftModel)getModel()).setSelection(dragStart.y / squareWidth, 
-	    					dragStart.x / squareWidth, 
-	    					dragEnd.y / squareWidth, 
-	    					dragEnd.x / squareWidth);		
+	    			if (model != null) model.setSelection(
+	    					start.row, start.column, 
+	    					end.row, end.column);		
 	    		} else {
 	    			repaint();
 	    		}
@@ -218,17 +228,15 @@ public class GridControl extends JTable {
     
     public void endDrag () {
     	if (dragStart != null && dragEnd != null && !isShiftDrag) {
-    		final int cellX0 = dragStart.x / squareWidth;
-    		final int cellY0 = dragStart.y / squareWidth;
-    		final int cellX1 = dragEnd.x / squareWidth;
-	    	final int cellY1 = dragEnd.y / squareWidth;
-	    	final int diffX = cellX1 - cellX0;
-		    final int diffY = cellY1 - cellY0;
+    		final RowColumn start = toCell(dragStart);
+    		final RowColumn end = toCell(dragEnd);
+	    	final int diffX = end.column - start.column;
+		    final int diffY = end.row - start.row;
 		    final int steps = Math.max(Math.abs(diffX), Math.abs(diffY))+1;
 		    if (editedValueProvider != null) {
-		    	setValueAt (editedValueProvider.getValue(), cellY0, cellX0);
+		    	setValueAt (editedValueProvider.getValue(), start.row, start.column);
 		    	for (int i = 1; i < steps; i++) {
-		    		setValueAt (editedValueProvider.getValue(), cellY0 + i*diffY/(steps-1), cellX0+i*diffX/(steps-1));
+		    		setValueAt (editedValueProvider.getValue(), start.row + i*diffY/(steps-1), start.column+i*diffX/(steps-1));
 		    	}	
 		   	}	
     	}
@@ -315,5 +323,19 @@ public class GridControl extends JTable {
                 label.setBackground(Color.WHITE);
             return label;
         }        
+    }
+    
+    // Helpers for dealing with point to cell conversions.
+    private class RowColumn {
+    	public final int row;
+    	public final int column;
+    	public RowColumn (int row, int column) {
+    		this.row = row;
+    		this.column = column;
+    	}
+    }
+    
+    private RowColumn toCell (Point p) {
+    	return new RowColumn (p.y / squareWidth, p.x / squareWidth);
     }
 }

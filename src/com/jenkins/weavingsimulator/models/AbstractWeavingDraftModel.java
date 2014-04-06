@@ -26,6 +26,8 @@
 package com.jenkins.weavingsimulator.models;
 
 import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
+
+import java.awt.Rectangle;
 import java.beans.IndexedPropertyChangeEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -43,7 +45,18 @@ public abstract class AbstractWeavingDraftModel
     protected WeavingDraft draft;
     private PropertyChangeListener draftListener;
     
-
+    /**
+     * The current selected set of cells.
+     * This works in table cells, not pixels. 
+     */
+    private Rectangle cursorSelection = new Rectangle();
+    
+    /**
+     * Constant that can be used for the type parameter of 
+     * a TableModelEvent to indicate that the cursor position has changed.
+     */
+    public static int CURSOR = 4;
+    
     /** Creates a new instance of AbstractWeavingDraftModel */
     public AbstractWeavingDraftModel(WeavingDraft draft) {
         draftListener = new PropertyChangeListener() {
@@ -93,20 +106,53 @@ public abstract class AbstractWeavingDraftModel
     /** Sets a selection into the model, which can later be duplicated by calling pasteSelection.
      * The default implementation is a no-op. 
      * Because this is implemented by the treadle and tie-up models, an implementation is likely to pay attention 
-     * to either X or Y, but not both.
-     * @param cellX0 Starting column of the selection
-     * @param cellY0 Starting row of the selection
-     * @param cellX1 Ending column of the selection
-     * @param cellY1 Ending row of the selection.
+     * to either row or column, but not both.
+     * @param startRow Starting row of the selection
+     * @param startColumn Starting column of the selection
+     * @param endRow One-past-end row of the selection.
+     * @param endColumn One-past-end column of the selection
      */
-    public void setSelection (int cellX0, int cellY0, int cellX1, int cellY1){
+    public void setSelection (int startRow, int startColumn, int endRow, int endColumn){
     }
     
-    /** If a selection has previously been set by setSelection, duplicates that seelction
-     * with its top left hand corner at cellX, cellY.
-     * @param cellX Starting column
-     * @param cellY Starting row
+    /** If a selection has previously been set by setSelection, duplicates that selection
+     * with its top left hand corner at rowIndex, columnIndex.
+     * @param rowIndex Starting row
+     * @param columnIndex Starting column
      */
-    public void pasteSelection (int cellX, int cellY) {
+    public void pasteSelection (int rowIndex, int columnIndex) {
+    }
+    
+    /**
+     * Sets the current cell cursor position and notifies any listeners.
+     * @param rowIndex row that the cursor is over
+     * @param columnIndex column that the cursor is over
+     */
+    public void setCurrentCell (int rowIndex, int columnIndex) {
+    	cursorSelection = new Rectangle (columnIndex, rowIndex, -1, -1);
+    	fireTableChanged (new TableModelEvent(this, rowIndex, rowIndex, columnIndex, CURSOR));
+    }
+    
+    /**
+     * Sets the current cell cursor position and notifies any listeners.
+     * @param startRow Starting row of the selection
+     * @param startColumn Starting column of the selection
+     * @param endRow One-past-end row of the selection.
+     * @param endColumn One-past-end column of the selection
+
+     */
+    public void setCurrentCell (int startRow, int startColumn, int endRow, int endColumn) {
+    	cursorSelection = new Rectangle (startColumn, startRow, Math.abs(startColumn-endColumn), Math.abs(startRow-endRow));
+    	fireTableChanged (new TableModelEvent(this, startRow, startRow, startColumn, CURSOR));
+    }
+
+    /**
+     * Gets the current cursor location, as a starting cell and width & height of any drag in progress.
+     * If no drag is in progress reports -1, -1 for the dimensions.
+     * @return
+     * 
+     */
+    public Rectangle getCurrentCell() {
+    	return cursorSelection;
     }
 }
