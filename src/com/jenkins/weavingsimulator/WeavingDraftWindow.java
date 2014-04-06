@@ -29,8 +29,13 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+
 import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
+import com.jenkins.weavingsimulator.models.AbstractWeavingDraftModel;
 import com.jenkins.weavingsimulator.models.EditingSession;
+import com.jenkins.weavingsimulator.models.StatusBarModel;
 import com.jenkins.weavingsimulator.models.StepColorModel;
 import com.jenkins.weavingsimulator.models.ThreadingDraftModel;
 import com.jenkins.weavingsimulator.models.TieUpModel;
@@ -92,6 +97,21 @@ public class WeavingDraftWindow extends javax.swing.JInternalFrame {
 		warpEndColorGrid.setToolTipText("Set warp colour");
 		pickColorGrid.setToolTipText("Set weft colour");
 		tieUpGrid.setToolTipText("Set tie-up");
+		
+		StatusBarModel sbModel = new StatusBarModel();
+		sbModel.listen((AbstractWeavingDraftModel)treadlingDraftGrid.getModel());
+		sbModel.listen((AbstractWeavingDraftModel)threadingDraftGrid.getModel());
+		
+		statusBar = new StatusBarControl(sbModel);
+		statusBar.setName("statusBar");
+		java.awt.GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
+		gridBagConstraints.gridx = 0;
+		gridBagConstraints.gridy = 4;
+		gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+		gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTH;
+		gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
+		jPanel1.add(statusBar, gridBagConstraints);
+		statusBar.setText("0,0");
 		
 		setName("WeavingDraftWindow");
 	}
@@ -315,6 +335,7 @@ public class WeavingDraftWindow extends javax.swing.JInternalFrame {
 	private com.jenkins.weavingsimulator.GridControl warpEndColorGrid;
 	private com.jenkins.weavingsimulator.GridControl weavingPatternGrid;
 	// End of variables declaration//GEN-END:variables
+	private StatusBarControl statusBar;
 
 	private javax.swing.JFrame tiledViewFrame = null;
 	private WeavingPatternPanel wpanel = null;

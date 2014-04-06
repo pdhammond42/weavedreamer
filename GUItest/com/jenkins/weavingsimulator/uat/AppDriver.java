@@ -224,7 +224,11 @@ public class AppDriver{
 		assertThat (paletteGrid().backgroundNear(index, 0, color));
 	}
 	
-	//
+    public void statusBarContains(String text) {
+    	assertThat (mainWindow.getTextBox("statusBar").textContains(text));
+    }
+    
+    //
 	// UI element access
 	//
     private static JFormattedTextField getJTextBox(Window window, String name) {
