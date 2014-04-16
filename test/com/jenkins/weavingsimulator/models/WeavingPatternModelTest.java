@@ -66,9 +66,9 @@ public class WeavingPatternModelTest extends TestCase {
                 new Treadle(Arrays.asList(0, 2)),
                 new Treadle(Arrays.asList(1))));
         draft.setPicks(Arrays.asList(
-                new WeftPick(Color.BLACK, 0),
-                new WeftPick(Color.WHITE, 1),
-                new WeftPick(Color.DARK_GRAY, -1)));
+                new WeftPick(Color.BLACK, 2, 0),
+                new WeftPick(Color.WHITE, 2, 1),
+                new WeftPick(Color.DARK_GRAY, 2)));
         
         model = new WeavingPatternModel(draft);
         
@@ -110,7 +110,7 @@ public class WeavingPatternModelTest extends TestCase {
     
     public void testNotifyOnStepsChanged() {
         // try adding a pick
-        draft.getPicks().add(new WeftPick(Color.RED, 1));
+        draft.getPicks().add(new WeftPick(Color.RED, 2, 0));
         TableModelTestUtils.assertTableRowUpdateEvent(listener.event, model, 3);
         
         // try changing a pick
@@ -120,7 +120,7 @@ public class WeavingPatternModelTest extends TestCase {
         
         // change all picks
         listener.event = null;
-        draft.setPicks(Arrays.asList(new WeftPick(Color.BLUE, 1)));
+        draft.setPicks(Arrays.asList(new WeftPick(Color.BLUE, 2, 0)));
         TableModelTestUtils.assertAllTableCellsUpdateEvent(listener.event, model);
     }
     

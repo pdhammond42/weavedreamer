@@ -213,20 +213,20 @@ public class WeavingDraftPropertiesDialog extends javax.swing.JDialog {
                     draft.getEnds().remove(draft.getEnds().size() - 1);
             }
             
-            if (numPicks > draft.getPicks().size()) {
-                while (numPicks > draft.getPicks().size())
-                    draft.getPicks().add(new com.jenkins.weavingsimulator.datatypes.WeftPick());
-            } else if (numPicks < draft.getPicks().size()) {
-                while (numPicks < draft.getPicks().size())
-                    draft.getPicks().remove(draft.getPicks().size() - 1);
-            }
-            
             if (numTreadles > draft.getTreadles().size()) {
                 while (numTreadles > draft.getTreadles().size())
                     draft.getTreadles().add(new com.jenkins.weavingsimulator.datatypes.Treadle());
             } else if (numTreadles < draft.getTreadles().size()) {
                 while (numTreadles < draft.getTreadles().size())
                     draft.getTreadles().remove(draft.getTreadles().size() - 1);
+            }
+            
+            if (numPicks > draft.getPicks().size()) {
+                while (numPicks > draft.getPicks().size())
+                    draft.getPicks().add(new com.jenkins.weavingsimulator.datatypes.WeftPick(numTreadles));
+            } else if (numPicks < draft.getPicks().size()) {
+                while (numPicks < draft.getPicks().size())
+                    draft.getPicks().remove(draft.getPicks().size() - 1);
             }
             
     		Palette p = (Palette)palettes_combo.getSelectedItem();

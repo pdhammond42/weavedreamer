@@ -111,10 +111,10 @@ public class TreadlingDraftModel extends AbstractWeavingDraftModel {
         	return Color.WHITE;
     }
     
-    /** Sets the value in the cell at <code>columnIndex</code> and
-     * <code>rowIndex</code> to <code>aValue</code>.
+    /** Toggles the value in the cell at <code>columnIndex</code> and
+     * <code>rowIndex</code>.
      *
-     * @param	aValue		 the new value (boolean)
+     * @param	aValue		 the new value (boolean), which is ignored.
      * @param	rowIndex	 the row whose value is to be changed
      * @param	columnIndex 	 the column whose value is to be changed
      * @see #getValueAt
@@ -123,7 +123,7 @@ public class TreadlingDraftModel extends AbstractWeavingDraftModel {
      */
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
         WeftPick pick = draft.getPicks().get(rowIndex);
-        pick.setTreadleId(columnIndex);
+        pick.setTreadle(columnIndex, true);
     }
     
     /** Returns true if the cell at <code>rowIndex</code> and
@@ -174,7 +174,7 @@ public class TreadlingDraftModel extends AbstractWeavingDraftModel {
             WeftPick to = draft.getPicks().get(row + offset);
             WeftPick from = draft.getPicks().get(row);
             for (int col = 0; col < draft.getTreadles().size(); col++) {
-            	if (from.isTreadleSelected(col)) to.setTreadleId(col);
+            	if (from.isTreadleSelected(col)) to.setTreadle(col, true);
             }
     	}
     }

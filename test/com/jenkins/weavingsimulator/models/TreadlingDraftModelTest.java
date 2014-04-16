@@ -54,9 +54,9 @@ public class TreadlingDraftModelTest extends TestCase {
         draft.setNumHarnesses(2);
         draft.setTreadles(Arrays.asList(new Treadle(), new Treadle()));
         draft.setPicks(Arrays.asList(
-                new WeftPick(Color.BLACK, 0), 
-                new WeftPick(Color.WHITE, 1),
-                new WeftPick(Color.BLUE, 0)));
+                new WeftPick(Color.BLACK, 2, 0), 
+                new WeftPick(Color.WHITE, 2, 1),
+                new WeftPick(Color.BLUE, 2, 0)));
         
         model = new TreadlingDraftModel(draft);
         listener = new TestTableModelListener();
@@ -79,9 +79,9 @@ public class TreadlingDraftModelTest extends TestCase {
 
     public void testGetValueAt() {
     	model.setSelection(2, 0, 3, 0);
-    	draft.getPicks().get(0).setTreadleId(0);
-    	draft.getPicks().get(1).setTreadleId(1);
-    	draft.getPicks().get(2).setTreadleId(0);
+    	draft.getPicks().get(0).setTreadle(0, true);
+    	draft.getPicks().get(1).setTreadle(1, true);
+    	draft.getPicks().get(2).setTreadle(0, true);
     	
     	assertThat((Color)model.getValueAt(0, 0), equalTo(Color.BLACK));
     	assertThat((Color)model.getValueAt(0, 1), equalTo(Color.WHITE));
@@ -122,7 +122,7 @@ public class TreadlingDraftModelTest extends TestCase {
     }
     
     public void testNotifyOnStepsChanged() {
-        draft.getPicks().add(new WeftPick(Color.RED, 1));
+        draft.getPicks().add(new WeftPick(Color.RED, 2, 1));
         TableModelTestUtils.assertAllTableCellsUpdateEvent(listener.event, model);
     }
     
@@ -135,12 +135,12 @@ public class TreadlingDraftModelTest extends TestCase {
     
     public void testSetAndPasteSelection() {
         draft.setPicks(Arrays.asList(
-                new WeftPick(Color.BLACK, 0), 
-                new WeftPick(Color.WHITE, 1),
-                new WeftPick(Color.WHITE, 1),
-                new WeftPick(Color.WHITE, 1),
-                new WeftPick(Color.WHITE, 1),
-                new WeftPick(Color.BLUE, 0)));
+                new WeftPick(Color.BLACK, 2, 0), 
+                new WeftPick(Color.WHITE, 2, 1),
+                new WeftPick(Color.WHITE, 2, 1),
+                new WeftPick(Color.WHITE, 2, 1),
+                new WeftPick(Color.WHITE, 2, 1),
+                new WeftPick(Color.BLUE, 2, 0)));
 
     	model.setValueAt(true, 0, 0);
     	model.setValueAt(true, 1, 1);

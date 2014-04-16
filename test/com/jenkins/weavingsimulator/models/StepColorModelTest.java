@@ -59,8 +59,8 @@ public class StepColorModelTest extends TestCase {
         draft.setNumHarnesses(2);
         
         List<WeftPick> picks = new LinkedList<WeftPick>();
-        picks.add(new WeftPick(Color.BLACK, 0));
-        picks.add(new WeftPick(Color.WHITE, 1));
+        picks.add(new WeftPick(Color.BLACK, 2, 0));
+        picks.add(new WeftPick(Color.WHITE, 2, 1));
         
         draft.setPicks(picks);
 
@@ -111,7 +111,7 @@ public class StepColorModelTest extends TestCase {
     
     /// Test that listener is notifed when number of picks changes
     public void testNotifyListenerOnStepsChanged() {
-        draft.getPicks().add(new WeftPick(Color.BLACK, 0));        
+        draft.getPicks().add(new WeftPick(Color.BLACK, 2, 0));        
         TableModelTestUtils.assertAllTableCellsUpdateEvent(listener.event, model);
     }
     

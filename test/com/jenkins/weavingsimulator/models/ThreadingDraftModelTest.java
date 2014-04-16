@@ -132,7 +132,7 @@ public class ThreadingDraftModelTest extends TestCase {
         // change some other properties of draft
         draft.setName("Foo");
         draft.getTreadles().add(new Treadle());
-        draft.getPicks().add(new WeftPick(Color.BLUE, 0));
+        draft.getPicks().add(new WeftPick(Color.BLUE, 1, 0));
         
         assertNull(listener.event);
     }

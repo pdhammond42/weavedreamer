@@ -90,8 +90,8 @@ public class WeavingDraftTest extends TestCase {
         draft.getTreadles().add(new Treadle());
         
         List<WeftPick> picks = new LinkedList<WeftPick>();
-        picks.add(new WeftPick(Color.BLACK, 0));
-        picks.add(new WeftPick(Color.BLACK, 1));
+        picks.add(new WeftPick(Color.BLACK, 2, 0));
+        picks.add(new WeftPick(Color.BLACK, 2, 1));
         
         List<WeftPick> oldValue = draft.getPicks();
         draft.setPicks(picks);
@@ -101,7 +101,7 @@ public class WeavingDraftTest extends TestCase {
         BeanTestUtils.assertPropertyChangeFired(listener.events, "picks", oldValue, picks, -1);
         
         // make sure it throws exception for out of bounds pick values
-        WeftPick two = new WeftPick(Color.WHITE, 2);
+        WeftPick two = new WeftPick(Color.WHITE, 3, 2);
         boolean gotException = false;
         try {
             draft.getPicks().add(two);
@@ -115,7 +115,7 @@ public class WeavingDraftTest extends TestCase {
         // verify lower bound
         gotException = false;
         try {
-            draft.getPicks().add(new WeftPick(Color.WHITE, -2));
+            draft.getPicks().add(new WeftPick(Color.WHITE, -2, -2));
         } catch (IllegalArgumentException e) {
             gotException = true;
         }
@@ -258,10 +258,9 @@ public class WeavingDraftTest extends TestCase {
         
         // make sure that removing a treadle updates any picks which reference it
         numTreadles = draft.getTreadles().size();
-        draft.getPicks().add(new WeftPick(Color.WHITE, numTreadles - 1));
+        draft.getPicks().add(new WeftPick(Color.WHITE, numTreadles, numTreadles - 1));
         draft.getTreadles().remove(numTreadles - 1);
-        // now the newly added pick should have treadleId -1
-        assertFalse(draft.getPicks().get(draft.getPicks().size() - 1).isTreadleSelected(numTreadles-1));
+        assertFalse(draft.getPicks().get(draft.getPicks().size() - 1).isTreadleSelected(numTreadles-2));
     }
 
         
@@ -328,9 +327,9 @@ public class WeavingDraftTest extends TestCase {
         draft.getEnds().add(new WarpEnd(Color.RED, 0));
         draft.getTreadles().add(new Treadle(Arrays.asList(0)));
         draft.getTreadles().add(new Treadle(Arrays.asList(1)));
-        draft.getPicks().add(new WeftPick(Color.GREEN, -1));
-        draft.getPicks().add(new WeftPick(Color.PINK, 0));
-        draft.getPicks().add(new WeftPick(Color.BLUE, 1));
+        draft.getPicks().add(new WeftPick(Color.GREEN, 2));
+        draft.getPicks().add(new WeftPick(Color.PINK, 2, 0));
+        draft.getPicks().add(new WeftPick(Color.BLUE, 2, 1));
         
         boolean gotException = false;
         
@@ -377,8 +376,8 @@ public class WeavingDraftTest extends TestCase {
         draft.getEnds().add(new WarpEnd(Color.RED, 1));
         draft.getTreadles().add(new Treadle(Arrays.asList(0)));
         draft.getTreadles().add(new Treadle(Arrays.asList(1)));
-        draft.getPicks().add(new WeftPick(Color.PINK, 0));
-        draft.getPicks().add(new WeftPick(Color.BLUE, 1));
+        draft.getPicks().add(new WeftPick(Color.PINK, 2, 0));
+        draft.getPicks().add(new WeftPick(Color.BLUE, 2, 1));
         
         assertTrue (draft.isWarpVisible(0,0));
         assertFalse (draft.isWarpVisible(1,0));
@@ -393,8 +392,8 @@ public class WeavingDraftTest extends TestCase {
         draft.getTreadles().add(new Treadle(Arrays.asList(1)));
         draft.getEnds().add(new WarpEnd(Color.WHITE, 0));
         draft.getEnds().add(new WarpEnd(Color.RED, 1));
-        draft.getPicks().add(new WeftPick(Color.PINK, 0));
-        draft.getPicks().add(new WeftPick(Color.BLUE, 1));    
+        draft.getPicks().add(new WeftPick(Color.PINK, 2, 0));
+        draft.getPicks().add(new WeftPick(Color.BLUE, 2, 1));    
         
         draft.createPalette();
         assertThat(draft.getPalette().getColors(), containsInAnyOrder(Color.white, Color.red, Color.pink, Color.blue));

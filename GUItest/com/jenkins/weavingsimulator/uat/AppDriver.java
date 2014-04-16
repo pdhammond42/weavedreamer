@@ -48,7 +48,6 @@ public class AppDriver{
     			.triggerClick())
     			.process(new PropertiesHandler (harnesses, treadles, ends, picks, palette))
     			.run();
-    	
     }
     
     public void saveAs (final String name) {

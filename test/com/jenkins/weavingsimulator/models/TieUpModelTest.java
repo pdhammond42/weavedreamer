@@ -130,7 +130,7 @@ public class TieUpModelTest extends TestCase {
 
     public void testNoExtraNotifications() {
         draft.setName("NewName");
-        draft.getPicks().add(new WeftPick(Color.RED, 1));
+        draft.getPicks().add(new WeftPick(Color.RED, 2));
         draft.getEnds().add(new WarpEnd(Color.BLUE, 1));
         assertNull(listener.event);
     }

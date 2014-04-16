@@ -26,6 +26,7 @@
 package com.jenkins.weavingsimulator.datatypes;
 
 import java.awt.Color;
+
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
@@ -37,7 +38,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 public class WeftPick {
     
     /** Holds value of property treadleId. */
-    private int treadleId = -1;
+    private boolean[] treadles;
     
     /** Utility field used by bound properties. */
     private transient java.beans.PropertyChangeSupport propertyChangeSupport =  
@@ -50,11 +51,20 @@ public class WeftPick {
     public WeftPick() {
     }
     
-    public WeftPick(Color color, int treadleId) {
-        this.color = color;
-        this.treadleId = treadleId;
+    public WeftPick(int treadleCount) {
+    	this.treadles = new boolean[treadleCount];
     }
-    
+
+    public WeftPick(Color color, int treadleCount, int... selected) {
+    	if (treadleCount < 0) throw new IllegalArgumentException();
+        this.color = color;
+        this.treadles = new boolean[treadleCount];
+        for (int t : selected) {
+        	if (t >= treadleCount || t < 0) throw new IllegalArgumentException();
+        	this.treadles[t] = true;
+        }
+    }
+
     /** Adds a PropertyChangeListener to the listener list.
      * @param l The listener to add.
      *
@@ -76,17 +86,25 @@ public class WeftPick {
      *
      */
     public boolean isTreadleSelected (int treadleId) {
-        return this.treadleId == treadleId;
+        return this.treadles[treadleId];
+    }
+    
+    /** Getter for property treadles
+     * 
+     */
+    public boolean[] getTreadles() {
+    	return treadles.clone();
     }
     
     /** Setter for property treadleId.
      * @param treadleId New value of property treadleId.
+     * @param value TODO
      *
      */
-    public void setTreadleId(int treadleId) {
-        int oldTreadleId = this.treadleId;
-        this.treadleId = treadleId;
-        propertyChangeSupport.firePropertyChange("treadleId", oldTreadleId, treadleId);
+    public void setTreadle(int treadleId, boolean value) {
+        boolean[] oldTreadles = this.treadles.clone();
+        this.treadles[treadleId] = value;
+        propertyChangeSupport.firePropertyChange("treadles", oldTreadles, treadles);
     }
     
     /** Getter for property color.
@@ -120,6 +138,13 @@ public class WeftPick {
      * @param treadles
      */
 	public void validate(int treadles) throws IllegalArgumentException {
-		if (treadleId >= treadles || treadleId < -1) throw new IllegalArgumentException ();
+		if (this.treadles.length != treadles) throw new IllegalArgumentException ();
+	}
+
+	public void setTreadleCount(int i) {
+		boolean[] oldTreadles = treadles;
+		treadles = new boolean[i];
+		System.arraycopy(oldTreadles, 0, treadles, 0, Math.min(i, oldTreadles.length));
+		propertyChangeSupport.firePropertyChange("treadles", oldTreadles, treadles);
 	}
 }

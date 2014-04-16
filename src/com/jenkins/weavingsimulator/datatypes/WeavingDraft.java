@@ -419,16 +419,14 @@ public class WeavingDraft {
         }
     }
 
-    /** fix up picks that refer to out of range treadles, by setting them to -1. 
+    /** fix up picks that refer to out of range treadles. 
      * This should be called whenever the number of treadles changes.
      */
     private void fixUpSteps(int oldCount) {
         // unset any picks that use the removed treadle
     	if (oldCount > treadles.size()) {
     		for (WeftPick pick : picks) {
-    			for (int i = treadles.size(); i < oldCount; ++i)
-    			if (pick.isTreadleSelected(i))
-    				pick.setTreadleId(-1);
+    			pick.setTreadleCount(treadles.size());
     		}
     	}
     }
@@ -581,7 +579,7 @@ public class WeavingDraft {
             WeftPick pick = (WeftPick)evt.getSource();
             try { validatePick(pick); }
             catch (IllegalArgumentException e) {
-                pick.setTreadleId((Integer)evt.getOldValue());
+                pick.setTreadle((Integer)evt.getOldValue(), true);
                 throw e;
             }
             propertyChangeSupport.fireIndexedPropertyChange("picks", identityIndexOf(picks, pick),

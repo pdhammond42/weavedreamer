@@ -51,7 +51,7 @@ public class WIFIO {
         }
         
         if (wif.getBooleanField("CONTENTS", "WEFT", false)) {
-        	List<WeftPick> picks = readWeft(wif, palette);        
+        	List<WeftPick> picks = readWeft(wif, palette, draft.getTreadles().size());        
         	draft.setPicks(picks);
         }
         
@@ -144,7 +144,7 @@ public class WIFIO {
         return ends;
     }
 
-    private List<WeftPick> readWeft(WIFFile wif, List<Color> palette) throws RuntimeException {
+    private List<WeftPick> readWeft(WIFFile wif, List<Color> palette, int treadles) throws RuntimeException {
     	boolean liftplan = wif.getBooleanField("CONTENTS", "LIFTPLAN", false);
         int numPicks = wif.getIntField("WEFT", "Threads");
         List<WeftPick> picks = new ArrayList<WeftPick>(numPicks);
@@ -161,7 +161,7 @@ public class WIFIO {
         			int colorIdx = wif.getIntField("WEFT", "COLOR") - 1;
         			color = palette.get(colorIdx);            
         		}
-        		picks.add(new WeftPick(color, treadleId));
+        		picks.add(new WeftPick(color, treadles, treadleId));
         	} catch (WIFException e) {
         		break;
         	}
