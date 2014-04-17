@@ -53,6 +53,12 @@ public class WeavingDraftPropertiesDialog extends javax.swing.JDialog {
 			}
         });
         
+        liftplanCheck.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				numTreadlesField.setEnabled(!liftplanCheck.isSelected());
+			}
+        });
+        
         java.awt.Dimension dim = getPreferredSize();
         dim.setSize(dim.width + 20, dim.height + 20);
         setSize(dim);
@@ -120,6 +126,12 @@ public class WeavingDraftPropertiesDialog extends javax.swing.JDialog {
         gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         getContentPane().add(numTreadlesField, gridBagConstraints);
+        
+        liftplanCheck = new javax.swing.JCheckBox("Liftplan");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        getContentPane().add(liftplanCheck, gridBagConstraints);
 
         jLabel3.setText("Num Warp Ends: ");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -197,37 +209,14 @@ public class WeavingDraftPropertiesDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
-        if (draft != null) {
+       if (draft != null) {
             int numHarnesses = ((Number)numHarnessesField.getValue()).intValue();
             int numEnds = ((Number)numWarpEndsField.getValue()).intValue();
             int numPicks = ((Number)numWeftPicksField.getValue()).intValue();
             int numTreadles = ((Number)numTreadlesField.getValue()).intValue();
-            
-            draft.setNumHarnesses(numHarnesses);
-            
-            if (numEnds > draft.getEnds().size()) {
-                while (numEnds > draft.getEnds().size())
-                    draft.getEnds().add(new com.jenkins.weavingsimulator.datatypes.WarpEnd(java.awt.Color.WHITE, -1));
-            } else if (numEnds < draft.getEnds().size()) {
-                while (numEnds < draft.getEnds().size())
-                    draft.getEnds().remove(draft.getEnds().size() - 1);
-            }
-            
-            if (numTreadles > draft.getTreadles().size()) {
-                while (numTreadles > draft.getTreadles().size())
-                    draft.getTreadles().add(new com.jenkins.weavingsimulator.datatypes.Treadle());
-            } else if (numTreadles < draft.getTreadles().size()) {
-                while (numTreadles < draft.getTreadles().size())
-                    draft.getTreadles().remove(draft.getTreadles().size() - 1);
-            }
-            
-            if (numPicks > draft.getPicks().size()) {
-                while (numPicks > draft.getPicks().size())
-                    draft.getPicks().add(new com.jenkins.weavingsimulator.datatypes.WeftPick(numTreadles));
-            } else if (numPicks < draft.getPicks().size()) {
-                while (numPicks < draft.getPicks().size())
-                    draft.getPicks().remove(draft.getPicks().size() - 1);
-            }
+            boolean isLiftplan = liftplanCheck.isSelected();
+
+            draft.setProperties(numHarnesses, numTreadles, numEnds, numPicks, isLiftplan);
             
     		Palette p = (Palette)palettes_combo.getSelectedItem();
     		if (p != null) {
@@ -361,5 +350,6 @@ public class WeavingDraftPropertiesDialog extends javax.swing.JDialog {
     private NonNegativeIntFormatter formatter = new NonNegativeIntFormatter();
     private Vector<Palette> palettes = new Vector<Palette>();
     private javax.swing.JComboBox palettes_combo;
+    private javax.swing.JCheckBox liftplanCheck;
     private GridControl paletteGrid;
 }

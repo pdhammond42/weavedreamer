@@ -123,7 +123,11 @@ public class TreadlingDraftModel extends AbstractWeavingDraftModel {
      */
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
         WeftPick pick = draft.getPicks().get(rowIndex);
-        pick.setTreadle(columnIndex, true);
+        if (draft.getIsLiftplan()) {
+        	pick.setTreadle(columnIndex, !pick.getTreadles()[columnIndex]);
+        } else {
+        	pick.setTreadleUnique(columnIndex);
+        }
     }
     
     /** Returns true if the cell at <code>rowIndex</code> and

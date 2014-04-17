@@ -85,6 +85,8 @@ public class WeavingDraft {
     
     private Palette palette;
     
+    private boolean isLiftplan;
+    
     /** Holds value of property doValidation.   If this property is false, then
      * certain validations in property set functions, that depend on the value
      * of other properties, won't be done.  This is to support XMLDecode, since
@@ -105,6 +107,7 @@ public class WeavingDraft {
         setPicks(new ObservableList<WeftPick>());
         setEnds(new ObservableList<WarpEnd>());
         setTreadles(new ObservableList<Treadle>());
+        isLiftplan = false;
     }
     
     /** Initializes object with name property set to name, and doValidation set
@@ -370,6 +373,76 @@ public class WeavingDraft {
         }	
     }
     
+    /** Return true if this is a liftplan draft, other wise false (treadling draft).
+     * 
+     */
+    public boolean getIsLiftplan() {
+    	return isLiftplan;
+    }
+    
+    /** Resets the properties of the draft in one go, maintaining the state as 
+     *  best as possible while maintaining consistency. Used by the draft properties GUI.
+     */
+    public void setProperties (int numHarnesses, int numTreadles, int numEnds, int numPicks, boolean isLiftplan) {
+    	setDoValidation(false);
+    	
+    	setNumHarnesses(numHarnesses);
+    	
+        if (isLiftplan) {
+   		    numTreadles = numHarnesses;
+   		    if (!this.isLiftplan) {
+       		    for (WeftPick p : picks) {
+       		    	int oldTreadle = p.getSelection();
+       		    	if (oldTreadle != -1) {
+       		    		p.setTreadle(oldTreadle,  false);
+       		    		p.setTreadleCount(numTreadles);
+       		    		for (int t : treadles.get(oldTreadle)) {
+       		    			p.setTreadle(t,  true);
+       		    		}
+       		    	}
+       		    }
+        	}
+        }
+		this.isLiftplan = isLiftplan;
+
+        if (numEnds > getEnds().size()) {
+            while (numEnds > getEnds().size())
+                getEnds().add(new com.jenkins.weavingsimulator.datatypes.WarpEnd(java.awt.Color.WHITE, -1));
+        } else if (numEnds < getEnds().size()) {
+            while (numEnds < getEnds().size())
+                getEnds().remove(getEnds().size() - 1);
+        }
+        
+        if (numTreadles > getTreadles().size()) {
+            while (numTreadles > getTreadles().size())
+                getTreadles().add(new com.jenkins.weavingsimulator.datatypes.Treadle());
+        } else if (numTreadles < getTreadles().size()) {
+            while (numTreadles < getTreadles().size())
+                getTreadles().remove(getTreadles().size() - 1);
+        }
+        
+        if (isLiftplan) {
+        	for (int i=0; i != numTreadles; ++i) {
+        		treadles.get(i).clear();
+        		treadles.get(i).add(numTreadles-i-1);
+        	}	
+        }
+        
+        for (WeftPick p : getPicks()) {
+        	p.setTreadleCount(numTreadles);
+        }
+        
+        if (numPicks > getPicks().size()) {
+            while (numPicks > getPicks().size())
+                getPicks().add(new com.jenkins.weavingsimulator.datatypes.WeftPick(numTreadles));
+        } else if (numPicks < getPicks().size()) {
+            while (numPicks < getPicks().size())
+                getPicks().remove(getPicks().size() - 1);
+        }    	
+        
+        setDoValidation(true);
+    }
+    
     /**
      * Attempt to create a new palette using the colors currently in use.
      * Intended for use after loading an old draft that does not have a palette.
@@ -577,11 +650,7 @@ public class WeavingDraft {
          */
         public void propertyChange(java.beans.PropertyChangeEvent evt) {
             WeftPick pick = (WeftPick)evt.getSource();
-            try { validatePick(pick); }
-            catch (IllegalArgumentException e) {
-                pick.setTreadle((Integer)evt.getOldValue(), true);
-                throw e;
-            }
+            validatePick(pick); 
             propertyChangeSupport.fireIndexedPropertyChange("picks", identityIndexOf(picks, pick),
                 null, pick);
         }

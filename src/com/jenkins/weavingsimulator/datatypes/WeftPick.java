@@ -89,6 +89,16 @@ public class WeftPick {
         return this.treadles[treadleId];
     }
     
+    /** Returns the first selected treadle ID, or -1 for no selection
+     * 
+     */
+    public int getSelection() {
+    	for (int i=0; i != treadles.length; ++i) {
+    		if (treadles[i]) return i;
+    	}
+    	return -1;
+    }
+    
     /** Getter for property treadles
      * 
      */
@@ -97,8 +107,8 @@ public class WeftPick {
     }
     
     /** Setter for property treadleId.
-     * @param treadleId New value of property treadleId.
-     * @param value TODO
+     * @param treadleId Treadle to set.
+     * @param value value to set it to
      *
      */
     public void setTreadle(int treadleId, boolean value) {
@@ -146,5 +156,18 @@ public class WeftPick {
 		treadles = new boolean[i];
 		System.arraycopy(oldTreadles, 0, treadles, 0, Math.min(i, oldTreadles.length));
 		propertyChangeSupport.firePropertyChange("treadles", oldTreadles, treadles);
+	}
+
+	/** Sets the given treadle to be selected, clearing any other selections.
+	 * 
+	 * @param i treadle to set
+	 */
+	public void setTreadleUnique(int i) {
+		if (!treadles[i]) {
+			boolean[] oldTreadles = treadles;
+			treadles = new boolean[oldTreadles.length];
+			treadles[i] = true;
+			propertyChangeSupport.firePropertyChange("treadles", oldTreadles, treadles);			
+		}
 	}
 }

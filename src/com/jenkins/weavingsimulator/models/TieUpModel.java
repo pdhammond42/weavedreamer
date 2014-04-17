@@ -71,14 +71,16 @@ public class TieUpModel extends AbstractWeavingDraftModel {
      *
      */
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-        Treadle treadle = draft.getTreadles().get(columnIndex);
-        int harnessId = rowIndex;
-        if (treadle.contains(harnessId))
-            // need to wrap harnessId in Integer, otherwise the remove(index) method is called 
-            // instead of the remove(Object) version.
-            treadle.remove(new Integer(harnessId));
-        else
-            treadle.add(harnessId);
+    	if (isCellEditable(rowIndex, columnIndex)) {
+	        Treadle treadle = draft.getTreadles().get(columnIndex);
+	        int harnessId = rowIndex;
+	        if (treadle.contains(harnessId))
+	            // need to wrap harnessId in Integer, otherwise the remove(index) method is called 
+	            // instead of the remove(Object) version.
+	            treadle.remove(new Integer(harnessId));
+	        else
+	            treadle.add(harnessId);
+    	}
     }
     
     /** Returns true if the cell at <code>rowIndex</code> and
@@ -93,7 +95,7 @@ public class TieUpModel extends AbstractWeavingDraftModel {
      *
      */
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-        return true;
+        return !draft.getIsLiftplan();
     }
     
     /** Returns the number of columns in the model. A

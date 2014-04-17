@@ -37,7 +37,7 @@ import junit.framework.TestSuite;
 
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
-
+import static org.apache.commons.lang.ArrayUtils.*;
 
 /**
  *
@@ -397,5 +397,65 @@ public class WeavingDraftTest extends TestCase {
         
         draft.createPalette();
         assertThat(draft.getPalette().getColors(), containsInAnyOrder(Color.white, Color.red, Color.pink, Color.blue));
+    }
+    
+    public void testPropertyUpdate() {
+    	draft.setProperties (4, 6, 18, 22, false);
+    	assertThat(draft.getIsLiftplan(), is(false));
+    	assertThat(draft.getEnds().size(), is(18));
+    	assertThat(draft.getPicks().size(), is(22));
+    	assertThat(draft.getNumHarnesses(), is(4));
+    	assertThat(draft.getTreadles().size(), is(6));
+    }
+
+    public void testPropertyChangesTreadlesConsistently() {
+    	draft.setProperties (4, 6, 18, 12, false);
+    	draft.setProperties (4, 8, 18, 16, false);
+    	assertThat(draft.getPicks().size(), is(16));
+    	assertThat(draft.getTreadles().size(), is(8));
+    	for (WeftPick p : draft.getPicks()) {
+    		assertThat (p.getTreadles().length, is(8));
+    	}
+    }
+    
+    public void testPropertyChangePReservesDraftToLiftplan() {
+    	draft.setProperties (3, 2, 8, 8, false);
+    	/* Set up a draft like this:
+    	 *  .*
+    	 *  **  treadle
+    	 *  *.
+    	 * 
+    	 *  *.
+    	 *  .*  pick
+    	 *  *.
+    	 *  
+    	 *  Convert to liftplan and check it looks like
+    	 *  ..*
+    	 *  .*.  "treadle"
+    	 *  *..
+    	 *  
+    	 *  **.
+    	 *  .**  pick
+    	 *  **.
+    	*/
+    	draft.getTreadles().get(0).add(0);
+    	draft.getTreadles().get(0).add(1);
+    	draft.getTreadles().get(1).add(1);
+    	draft.getTreadles().get(1).add(2);
+    	draft.getPicks().get(0).setTreadleUnique(0);
+    	draft.getPicks().get(1).setTreadleUnique(1);
+    	draft.getPicks().get(2).setTreadleUnique(0);
+    	
+    	draft.setProperties(3, 2, 8, 8, true);
+    	assertThat(draft.getIsLiftplan(), is(true));
+    	assertThat(draft.getTreadles().get(0), contains(2));
+    	assertThat(draft.getTreadles().get(1), contains(1));
+    	assertThat(draft.getTreadles().get(2), contains(0));
+    	assertThat(toObject(draft.getPicks().get(0).getTreadles()), 
+    			arrayContaining(true, true, false));
+    	assertThat(toObject(draft.getPicks().get(1).getTreadles()), 
+    			arrayContaining(false, true, true));
+    	assertThat(toObject(draft.getPicks().get(2).getTreadles()), 
+    			arrayContaining(true, true, false));
     }
 }
