@@ -27,6 +27,12 @@
 package com.jenkins.weavingsimulator.datatypes;
 
 import java.awt.Color;
+import java.beans.XMLDecoder;
+import java.beans.XMLEncoder;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -418,7 +424,7 @@ public class WeavingDraftTest extends TestCase {
     	}
     }
     
-    public void testPropertyChangePReservesDraftToLiftplan() {
+    public void testPropertyChangePreservesDraftToLiftplan() {
     	draft.setProperties (3, 2, 8, 8, false);
     	/* Set up a draft like this:
     	 *  .*
@@ -442,9 +448,9 @@ public class WeavingDraftTest extends TestCase {
     	draft.getTreadles().get(0).add(1);
     	draft.getTreadles().get(1).add(1);
     	draft.getTreadles().get(1).add(2);
-    	draft.getPicks().get(0).setTreadleUnique(0);
-    	draft.getPicks().get(1).setTreadleUnique(1);
-    	draft.getPicks().get(2).setTreadleUnique(0);
+    	draft.getPicks().get(0).setTreadleId(0);
+    	draft.getPicks().get(1).setTreadleId(1);
+    	draft.getPicks().get(2).setTreadleId(0);
     	
     	draft.setProperties(3, 2, 8, 8, true);
     	assertThat(draft.getIsLiftplan(), is(true));
@@ -457,5 +463,32 @@ public class WeavingDraftTest extends TestCase {
     			arrayContaining(false, true, true));
     	assertThat(toObject(draft.getPicks().get(2).getTreadles()), 
     			arrayContaining(true, true, false));
+    }
+    
+    public void testPersistence() throws IOException {
+        draft.setNumHarnesses(2);
+        draft.getEnds().add(new WarpEnd(Color.WHITE, -1));
+        draft.getEnds().add(new WarpEnd(Color.RED, 0));
+        draft.getTreadles().add(new Treadle(Arrays.asList(0)));
+        draft.getTreadles().add(new Treadle(Arrays.asList(1)));
+        draft.getPicks().add(new WeftPick(Color.GREEN, 2));
+        draft.getPicks().add(new WeftPick(Color.PINK, 2, 0));
+        draft.getPicks().add(new WeftPick(Color.BLUE, 2, 1));
+
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        XMLEncoder enc = new XMLEncoder(os);
+        enc.writeObject(draft);
+        enc.close();
+        
+        FileOutputStream out = new FileOutputStream("out.xml");
+        out.write(os.toByteArray());
+        out.close();
+        
+        ByteArrayInputStream ins = new ByteArrayInputStream(os.toByteArray());
+        XMLDecoder dec = new XMLDecoder(ins);
+        WeavingDraft newDraft = (WeavingDraft)dec.readObject();
+        
+        assertThat (newDraft.getEnds(), is (draft.getEnds()));
+        assertThat(newDraft.getPicks(), is(draft.getPicks()));
     }
 }

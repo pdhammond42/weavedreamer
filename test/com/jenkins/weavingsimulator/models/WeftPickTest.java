@@ -67,12 +67,16 @@ public class WeftPickTest extends TestCase {
 		assertThat(toObject(pick.getTreadles()), arrayContaining(false, false));
 	}
 	
-	public void testSetTreadleUnique() {
+	public void testSetTreadleId() {
 		WeftPick pick = new WeftPick (Color.RED, 3, 2);
-		pick.setTreadleUnique(1);
+		pick.setTreadleId(1);
 		assertThat(toObject(pick.getTreadles()), arrayContaining(false, true, false));
 	}
 	
+	public void testOutOfRangeTreadleIsNotSelected() {
+		WeftPick pick = new WeftPick (Color.RED, 3);
+		assertThat(pick.isTreadleSelected(4), is(false));		
+	}
 	private class Listener implements PropertyChangeListener {	
 		public Object before;
 		public Object after;

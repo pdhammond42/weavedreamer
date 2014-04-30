@@ -26,6 +26,7 @@
 package com.jenkins.weavingsimulator.datatypes;
 
 import java.awt.Color;
+import java.util.Arrays;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
@@ -86,7 +87,7 @@ public class WeftPick {
      *
      */
     public boolean isTreadleSelected (int treadleId) {
-        return this.treadles[treadleId];
+        return treadleId < treadles.length && this.treadles[treadleId];
     }
     
     /** Returns the first selected treadle ID, or -1 for no selection
@@ -103,7 +104,15 @@ public class WeftPick {
      * 
      */
     public boolean[] getTreadles() {
-    	return treadles.clone();
+    	return treadles;
+    }
+    
+    /** Sets all the treadles. Mainly for persistence.
+     */
+    public void setTreadles(boolean[] t) {
+    	boolean[] oldTreadles = treadles;
+    	treadles = t;
+    	propertyChangeSupport.firePropertyChange("treadles", oldTreadles, treadles);
     }
     
     /** Setter for property treadleId.
@@ -117,6 +126,24 @@ public class WeftPick {
         propertyChangeSupport.firePropertyChange("treadles", oldTreadles, treadles);
     }
     
+	/** Sets the given treadle to be selected, clearing any other selections.
+	 *  It is used for non-liftplan drafts, and also for restoring
+	 *  drafts from older persisted versions where the property was called treadleId.
+	 * 
+	 * @param i treadle to set
+	 */
+	public void setTreadleId(int i) {
+		if (treadles == null) {
+			treadles = new boolean[i+1];
+		}
+		if (!treadles[i]) {
+			boolean[] oldTreadles = treadles;
+			treadles = new boolean[oldTreadles.length];
+			treadles[i] = true;
+			propertyChangeSupport.firePropertyChange("treadles", oldTreadles, treadles);			
+		}
+	}
+	    
     /** Getter for property color.
      * @return Value of property color.
      *
@@ -158,16 +185,11 @@ public class WeftPick {
 		propertyChangeSupport.firePropertyChange("treadles", oldTreadles, treadles);
 	}
 
-	/** Sets the given treadle to be selected, clearing any other selections.
-	 * 
-	 * @param i treadle to set
-	 */
-	public void setTreadleUnique(int i) {
-		if (!treadles[i]) {
-			boolean[] oldTreadles = treadles;
-			treadles = new boolean[oldTreadles.length];
-			treadles[i] = true;
-			propertyChangeSupport.firePropertyChange("treadles", oldTreadles, treadles);			
-		}
+
+	@Override
+	public String toString () {
+		return String.format("#%02x%02x%02x : %s", 
+				color.getRed(), color.getGreen(),color.getBlue(),
+				Arrays.toString(treadles));
 	}
 }

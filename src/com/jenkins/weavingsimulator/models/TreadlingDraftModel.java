@@ -126,7 +126,7 @@ public class TreadlingDraftModel extends AbstractWeavingDraftModel {
         if (draft.getIsLiftplan()) {
         	pick.setTreadle(columnIndex, !pick.getTreadles()[columnIndex]);
         } else {
-        	pick.setTreadleUnique(columnIndex);
+        	pick.setTreadleId(columnIndex);
         }
     }
     

@@ -625,10 +625,7 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
         dec.close();
         if (draft == null)
             throw new IOException("Failed to read Weaving Draft");
-        if (draft.getPalette() == null) {
-        	// Read from older version before palette was persisted.
-        	draft.createPalette();
-        }
+        draft.validate();
         return draft;
     }
     

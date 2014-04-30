@@ -335,6 +335,28 @@ public class WeavingDraft {
         this.doValidation = doValidation;
     }
 
+    /** Ensures the object is self consistent. 
+     * Should be called on a  new object restored from persistence,
+     * to tidy up anything left by readong an old version.
+     */
+    public void validate() throws IllegalArgumentException {
+    	doValidation=true;
+
+    	for (WeftPick p : picks) {
+    		p.setTreadleCount(treadles.size());
+    	}
+    	for (WarpEnd e : ends) {
+    		validateEnd(e);
+    	}
+    	for (Treadle t : treadles) {
+    		validateTreadle(t);
+    	}
+        if (getPalette() == null) {
+        	// Read from older version before palette was persisted.
+        	createPalette();
+        }
+    }
+    
     /**
      * Gets the color which would be visible in the woven fabric at the grid 
      * square indicated by {@code warpThread} and {@code weftThread}.
