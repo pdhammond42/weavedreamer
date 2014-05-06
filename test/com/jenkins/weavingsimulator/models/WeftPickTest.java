@@ -30,12 +30,6 @@ public class WeftPickTest extends TestCase {
 		assertThat(toObject(pick.getTreadles()), arrayContaining(false, true, true, false));
 	}
 	
-	public void testTreadlesAreSealed() {
-		WeftPick pick = new WeftPick (Color.RED, 4, 2);
-		pick.getTreadles()[1] = true;
-		assertThat(toObject(pick.getTreadles()), arrayContaining(false, false, true, false));		
-	}
-	
 	public void testTreadleCanTakeMultipleSelections() {
 		WeftPick pick = new WeftPick (Color.RED, 4, 2, 3);
 		assertThat(toObject(pick.getTreadles()), arrayContaining(false, false, true, true));		

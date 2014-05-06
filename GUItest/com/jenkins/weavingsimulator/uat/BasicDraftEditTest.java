@@ -104,6 +104,12 @@ public class BasicDraftEditTest extends WeavingTestCase {
 		ui.draftIs(0, 1, blue);		
 	}
 	
+	public void testLoadFileSavedFrom2_5() {
+		ui.open("testdata/103-2.5.wsml");
+		ui.draftIs(0, 0, orange);
+		ui.draftIs(0, 1, blue);				
+	}
+	
 	public void testEditProperties () {
 		ui.open("testdata/103.wif");
 		

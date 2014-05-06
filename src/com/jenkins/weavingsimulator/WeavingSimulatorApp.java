@@ -603,23 +603,6 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
     }
     
     private WeavingDraft readWeavingDraft(InputStream ins) throws IOException {
-        /* Convert XML from old format to current format.  It's fine if it's
-         * already current. */
-        try {
-            InputStream xslIns = getClass().getResourceAsStream("wsmlconverter.xsl");
-            Source xslSource = new StreamSource(xslIns);
-            Transformer trans = TransformerFactory.newInstance().newTransformer(xslSource);
-            Source source = new StreamSource(ins);
-            ByteArrayOutputStream resultStr = new ByteArrayOutputStream();
-            Result result = new StreamResult(resultStr);
-            trans.transform(source, result);
-            ins = new ByteArrayInputStream(resultStr.toByteArray());
-            xslIns.close();
-        } catch (TransformerException ex) {
-            Logger.getLogger(WeavingSimulatorApp.class.getName()).log(Level.SEVERE, null, ex);
-            throw new IOException("Failed to transform draft: " + ex.getMessage());
-        }
-        
         java.beans.XMLDecoder dec = new java.beans.XMLDecoder(ins);
         WeavingDraft draft = (WeavingDraft)dec.readObject();
         dec.close();

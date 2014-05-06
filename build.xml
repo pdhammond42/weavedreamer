@@ -24,7 +24,6 @@ extra dependencies and creates a Git tag, so should not be used all the time. --
 		<echo message="${ant.project.name}: ${an.file}" />
 		<copy file="res/com/jenkins/WeavingSimulator/about.txt" todir="bin/com/jenkins/weavingsimulator" overwrite="true" />
 		<replace file="bin/com/jenkins/weavingsimulator/about.txt" token="X.X" value="${version}" />
-		<copy file="res/com/jenkins/WeavingSimulator/wsmlconverter.xsl" todir="bin/com/jenkins/weavingsimulator" overwrite="true" />
 		<javac debug="true" debuglevel="${debuglevel}" destdir="bin">
 			<src path="src" />
 			<classpath refid="WeavingSimulator.classpath" />
@@ -72,7 +71,7 @@ extra dependencies and creates a Git tag, so should not be used all the time. --
 			<arg line="tag -a ${version} -m 'Tagged by build system'" />
 		</exec>
 	</target>
-	<target name="package">
+	<target name="package" depends="build">
 		<zip destfile="freeweave_${version}.zip">
 			<file file="dist/WeavingSimulator.jar" />
 			<zipfileset dir="libs" prefix="libs" excludes="hamcrest-all-1.3.jar" />
@@ -81,7 +80,7 @@ extra dependencies and creates a Git tag, so should not be used all the time. --
 			<zipfileset dir="attachment" prefix="attachment" />
 		</zip>
 	</target>
-	<target name="guitest">
+	<target name="guitest" depends="package">
 		<unzip src="freeweave_${version}.zip" dest="GUItest/temp" />
 		<junit fork="yes" printsummary="withOutAndErr" haltonfailure="true">
 			<formatter type="xml" />

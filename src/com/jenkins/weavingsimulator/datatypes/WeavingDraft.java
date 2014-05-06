@@ -337,7 +337,7 @@ public class WeavingDraft {
 
     /** Ensures the object is self consistent. 
      * Should be called on a  new object restored from persistence,
-     * to tidy up anything left by readong an old version.
+     * to tidy up anything left by reading an old version.
      */
     public void validate() throws IllegalArgumentException {
     	doValidation=true;
