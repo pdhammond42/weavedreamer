@@ -1,6 +1,7 @@
 package com.jenkins.weavingsimulator.datatypes;
 
 import junit.framework.*;
+import static org.apache.commons.lang.ArrayUtils.toObject;
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -238,22 +239,20 @@ public class WifIOTest extends TestCase {
     	WeavingDraft draft = io.readWeavingDraft(new StringReader(dobby));
     	
     	java.util.List<Treadle> t = draft.getTreadles();
-    	assertThat(t, hasSize(6));
-    	assertThat(t.get(0), contains(0,2));
-    	assertThat(t.get(1), contains(1,3));
-    	assertThat(t.get(2), contains(0,2,3));
-    	assertThat(t.get(3), contains(0,1,2));
-    	assertThat(t.get(4), contains(0,2));
-    	assertThat(t.get(5), contains(1,3));
+    	assertThat(t, hasSize(4));
+    	assertThat(t.get(0), contains(3));
+    	assertThat(t.get(1), contains(2));
+    	assertThat(t.get(2), contains(1));
+    	assertThat(t.get(3), contains(0));
     	
     	java.util.List<WeftPick> p = draft.getPicks();
     	assertThat(p, hasSize(6));
-    	assertThat(p.get(0).isTreadleSelected(0), is(true));
-    	assertThat(p.get(1).isTreadleSelected(1), is(true));
-    	assertThat(p.get(2).isTreadleSelected(2), is(true));
-    	assertThat(p.get(3).isTreadleSelected(3), is(true));
-    	assertThat(p.get(4).isTreadleSelected(4), is(true));
-    	assertThat(p.get(5).isTreadleSelected(5), is(true));
+    	assertThat(toObject(p.get(0).getTreadles()), is(arrayContaining(true, false, true, false)));
+    	assertThat(toObject(p.get(1).getTreadles()), is(arrayContaining(false, true, false, true)));
+    	assertThat(toObject(p.get(2).getTreadles()), is(arrayContaining(true, false, true, true)));
+    	assertThat(toObject(p.get(3).getTreadles()), is(arrayContaining(true, true, true, false)));
+    	assertThat(toObject(p.get(4).getTreadles()), is(arrayContaining(true, false, true, false)));
+    	assertThat(toObject(p.get(5).getTreadles()), is(arrayContaining(false, true, false, true)));
     }
     
     public void testActualNumberOfColoursTakesPriority () throws IOException {

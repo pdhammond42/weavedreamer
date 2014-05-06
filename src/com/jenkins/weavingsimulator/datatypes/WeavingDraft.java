@@ -402,6 +402,21 @@ public class WeavingDraft {
     	return isLiftplan;
     }
     
+    /** Sets this draft to be a liftplan draft. Intended to be used in creating from 
+     * serialisation, so not reversible (although you could use setProperties if you had to).
+     * After calling this, getIsLiftplan returns true and the tie up is set to 
+     * a liftplan diagonal. 
+     * @return
+     */
+    public void setLiftplan() {
+    	isLiftplan = true;
+    	treadles = new ObservableList<Treadle>();
+    	for (int i=0; i != numHarnesses; ++i) {
+    		treadles.add(new Treadle());
+    		treadles.get(i).add(numHarnesses-i-1);
+        }
+    }
+    
     /** Resets the properties of the draft in one go, maintaining the state as 
      *  best as possible while maintaining consistency. Used by the draft properties GUI.
      */

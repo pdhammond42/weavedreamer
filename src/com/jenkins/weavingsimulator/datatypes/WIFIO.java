@@ -46,11 +46,10 @@ public class WIFIO {
         }
         
         if(wif.getBooleanField("CONTENTS", "LIFTPLAN", false)) {
-        	List<Treadle> treadles = readLiftplan(wif);
-        	draft.setTreadles(treadles);
-        }
-        
-        if (wif.getBooleanField("CONTENTS", "WEFT", false)) {
+        	List<WeftPick> picks = readLiftplan(wif, palette, draft.getNumHarnesses());
+        	draft.setLiftplan();
+        	draft.setPicks(picks);
+        } else if (wif.getBooleanField("CONTENTS", "WEFT", false)) {
         	List<WeftPick> picks = readWeft(wif, palette, draft.getTreadles().size());        
         	draft.setPicks(picks);
         }
@@ -98,23 +97,6 @@ public class WIFIO {
 
         return treadles;
     }
-
-    private List<Treadle> readLiftplan(WIFFile wif) {
-    	int numTreadles = wif.countEntriesInSection("LIFTPLAN");
-    	List<Treadle> treadles =new ArrayList<Treadle>(numTreadles);
-
-        for (int i = 0; i < numTreadles; i++) {
-            String treadleId = String.valueOf(i + 1);
-            Treadle treadle = new Treadle();
-            for (int hid : wif.getIntListField("LIFTPLAN", treadleId)) {
-                // need to convert harness ids to 0 based
-                treadle.add(hid - 1);
-            }
-            treadles.add(treadle);
-        }
-    		
-    	return treadles;
-    }
     
     private List<WarpEnd> readWarp(WIFFile wif, List<Color> palette) throws RuntimeException {
 
@@ -145,22 +127,13 @@ public class WIFIO {
     }
 
     private List<WeftPick> readWeft(WIFFile wif, List<Color> palette, int treadles) throws RuntimeException {
-    	boolean liftplan = wif.getBooleanField("CONTENTS", "LIFTPLAN", false);
         int numPicks = wif.getIntField("WEFT", "Threads");
         List<WeftPick> picks = new ArrayList<WeftPick>(numPicks);
         for (int i = 0; i < numPicks; i++) {
         	String pickId = String.valueOf(i + 1);
         	try {
-        		int treadleId = liftplan ? i : wif.getIntField("TREADLING", pickId) - 1;
-        		Color color = Color.white; 
-        		if (wif.hasField("WEFT COLORS", pickId)) {
-        			int colorIdx = wif.getIntField("WEFT COLORS", pickId) - 1;
-        			color = palette.get(colorIdx);
-        		}
-        		else if (wif.hasField("WARP", "COLOR")) {
-        			int colorIdx = wif.getIntField("WEFT", "COLOR") - 1;
-        			color = palette.get(colorIdx);            
-        		}
+        		int treadleId = wif.getIntField("TREADLING", pickId) - 1;
+        		Color color = readWeftColor(wif, palette, pickId);
         		picks.add(new WeftPick(color, treadles, treadleId));
         	} catch (WIFException e) {
         		break;
@@ -168,5 +141,35 @@ public class WIFIO {
         }
 
         return picks;
+    }
+    
+    private List<WeftPick> readLiftplan(WIFFile wif, List<Color> palette, int harnesses) {
+    	int numPicks = wif.countEntriesInSection("LIFTPLAN");
+    	List<WeftPick> picks = new ArrayList<WeftPick>(numPicks);
+
+        for (int i = 0; i < numPicks; i++) {
+            String pickId = String.valueOf(i + 1);
+            WeftPick pick = new WeftPick(readWeftColor(wif, palette, pickId), harnesses);
+            for (int hid : wif.getIntListField("LIFTPLAN", pickId)) {
+                // need to convert harness ids to 0 based
+                pick.setTreadle(hid - 1, true);
+            }
+            picks.add(pick);
+        }
+    		
+    	return picks;
+    }
+    
+    private Color readWeftColor(WIFFile wif, List<Color> palette, String pickId)  throws RuntimeException {
+		Color color = Color.white; 
+		if (wif.hasField("WEFT COLORS", pickId)) {
+			int colorIdx = wif.getIntField("WEFT COLORS", pickId) - 1;
+			color = palette.get(colorIdx);
+		}
+		else if (wif.hasField("WEFT", "COLOR")) {
+			int colorIdx = wif.getIntField("WEFT", "COLOR") - 1;
+			color = palette.get(colorIdx);            
+		}
+		return color;
     }
 }
