@@ -19,6 +19,19 @@ Unpack the zip archive. Either
 
 - or right click the .jar file and select the option along the lines of 
 "Open with Java runtime".
+ 
+Changes in 0.2.5
+----------------
+For the user:
+- Can now create and edit Liftplan drafts.
+- Cursor position shown
+Behind the scenes:
+- Better testing, in particular automated GUI tests.
+- Corrected commit logs, which had been showing the wrong user.
+
+Changes in 0.2.4
+----------------
+Bug fixes in loading WSML amnd WIF.
 
 Changes in 0.2.3
 ----------------
