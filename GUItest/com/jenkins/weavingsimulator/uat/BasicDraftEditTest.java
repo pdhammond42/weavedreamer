@@ -1,7 +1,6 @@
 package com.jenkins.weavingsimulator.uat;
 
 import java.awt.Color;
-import java.io.File;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
@@ -13,9 +12,6 @@ import static org.hamcrest.Matchers.*;
 
 
 public class BasicDraftEditTest extends WeavingTestCase {
-	// Colours used in the 103.wif test piece.
-	private final Color orange = new Color(0xcc674f);
-	private final Color blue = new Color(0x66ccff);
 	
 	public void testNewDraft() {
 		
@@ -86,28 +82,6 @@ public class BasicDraftEditTest extends WeavingTestCase {
 		ui.draftIs(5, 0, Color.lightGray);
 		ui.draftIs(6, 0, Color.lightGray);	
 		ui.draftIs(0, 0, Color.darkGray);		
-	}
-	
-	public void testLoadAndSave() {
-		File leftover = new File("testdata/103.wsml");
-		if (leftover.exists()) leftover.delete();
-		
-		ui.open("testdata/103.wif");
-		ui.draftIs(0, 0, orange);
-		ui.draftIs(0, 1, blue);
-		
-		ui.saveAs("testdata/103.wsml");
-		ui.close();
-		
-		ui.open("testdata/103.wsml");
-		ui.draftIs(0, 0, orange);
-		ui.draftIs(0, 1, blue);		
-	}
-	
-	public void testLoadFileSavedFrom2_5() {
-		ui.open("testdata/103-2.5.wsml");
-		ui.draftIs(0, 0, orange);
-		ui.draftIs(0, 1, blue);				
 	}
 	
 	public void testEditProperties () {

@@ -71,7 +71,7 @@ extra dependencies and creates a Git tag, so should not be used all the time. --
 			<arg line="tag -a ${version} -m 'Tagged by build system'" />
 		</exec>
 	</target>
-	<target name="package" depends="build">
+	<target name="package" depends="build-project">
 		<zip destfile="freeweave_${version}.zip">
 			<file file="dist/WeavingSimulator.jar" />
 			<zipfileset dir="libs" prefix="libs" excludes="hamcrest-all-1.3.jar" />

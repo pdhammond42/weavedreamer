@@ -78,6 +78,12 @@ public class WIFIO {
     			// that COLOR PALETTE.ENTRIES doesn't match the actual COLOR TABLE.
     		}
     	}
+    	else
+    	{
+    		// In the absence of a palette use a simple black and white.
+    		palette.add(Color.BLACK);
+    		palette.add(Color.WHITE);
+    	}
 
         return palette;
     }

@@ -191,9 +191,8 @@ public class WifIOTest extends TestCase {
     
     public void testDobbyLiftplanCanBeRead () throws IOException {
     	// Triggered handweaving.net pattern 56737 - a 296 row dobby pattern.
-    	// hw.net interprets it as a really complex tie up and a simple treadle.
-    	// Seems sensible enough, the "tie up" is the dobby set up and the
-    	// Pick is the dobby bar to use. Although it may prove hard to show.
+    	// This was Interesting before we supported liftplan, now it makes
+    	// a decent test case for liftplan support.
     	String dobby = minimal + 
     			"Color palette=yes\n"+
     			"Color Table=yes\n"+
@@ -349,5 +348,38 @@ public class WifIOTest extends TestCase {
     	WeavingDraft draft = io.readWeavingDraft(new StringReader(nothing));
 
     	assertThat(draft.getEnds().size(), is(0));
+    }
+    
+    public void testNoColoursIsNotAnError() throws IOException {
+    	String nocolours = minimal +
+    			"[CONTENTS]\n" +
+    			"COLOR PALETTE=no\n" +
+    			"COLOR TABLE=no\n" +
+    			"THREADING=yes\n" +
+    			"TIEUP=yes\n" +
+    			"WARP=yes\n" +
+    			"WARP COLORS=no\n" +
+    			"WEAVING=yes\n" +
+    			"WEFT=yes\n" +
+    			"WEFT COLORS=no\n" +
+    			"[WEAVING]\n"+
+    			"Shafts=2\n"+
+    			"Treadles=2\n"+
+    			"[WARP]\n"+
+    			"Threads=2\n"+
+    			"[WEFT]\n"+
+    			"Threads=2\n"+
+    			"[THREADING]\n"+
+    			"1=1\n"+
+    			"2=2\n"+
+    			"[TREADLING]\n"+
+    			"1=1\n"+
+    			"2=2\n"+
+    			"[TIEUP]\n"+
+    			"1=2\n"+
+    			"2=1\n";
+    	WIFIO io = new WIFIO();
+    	WeavingDraft draft = io.readWeavingDraft(new StringReader(nocolours));
+    	assertThat(draft.getPalette().getNumColors(), is(2));
     }
 };
