@@ -19,6 +19,10 @@ Unpack the zip archive. Either
 
 - or right click the .jar file and select the option along the lines of 
 "Open with Java runtime".
+
+0.2.5.1
+-------
+Bugfix release, persistence was broken for liftplan.
  
 Changes in 0.2.5
 ----------------
