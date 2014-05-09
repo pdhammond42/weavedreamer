@@ -491,4 +491,33 @@ public class WeavingDraftTest extends TestCase {
         assertThat (newDraft.getEnds(), is (draft.getEnds()));
         assertThat(newDraft.getPicks(), is(draft.getPicks()));
     }
+    
+    public void testLpPersistence() throws IOException {
+        draft.setNumHarnesses(2);
+        draft.getEnds().add(new WarpEnd(Color.WHITE, -1));
+        draft.getEnds().add(new WarpEnd(Color.RED, 0));
+        draft.getTreadles().add(new Treadle(Arrays.asList(0)));
+        draft.getTreadles().add(new Treadle(Arrays.asList(1)));
+        draft.getPicks().add(new WeftPick(Color.GREEN, 2));
+        draft.getPicks().add(new WeftPick(Color.PINK, 2, 0));
+        draft.getPicks().add(new WeftPick(Color.BLUE, 2, 1));
+        draft.setIsLiftplan(true);
+        
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        XMLEncoder enc = new XMLEncoder(os);
+        enc.writeObject(draft);
+        enc.close();
+        
+        FileOutputStream out = new FileOutputStream("out.xml");
+        out.write(os.toByteArray());
+        out.close();
+        
+        ByteArrayInputStream ins = new ByteArrayInputStream(os.toByteArray());
+        XMLDecoder dec = new XMLDecoder(ins);
+        WeavingDraft newDraft = (WeavingDraft)dec.readObject();
+        
+        assertThat (newDraft.getEnds(), is (draft.getEnds()));
+        assertThat(newDraft.getPicks(), is(draft.getPicks()));
+        assertThat(newDraft.getIsLiftplan(), is(draft.getIsLiftplan()));
+    }
 }

@@ -47,7 +47,7 @@ public class WIFIO {
         
         if(wif.getBooleanField("CONTENTS", "LIFTPLAN", false)) {
         	List<WeftPick> picks = readLiftplan(wif, palette, draft.getNumHarnesses());
-        	draft.setLiftplan();
+        	draft.setIsLiftplan(true);
         	draft.setPicks(picks);
         } else if (wif.getBooleanField("CONTENTS", "WEFT", false)) {
         	List<WeftPick> picks = readWeft(wif, palette, draft.getTreadles().size());        
