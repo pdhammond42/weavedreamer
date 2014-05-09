@@ -33,6 +33,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+
 
 /**
  *
@@ -717,6 +720,35 @@ public class WeavingDraft {
             propertyChangeSupport.fireIndexedPropertyChange("ends", identityIndexOf(ends, end),
                 null, end);
         }
-        
-    }        
+    }
+    
+    public boolean equals(Object obj) {
+    	if (obj == null) { return false; }
+    	if (obj == this) { return true; }
+    	if (obj.getClass() != getClass()) {
+    		return false;
+    	}
+    	WeavingDraft d = (WeavingDraft)obj;
+		return new EqualsBuilder()
+				.append(isLiftplan, d.isLiftplan)
+				.append(name, d.name)
+				.append(numHarnesses, d.numHarnesses)
+				.append(palette, d.palette)
+				.append(ends, d.ends)
+				.append(picks, d.picks)
+				.append(treadles, d.treadles)
+				.isEquals();
+	}
+
+    public int hashCode() {
+		return new HashCodeBuilder()
+		.append(isLiftplan)
+		.append(name)
+		.append(numHarnesses)
+		.append(palette)
+		.append(ends)
+		.append(picks)
+		.append(treadles)
+		.toHashCode();
+    }
 }

@@ -488,8 +488,7 @@ public class WeavingDraftTest extends TestCase {
         XMLDecoder dec = new XMLDecoder(ins);
         WeavingDraft newDraft = (WeavingDraft)dec.readObject();
         
-        assertThat (newDraft.getEnds(), is (draft.getEnds()));
-        assertThat(newDraft.getPicks(), is(draft.getPicks()));
+        assertThat (newDraft, is(equalTo (draft)));
     }
     
     public void testLpPersistence() throws IOException {
@@ -516,8 +515,16 @@ public class WeavingDraftTest extends TestCase {
         XMLDecoder dec = new XMLDecoder(ins);
         WeavingDraft newDraft = (WeavingDraft)dec.readObject();
         
-        assertThat (newDraft.getEnds(), is (draft.getEnds()));
-        assertThat(newDraft.getPicks(), is(draft.getPicks()));
-        assertThat(newDraft.getIsLiftplan(), is(draft.getIsLiftplan()));
+        assertThat(newDraft, is(equalTo(draft)));
+    }
+    
+    public void testEquality() {
+    	WeavingDraft d1 = new WeavingDraft();
+    	WeavingDraft d2 = new WeavingDraft();   
+    	assertThat(d1, is(d2));
+    	d1.setName("something");
+    	assertThat(d1, is(not(d2)));
+    	d2.setName("something");
+    	assertThat(d1, is(d2));
     }
 }
