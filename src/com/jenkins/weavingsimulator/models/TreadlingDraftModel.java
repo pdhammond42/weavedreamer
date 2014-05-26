@@ -48,6 +48,7 @@ public class TreadlingDraftModel extends AbstractWeavingDraftModel {
     /** Creates a new instance of TreadlingDraftModel */
     public TreadlingDraftModel(WeavingDraft draft) {
         super(draft);
+        selection = new GridSelection ();
         setDraftListener(new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent ev) {
                 String propName = ev.getPropertyName();
@@ -105,7 +106,7 @@ public class TreadlingDraftModel extends AbstractWeavingDraftModel {
     public Object getValueAt(int rowIndex, int columnIndex) {
         if (draft.getPicks().get(rowIndex).isTreadleSelected(columnIndex))
             return Color.BLACK;
-        else if (rowIndex >= selectionStart && rowIndex < selectionEnd)
+        else if (selection.contains(rowIndex, columnIndex))
             return Color.LIGHT_GRAY;
         else
         	return Color.WHITE;
@@ -157,29 +158,26 @@ public class TreadlingDraftModel extends AbstractWeavingDraftModel {
         return Color.class;
     }
     
-    private int selectionStart = 0;
-    private int selectionEnd = 0;
+    private GridSelection selection;
     /** Sets the selection to be the rows [startRow..endRow)
-     *  
-     * @param startRow First row that is selected
-     * @param startColumn Unused
-     * @param endRow One-past-last row selected.
-     * @param endColumn Unused
+        and the columns [startColumn..endColumn)
      */
     public void setSelection (int startRow, int startColumn, int endRow, int endColumn) {
-    	selectionStart = startRow;
-    	selectionEnd = endRow;
+    	selection = new GridSelection (startRow, startColumn, endRow, endColumn);
     	fireTableDataChanged();
     }
     
-    public void pasteSelection (int rowIndex, int columnIndex) {
-    	int offset = rowIndex - selectionStart;
-    	for (int row = selectionStart; row != selectionEnd; row++) {
-            WeftPick to = draft.getPicks().get(row + offset);
-            WeftPick from = draft.getPicks().get(row);
-            for (int col = 0; col < draft.getTreadles().size(); col++) {
-            	if (from.isTreadleSelected(col)) to.setTreadle(col, true);
-            }
+    public SelectedCells getSelection() {
+    	return new SelectedCells (draft.getPicks(), selection);
+    }
+    
+    public void pasteSelection (int rowIndex, int columnIndex, SelectedCells selection) {
+    	for (int row = 0; row != selection.getRows(); row++) {
+    		for (int col = 0; col != selection.getColumns(); col++) {
+    			if (selection.getValue(row, col)) {
+    				setValueAt (null, row + rowIndex, col + columnIndex);
+    			}
+    		}
     	}
     }
 }

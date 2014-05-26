@@ -218,6 +218,14 @@ public class AppDriver{
 		assertThat(weavingPatternGrid().backgroundNear(row, column, expected));
 	}
 	
+	public void pickIs (final int row, final int column, final Color expected) {
+		assertThat(treadlingDraftGrid().backgroundNear(row, column, expected));
+	}
+	
+	public void endIs(final int row, final int column, final Color expected) {
+		assertThat(threadingDraftGrid().backgroundNear(row, column, expected));		
+	}
+	
 	public void paletteIs(int index, Color color) {
 		assertThat (paletteGrid().backgroundNear(index, 0, color));
 	}

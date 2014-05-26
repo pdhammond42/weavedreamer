@@ -105,8 +105,6 @@ public abstract class AbstractWeavingDraftModel
     
     /** Sets a selection into the model, which can later be duplicated by calling pasteSelection.
      * The default implementation is a no-op. 
-     * Because this is implemented by the treadle and tie-up models, an implementation is likely to pay attention 
-     * to either row or column, but not both.
      * @param startRow Starting row of the selection
      * @param startColumn Starting column of the selection
      * @param endRow One-past-end row of the selection.

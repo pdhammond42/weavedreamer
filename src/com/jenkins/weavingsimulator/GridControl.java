@@ -104,7 +104,9 @@ public class GridControl extends JTable {
 			}
 			public void mouseMoved(MouseEvent arg0) {
 				final RowColumn p = toCell(arg0.getPoint());
-				((AbstractWeavingDraftModel)getModel()).setCurrentCell(p.row, p.column);		
+				if (getModel() instanceof AbstractWeavingDraftModel) { 
+					((AbstractWeavingDraftModel)getModel()).setCurrentCell(p.row, p.column);
+				}
 			}
 			});
         addMouseListener (new MouseListener() {

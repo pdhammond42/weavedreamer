@@ -78,7 +78,6 @@ public class TreadlingDraftModelTest extends TestCase {
     }
 
     public void testGetValueAt() {
-    	model.setSelection(2, 0, 3, 0);
     	draft.getPicks().get(0).setTreadle(0, true);
     	draft.getPicks().get(1).setTreadle(1, true);
     	draft.getPicks().get(2).setTreadle(0, true);
@@ -88,7 +87,25 @@ public class TreadlingDraftModelTest extends TestCase {
     	assertThat((Color)model.getValueAt(1, 0), equalTo(Color.WHITE));
     	assertThat((Color)model.getValueAt(1, 1), equalTo(Color.BLACK));
     	assertThat((Color)model.getValueAt(2, 0), equalTo(Color.BLACK));
-    	assertThat((Color)model.getValueAt(2, 1), equalTo(Color.LIGHT_GRAY));    	
+    	assertThat((Color)model.getValueAt(2, 1), equalTo(Color.WHITE));    	
+    }
+    
+    public void testGetValueWithSelection() {
+    	model.setSelection(0, 0, 2, 2);
+
+    	draft.getPicks().get(0).setTreadle(0, true);
+    	draft.getPicks().get(1).setTreadle(1, true);
+    	draft.getPicks().get(2).setTreadle(0, true);
+
+    	assertThat((Color)model.getValueAt(0, 0), equalTo(Color.BLACK));
+    	assertThat((Color)model.getValueAt(0, 1), equalTo(Color.LIGHT_GRAY));
+    	assertThat((Color)model.getValueAt(0, 2), equalTo(Color.WHITE));
+    	assertThat((Color)model.getValueAt(1, 0), equalTo(Color.LIGHT_GRAY));
+    	assertThat((Color)model.getValueAt(1, 1), equalTo(Color.BLACK));
+    	assertThat((Color)model.getValueAt(1, 2), equalTo(Color.WHITE));
+    	assertThat((Color)model.getValueAt(2, 0), equalTo(Color.BLACK));    	
+    	assertThat((Color)model.getValueAt(2, 1), equalTo(Color.WHITE));    	
+    	assertThat((Color)model.getValueAt(2, 2), equalTo(Color.WHITE));    	
     }
 
     public void testSetValueAt() {
@@ -133,24 +150,57 @@ public class TreadlingDraftModelTest extends TestCase {
         assertNull(listener.event);
     }
     
-    public void testSetAndPasteSelection() {
-        draft.setPicks(Arrays.asList(
-                new WeftPick(Color.BLACK, 2, 0), 
-                new WeftPick(Color.WHITE, 2, 1),
-                new WeftPick(Color.WHITE, 2, 1),
-                new WeftPick(Color.WHITE, 2, 1),
-                new WeftPick(Color.WHITE, 2, 1),
-                new WeftPick(Color.BLUE, 2, 0)));
+    public void testSetAndGetSelection() {
+    	draft.setTreadles(Arrays.asList(new Treadle(), new Treadle(), 
+    			new Treadle(), new Treadle()));
+    	draft.setPicks(Arrays.asList(
+                new WeftPick(Color.BLACK, 4, 0), 
+                new WeftPick(Color.WHITE, 4, 1),
+                new WeftPick(Color.WHITE, 4, 1),
+                new WeftPick(Color.WHITE, 4, 1),
+                new WeftPick(Color.WHITE, 4, 1),
+                new WeftPick(Color.BLUE, 4, 0)));
+
+    	model.setValueAt(true, 2, 1);
+    	model.setValueAt(true, 3, 2);
+    	model.setValueAt(true, 4, 3);
+    	model.setValueAt(true, 5, 3);
+    	
+    	model.setSelection(2, 1, 5, 3);
+    	SelectedCells selection = model.getSelection();
+        
+        assertThat(selection.getRows(), equalTo(3));
+        assertThat(selection.getColumns(), equalTo(2));
+        assertThat(selection.getValue(0,0), is(true));
+        assertThat(selection.getValue(0,1), is(false));
+        assertThat(selection.getValue(1,0), is(false));
+        assertThat(selection.getValue(1,1), is(true));    
+    	assertThat(selection.getValue(2,0), is(false));
+    	assertThat(selection.getValue(2,1), is(false));
+    }
+    
+    public void testPasteSelection() {
+    	draft.setTreadles(Arrays.asList(new Treadle(), new Treadle(), 
+    			new Treadle(), new Treadle()));
+    	draft.setPicks(Arrays.asList(
+                new WeftPick(Color.BLACK, 4, 0), 
+                new WeftPick(Color.WHITE, 4, 1),
+                new WeftPick(Color.WHITE, 4, 1),
+                new WeftPick(Color.WHITE, 4, 1),
+                new WeftPick(Color.WHITE, 4, 1),
+                new WeftPick(Color.BLUE, 4, 0)));
 
     	model.setValueAt(true, 0, 0);
     	model.setValueAt(true, 1, 1);
-    	model.setValueAt(true, 2, 1);
+    	model.setValueAt(true, 2, 2);
     	
-    	model.setSelection(0, 0, 3, 0);
-    	model.pasteSelection (3, 0);
-    	
-    	assertThat(model.getValueAt(3, 0), equalTo(model.getValueAt(0, 0)));
-    	assertThat(model.getValueAt(4, 1), equalTo(model.getValueAt(1, 1)));
-    	assertThat(model.getValueAt(5, 1), equalTo(model.getValueAt(2, 1)));
+    	model.setSelection(0, 0, 3, 2);
+    	SelectedCells selection = model.getSelection();
+        
+    	model.pasteSelection(2, 1, selection);
+    	assertThat((Color)model.getValueAt(2, 1), is(Color.BLACK));
+    	assertThat((Color)model.getValueAt(3, 2), is(Color.BLACK));
+    	// outside the selection
+    	assertThat((Color)model.getValueAt(4, 3), is(Color.WHITE));
     }
 }

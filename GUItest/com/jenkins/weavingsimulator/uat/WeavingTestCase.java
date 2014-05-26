@@ -7,7 +7,7 @@ import org.uispec4j.interception.MainClassAdapter;
 
 import com.jenkins.weavingsimulator.WeavingSimulatorApp;
 
-class WeavingTestCase extends UISpecTestCase {
+abstract class WeavingTestCase extends UISpecTestCase {
 	// Colours used in the 103.wif test piece.
 	protected final Color orange = new Color(0xcc674f);
 	protected final Color blue = new Color(0x66ccff);
