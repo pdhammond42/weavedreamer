@@ -257,6 +257,7 @@ public class WeavingDraftPropertiesDialog extends javax.swing.JDialog {
         numWeftPicksField.setValue(value_or_default(draft.getPicks().size(), "picks", 20));
         numHarnessesField.setValue(value_or_default(draft.getNumHarnesses(), "harnesses", 4));
         numTreadlesField.setValue(value_or_default(draft.getTreadles().size(), "treadles", 6));
+        liftplanCheck.setSelected(draft.getIsLiftplan());
         editFinished = false;
         
         setVisible(true);
@@ -291,12 +292,12 @@ public class WeavingDraftPropertiesDialog extends javax.swing.JDialog {
     }
     
     private Integer value_or_default (int value, String default_key, int deflt) {
-    	// Returns  anew Integer with value, unless value is 0, then returns
+    	// Returns a new Integer with value, unless value is 0, then returns
     	// the preferences value for default_key if available, or deflt.
     	if (value != 0) return new Integer(value);
     	return new Integer (Preferences.userNodeForPackage(this.getClass()).getInt(default_key, deflt));
     }
-    
+  
     // formatter for JFormattedTextField which only allows integers >= 0.
     private class NonNegativeIntFormatter 
         extends javax.swing.JFormattedTextField.AbstractFormatter {
