@@ -157,16 +157,4 @@ public class PalettePanel extends JPanel {
         paletteGrid.setRowSelectionInterval(0,0);
         paletteGrid.setEnabled(true);
     }
-    
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("PalettePanel Test");
-        PalettePanel panel = new PalettePanel();
-        EditingSession session = new EditingSession();
-        session.setPalette(new Palette(10));
-        panel.setSession(session);
-        frame.add(panel);
-        frame.pack();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
-    } 
 }

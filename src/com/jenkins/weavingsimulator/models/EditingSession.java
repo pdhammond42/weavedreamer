@@ -61,22 +61,26 @@ public class EditingSession {
      */
     private boolean draftModified;
     
-    /**
-     * The palette may get changed directly on the draft. The session
-     * needs to propagate this.
-     */
-    private PropertyChangeListener draftPaletteChangedListener;
-    
-    
-    public EditingSession() {
+    public EditingSession(WeavingDraft draft) {
         propertySupport = new PropertyChangeSupport(this);
-        draftPaletteChangedListener = new PropertyChangeListener() {
+
+        this.draft = draft;
+        // The palette may get changed directly on the draft. The session
+        // needs to propagate this.
+        this.draft.addPropertyChangeListener("palette", new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent e) {
             	if (e.getPropertyName() == "palette") 
             		propertySupport.firePropertyChange (PALETTE_PROPERTY, 
             				e.getOldValue(), e.getNewValue());
             }
-        };
+        });
+        
+		draft.addPropertyChangeListener(new PropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent ev) {
+				if (!isDraftModified())
+					setDraftModified(true);
+			}
+		});
     }
     
     
@@ -125,18 +129,6 @@ public class EditingSession {
     public WeavingDraft getDraft() {
 
         return this.draft;
-    }
-
-    /**
-     * Setter for property draft.
-     * @param draft New value of property draft.
-     */
-    public void setDraft(WeavingDraft draft) {
-
-        WeavingDraft oldDraft = this.draft;
-        this.draft = draft;
-        propertySupport.firePropertyChange (DRAFT_PROPERTY, oldDraft, draft);
-        this.draft.addPropertyChangeListener("palette", draftPaletteChangedListener);
     }
 
     /**

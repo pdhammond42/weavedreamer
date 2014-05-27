@@ -37,16 +37,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.beans.XMLEncoder;
 import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.prefs.*;
 
 import javax.swing.JFileChooser;
@@ -57,13 +53,6 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
-import javax.xml.transform.Result;
-import javax.xml.transform.Source;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.stream.StreamResult;
-import javax.xml.transform.stream.StreamSource;
 
 /**
  *
@@ -557,16 +546,15 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
     /** Opens a new WeavingDraftWindow displaying draft.  If file is not
      * null, uses the filename as the window title. */
     private void openWeavingDraftWindow(WeavingDraft draft, File file) {
-        WeavingDraftWindow win = new WeavingDraftWindow();
-        EditingSession session = new EditingSession();
-        session.setDraft(draft);
+        EditingSession session = new EditingSession(draft);
+       
         // Until we can save a WIF, don't consider a draft loaded from WIF to have
         // a file for saving.
         if (file != null && ! (file.getName().toLowerCase().endsWith(WIF_EXTENSION))) 
         	session.setFile(file);
         session.setDraftModified(false);
-        win.setSession(session);
         
+        WeavingDraftWindow win = new WeavingDraftWindow(session);
         if (file == null)
             win.setTitle("*New Draft " + newFileNum++ + "*");
         mainDesktop.add(win);

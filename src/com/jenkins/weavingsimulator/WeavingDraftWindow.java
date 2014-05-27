@@ -52,7 +52,7 @@ import com.jenkins.weavingsimulator.models.WeavingPatternModel;
 public class WeavingDraftWindow extends javax.swing.JInternalFrame {
 
 	/** Creates new form WeavingDraftWindow */
-	public WeavingDraftWindow() {
+	public WeavingDraftWindow(EditingSession session) {
 		initComponents();
 
 		jScrollPane1.getVerticalScrollBar().setUnitIncrement(16);
@@ -111,8 +111,24 @@ public class WeavingDraftWindow extends javax.swing.JInternalFrame {
 		statusBar.setText("0,0");
 		
 		setName("WeavingDraftWindow");
+		
+		this.session = session;
+		setUpModels();
 	}
 
+	private void setUpModels () {
+		WeavingDraft draft = session.getDraft();
+		((ThreadingDraftModel) threadingDraftGrid.getModel()).setDraft(draft);
+		((WarpEndColorModel) warpEndColorGrid.getModel()).setDraft(draft);
+		((WeavingPatternModel) weavingPatternGrid.getModel()).setDraft(draft);
+		((TieUpModel) tieUpGrid.getModel()).setDraft(draft);
+		((TreadlingDraftModel) treadlingDraftGrid.getModel()).setDraft(draft);
+		((StepColorModel) pickColorGrid.getModel()).setDraft(draft);
+		fileChangedHandler(session.getFile());
+		draftModifiedChangedHandler(session.isDraftModified());
+		palettePanel.setSession(session);
+	}
+	
 	private class ColorEditProvider implements GridControl.EditedValueProvider {
 		public Object getValue() {
 			int selection = session.getPalette().getSelection();
@@ -203,22 +219,6 @@ public class WeavingDraftWindow extends javax.swing.JInternalFrame {
 		pack();
 	}// </editor-fold>//GEN-END:initComponents
 
-	private void draftChangedHandler(WeavingDraft draft) {
-		((ThreadingDraftModel) threadingDraftGrid.getModel()).setDraft(draft);
-		((WarpEndColorModel) warpEndColorGrid.getModel()).setDraft(draft);
-		((WeavingPatternModel) weavingPatternGrid.getModel()).setDraft(draft);
-		((TieUpModel) tieUpGrid.getModel()).setDraft(draft);
-		((TreadlingDraftModel) treadlingDraftGrid.getModel()).setDraft(draft);
-		((StepColorModel) pickColorGrid.getModel()).setDraft(draft);
-
-		draft.addPropertyChangeListener(new PropertyChangeListener() {
-			public void propertyChange(PropertyChangeEvent ev) {
-				if (!session.isDraftModified())
-					session.setDraftModified(true);
-			}
-		});
-	}
-
 	private void fileChangedHandler(File file) {
 		if (file != null)
 			setTitle(file.getName());
@@ -266,39 +266,7 @@ public class WeavingDraftWindow extends javax.swing.JInternalFrame {
 	 * @return Value of property session.
 	 */
 	public EditingSession getSession() {
-
 		return this.session;
-	}
-
-	/**
-	 * Setter for property session.
-	 * 
-	 * @param session
-	 *            New value of property session.
-	 */
-	public void setSession(EditingSession session) {
-		if (this.session != null)
-			throw new IllegalStateException("Can't reset editing session");
-
-		this.session = session;
-		draftChangedHandler(session.getDraft());
-		fileChangedHandler(session.getFile());
-		draftModifiedChangedHandler(session.isDraftModified());
-		palettePanel.setSession(session);
-
-		session.addPropertyChangeListener(new PropertyChangeListener() {
-			public void propertyChange(PropertyChangeEvent evt) {
-				if (evt.getPropertyName().equals(EditingSession.DRAFT_PROPERTY))
-					draftChangedHandler((WeavingDraft) evt.getNewValue());
-				else if (evt.getPropertyName().equals(
-						EditingSession.FILE_PROPERTY))
-					fileChangedHandler((File) evt.getNewValue());
-				else if (evt.getPropertyName().equals(
-						EditingSession.DRAFT_MODIFIED_PROPERTY))
-					draftModifiedChangedHandler((Boolean) evt.getNewValue());
-			}
-		});
-
 	}
 
 	public void zoomIn() {
