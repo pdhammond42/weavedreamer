@@ -43,6 +43,7 @@ public class EditingSession {
     public static final String DRAFT_MODIFIED_PROPERTY = "draftModified";
     public static final String FILE_PROPERTY = "file";
     public static final String PALETTE_PROPERTY = "palette";
+    public static final String SELECTION_PROPERTY = "selection";
     
     private PropertyChangeSupport propertySupport;
 
@@ -60,6 +61,8 @@ public class EditingSession {
      * Holds value of property draftModified.
      */
     private boolean draftModified;
+    
+    private SelectedCells selection;
     
     public EditingSession(WeavingDraft draft) {
         propertySupport = new PropertyChangeSupport(this);
@@ -81,6 +84,7 @@ public class EditingSession {
 					setDraftModified(true);
 			}
 		});
+		selection = new SelectedCells();
     }
     
     
@@ -171,4 +175,18 @@ public class EditingSession {
         propertySupport.firePropertyChange (DRAFT_MODIFIED_PROPERTY, 
                 oldDraftModified, draftModified);
     }
+
+
+	public SelectedCells getSelectedCells() {
+		// TODO Auto-generated method stub
+		return selection;
+	}
+
+
+	public void setSelectedCells(SelectedCells selectedCells) {
+		SelectedCells oldSelection = selection;
+		selection = selectedCells;		
+        propertySupport.firePropertyChange (SELECTION_PROPERTY, 
+        		oldSelection, selection);
+	}
 }

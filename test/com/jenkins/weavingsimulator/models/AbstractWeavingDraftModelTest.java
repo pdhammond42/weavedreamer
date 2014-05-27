@@ -64,23 +64,6 @@ public class AbstractWeavingDraftModelTest extends TestCase {
         assertSame(draft, model.getDraft());
     }
 
-    public void testSetDraft() {
-        WeavingDraft newDraft = new WeavingDraft("AnotherTest");
-        model.setDraft(newDraft);
-        
-        assertSame(newDraft, model.getDraft());
-        
-        // make sure model notifies listeners of changes to draft
-        model.addTableModelListener(listener);
-        newDraft.setNumHarnesses(2);
-        assertNotNull(listener.event);
-        
-        // make sure old draft isn't still being listened to by model
-        listener.event = null;
-        draft.setNumHarnesses(2);
-        assertNull(listener.event);
-    }
-
     /**
      * Make sure when a AbstractWeavingModel is created with a draft
      * passed in the constructor, the model adds a listener to the draft

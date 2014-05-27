@@ -57,7 +57,7 @@ public class ThreadingDraftModelTest extends TestCase {
         draft.getEnds().add(new WarpEnd(Color.BLUE, 0));
         draft.getEnds().add(new WarpEnd(Color.GREEN, 1));
         
-        model = new ThreadingDraftModel(draft);
+        model = new ThreadingDraftModel(new EditingSession(draft));
         
         listener = new TestTableModelListener();
         model.addTableModelListener(listener);
@@ -78,7 +78,7 @@ public class ThreadingDraftModelTest extends TestCase {
     }
 
     public void testGetValueAt() {
-    	model.setSelection (0,1,0,2);
+    	model.showSelection (0,1,2,2);
     	draft.getEnds().get(0).setHarnessId(1);
     	draft.getEnds().get(1).setHarnessId(0);
     	
@@ -135,25 +135,5 @@ public class ThreadingDraftModelTest extends TestCase {
         draft.getPicks().add(new WeftPick(Color.BLUE, 1, 0));
         
         assertNull(listener.event);
-    }
-    
-    public void testSetAndPasteSelection() {
-        draft.setEnds(Arrays.asList(
-        		new WarpEnd(Color.BLUE, 0), 
-        		new WarpEnd(Color.BLUE, 1), 
-        		new WarpEnd(Color.BLUE, 0), 
-        		new WarpEnd(Color.BLUE, 1), 
-        		new WarpEnd(Color.BLUE, 0), 
-        		new WarpEnd(Color.BLUE, 1)));
-
-    	model.setValueAt(true, 0, 0);
-    	model.setValueAt(true, 1, 1);
-    	model.setValueAt(true, 1, 2);
-    	
-    	model.setSelection(0, 0, 0, 3);
-    	model.pasteSelection (0, 3);
-    	assertThat(model.getValueAt(0, 3), equalTo(model.getValueAt(0,0)));
-    	assertThat(model.getValueAt(1, 4), equalTo(model.getValueAt(1,1)));
-    	assertThat(model.getValueAt(1, 5), equalTo(model.getValueAt(1,2)));
     }
 }

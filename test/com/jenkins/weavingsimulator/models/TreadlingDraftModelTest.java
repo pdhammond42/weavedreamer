@@ -44,6 +44,7 @@ public class TreadlingDraftModelTest extends TestCase {
     private WeavingDraft draft;
     private TreadlingDraftModel model;
     private TestTableModelListener listener;
+    private EditingSession session;
     
     public TreadlingDraftModelTest(String testName) {
         super(testName);
@@ -58,7 +59,8 @@ public class TreadlingDraftModelTest extends TestCase {
                 new WeftPick(Color.WHITE, 2, 1),
                 new WeftPick(Color.BLUE, 2, 0)));
         
-        model = new TreadlingDraftModel(draft);
+        session = new EditingSession(draft);
+        model = new TreadlingDraftModel(session);
         listener = new TestTableModelListener();
         model.addTableModelListener(listener);
     }
@@ -91,7 +93,7 @@ public class TreadlingDraftModelTest extends TestCase {
     }
     
     public void testGetValueWithSelection() {
-    	model.setSelection(0, 0, 2, 2);
+    	model.showSelection(0, 0, 2, 2);
 
     	draft.getPicks().get(0).setTreadle(0, true);
     	draft.getPicks().get(1).setTreadle(1, true);
@@ -149,8 +151,8 @@ public class TreadlingDraftModelTest extends TestCase {
         draft.getEnds().add(new WarpEnd(Color.BLACK, 1));
         assertNull(listener.event);
     }
-    
-    public void testSetAndGetSelection() {
+        
+    public void testCopySelectionGoesToSession() {
     	draft.setTreadles(Arrays.asList(new Treadle(), new Treadle(), 
     			new Treadle(), new Treadle()));
     	draft.setPicks(Arrays.asList(
@@ -166,10 +168,13 @@ public class TreadlingDraftModelTest extends TestCase {
     	model.setValueAt(true, 4, 3);
     	model.setValueAt(true, 5, 3);
     	
-    	model.setSelection(2, 1, 5, 3);
-    	SelectedCells selection = model.getSelection();
-        
-        assertThat(selection.getRows(), equalTo(3));
+    	model.showSelection(2, 1, 5, 3);
+    	assertThat (session.getSelectedCells().getRows(), is(0));
+    	assertThat (session.getSelectedCells().getColumns(), is(0));
+    	model.copySelection();
+    	
+    	SelectedCells selection = session.getSelectedCells();
+    	assertThat(selection.getRows(), equalTo(3));
         assertThat(selection.getColumns(), equalTo(2));
         assertThat(selection.getValue(0,0), is(true));
         assertThat(selection.getValue(0,1), is(false));
@@ -179,28 +184,54 @@ public class TreadlingDraftModelTest extends TestCase {
     	assertThat(selection.getValue(2,1), is(false));
     }
     
-    public void testPasteSelection() {
+    public void testSelectionisPastedFromSession() {
     	draft.setTreadles(Arrays.asList(new Treadle(), new Treadle(), 
     			new Treadle(), new Treadle()));
     	draft.setPicks(Arrays.asList(
                 new WeftPick(Color.BLACK, 4, 0), 
                 new WeftPick(Color.WHITE, 4, 1),
-                new WeftPick(Color.WHITE, 4, 1),
-                new WeftPick(Color.WHITE, 4, 1),
+                new WeftPick(Color.WHITE, 4, 2),
+                new WeftPick(Color.WHITE, 4, 3),
                 new WeftPick(Color.WHITE, 4, 1),
                 new WeftPick(Color.BLUE, 4, 0)));
 
-    	model.setValueAt(true, 0, 0);
-    	model.setValueAt(true, 1, 1);
-    	model.setValueAt(true, 2, 2);
+    	/* Start with
+    	 *  *...
+    	 *  .*..
+    	 *  ..*.
+    	 *  ...*
+    	 *  .*..
+    	 *  *...
+    	 *  copy from r,c 3, 1 .. 5, 4, paste to 1, 0, should get
+    	 *  *...
+    	 *  ..*.
+    	 *  *...
+    	 *  ...*
+    	 *  .*..
+    	 *  *... 
+    	 */	
+    	session.setSelectedCells(new SelectedCells(draft.getPicks(), new GridSelection(3, 1, 5, 4)));
     	
-    	model.setSelection(0, 0, 3, 2);
-    	SelectedCells selection = model.getSelection();
-        
-    	model.pasteSelection(2, 1, selection);
-    	assertThat((Color)model.getValueAt(2, 1), is(Color.BLACK));
-    	assertThat((Color)model.getValueAt(3, 2), is(Color.BLACK));
-    	// outside the selection
-    	assertThat((Color)model.getValueAt(4, 3), is(Color.WHITE));
+    	model.pasteSelection(1, 0);
+    	assertThat((Color)model.getValueAt(0, 0), is(Color.BLACK));
+    	assertThat((Color)model.getValueAt(0, 1), is(Color.WHITE));
+    	assertThat((Color)model.getValueAt(0, 2), is(Color.WHITE));
+    	assertThat((Color)model.getValueAt(0, 3), is(Color.WHITE));
+    	
+    	assertThat((Color)model.getValueAt(1, 0), is(Color.WHITE));
+    	assertThat((Color)model.getValueAt(1, 1), is(Color.WHITE));
+    	assertThat((Color)model.getValueAt(1, 2), is(Color.BLACK));
+    	assertThat((Color)model.getValueAt(1, 3), is(Color.WHITE));
+    	
+    	assertThat((Color)model.getValueAt(2, 0), is(Color.BLACK));
+    	assertThat((Color)model.getValueAt(2, 1), is(Color.WHITE));
+    	assertThat((Color)model.getValueAt(2, 2), is(Color.WHITE));
+    	assertThat((Color)model.getValueAt(2, 3), is(Color.WHITE));
+    	
+    	assertThat((Color)model.getValueAt(3, 0), is(Color.WHITE));
+    	assertThat((Color)model.getValueAt(3, 1), is(Color.WHITE));
+    	assertThat((Color)model.getValueAt(3, 2), is(Color.WHITE));
+    	assertThat((Color)model.getValueAt(3, 3), is(Color.BLACK));
+    	
     }
 }

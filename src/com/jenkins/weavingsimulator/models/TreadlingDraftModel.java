@@ -31,7 +31,6 @@ import java.beans.PropertyChangeListener;
 
 import java.beans.IndexedPropertyChangeEvent;
 import com.jenkins.weavingsimulator.datatypes.WeftPick;
-import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
 
 /** Represents the treadling draft display of a weaving draft.  The treadling
  * draft displays which treadle should be pushed for each pick in the pattern.
@@ -43,12 +42,11 @@ import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
  *
  * @author  ajenkins
  */
-public class TreadlingDraftModel extends AbstractWeavingDraftModel {
+public class TreadlingDraftModel extends CopyableWeavingGridModel {
     
     /** Creates a new instance of TreadlingDraftModel */
-    public TreadlingDraftModel(WeavingDraft draft) {
-        super(draft);
-        selection = new GridSelection ();
+    public TreadlingDraftModel(EditingSession session) {
+        super(session);
         setDraftListener(new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent ev) {
                 String propName = ev.getPropertyName();
@@ -106,7 +104,7 @@ public class TreadlingDraftModel extends AbstractWeavingDraftModel {
     public Object getValueAt(int rowIndex, int columnIndex) {
         if (draft.getPicks().get(rowIndex).isTreadleSelected(columnIndex))
             return Color.BLACK;
-        else if (selection.contains(rowIndex, columnIndex))
+        else if (isSelected(rowIndex, columnIndex))
             return Color.LIGHT_GRAY;
         else
         	return Color.WHITE;
@@ -156,28 +154,5 @@ public class TreadlingDraftModel extends AbstractWeavingDraftModel {
      */
     public Class<?> getColumnClass(int columnIndex) {
         return Color.class;
-    }
-    
-    private GridSelection selection;
-    /** Sets the selection to be the rows [startRow..endRow)
-        and the columns [startColumn..endColumn)
-     */
-    public void setSelection (int startRow, int startColumn, int endRow, int endColumn) {
-    	selection = new GridSelection (startRow, startColumn, endRow, endColumn);
-    	fireTableDataChanged();
-    }
-    
-    public SelectedCells getSelection() {
-    	return new SelectedCells (draft.getPicks(), selection);
-    }
-    
-    public void pasteSelection (int rowIndex, int columnIndex, SelectedCells selection) {
-    	for (int row = 0; row != selection.getRows(); row++) {
-    		for (int col = 0; col != selection.getColumns(); col++) {
-    			if (selection.getValue(row, col)) {
-    				setValueAt (null, row + rowIndex, col + columnIndex);
-    			}
-    		}
-    	}
     }
 }

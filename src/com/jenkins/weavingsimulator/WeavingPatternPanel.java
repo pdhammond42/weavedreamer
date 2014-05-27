@@ -37,9 +37,9 @@ import javax.swing.table.TableModel;
  */
 public class WeavingPatternPanel extends javax.swing.JPanel {    
     /** Creates new form WeavingPatternPanel */
-    public WeavingPatternPanel() {
+    public WeavingPatternPanel(WeavingDraft draft) {
         initComponents();
-        WeavingPatternModel wmodel = new WeavingPatternModel(new WeavingDraft(""));
+        WeavingPatternModel wmodel = new WeavingPatternModel(draft);
         TableModel model = new TiledTableModelAdapter(wmodel);
         weavingPatternGrid.setModel(model);
         weavingPatternGrid.setSquareWidth(10);
@@ -108,19 +108,7 @@ public class WeavingPatternPanel extends javax.swing.JPanel {
             (TiledTableModelAdapter)weavingPatternGrid.getModel();
         WeavingPatternModel wmodel = (WeavingPatternModel)model.getModel();
         return wmodel.getDraft();
-    }    
-    
-    /** Setter for property draft.
-     * @param draft New value of property draft.
-     *
-     */
-    public void setDraft(WeavingDraft draft) {
-        TiledTableModelAdapter model = 
-            (TiledTableModelAdapter)weavingPatternGrid.getModel();
-        WeavingPatternModel wmodel = (WeavingPatternModel)model.getModel();
-        wmodel.setDraft(draft);
-    }    
-    
+    }      
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.jenkins.weavingsimulator.GridControl weavingPatternGrid;

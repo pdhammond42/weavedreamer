@@ -39,7 +39,6 @@ import java.beans.PropertyChangeListener;
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.event.ListSelectionListener;
 

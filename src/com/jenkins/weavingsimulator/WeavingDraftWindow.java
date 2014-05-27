@@ -25,8 +25,6 @@
 package com.jenkins.weavingsimulator;
 
 import java.awt.Dimension;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.File;
 
 import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
@@ -59,7 +57,9 @@ public class WeavingDraftWindow extends javax.swing.JInternalFrame {
 		jScrollPane1.getHorizontalScrollBar().setUnitIncrement(16);
 
 		int squareWidth = 15;
-		WeavingDraft draft = new WeavingDraft("");
+		this.session = session;
+		WeavingDraft draft = session.getDraft();
+		
 		weavingPatternGrid.setModel(new WeavingPatternModel(draft));
 		weavingPatternGrid.setSquareWidth(squareWidth);
 		weavingPatternGrid.setIntercellSpacing(new Dimension(0,0));
@@ -67,7 +67,7 @@ public class WeavingDraftWindow extends javax.swing.JInternalFrame {
 		weavingPatternGrid.setShowGrid(false);
 		weavingPatternGrid.setName("weavingPatternGrid");
 
-		threadingDraftGrid.setModel(new ThreadingDraftModel(draft));
+		threadingDraftGrid.setModel(new ThreadingDraftModel(session));
 		threadingDraftGrid.setSquareWidth(squareWidth);
 		threadingDraftGrid.setName("threadingDraftGrid");
 
@@ -80,7 +80,7 @@ public class WeavingDraftWindow extends javax.swing.JInternalFrame {
 		tieUpGrid.setSquareWidth(squareWidth);
 		tieUpGrid.setName("tieUpGrid");
 		
-		treadlingDraftGrid.setModel(new TreadlingDraftModel(draft));
+		treadlingDraftGrid.setModel(new TreadlingDraftModel(session));
 		treadlingDraftGrid.setSquareWidth(squareWidth);
 		treadlingDraftGrid.setName("treadlingDraftGrid");
 		
@@ -112,23 +112,11 @@ public class WeavingDraftWindow extends javax.swing.JInternalFrame {
 		
 		setName("WeavingDraftWindow");
 		
-		this.session = session;
-		setUpModels();
-	}
-
-	private void setUpModels () {
-		WeavingDraft draft = session.getDraft();
-		((ThreadingDraftModel) threadingDraftGrid.getModel()).setDraft(draft);
-		((WarpEndColorModel) warpEndColorGrid.getModel()).setDraft(draft);
-		((WeavingPatternModel) weavingPatternGrid.getModel()).setDraft(draft);
-		((TieUpModel) tieUpGrid.getModel()).setDraft(draft);
-		((TreadlingDraftModel) treadlingDraftGrid.getModel()).setDraft(draft);
-		((StepColorModel) pickColorGrid.getModel()).setDraft(draft);
 		fileChangedHandler(session.getFile());
 		draftModifiedChangedHandler(session.isDraftModified());
 		palettePanel.setSession(session);
 	}
-	
+
 	private class ColorEditProvider implements GridControl.EditedValueProvider {
 		public Object getValue() {
 			int selection = session.getPalette().getSelection();
@@ -226,9 +214,8 @@ public class WeavingDraftWindow extends javax.swing.JInternalFrame {
 
 	public void displayTiledView() {
 		if (tiledViewFrame == null) {
-			wpanel = new WeavingPatternPanel();
+			wpanel = new WeavingPatternPanel(session.getDraft());
 			wpanel.setName("draftPanel");
-			wpanel.setDraft(session.getDraft());
 			tiledViewFrame = new javax.swing.JFrame(getTitle());
 			tiledViewFrame.getContentPane().add(wpanel);
 			tiledViewFrame.pack();

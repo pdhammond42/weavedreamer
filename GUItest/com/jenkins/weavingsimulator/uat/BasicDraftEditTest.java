@@ -151,4 +151,19 @@ public class BasicDraftEditTest extends WeavingTestCase {
 	public void testHelpAbout () {
 		ui.checkAboutBox();
 	}
+	
+	public void testPasteBetweenGrids() {
+		ui.newDraft(4, 6, 20, 20, "Monochrome");
+		
+		ui.setPick (0, 0);
+		ui.setPick (1, 1);
+		ui.setPick (2, 2);
+		ui.setPick (3, 3);
+		ui.selectPick(0, 0, 4, 4);
+		
+		ui.pasteThreading (0,0);
+		ui.endIs(0, 0, Color.BLACK);
+		ui.endIs(1, 1, Color.BLACK);
+		ui.endIs(2, 2, Color.BLACK);
+	}
 }

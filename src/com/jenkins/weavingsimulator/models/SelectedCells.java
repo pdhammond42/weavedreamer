@@ -22,12 +22,16 @@ public class SelectedCells {
 		}
 	}
 	
+	SelectedCells() {
+		rows = new boolean[0][0];
+	}
+	
 	int getRows() {
 		return rows.length;
 	}
 	
 	int getColumns() { 
-		return rows[0].length;
+		return rows.length > 0 ? rows[0].length : 0;
 	}
 	
 	boolean getValue(int row, int column) {

@@ -216,7 +216,7 @@ public class GridControl extends JTable {
 	    				start.row, start.column, 
     					end.row, end.column);		
 	    		if (isShiftDrag) {
-	    			if (model != null) model.setSelection(
+	    			if (model != null) model.showSelection(
 	    					start.row, start.column, 
 	    					end.row, end.column);		
 	    		} else {
@@ -227,18 +227,25 @@ public class GridControl extends JTable {
     }
     
     public void endDrag () {
-    	if (dragStart != null && dragEnd != null && !isShiftDrag) {
-    		final RowColumn start = toCell(dragStart);
-    		final RowColumn end = toCell(dragEnd);
-	    	final int diffX = end.column - start.column;
-		    final int diffY = end.row - start.row;
-		    final int steps = Math.max(Math.abs(diffX), Math.abs(diffY))+1;
-		    if (editedValueProvider != null) {
-		    	setValueAt (editedValueProvider.getValue(), start.row, start.column);
-		    	for (int i = 1; i < steps; i++) {
-		    		setValueAt (editedValueProvider.getValue(), start.row + i*diffY/(steps-1), start.column+i*diffX/(steps-1));
-		    	}	
-		   	}	
+    	if (dragStart != null && dragEnd != null) {
+    		if (isShiftDrag) {
+    			if (getModel() instanceof AbstractWeavingDraftModel) { 
+    				((AbstractWeavingDraftModel)getModel()).copySelection();
+    				((AbstractWeavingDraftModel)getModel()).showSelection(0,0,0,0);
+    			}
+    		} else {
+    			final RowColumn start = toCell(dragStart);
+    			final RowColumn end = toCell(dragEnd);
+    			final int diffX = end.column - start.column;
+    			final int diffY = end.row - start.row;
+    			final int steps = Math.max(Math.abs(diffX), Math.abs(diffY))+1;
+    			if (editedValueProvider != null) {
+    				setValueAt (editedValueProvider.getValue(), start.row, start.column);
+    				for (int i = 1; i < steps; i++) {
+    					setValueAt (editedValueProvider.getValue(), start.row + i*diffY/(steps-1), start.column+i*diffX/(steps-1));
+    				}	
+    			}	
+    		}
     	}
     	dragStart = null;
     	dragEnd = null;
@@ -338,4 +345,4 @@ public class GridControl extends JTable {
     private RowColumn toCell (Point p) {
     	return new RowColumn (p.y / squareWidth, p.x / squareWidth);
     }
-}
+ }

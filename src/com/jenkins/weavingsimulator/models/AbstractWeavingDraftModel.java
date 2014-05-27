@@ -69,7 +69,8 @@ public abstract class AbstractWeavingDraftModel
                     fireTableStructureChanged();
             }
         };
-        setDraft(draft);
+        this.draft = draft;
+        if (draft != null) draft.addPropertyChangeListener(draftListener);
     }
     
     /** Getter for property draft.
@@ -78,18 +79,6 @@ public abstract class AbstractWeavingDraftModel
      */
     public WeavingDraft getDraft() {
         return this.draft;
-    }
-    
-    /** Setter for property draft.
-     * @param draft New value of property draft.
-     *
-     */
-    public void setDraft(WeavingDraft draft) {
-        if (this.draft != null)
-            this.draft.removePropertyChangeListener(draftListener);
-        this.draft = draft;
-        draft.addPropertyChangeListener(draftListener);
-        fireTableStructureChanged();
     }
     
     protected void setDraftListener(PropertyChangeListener listener) {
@@ -110,10 +99,21 @@ public abstract class AbstractWeavingDraftModel
      * @param endRow One-past-end row of the selection.
      * @param endColumn One-past-end column of the selection
      */
-    public void setSelection (int startRow, int startColumn, int endRow, int endColumn){
+    public void showSelection (int startRow, int startColumn, int endRow, int endColumn){
     }
     
-    /** If a selection has previously been set by setSelection, duplicates that selection
+    /** If a selection has previously been set by showSelection, copies it to
+     * a shared location that can be accessed later by copySelection. 
+     * Default operation is a no-op. 
+     * Groups of derived objects will co-operate about where the shared 
+     * location is.
+     */
+    public void copySelection() {
+    	
+    }
+    
+    /** If a selection has previously been copied by any cooperating object,
+     *  duplicates that selection
      * with its top left hand corner at rowIndex, columnIndex.
      * @param rowIndex Starting row
      * @param columnIndex Starting column

@@ -14,7 +14,7 @@ public class StausBarModelTest extends TestCase {
 	public void testModelObservesDraftSelection () {
 		StatusBarModel sbmodel = new StatusBarModel();
 		WeavingDraft draft = new WeavingDraft();
-		TreadlingDraftModel tm = new TreadlingDraftModel(draft);
+		TreadlingDraftModel tm = new TreadlingDraftModel(new EditingSession(draft));
 		
 		sbmodel.listen(tm);
 		tm.setCurrentCell(3, 2);
@@ -27,7 +27,7 @@ public class StausBarModelTest extends TestCase {
 	public void testModelNotifiesChanges () {
 		StatusBarModel sbmodel = new StatusBarModel();
 		WeavingDraft draft = new WeavingDraft();
-		TreadlingDraftModel tm = new TreadlingDraftModel(draft);
+		TreadlingDraftModel tm = new TreadlingDraftModel(new EditingSession(draft));
 		sbmodel.listen(tm);
 
 		PropertyChangeHandler handler = new PropertyChangeHandler();

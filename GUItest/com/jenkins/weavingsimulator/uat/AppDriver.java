@@ -11,6 +11,7 @@ import javax.swing.JInternalFrame;
 import javax.swing.JRootPane;
 import javax.swing.JTable;
 
+import org.uispec4j.Key.Modifier;
 import org.uispec4j.Mouse;
 import org.uispec4j.Table;
 import org.uispec4j.Trigger;
@@ -107,6 +108,10 @@ public class AppDriver{
     	drag (treadlingDraftGrid(), startRow, startColumn, endRow, endColumn);
     }   
     
+    void selectPick(final int startRow, final int startColumn, final int endRow, final int endColumn) {
+    	drag (treadlingDraftGrid(), startRow, startColumn, endRow, endColumn, Modifier.SHIFT);
+    }   
+
     void setPickColour (final int row) {
     	pickColorGrid().click(row, 0);
     }
@@ -126,6 +131,10 @@ public class AppDriver{
     void dragThreading(final int startRow, final int startColumn, final int endRow, final int endColumn) {
     	drag (threadingDraftGrid(), startRow, startColumn, endRow, endColumn);
     }   
+ 
+    void selectThreading(final int startRow, final int startColumn, final int endRow, final int endColumn) {
+    	drag (threadingDraftGrid(), startRow, startColumn, endRow, endColumn, Modifier.SHIFT);    	
+    }
     
     void setThreadingColour (final int column) {
     	warpEndColorGrid().click(0, column);
@@ -133,6 +142,10 @@ public class AppDriver{
     
     void dragThreadingColour(final int start, final int end) {
     	drag(warpEndColorGrid(), 0, start, 0, end);
+    }
+    
+    void pasteThreading (final int row, final int column){
+    	threadingDraftGrid().rightClick(row, column);
     }
     
     void zoomIn() {
@@ -296,8 +309,21 @@ public class AppDriver{
 			return window.getButton("OK").triggerClick();
 		}
 	}
-	
-	private static void drag (Table table, final int startRow, final int startColumn, final int endRow, final int endColumn){
+
+	private static void drag (Table table, 
+			final int startRow, 
+			final int startColumn, 
+			final int endRow, 
+			final int endColumn) {
+		drag (table, startRow, startColumn, endRow, endColumn, Modifier.NONE);
+	}
+
+	private static void drag (Table table, 
+			final int startRow, 
+			final int startColumn, 
+			final int endRow, 
+			final int endColumn,
+			Modifier mod) {
     	JTable jtable = table.getAwtComponent();
     	final int startX = xOfColumn(jtable, startColumn);
     	final int startY = yOfRow(jtable, startRow);
@@ -306,9 +332,9 @@ public class AppDriver{
     	// Autoscrolling will prevent the second drag being handled, so
     	// suppress it.
     	jtable.setAutoscrolls(false);
-    	Mouse.drag(table, startX, startY);
-    	Mouse.drag(table, endX, endY);
-    	Mouse.released(table, endX, endY);
+    	Mouse.drag(table, false, mod, startX, startY);
+    	Mouse.drag(table, false, mod, endX, endY);
+    	Mouse.released(table, false, mod, endX, endY);
 	}
 	
 	private static int xOfColumn(JTable table, final int column) {

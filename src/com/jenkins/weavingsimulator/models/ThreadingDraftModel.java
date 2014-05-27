@@ -26,7 +26,6 @@
 package com.jenkins.weavingsimulator.models;
 
 import com.jenkins.weavingsimulator.datatypes.WarpEnd;
-import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
 
 import java.awt.Color;
 import java.beans.IndexedPropertyChangeEvent;
@@ -45,10 +44,10 @@ import java.beans.PropertyChangeListener;
  * Odd but it works. 
  * @author  ajenkins
  */
-public class ThreadingDraftModel extends AbstractWeavingDraftModel {
+public class ThreadingDraftModel extends CopyableWeavingGridModel {
     /** Creates a new instance of ThreadingDraftModel */
-    public ThreadingDraftModel(WeavingDraft draft) {
-        super(draft);
+    public ThreadingDraftModel(EditingSession session) {
+        super(session);
         setDraftListener(new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent ev) {
                 String propName = ev.getPropertyName();
@@ -104,7 +103,7 @@ public class ThreadingDraftModel extends AbstractWeavingDraftModel {
         WarpEnd end = draft.getEnds().get(columnIndex);
         if (end.getHarnessId() == rowIndex) {
         	return Color.BLACK;
-        } else if (columnIndex >= selectionStart && columnIndex < selectionEnd) {
+        } else if (isSelected(rowIndex, columnIndex)) {
         	return Color.LIGHT_GRAY;
         } else {
         	return Color.WHITE;
@@ -124,28 +123,5 @@ public class ThreadingDraftModel extends AbstractWeavingDraftModel {
     
     public Class<?> getColumnClass(int columnIndex) {
         return Color.class;
-    }
-    
-    private int selectionStart = 0;
-    private int selectionEnd = 0;
-    /** Sets the selection to be the columns [startColumn..endColumn)
-     *  
-     * @param startRow Unused 
-     * @param startColumn First column that is selected 
-     * @param endRow Unused
-     * @param endColumn One-past-last column selected.
-     */
-    public void setSelection (int startRow, int startColumn, int endRow, int endColumn) {
-    	selectionStart = startColumn;
-    	selectionEnd = endColumn;
-    }
-    
-    public void pasteSelection (int rowIndex, int columnIndex) {
-    	int offset = columnIndex - selectionStart;
-    	for (int column = selectionStart; column != selectionEnd; column++) {
-            WarpEnd to = draft.getEnds().get(column + offset);
-            WarpEnd from = draft.getEnds().get(column);
-            to.setHarnessId(from.getHarnessId());   	
-    	}
     }
 }
