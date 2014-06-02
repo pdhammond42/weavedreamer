@@ -35,28 +35,17 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
-import javax.swing.JMenuItem;
 import javax.swing.JTable;
-import javax.swing.table.TableModel;
-import javax.swing.JPopupMenu;
+
 
 import com.jenkins.weavingsimulator.models.AbstractWeavingDraftModel;
 import com.jenkins.weavingsimulator.models.WeavingPatternCellModel;
 
-/** GridControl is a specialized JTable in which all cells are square.  Instead
+/** 
+ * GridControl is a specialized JTable in which all cells are square.  Instead
  * of setting setting the row height and column width, you set the squareWidth 
  * property.
  * 
- * This class implements drag behaviour to select and operate on multiple cells
- * at once. There are two drag modes: with and without shift, both on button 1.
- * Without shift, it displays a preview line of the drag path, then on end drag 
- * requests the model to set all cells crossed by the path. With shift, it updates 
- * the model on each drag with the selection. It is up to the model to implement
- * the selection. The reason for the difference is that setting the cells directly 
- * leaves cells changed even if the drag moves away from them. We probably could
- * provide some sort of restore, but I can't see how so this works.
- *
- * @author  ajenkins
  */
 public class GridControl extends JTable {
     
@@ -71,15 +60,6 @@ public class GridControl extends JTable {
     public GridControl(javax.swing.table.TableModel model) {
         super(model);
         init();
-    }
-    
-    private boolean allowDrag = true;
-    /** 
-     * Sets whether dragging will be allowed in this grid (default is on).
-     * @param allow Allow dragging if true.
-     */
-    public void setAllowDrag(boolean allow) {
-    	allowDrag = allow;
     }
         
     private void init() {
@@ -101,17 +81,6 @@ public class GridControl extends JTable {
         setRowHeight(squareWidth);
         setGridColor(Color.GRAY);
         
-        addMouseMotionListener (new MouseMotionListener() {
-			public void mouseDragged(MouseEvent arg0) {
-				if (allowDrag) doDrag (arg0);
-			}
-			public void mouseMoved(MouseEvent arg0) {
-				final RowColumn p = toCell(arg0.getPoint());
-				if (getModel() instanceof AbstractWeavingDraftModel) { 
-					((AbstractWeavingDraftModel)getModel()).setCurrentCell(p.row, p.column);
-				}
-			}
-			});
         addMouseListener (new MouseListener() {
 
 			public void mouseClicked(MouseEvent e) {
@@ -120,10 +89,7 @@ public class GridControl extends JTable {
 						e.getButton() == MouseEvent.BUTTON1 && 
 						editedValueProvider != null) {
 					setValueAt (editedValueProvider.getValue(), p.row, p.column);
-				} else if (e.getClickCount() == 1 && 
-						e.getButton() == MouseEvent.BUTTON3) {
-					showContextMenu(e);
-				}
+				} 
 			}
 
 			public void mouseEntered(MouseEvent e) {
@@ -136,23 +102,11 @@ public class GridControl extends JTable {
 			}
 
 			public void mouseReleased(MouseEvent e) {
-				endDrag();
 			}
         
         });
     }
     
-    private void showContextMenu(MouseEvent e) {
-    	final RowColumn p = toCell(e.getPoint());	
-		JMenuItem[] items = ((AbstractWeavingDraftModel)getModel()).getMenuItems(p.row, p.column);
-		if (items.length > 0) {
-			JPopupMenu menu = new JPopupMenu();
-			for (JMenuItem i: items) {
-				menu.add(i);
-			}
-			menu.show(this, e.getX(), e.getY());
-		}    	
-    }
     
     /** Getter for property squareWidth.
      * @return Value of property squareWidth.
@@ -196,75 +150,7 @@ public class GridControl extends JTable {
         column.setMaxWidth(squareWidth);
     }    
         
-    Point dragStart = null;
-    Point dragEnd = null;
-    boolean isShiftDrag = false;
-	private EditedValueProvider editedValueProvider;
-    
-	/** Overridden to draw the preview line during drag operations. 
-	 * 
-	 */
-    public void paintComponent (Graphics g) {
-    	super.paintComponent(g);
-    	Graphics2D g2 = (Graphics2D) g;
-    	if (dragStart != null && dragEnd != null && !isShiftDrag) {
-    		g2.setColor(Color.darkGray);
-    		g2.setStroke (new BasicStroke(2));
-    		g2.drawLine(dragStart.x, dragStart.y, dragEnd.x, dragEnd.y);
-    	}
-    }
-    
-    public void doDrag (MouseEvent event) {
-    	if ((event.getModifiersEx() & MouseEvent.BUTTON1_DOWN_MASK) != 0) {
-        	isShiftDrag = (event.getModifiersEx() & MouseEvent.SHIFT_DOWN_MASK) != 0;
-	    	if (dragStart == null) {
-				dragStart = event.getPoint();
-	    	} else {
-	    		dragEnd = event.getPoint();
-	    		final RowColumn start = toCell(dragStart);
-	    		final RowColumn end = toCell(dragEnd);
-	    		AbstractWeavingDraftModel model = null;
-	    		if (getModel() instanceof AbstractWeavingDraftModel) 
-	    			model = (AbstractWeavingDraftModel)getModel();
-	    		if (model != null) 
-	    			model.setCurrentCell(
-	    				start.row, start.column, 
-    					end.row, end.column);		
-	    		if (isShiftDrag) {
-	    			if (model != null) model.showSelection(
-	    					start.row, start.column, 
-	    					end.row, end.column);		
-	    		} else {
-	    			repaint();
-	    		}
-	    	}	
-    	}
-    }
-    
-    public void endDrag () {
-    	if (dragStart != null && dragEnd != null) {
-    		if (isShiftDrag) {
-    			if (getModel() instanceof AbstractWeavingDraftModel) { 
-    				((AbstractWeavingDraftModel)getModel()).copySelection();
-    				((AbstractWeavingDraftModel)getModel()).showSelection(0,0,0,0);
-    			}
-    		} else {
-    			final RowColumn start = toCell(dragStart);
-    			final RowColumn end = toCell(dragEnd);
-    			final int diffX = end.column - start.column;
-    			final int diffY = end.row - start.row;
-    			final int steps = Math.max(Math.abs(diffX), Math.abs(diffY))+1;
-    			if (editedValueProvider != null) {
-    				setValueAt (editedValueProvider.getValue(), start.row, start.column);
-    				for (int i = 1; i < steps; i++) {
-    					setValueAt (editedValueProvider.getValue(), start.row + i*diffY/(steps-1), start.column+i*diffX/(steps-1));
-    				}	
-    			}	
-    		}
-    	}
-    	dragStart = null;
-    	dragEnd = null;
-    }
+	protected EditedValueProvider editedValueProvider;
     
     /**	 
      * This is nothing to do with conventional JTable cell editing.
@@ -348,7 +234,7 @@ public class GridControl extends JTable {
     }
     
     // Helpers for dealing with point to cell conversions.
-    private class RowColumn {
+    protected class RowColumn {
     	public final int row;
     	public final int column;
     	public RowColumn (int row, int column) {
@@ -357,7 +243,7 @@ public class GridControl extends JTable {
     	}
     }
     
-    private RowColumn toCell (Point p) {
+    protected RowColumn toCell (Point p) {
     	return new RowColumn (p.y / squareWidth, p.x / squareWidth);
     }
     

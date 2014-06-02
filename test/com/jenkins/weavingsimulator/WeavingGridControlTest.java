@@ -24,13 +24,16 @@
 
 package com.jenkins.weavingsimulator;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 
+import com.jenkins.weavingsimulator.models.AbstractWeavingDraftModel;
+
 import junit.framework.TestCase;
 
-public class GridControlTest extends TestCase {
+public class WeavingGridControlTest extends TestCase {
 	
 	private MouseEvent leftDragEvent (Component source, Point pos) {
 		return new MouseEvent (source, 
@@ -51,22 +54,12 @@ public class GridControlTest extends TestCase {
 	}
 	
 	public void testLeftDragDown () {
-		javax.swing.table.TableModel model = new javax.swing.table.DefaultTableModel(
-				new Object[][] {
-						{false,false,false},
-						{false,false,false},
-						{false,false,false},
-						{false,false,false},
-						{false,false,false},
-						{false,false,false},
-						{false,false,false},
-						}, 
-				new Object[]{0,0,0});
+		AbstractWeavingDraftModel model = new TestDraftModel();
 		// Each is by default 10 pixels square.
 		// Cell pixel positions 
 		Point cell_r1c0 = new Point (5, 15);
 		Point cell_r5c0 = new Point (5, 55);
-		GridControl grid = new GridControl(model);
+		WeavingGridControl grid = new WeavingGridControl(model);
 		grid.doDrag(leftDragEvent(grid, cell_r1c0));
 		grid.doDrag(leftDragEvent(grid, cell_r5c0));
 		grid.endDrag();
@@ -80,22 +73,12 @@ public class GridControlTest extends TestCase {
 	}
 
 	public void testLeftDragUp () {
-		javax.swing.table.TableModel model = new javax.swing.table.DefaultTableModel(
-				new Object[][] {
-						{false,false,false},
-						{false,false,false},
-						{false,false,false},
-						{false,false,false},
-						{false,false,false},
-						{false,false,false},
-						{false,false,false},
-						}, 
-				new Object[]{0,0,0});
+		AbstractWeavingDraftModel model = new TestDraftModel();
 		// Each is by default 10 pixels square.
 		// Cell pixel positions 
 		Point cell_r1c0 = new Point (5, 15);
 		Point cell_r5c0 = new Point (5, 55);
-		GridControl grid = new GridControl(model);
+		WeavingGridControl grid = new WeavingGridControl(model);
 		grid.doDrag(leftDragEvent(grid, cell_r5c0));
 		grid.doDrag(leftDragEvent(grid, cell_r1c0));
 		grid.endDrag();
@@ -109,22 +92,12 @@ public class GridControlTest extends TestCase {
 	}
 	
 	public void testLeftDragRight () {
-		javax.swing.table.TableModel model = new javax.swing.table.DefaultTableModel(
-				new Object[][] {
-						{false,false,false},
-						{false,false,false},
-						{false,false,false},
-						{false,false,false},
-						{false,false,false},
-						{false,false,false},
-						{false,false,false},
-						}, 
-				new Object[]{0,0,0});
+		AbstractWeavingDraftModel model = new TestDraftModel();
 		// Each is by default 10 pixels square.
 		// Cell pixel positions 
 		Point cell_r1c0 = new Point (5, 15);
 		Point cell_r1c2 = new Point (25, 15);
-		GridControl grid = new GridControl(model);
+		WeavingGridControl grid = new WeavingGridControl(model);
 		grid.doDrag(leftDragEvent(grid, cell_r1c0));
 		grid.doDrag(leftDragEvent(grid, cell_r1c2));
 		grid.endDrag();
@@ -135,22 +108,12 @@ public class GridControlTest extends TestCase {
 	}
 	
 	public void testLeftDragLeft () {
-		javax.swing.table.TableModel model = new javax.swing.table.DefaultTableModel(
-				new Object[][] {
-						{false,false,false},
-						{false,false,false},
-						{false,false,false},
-						{false,false,false},
-						{false,false,false},
-						{false,false,false},
-						{false,false,false},
-						}, 
-				new Object[]{0,0,0});
+		AbstractWeavingDraftModel model = new TestDraftModel();
 		// Each is by default 10 pixels square.
 		// Cell pixel positions 
 		Point cell_r1c0 = new Point (5, 15);
 		Point cell_r1c2 = new Point (25, 15);
-		GridControl grid = new GridControl(model);
+		WeavingGridControl grid = new WeavingGridControl(model);
 		grid.doDrag(leftDragEvent(grid, cell_r1c2));
 		grid.doDrag(leftDragEvent(grid, cell_r1c0));
 		grid.endDrag();
@@ -161,22 +124,12 @@ public class GridControlTest extends TestCase {
 	}
 	
 	public void testLeftDragLeftDown () {
-		javax.swing.table.TableModel model = new javax.swing.table.DefaultTableModel(
-				new Object[][] {
-						{false,false,false},
-						{false,false,false},
-						{false,false,false},
-						{false,false,false},
-						{false,false,false},
-						{false,false,false},
-						{false,false,false},
-						}, 
-				new Object[]{0,0,0});
+		AbstractWeavingDraftModel model = new TestDraftModel();
 		// Each is by default 10 pixels square.
 		// Cell pixel positions 
 		Point cell_r1c2 = new Point (25, 15);
 		Point cell_r3c0 = new Point (5, 35);
-		GridControl grid = new GridControl(model);
+		WeavingGridControl grid = new WeavingGridControl(model);
 		grid.doDrag(leftDragEvent(grid, cell_r1c2));
 		grid.doDrag(leftDragEvent(grid, cell_r3c0));
 		grid.endDrag();
@@ -188,22 +141,12 @@ public class GridControlTest extends TestCase {
 	
 	public void testRightDragDown () {
 		// Currently right drag does nothing.
-		javax.swing.table.TableModel model = new javax.swing.table.DefaultTableModel(
-				new Object[][] {
-						{false,false,false},
-						{false,false,false},
-						{false,false,false},
-						{false,false,false},
-						{false,false,false},
-						{false,false,false},
-						{false,false,false},
-						}, 
-				new Object[]{0,0,0});
+		AbstractWeavingDraftModel model = new TestDraftModel();
 		// Each is by default 10 pixels square.
 		// Cell pixel positions 
 		Point cell_r1c0 = new Point (5, 15);
 		Point cell_r5c0 = new Point (5, 55);
-		GridControl grid = new GridControl(model);
+		WeavingGridControl grid = new WeavingGridControl(model);
 		grid.doDrag(rightDragEvent(grid, cell_r1c0));
 		grid.doDrag(rightDragEvent(grid, cell_r5c0));
 		grid.endDrag();
@@ -216,4 +159,35 @@ public class GridControlTest extends TestCase {
 		assertFalse((Boolean) model.getValueAt(6,0));
 	}
 
+	private class TestDraftModel extends AbstractWeavingDraftModel {
+		Object[][] model = new Object[][] {
+				{false,false,false},
+				{false,false,false},
+				{false,false,false},
+				{false,false,false},
+				{false,false,false},
+				{false,false,false},
+				{false,false,false},
+		};
+
+		public TestDraftModel() {
+			super(null);
+		}
+
+		public Object getValueAt(int rowIndex, int columnIndex) {
+			return model[rowIndex][columnIndex];
+		}
+
+		public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+			model[rowIndex][columnIndex] = (Boolean)aValue;
+		}
+
+		public int getRowCount() {
+			return model.length;
+		}
+
+		public int getColumnCount() {
+			return model[0].length;
+		}
+	}
 }

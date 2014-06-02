@@ -57,28 +57,7 @@ public abstract class CopyableWeavingGridModel extends AbstractWeavingDraftModel
     	return selection.contains(row, column);
     }    
 
-    // THis menu stuff probably doesn't belong here...
-    public JMenuItem[] getMenuItems(int row, int column) {
-    	JMenuItem[] items = new JMenuItem[1];
-    	items[0] = new JMenuItem("Paste");
-    	items[0].addActionListener(new PasteHandler(this, row, column));
-    	return items;
+    public boolean supportsPaste() {
+    	return true;
     }
-
-    private class PasteHandler implements ActionListener {
-    	int row;
-    	int column;
-    	CopyableWeavingGridModel model;
-    	
-    	public PasteHandler(CopyableWeavingGridModel model, 
-    			int row, int column) {
-    		this.row = row;
-    		this.column = column;
-    		this.model = model;
-    	}
-    	
-		public void actionPerformed(ActionEvent e) {
-			model.pasteSelection(row,  column);
-		}
-    }
-}
+ }

@@ -102,7 +102,6 @@ public class PalettePanel extends JPanel {
                 new PaletteSelectionListener());
         paletteGrid.setCellSelectionEnabled(true);
         paletteGrid.setEnabled(false);
-        paletteGrid.setAllowDrag(false);
         paletteGrid.addMouseListener(new MouseListener() {
         	public void mouseClicked(MouseEvent e) {
         		if (e.getClickCount() == 2) {

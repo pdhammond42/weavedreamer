@@ -157,12 +157,10 @@ public abstract class AbstractWeavingDraftModel
     	return cursorSelection;
     }
     
-    /** Returns a list of menu items that can be shown in a context menu.
-     * The default is an empty list, in which case  no menu is displayed.
-     * The items should have their Action listeners set.
-     * @return A set of menu items.
+    /** Returns true if the model supports copy/paste behaviour.
+     * Default is false.
      */
-    public JMenuItem[] getMenuItems(int row, int column) {
-    	return new JMenuItem[0];
+    public boolean supportsPaste() {
+    	return false;
     }
 }

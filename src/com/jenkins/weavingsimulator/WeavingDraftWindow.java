@@ -63,7 +63,6 @@ public class WeavingDraftWindow extends javax.swing.JInternalFrame {
 		weavingPatternGrid.setModel(new WeavingPatternModel(draft));
 		weavingPatternGrid.setSquareWidth(squareWidth);
 		weavingPatternGrid.setIntercellSpacing(new Dimension(0,0));
-		weavingPatternGrid.setAllowDrag(false);
 		weavingPatternGrid.setShowGrid(false);
 		weavingPatternGrid.setName("weavingPatternGrid");
 
@@ -140,12 +139,12 @@ public class WeavingDraftWindow extends javax.swing.JInternalFrame {
 
 		jScrollPane1 = new javax.swing.JScrollPane();
 		jPanel1 = new javax.swing.JPanel();
-		warpEndColorGrid = new com.jenkins.weavingsimulator.GridControl();
-		threadingDraftGrid = new com.jenkins.weavingsimulator.GridControl();
-		tieUpGrid = new com.jenkins.weavingsimulator.GridControl();
-		weavingPatternGrid = new com.jenkins.weavingsimulator.GridControl();
-		treadlingDraftGrid = new com.jenkins.weavingsimulator.GridControl();
-		pickColorGrid = new com.jenkins.weavingsimulator.GridControl();
+		warpEndColorGrid = new com.jenkins.weavingsimulator.WeavingGridControl();
+		threadingDraftGrid = new com.jenkins.weavingsimulator.WeavingGridControl();
+		tieUpGrid = new com.jenkins.weavingsimulator.WeavingGridControl();
+		weavingPatternGrid = new com.jenkins.weavingsimulator.WeavingGridControl();
+		treadlingDraftGrid = new com.jenkins.weavingsimulator.WeavingGridControl();
+		pickColorGrid = new com.jenkins.weavingsimulator.WeavingGridControl();
 		palettePanel = new com.jenkins.weavingsimulator.PalettePanel();
 
 		setClosable(true);
@@ -280,11 +279,11 @@ public class WeavingDraftWindow extends javax.swing.JInternalFrame {
 	private javax.swing.JPanel jPanel1;
 	private javax.swing.JScrollPane jScrollPane1;
 	private com.jenkins.weavingsimulator.PalettePanel palettePanel;
-	private com.jenkins.weavingsimulator.GridControl pickColorGrid;
-	private com.jenkins.weavingsimulator.GridControl threadingDraftGrid;
-	private com.jenkins.weavingsimulator.GridControl tieUpGrid;
-	private com.jenkins.weavingsimulator.GridControl treadlingDraftGrid;
-	private com.jenkins.weavingsimulator.GridControl warpEndColorGrid;
+	private com.jenkins.weavingsimulator.WeavingGridControl pickColorGrid;
+	private com.jenkins.weavingsimulator.WeavingGridControl threadingDraftGrid;
+	private com.jenkins.weavingsimulator.WeavingGridControl tieUpGrid;
+	private com.jenkins.weavingsimulator.WeavingGridControl treadlingDraftGrid;
+	private com.jenkins.weavingsimulator.WeavingGridControl warpEndColorGrid;
 	private com.jenkins.weavingsimulator.GridControl weavingPatternGrid;
 	// End of variables declaration//GEN-END:variables
 	private StatusBarControl statusBar;
