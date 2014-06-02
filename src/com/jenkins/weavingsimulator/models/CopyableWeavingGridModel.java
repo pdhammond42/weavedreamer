@@ -1,5 +1,10 @@
 package com.jenkins.weavingsimulator.models;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JMenuItem;
+
 import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
 
 /** Extends the weaving draft grid model to provide copy and paste 
@@ -33,11 +38,14 @@ public abstract class CopyableWeavingGridModel extends AbstractWeavingDraftModel
     	session.setSelectedCells(new SelectedCells (draft.getPicks(), selection));
     }
     
-    
     public void pasteSelection (int rowIndex, int columnIndex) {
     	SelectedCells selection = session.getSelectedCells();
-    	for (int row = 0; row != selection.getRows(); row++) {
-    		for (int col = 0; col != selection.getColumns(); col++) {
+
+    	final int rowcount = Math.min(selection.getRows(), getRowCount() - rowIndex);
+    	final int colcount = Math.min(selection.getColumns(), getColumnCount() - columnIndex);
+    	
+    	for (int row = 0; row != rowcount; row++) {
+    		for (int col = 0; col != colcount; col++) {
     			if (selection.getValue(row, col)) {
     				setValueAt (null, row + rowIndex, col + columnIndex);
     			}
@@ -47,5 +55,30 @@ public abstract class CopyableWeavingGridModel extends AbstractWeavingDraftModel
     
     protected boolean isSelected (int row, int column) {
     	return selection.contains(row, column);
+    }    
+
+    // THis menu stuff probably doesn't belong here...
+    public JMenuItem[] getMenuItems(int row, int column) {
+    	JMenuItem[] items = new JMenuItem[1];
+    	items[0] = new JMenuItem("Paste");
+    	items[0].addActionListener(new PasteHandler(this, row, column));
+    	return items;
+    }
+
+    private class PasteHandler implements ActionListener {
+    	int row;
+    	int column;
+    	CopyableWeavingGridModel model;
+    	
+    	public PasteHandler(CopyableWeavingGridModel model, 
+    			int row, int column) {
+    		this.row = row;
+    		this.column = column;
+    		this.model = model;
+    	}
+    	
+		public void actionPerformed(ActionEvent e) {
+			model.pasteSelection(row,  column);
+		}
     }
 }

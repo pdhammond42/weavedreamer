@@ -18,6 +18,7 @@ import org.uispec4j.Trigger;
 import org.uispec4j.Window;
 import org.uispec4j.interception.BasicHandler;
 import org.uispec4j.interception.FileChooserHandler;
+import org.uispec4j.interception.PopupMenuInterceptor;
 import org.uispec4j.interception.WindowHandler;
 import org.uispec4j.interception.WindowInterceptor;
 
@@ -145,7 +146,10 @@ public class AppDriver{
     }
     
     void pasteThreading (final int row, final int column){
-    	threadingDraftGrid().rightClick(row, column);
+    	PopupMenuInterceptor
+			.run(threadingDraftGrid().triggerRightClick(row, column))
+			.getSubMenu("Paste")	
+			.click();
     }
     
     void zoomIn() {
@@ -309,7 +313,7 @@ public class AppDriver{
 			return window.getButton("OK").triggerClick();
 		}
 	}
-
+	
 	private static void drag (Table table, 
 			final int startRow, 
 			final int startColumn, 

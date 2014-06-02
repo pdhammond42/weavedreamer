@@ -27,7 +27,6 @@
 package com.jenkins.weavingsimulator.models;
 
 import java.awt.Color;
-import java.util.Arrays;
 
 import junit.framework.TestCase;
 import junit.framework.TestSuite;

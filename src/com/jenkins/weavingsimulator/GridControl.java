@@ -35,7 +35,10 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
+import javax.swing.JMenuItem;
 import javax.swing.JTable;
+import javax.swing.table.TableModel;
+import javax.swing.JPopupMenu;
 
 import com.jenkins.weavingsimulator.models.AbstractWeavingDraftModel;
 import com.jenkins.weavingsimulator.models.WeavingPatternCellModel;
@@ -119,7 +122,7 @@ public class GridControl extends JTable {
 					setValueAt (editedValueProvider.getValue(), p.row, p.column);
 				} else if (e.getClickCount() == 1 && 
 						e.getButton() == MouseEvent.BUTTON3) {
-					((AbstractWeavingDraftModel)getModel()).pasteSelection(p.row, p.column);
+					showContextMenu(e);
 				}
 			}
 
@@ -137,6 +140,18 @@ public class GridControl extends JTable {
 			}
         
         });
+    }
+    
+    private void showContextMenu(MouseEvent e) {
+    	final RowColumn p = toCell(e.getPoint());	
+		JMenuItem[] items = ((AbstractWeavingDraftModel)getModel()).getMenuItems(p.row, p.column);
+		if (items.length > 0) {
+			JPopupMenu menu = new JPopupMenu();
+			for (JMenuItem i: items) {
+				menu.add(i);
+			}
+			menu.show(this, e.getX(), e.getY());
+		}    	
     }
     
     /** Getter for property squareWidth.
@@ -345,4 +360,5 @@ public class GridControl extends JTable {
     private RowColumn toCell (Point p) {
     	return new RowColumn (p.y / squareWidth, p.x / squareWidth);
     }
+    
  }

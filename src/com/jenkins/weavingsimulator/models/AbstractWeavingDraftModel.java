@@ -27,10 +27,13 @@ package com.jenkins.weavingsimulator.models;
 
 import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
 
+import java.awt.MenuItem;
 import java.awt.Rectangle;
 import java.beans.IndexedPropertyChangeEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+
+import javax.swing.JMenuItem;
 import javax.swing.event.TableModelEvent;
 import javax.swing.table.AbstractTableModel;
 
@@ -152,5 +155,14 @@ public abstract class AbstractWeavingDraftModel
      */
     public Rectangle getCurrentCell() {
     	return cursorSelection;
+    }
+    
+    /** Returns a list of menu items that can be shown in a context menu.
+     * The default is an empty list, in which case  no menu is displayed.
+     * The items should have their Action listeners set.
+     * @return A set of menu items.
+     */
+    public JMenuItem[] getMenuItems(int row, int column) {
+    	return new JMenuItem[0];
     }
 }

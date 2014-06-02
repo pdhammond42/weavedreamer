@@ -232,6 +232,21 @@ public class TreadlingDraftModelTest extends TestCase {
     	assertThat((Color)model.getValueAt(3, 1), is(Color.WHITE));
     	assertThat((Color)model.getValueAt(3, 2), is(Color.WHITE));
     	assertThat((Color)model.getValueAt(3, 3), is(Color.BLACK));
+    }
+    
+    public void testPasteTooBigIsTruncated() {
+    	draft.setTreadles(Arrays.asList(new Treadle(), new Treadle(), 
+    			new Treadle(), new Treadle()));
+    	draft.setPicks(Arrays.asList(
+                new WeftPick(Color.BLACK, 4, 0), 
+                new WeftPick(Color.WHITE, 4, 1),
+                new WeftPick(Color.WHITE, 4, 2),
+                new WeftPick(Color.WHITE, 4, 3),
+                new WeftPick(Color.WHITE, 4, 1),
+                new WeftPick(Color.BLUE, 4, 0)));
+
+    	session.setSelectedCells(new SelectedCells(draft.getPicks(), new GridSelection(0, 0, 5, 4)));
     	
+    	model.pasteSelection(3, 3);    	
     }
 }
