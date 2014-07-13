@@ -24,14 +24,13 @@
 
 package com.jenkins.weavingsimulator;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 
-import com.jenkins.weavingsimulator.models.AbstractWeavingDraftModel;
-
 import junit.framework.TestCase;
+
+import com.jenkins.weavingsimulator.models.AbstractWeavingDraftModel;
 
 public class WeavingGridControlTest extends TestCase {
 	

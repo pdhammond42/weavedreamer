@@ -25,17 +25,15 @@
 
 package com.jenkins.weavingsimulator.models;
 
-import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
-
-import java.awt.MenuItem;
 import java.awt.Rectangle;
 import java.beans.IndexedPropertyChangeEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import javax.swing.JMenuItem;
 import javax.swing.event.TableModelEvent;
 import javax.swing.table.AbstractTableModel;
+
+import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
 
 /**
  *
@@ -121,7 +119,7 @@ public abstract class AbstractWeavingDraftModel
      * @param rowIndex Starting row
      * @param columnIndex Starting column
      */
-    public void pasteSelection (int rowIndex, int columnIndex) {
+    public void pasteSelection (int rowIndex, int columnIndex, CellSelectionTransform transform) {
     }
     
     /**
@@ -161,6 +159,14 @@ public abstract class AbstractWeavingDraftModel
      * Default is false.
      */
     public boolean supportsPaste() {
+    	return false;
+    }
+    
+    /** Returns true if the model can do a paste now.
+     * 
+     * @return
+     */
+    public boolean canPaste() {
     	return false;
     }
 }

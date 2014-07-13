@@ -1,11 +1,8 @@
 package com.jenkins.weavingsimulator.models;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
-import javax.swing.JMenuItem;
-
-import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
 
 /** Extends the weaving draft grid model to provide copy and paste 
  * functionality via the session object.
@@ -16,11 +13,17 @@ public abstract class CopyableWeavingGridModel extends AbstractWeavingDraftModel
 	
 	private EditingSession session;
     private GridSelection selection;
+	private boolean thisObjectSettingSelection = false;
 
 	public CopyableWeavingGridModel (EditingSession session) {
 		super (session.getDraft());
 		this.session = session;
         selection = new GridSelection ();
+        session.addPropertyChangeListener(EditingSession.SELECTION_PROPERTY, new PropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent evt) {
+				if (!thisObjectSettingSelection) showSelection(0,0,0,0);
+			}
+		});
     }
 	    
     /** Sets the selection to be the rows [startRow..endRow)
@@ -35,11 +38,14 @@ public abstract class CopyableWeavingGridModel extends AbstractWeavingDraftModel
      * 
      */
     public void copySelection() {
+    	thisObjectSettingSelection = true;
     	session.setSelectedCells(new SelectedCells (draft.getPicks(), selection));
+    	thisObjectSettingSelection = false;
     }
-    
-    public void pasteSelection (int rowIndex, int columnIndex) {
-    	SelectedCells selection = session.getSelectedCells();
+
+	public void pasteSelection(int rowIndex, int columnIndex,
+			CellSelectionTransform transform) {
+    	SelectedCells selection = transform.Transform(session.getSelectedCells());
 
     	final int rowcount = Math.min(selection.getRows(), getRowCount() - rowIndex);
     	final int colcount = Math.min(selection.getColumns(), getColumnCount() - columnIndex);
@@ -51,13 +57,18 @@ public abstract class CopyableWeavingGridModel extends AbstractWeavingDraftModel
     			}
     		}
     	}
-    }
-    
+	}
+
     protected boolean isSelected (int row, int column) {
     	return selection.contains(row, column);
     }    
 
     public boolean supportsPaste() {
     	return true;
+    }
+    
+    public boolean canPaste() {
+    	return session.getSelectedCells().getColumns() != 0 && 
+    			session.getSelectedCells().getRows() != 0;
     }
  }

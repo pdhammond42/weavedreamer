@@ -131,7 +131,6 @@ public class WeavingGridControl extends GridControl {
     	if (dragStart != null && dragEnd != null) {
     		if (isShiftDrag) {
     			model.copySelection();
-    			model.showSelection(0,0,0,0);
     		} else {
     			final RowColumn start = toCell(dragStart);
     			final RowColumn end = toCell(dragEnd);
@@ -166,6 +165,6 @@ public class WeavingGridControl extends GridControl {
     private void showContextMenu(MouseEvent e) {
     	final RowColumn p = toCell(e.getPoint());	
     	new PasteMenu(model, p.row, p.column)
-    	.show(this, e.getX(), e.getY());	
+    		.show(this, e.getX(), e.getY());	
     }	
 }

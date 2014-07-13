@@ -176,9 +176,11 @@ public class EditingSession {
                 oldDraftModified, draftModified);
     }
 
-
-	public SelectedCells getSelectedCells() {
-		// TODO Auto-generated method stub
+    /** Returns the current selection. If nothing is selected, returns an object 
+     * with zero size.
+     * @return
+     */
+    public SelectedCells getSelectedCells() {
 		return selection;
 	}
 

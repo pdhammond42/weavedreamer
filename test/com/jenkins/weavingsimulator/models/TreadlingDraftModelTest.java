@@ -212,7 +212,7 @@ public class TreadlingDraftModelTest extends TestCase {
     	 */	
     	session.setSelectedCells(new SelectedCells(draft.getPicks(), new GridSelection(3, 1, 5, 4)));
     	
-    	model.pasteSelection(1, 0);
+    	model.pasteSelection(1, 0, CellSelectionTransforms.Null());
     	assertThat((Color)model.getValueAt(0, 0), is(Color.BLACK));
     	assertThat((Color)model.getValueAt(0, 1), is(Color.WHITE));
     	assertThat((Color)model.getValueAt(0, 2), is(Color.WHITE));
@@ -247,6 +247,58 @@ public class TreadlingDraftModelTest extends TestCase {
 
     	session.setSelectedCells(new SelectedCells(draft.getPicks(), new GridSelection(0, 0, 5, 4)));
     	
-    	model.pasteSelection(3, 3);    	
+    	model.pasteSelection(3, 3, CellSelectionTransforms.Null());    	
     }
+    
+    public void testSelectionisPastedWithTransform() {
+    	draft.setTreadles(Arrays.asList(new Treadle(), new Treadle(), 
+    			new Treadle(), new Treadle()));
+    	draft.setPicks(Arrays.asList(
+                new WeftPick(Color.BLACK, 4, 0), 
+                new WeftPick(Color.WHITE, 4, 1),
+                new WeftPick(Color.WHITE, 4, 2),
+                new WeftPick(Color.WHITE, 4, 3),
+                new WeftPick(Color.WHITE, 4, 1),
+                new WeftPick(Color.BLUE, 4, 0)));
+
+    	/* Start with
+    	 *  *...
+    	 *  .*..
+    	 *  ..*.
+    	 *  ...*
+    	 *  .*..
+    	 *  *...
+    	 *  copy from r,c 0, 0 .. 1, 1, paste to 0, 0, with 
+    	 *  vertical doubling should get
+    	 *  *...
+    	 *  *...
+    	 *  .*..
+    	 *  .*..
+    	 *  .*..
+    	 *  *... 
+    	 */	
+    	session.setSelectedCells(new SelectedCells(draft.getPicks(), new GridSelection(0, 0, 2, 2)));
+    	
+    	model.pasteSelection(0, 0, CellSelectionTransforms.ScaleVertical(2));
+    	assertThat((Color)model.getValueAt(0, 0), is(Color.BLACK));
+    	assertThat((Color)model.getValueAt(0, 1), is(Color.WHITE));
+    	assertThat((Color)model.getValueAt(0, 2), is(Color.WHITE));
+    	assertThat((Color)model.getValueAt(0, 3), is(Color.WHITE));
+    	
+    	assertThat((Color)model.getValueAt(1, 0), is(Color.BLACK));
+    	assertThat((Color)model.getValueAt(1, 1), is(Color.WHITE));
+    	assertThat((Color)model.getValueAt(1, 2), is(Color.WHITE));
+    	assertThat((Color)model.getValueAt(1, 3), is(Color.WHITE));
+    	
+    	assertThat((Color)model.getValueAt(2, 0), is(Color.WHITE));
+    	assertThat((Color)model.getValueAt(2, 1), is(Color.BLACK));
+    	assertThat((Color)model.getValueAt(2, 2), is(Color.WHITE));
+    	assertThat((Color)model.getValueAt(2, 3), is(Color.WHITE));
+    	
+    	assertThat((Color)model.getValueAt(3, 0), is(Color.WHITE));
+    	assertThat((Color)model.getValueAt(3, 1), is(Color.BLACK));
+    	assertThat((Color)model.getValueAt(3, 2), is(Color.WHITE));
+    	assertThat((Color)model.getValueAt(3, 3), is(Color.WHITE));
+    }
+    
 }
