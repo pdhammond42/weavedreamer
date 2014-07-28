@@ -33,6 +33,7 @@ import java.awt.event.MouseListener;
 import javax.swing.JTable;
 
 
+import com.jenkins.weavingsimulator.models.AbstractWeavingDraftModel;
 import com.jenkins.weavingsimulator.models.WeavingPatternCellModel;
 
 /** 
@@ -62,14 +63,7 @@ public class GridControl extends JTable {
         
         setDefaultRenderer(Boolean.class, new BooleanRenderer());
         setDefaultEditor(Boolean.class, null);
-        
-        // Default is to do Boolean things. Caller can override this.
-        editedValueProvider = new EditedValueProvider () {
-        	public Object getValue() {
-        		return true;
-        	}
-        };
-        
+                
         setCellSelectionEnabled(false);
         
         setRowHeight(squareWidth);
@@ -82,7 +76,7 @@ public class GridControl extends JTable {
 				if (e.getClickCount() == 1 && 
 						e.getButton() == MouseEvent.BUTTON1 && 
 						editedValueProvider != null) {
-					setValueAt (editedValueProvider.getValue(), p.row, p.column);
+					setValueAt (editedValueProvider.getValue(p.row, p.column), p.row, p.column);
 				} 
 			}
 
@@ -96,8 +90,7 @@ public class GridControl extends JTable {
 			}
 
 			public void mouseReleased(MouseEvent e) {
-			}
-        
+			}    
         });
     }
     
@@ -144,29 +137,7 @@ public class GridControl extends JTable {
         column.setMaxWidth(squareWidth);
     }    
         
-	protected EditedValueProvider editedValueProvider;
-    
-    /**	 
-     * This is nothing to do with conventional JTable cell editing.
-     * It returns a value to be set into a selected cell. The caller is 
-     * responsible for setting up an object that returns the appropriate type for the
-     * model's setValueAt method.
-     * The GridControl holds a single instance of this interface. 
-     * When a cell is clicked, or dragged over, its value is set according to the
-     * value returned. 
-     *  
-     */
-    public interface EditedValueProvider {
-    	Object getValue();
-    }
-    
-    /** Provide an object that will return the new value of edited cells.
-     * Provide a null reference to disable editing.
-     * @param p the provider of values.
-     */
-    public void setEditValueProvider (EditedValueProvider p) {
-    	editedValueProvider = p;
-    }
+	protected AbstractWeavingDraftModel.EditedValueProvider editedValueProvider = null;
     
     private static class ColorRenderer implements javax.swing.table.TableCellRenderer 
     {

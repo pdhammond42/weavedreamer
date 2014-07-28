@@ -29,6 +29,8 @@ import java.beans.PropertyChangeListener;
 
 import java.beans.IndexedPropertyChangeEvent;
 import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
+import com.jenkins.weavingsimulator.models.AbstractWeavingDraftModel.ColorEditProvider;
+import com.jenkins.weavingsimulator.models.AbstractWeavingDraftModel.EditedValueProvider;
 
 /**
  * TableModel representing the fabric resulting from a weaving pattern. Each row
@@ -131,4 +133,8 @@ public class WeavingPatternModel extends AbstractWeavingDraftModel {
 	public Class<?> getColumnClass(int col) {
 		return WeavingPatternCellModel.class;
 	}
+	
+    public EditedValueProvider getEditedValueProvider() {
+    	return null;
+    }   
 }

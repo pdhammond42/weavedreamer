@@ -33,6 +33,7 @@ import java.beans.PropertyChangeListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.table.AbstractTableModel;
 
+import com.jenkins.weavingsimulator.GridControl;
 import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
 
 /**
@@ -169,4 +170,46 @@ public abstract class AbstractWeavingDraftModel
     public boolean canPaste() {
     	return false;
     }
+    
+    /**	 
+     * This is nothing to do with conventional JTable cell editing.
+     * It returns a value to be set into a selected cell. 
+     * The GridControl holds a single instance of this interface. 
+     * When a cell is clicked, or dragged over, its value is set according to the
+     * value returned. 
+     *  
+     */
+    public interface EditedValueProvider {
+    	Object getValue(int row, int column);
+    }
+    
+    public abstract EditedValueProvider getEditedValueProvider();
+    
+    // An edited value provider that always returns true.
+    protected class SetValueProvider implements EditedValueProvider {
+		public SetValueProvider() {
+		}
+
+		public Object getValue(int row, int column) {
+			return true;
+		}
+    }
+    
+    protected class ColorEditProvider implements EditedValueProvider {
+    	public ColorEditProvider (EditingSession session) {
+    		this.session = session;
+    	}
+    	
+		public Object getValue(int row, int column) {
+			int selection = session.getPalette().getSelection();
+			if (selection != -1) {
+				return session.getPalette().getColor(selection);
+			} else {
+				return null;
+			}
+		}
+		
+		private EditingSession session;
+	};
+
 }

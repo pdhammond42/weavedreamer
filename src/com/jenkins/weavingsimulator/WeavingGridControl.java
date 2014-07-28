@@ -41,6 +41,7 @@ public class WeavingGridControl extends GridControl {
     public WeavingGridControl(AbstractWeavingDraftModel model) {
     	super(model);
     	this.model = model;
+    	this.editedValueProvider = model.getEditedValueProvider();
     	init();
     }
     
@@ -99,6 +100,7 @@ public class WeavingGridControl extends GridControl {
 		super.setModel(model);
     	if (model instanceof AbstractWeavingDraftModel) {
     		this.model = (AbstractWeavingDraftModel)model;
+    		this.editedValueProvider = ((AbstractWeavingDraftModel) model).getEditedValueProvider();
     	} else {
     		this.model = null;
     	}
@@ -138,9 +140,9 @@ public class WeavingGridControl extends GridControl {
     			final int diffY = end.row - start.row;
     			final int steps = Math.max(Math.abs(diffX), Math.abs(diffY))+1;
     			if (editedValueProvider != null) {
-    				setValueAt (editedValueProvider.getValue(), start.row, start.column);
+    				setValueAt (editedValueProvider.getValue(start.row, start.column), start.row, start.column);
     				for (int i = 1; i < steps; i++) {
-    					setValueAt (editedValueProvider.getValue(), start.row + i*diffY/(steps-1), start.column+i*diffX/(steps-1));
+    					setValueAt (editedValueProvider.getValue(start.row + i*diffY/(steps-1), start.column+i*diffX/(steps-1)), start.row + i*diffY/(steps-1), start.column+i*diffX/(steps-1));
     				}	
     			}	
     		}

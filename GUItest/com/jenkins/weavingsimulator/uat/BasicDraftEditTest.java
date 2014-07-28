@@ -152,7 +152,7 @@ public class BasicDraftEditTest extends WeavingTestCase {
 		ui.checkAboutBox();
 	}
 	
-	public void testPasteBetweenGrids() {
+	public void testPastePickToEnd() {
 		ui.newDraft(4, 6, 20, 20, "Monochrome");
 		
 		ui.setPick (0, 0);
@@ -165,5 +165,37 @@ public class BasicDraftEditTest extends WeavingTestCase {
 		ui.endIs(0, 0, Color.BLACK);
 		ui.endIs(1, 1, Color.BLACK);
 		ui.endIs(2, 2, Color.BLACK);
+	}
+
+	public void testPasteEndToPick() {
+		ui.newDraft(4, 6, 20, 20, "Monochrome");
+		
+		ui.setThreading(0, 0);
+		ui.setThreading (1, 1);
+		ui.setThreading (2, 2);
+		ui.setThreading (3, 3);
+		ui.selectThreading(0, 0, 4, 4);
+		
+		ui.pasteTreadling (0,0);
+		ui.pickIs(0, 0, Color.BLACK);
+		ui.pickIs(1, 1, Color.BLACK);
+		ui.pickIs(2, 2, Color.BLACK);
+		ui.pickIs(3, 3, Color.BLACK);
+	}
+
+	public void testPasteTranspose() {
+		ui.newDraft(4, 6, 20, 20, "Monochrome");
+		
+		ui.setPick (0, 0);
+		ui.setPick (1, 1);
+		ui.setPick (2, 2);
+		ui.setPick (3, 1);
+		ui.selectPick(0, 0, 4, 4);
+		
+		ui.pasteThreading (0, 0, 1, 1, true, false, false);
+		ui.endIs(2, 0, Color.BLACK);
+		ui.endIs(1, 1, Color.BLACK);
+		ui.endIs(2, 2, Color.BLACK);
+		ui.endIs(3, 3, Color.BLACK);
 	}
 }

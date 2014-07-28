@@ -93,27 +93,10 @@ public class TreadlingDraftModel extends CopyableWeavingGridModel {
         return draft.getPicks().size();
     }
     
-    /** Returns the value for the cell at <code>columnIndex</code> and
-     * <code>rowIndex</code>.
-     *
-     * @param	rowIndex	the row whose value is to be queried
-     * @param	columnIndex 	the column whose value is to be queried
-     * @return	the value Object (color) at the specified cell
-     *
-     */
-    public Object getValueAt(int rowIndex, int columnIndex) {
-        if (draft.getPicks().get(rowIndex).isTreadleSelected(columnIndex))
-            return Color.BLACK;
-        else if (isSelected(rowIndex, columnIndex))
-            return Color.LIGHT_GRAY;
-        else
-        	return Color.WHITE;
-    }
-    
     /** Toggles the value in the cell at <code>columnIndex</code> and
      * <code>rowIndex</code>.
      *
-     * @param	aValue		 the new value (boolean), which is ignored.
+     * @param	aValue		 the new value (boolean).
      * @param	rowIndex	 the row whose value is to be changed
      * @param	columnIndex 	 the column whose value is to be changed
      * @see #getValueAt
@@ -123,10 +106,14 @@ public class TreadlingDraftModel extends CopyableWeavingGridModel {
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
         WeftPick pick = draft.getPicks().get(rowIndex);
         if (draft.getIsLiftplan()) {
-        	pick.setTreadle(columnIndex, !pick.getTreadles()[columnIndex]);
+        	pick.setTreadle(columnIndex, (Boolean)aValue);
         } else {
-        	pick.setTreadleId(columnIndex);
+        	if ((Boolean)aValue) pick.setTreadleId(columnIndex);
         }
+    }
+    
+    public boolean getBooleanValueAt (int row, int column) {
+    	return draft.getPicks().get(row).isTreadleSelected(column);
     }
     
     /** Returns true if the cell at <code>rowIndex</code> and
@@ -154,5 +141,9 @@ public class TreadlingDraftModel extends CopyableWeavingGridModel {
      */
     public Class<?> getColumnClass(int columnIndex) {
         return Color.class;
+    }
+    
+    public EditedValueProvider getEditedValueProvider () {
+    	return new ToggleEditProvider(this);
     }
 }

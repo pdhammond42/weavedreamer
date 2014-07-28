@@ -151,8 +151,26 @@ public class AppDriver{
 			.getSubMenu("Paste")	
 			.click();
     }
-    
-    void zoomIn() {
+ 
+    void pasteTreadling (final int row, final int column){
+    	PopupMenuInterceptor
+			.run(treadlingDraftGrid().triggerRightClick(row, column))
+			.getSubMenu("Paste")	
+			.click();
+    }
+
+    public void pasteThreading(final int row, final int column, int rowMultiplier, int colMultiplier, 
+    		boolean transpose, boolean reflectV, boolean reflectH) {
+    	WindowInterceptor.init(
+    		PopupMenuInterceptor
+    		.run(threadingDraftGrid().triggerRightClick(row, column))
+    		.getSubMenu("Paste Special")	
+    		.triggerClick())
+    	.process(new PasteSpecialHandler(rowMultiplier, colMultiplier, transpose, reflectV, reflectH))
+    	.run();
+    }				
+
+	void zoomIn() {
     	mainWindow.getMenuBar()
 		.getMenu("View")
 		.getSubMenu("Zoom In")
@@ -314,6 +332,33 @@ public class AppDriver{
 		}
 	}
 	
+	private class PasteSpecialHandler extends WindowHandler {
+
+		private int rowMultiplier;
+		private int colMultiplier;
+		private boolean transpose;
+		private boolean reflectV;
+		private boolean reflectH;
+
+		public PasteSpecialHandler (int rowMultiplier, int colMultiplier,
+				boolean transpose, boolean reflectV, boolean reflectH) {
+			this.rowMultiplier = rowMultiplier;
+			this.colMultiplier =colMultiplier;
+			this.transpose = transpose;
+			this.reflectH = reflectH;
+			this.reflectV = reflectV;
+		}
+		
+		public Trigger process(Window window) throws Exception {
+			getJTextBox(window, "scale_v").setValue(rowMultiplier);
+			getJTextBox(window, "scale_h").setValue(colMultiplier);
+			if (reflectH) window.getCheckBox("mirror_h").select();
+			if (reflectV) window.getCheckBox("mirror_v").select();
+			if (transpose) window.getCheckBox("transpose").select();
+			return window.getButton("OK").triggerClick();
+		}
+	}
+	
 	private static void drag (Table table, 
 			final int startRow, 
 			final int startColumn, 
@@ -360,7 +405,7 @@ public class AppDriver{
 			if (rowOfPoint == row) return point.y;
 			point.y ++;
 		} while (rowOfPoint != -1);
-		return 0;
+		return point.y;
 	}
 	
 	private static int cellWidth (Table table) {

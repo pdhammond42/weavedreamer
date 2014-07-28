@@ -210,7 +210,7 @@ public class TreadlingDraftModelTest extends TestCase {
     	 *  .*..
     	 *  *... 
     	 */	
-    	session.setSelectedCells(new SelectedCells(draft.getPicks(), new GridSelection(3, 1, 5, 4)));
+    	session.setSelectedCells(new SelectedCells(model, new GridSelection(3, 1, 5, 4)));
     	
     	model.pasteSelection(1, 0, CellSelectionTransforms.Null());
     	assertThat((Color)model.getValueAt(0, 0), is(Color.BLACK));
@@ -245,7 +245,7 @@ public class TreadlingDraftModelTest extends TestCase {
                 new WeftPick(Color.WHITE, 4, 1),
                 new WeftPick(Color.BLUE, 4, 0)));
 
-    	session.setSelectedCells(new SelectedCells(draft.getPicks(), new GridSelection(0, 0, 5, 4)));
+    	session.setSelectedCells(new SelectedCells(model, new GridSelection(0, 0, 5, 4)));
     	
     	model.pasteSelection(3, 3, CellSelectionTransforms.Null());    	
     }
@@ -277,7 +277,7 @@ public class TreadlingDraftModelTest extends TestCase {
     	 *  .*..
     	 *  *... 
     	 */	
-    	session.setSelectedCells(new SelectedCells(draft.getPicks(), new GridSelection(0, 0, 2, 2)));
+    	session.setSelectedCells(new SelectedCells(model, new GridSelection(0, 0, 2, 2)));
     	
     	model.pasteSelection(0, 0, CellSelectionTransforms.ScaleVertical(2));
     	assertThat((Color)model.getValueAt(0, 0), is(Color.BLACK));
@@ -299,6 +299,29 @@ public class TreadlingDraftModelTest extends TestCase {
     	assertThat((Color)model.getValueAt(3, 1), is(Color.BLACK));
     	assertThat((Color)model.getValueAt(3, 2), is(Color.WHITE));
     	assertThat((Color)model.getValueAt(3, 3), is(Color.WHITE));
+    }
+    
+    public void testSelectionisPastedOverLiftplan() {
+    	draft.setTreadles(Arrays.asList(new Treadle(), new Treadle(), 
+    			new Treadle(), new Treadle()));
+    	draft.setPicks(Arrays.asList(
+                new WeftPick(Color.BLACK, 4, 0), 
+                new WeftPick(Color.WHITE, 4, 1),
+                new WeftPick(Color.WHITE, 4, 2),
+                new WeftPick(Color.WHITE, 4, 3),
+                new WeftPick(Color.WHITE, 4, 1),
+                new WeftPick(Color.BLUE, 4, 0)));
+    	draft.setNumHarnesses(4);
+    	draft.setIsLiftplan(true);
+    	
+    	session.setSelectedCells(new SelectedCells(model, new GridSelection(0, 0, 4, 4)));
+    	
+    	model.pasteSelection(0, 0, CellSelectionTransforms.Null());
+
+    	assertThat(model.getBooleanValueAt(0, 0), is(true));
+    	assertThat(model.getBooleanValueAt(1, 1), is(true));
+    	assertThat(model.getBooleanValueAt(2, 2), is(true));
+    	assertThat(model.getBooleanValueAt(3, 3), is(true));
     }
     
 }

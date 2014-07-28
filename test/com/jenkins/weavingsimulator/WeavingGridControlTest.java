@@ -31,6 +31,7 @@ import java.awt.event.MouseEvent;
 import junit.framework.TestCase;
 
 import com.jenkins.weavingsimulator.models.AbstractWeavingDraftModel;
+import com.jenkins.weavingsimulator.models.AbstractWeavingDraftModel.EditedValueProvider;
 
 public class WeavingGridControlTest extends TestCase {
 	
@@ -188,5 +189,9 @@ public class WeavingGridControlTest extends TestCase {
 		public int getColumnCount() {
 			return model[0].length;
 		}
+		
+	    public EditedValueProvider getEditedValueProvider() {
+	    	return new SetValueProvider();
+	    }   
 	}
 }

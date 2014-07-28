@@ -31,6 +31,8 @@ import java.beans.PropertyChangeListener;
 import java.beans.IndexedPropertyChangeEvent;
 import com.jenkins.weavingsimulator.datatypes.Treadle;
 import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
+import com.jenkins.weavingsimulator.models.AbstractWeavingDraftModel.ColorEditProvider;
+import com.jenkins.weavingsimulator.models.AbstractWeavingDraftModel.EditedValueProvider;
 
 /** A TableModel class for representing the treadle tie up part of the
  * weaving draft.
@@ -150,4 +152,8 @@ public class TieUpModel extends AbstractWeavingDraftModel {
     public Class<?> getColumnClass(int columnIndex) {
         return Boolean.class;
     }    
+    
+    public EditedValueProvider getEditedValueProvider() {
+    	return new SetValueProvider();
+    }
 }

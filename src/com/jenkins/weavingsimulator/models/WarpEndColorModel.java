@@ -27,6 +27,9 @@ package com.jenkins.weavingsimulator.models;
 
 import com.jenkins.weavingsimulator.datatypes.WarpEnd;
 import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
+import com.jenkins.weavingsimulator.models.AbstractWeavingDraftModel.ColorEditProvider;
+import com.jenkins.weavingsimulator.models.AbstractWeavingDraftModel.EditedValueProvider;
+
 import java.awt.Color;
 import java.beans.IndexedPropertyChangeEvent;
 import java.beans.PropertyChangeEvent;
@@ -38,10 +41,12 @@ import java.beans.PropertyChangeListener;
  * @author  ajenkins
  */
 public class WarpEndColorModel extends AbstractWeavingDraftModel {
-    
+	private EditingSession session;
+	
     /** Creates a new instance of WarpEndColorModel */
-    public WarpEndColorModel(WeavingDraft draft) {
-        super(draft);
+    public WarpEndColorModel(EditingSession session) {
+        super(session.getDraft());
+        this.session = session;
         setDraftListener(new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent ev) {
                 if (ev.getPropertyName().equals("ends")) {
@@ -136,4 +141,7 @@ public class WarpEndColorModel extends AbstractWeavingDraftModel {
         return Color.class;
     }
     
+    public EditedValueProvider getEditedValueProvider() {
+    	return new ColorEditProvider(session);
+    }    
 }

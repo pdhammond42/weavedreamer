@@ -27,6 +27,7 @@
 package com.jenkins.weavingsimulator.models;
 
 import java.awt.Color;
+import java.util.Arrays;
 
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -45,6 +46,7 @@ public class ThreadingDraftModelTest extends TestCase {
     private WeavingDraft draft;
     private ThreadingDraftModel model;
     private TestTableModelListener listener;
+    private EditingSession session;
     
     public ThreadingDraftModelTest(String testName) {
         super(testName);
@@ -55,9 +57,10 @@ public class ThreadingDraftModelTest extends TestCase {
         draft.setNumHarnesses(2);
         draft.getEnds().add(new WarpEnd(Color.BLUE, 0));
         draft.getEnds().add(new WarpEnd(Color.GREEN, 1));
+        session = new EditingSession(draft);
         
-        model = new ThreadingDraftModel(new EditingSession(draft));
-        
+        model = new ThreadingDraftModel(session);
+       
         listener = new TestTableModelListener();
         model.addTableModelListener(listener);
     }
@@ -134,5 +137,39 @@ public class ThreadingDraftModelTest extends TestCase {
         draft.getPicks().add(new WeftPick(Color.BLUE, 1, 0));
         
         assertNull(listener.event);
+    }
+
+    public void testSelectionisPastedFromSession() {
+    	draft.setTreadles(Arrays.asList(new Treadle(), new Treadle(), 
+    			new Treadle(), new Treadle()));
+    	draft.setEnds(Arrays.asList(
+                new WarpEnd(Color.BLACK, 0), 
+                new WarpEnd(Color.WHITE, 1),
+                new WarpEnd(Color.WHITE, 0),
+                new WarpEnd(Color.WHITE, 1),
+                new WarpEnd(Color.WHITE, 0),
+                new WarpEnd(Color.BLUE, 1)));
+
+    	/* Start with
+    	 *  *.*.*.
+    	 *  .*.*.*
+    	 *  copy from r,c 0, 0 .. 2, 2, paste to 0, 1, should get
+    	 *  **..*.
+    	 *  ..**.*
+    	 */	
+    	session.setSelectedCells(new SelectedCells(model, new GridSelection(0, 0, 2, 2)));
+    	
+    	model.pasteSelection(0, 1, CellSelectionTransforms.Null());
+    	assertThat((Color)model.getValueAt(0, 0), is(Color.BLACK));
+    	assertThat((Color)model.getValueAt(1, 0), is(Color.WHITE));
+    	
+    	assertThat((Color)model.getValueAt(0, 1), is(Color.BLACK));
+    	assertThat((Color)model.getValueAt(1, 1), is(Color.WHITE));
+    	
+    	assertThat((Color)model.getValueAt(0, 2), is(Color.WHITE));
+    	assertThat((Color)model.getValueAt(1, 2), is(Color.BLACK));
+    	
+    	assertThat((Color)model.getValueAt(0, 3), is(Color.WHITE));
+    	assertThat((Color)model.getValueAt(1, 3), is(Color.BLACK));
     }
 }

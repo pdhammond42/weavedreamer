@@ -146,5 +146,8 @@ public class AbstractWeavingDraftModelTest extends TestCase {
         public Object getValueAt(int row, int column) {
             return null;
         }
+        public EditedValueProvider getEditedValueProvider() {
+        	return null;
+        }
     }
 }

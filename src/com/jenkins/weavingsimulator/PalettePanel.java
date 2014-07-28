@@ -97,7 +97,6 @@ public class PalettePanel extends JPanel {
                 
         paletteGrid = new GridControl();
         paletteGrid.setSquareWidth(20);
-        paletteGrid.setEditValueProvider (null);
         paletteGrid.getSelectionModel().addListSelectionListener(
                 new PaletteSelectionListener());
         paletteGrid.setCellSelectionEnabled(true);

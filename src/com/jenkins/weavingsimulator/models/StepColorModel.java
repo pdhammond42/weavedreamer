@@ -27,6 +27,8 @@ package com.jenkins.weavingsimulator.models;
 
 import com.jenkins.weavingsimulator.datatypes.WeftPick;
 import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
+import com.jenkins.weavingsimulator.models.AbstractWeavingDraftModel.EditedValueProvider;
+
 import java.awt.Color;
 import java.beans.IndexedPropertyChangeEvent;
 import java.beans.PropertyChangeEvent;
@@ -37,10 +39,12 @@ import java.beans.PropertyChangeListener;
  * @author  ajenkins
  */
 public class StepColorModel extends AbstractWeavingDraftModel {
-    
+	private EditingSession session;
+	
     /** Creates a new instance of StepColorModel */
-    public StepColorModel(WeavingDraft draft) {
-        super(draft);
+    public StepColorModel(EditingSession session) {
+        super(session.getDraft());
+        this.session=session;
         setDraftListener(new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent ev) {
                 if (!ev.getPropertyName().equals("picks"))
@@ -134,4 +138,7 @@ public class StepColorModel extends AbstractWeavingDraftModel {
         return Color.class;
     }
     
+    public EditedValueProvider getEditedValueProvider() {
+    	return new ColorEditProvider(session);
+    }
 }

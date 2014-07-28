@@ -29,13 +29,14 @@ Changes in 0.2.5
 For the user:
 - Can now create and edit Liftplan drafts.
 - Cursor position shown
+
 Behind the scenes:
 - Better testing, in particular automated GUI tests.
 - Corrected commit logs, which had been showing the wrong user.
 
 Changes in 0.2.4
 ----------------
-Bug fixes in loading WSML amnd WIF.
+Bug fixes in loading WSML and WIF.
 
 Changes in 0.2.3
 ----------------

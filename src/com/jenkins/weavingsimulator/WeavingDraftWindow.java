@@ -29,6 +29,7 @@ import java.io.File;
 
 import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
 import com.jenkins.weavingsimulator.models.AbstractWeavingDraftModel;
+import com.jenkins.weavingsimulator.models.CopyableWeavingGridModel;
 import com.jenkins.weavingsimulator.models.EditingSession;
 import com.jenkins.weavingsimulator.models.StatusBarModel;
 import com.jenkins.weavingsimulator.models.StepColorModel;
@@ -42,10 +43,6 @@ import com.jenkins.weavingsimulator.models.WeavingPatternModel;
  * 
  * @author ajenkins
  * 
- *         TODO Add a new pallete grid control, which allows a palette to be
- *         created. This will be connected to the endColorGrid and pickColorGrid
- *         via their models. It should work by having the cell editor for the
- *         end and pick colorGrids have a reference.
  */
 public class WeavingDraftWindow extends javax.swing.JInternalFrame {
 
@@ -70,9 +67,8 @@ public class WeavingDraftWindow extends javax.swing.JInternalFrame {
 		threadingDraftGrid.setSquareWidth(squareWidth);
 		threadingDraftGrid.setName("threadingDraftGrid");
 
-		warpEndColorGrid.setModel(new WarpEndColorModel(draft));
+		warpEndColorGrid.setModel(new WarpEndColorModel(session));
 		warpEndColorGrid.setSquareWidth(squareWidth);
-		warpEndColorGrid.setEditValueProvider(new ColorEditProvider());
 		warpEndColorGrid.setName("warpEndColorGrid");
 		
 		tieUpGrid.setModel(new TieUpModel(draft));
@@ -83,9 +79,8 @@ public class WeavingDraftWindow extends javax.swing.JInternalFrame {
 		treadlingDraftGrid.setSquareWidth(squareWidth);
 		treadlingDraftGrid.setName("treadlingDraftGrid");
 		
-		pickColorGrid.setModel(new StepColorModel(draft));
+		pickColorGrid.setModel(new StepColorModel(session));
 		pickColorGrid.setSquareWidth(squareWidth);
-		pickColorGrid.setEditValueProvider(new ColorEditProvider());
 		pickColorGrid.setName("pickColorGrid");
 		
 		treadlingDraftGrid.setToolTipText("Set treadle");
@@ -115,18 +110,7 @@ public class WeavingDraftWindow extends javax.swing.JInternalFrame {
 		draftModifiedChangedHandler(session.isDraftModified());
 		palettePanel.setSession(session);
 	}
-
-	private class ColorEditProvider implements GridControl.EditedValueProvider {
-		public Object getValue() {
-			int selection = session.getPalette().getSelection();
-			if (selection != -1) {
-				return session.getPalette().getColor(selection);
-			} else {
-				return null;
-			}
-		}
-	};
-
+	
 	/**
 	 * This method is called from within the constructor to initialize the form.
 	 * WARNING: Do NOT modify this code. The content of this method is always

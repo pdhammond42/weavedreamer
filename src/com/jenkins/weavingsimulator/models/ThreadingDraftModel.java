@@ -90,31 +90,16 @@ public class ThreadingDraftModel extends CopyableWeavingGridModel {
     public int getRowCount() {
         return draft.getNumHarnesses();
     }
-    
-    /** Returns the value for the cell at <code>columnIndex</code> and
-     * <code>rowIndex</code>.
-     *
-     * @param	rowIndex	the row whose value is to be queried
-     * @param	columnIndex 	the column whose value is to be queried
-     * @return	the value Object at the specified cell
-     *
-     */
-    public Object getValueAt(int rowIndex, int columnIndex) {
-        WarpEnd end = draft.getEnds().get(columnIndex);
-        if (end.getHarnessId() == rowIndex) {
-        	return Color.BLACK;
-        } else if (isSelected(rowIndex, columnIndex)) {
-        	return Color.LIGHT_GRAY;
-        } else {
-        	return Color.WHITE;
-        }
-    }
         
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
         WarpEnd end = draft.getEnds().get(columnIndex);
-        if (rowIndex != end.getHarnessId()) {
+        if ((Boolean)aValue && rowIndex != end.getHarnessId()) {
             end.setHarnessId(rowIndex);
         }        
+    }
+    
+    public boolean getBooleanValueAt (int row, int column) {
+    	return draft.getEnds().get(column).getHarnessId() == row;
     }
     
     public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -123,5 +108,9 @@ public class ThreadingDraftModel extends CopyableWeavingGridModel {
     
     public Class<?> getColumnClass(int columnIndex) {
         return Color.class;
+    }
+    
+    public EditedValueProvider getEditedValueProvider() {
+    	return new SetValueProvider();
     }
 }

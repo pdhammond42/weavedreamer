@@ -13,13 +13,14 @@ import com.jenkins.weavingsimulator.datatypes.WeftPick;
  */
 public class SelectedCells {
 	boolean[][] rows;
-	
-	SelectedCells (List<WeftPick> picks, GridSelection selection) {
+
+	SelectedCells (CopyableWeavingGridModel model, GridSelection selection) {
 		rows = new boolean[selection.getRows()][selection.getColumns()];
 		for (int row = 0; row != selection.getRows(); row++) {
 			for (int col = 0; col != selection.getColumns(); col++) {
-				rows[row][col] = picks.get(row + selection.getStartRow())
-						.isTreadleSelected(col + selection.getStartColumn());
+				rows[row][col] = model.getBooleanValueAt(
+						row + selection.getStartRow(),
+						col + selection.getStartColumn());
 			}
 		}
 	}
