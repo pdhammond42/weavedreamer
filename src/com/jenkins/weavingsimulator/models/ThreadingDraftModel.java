@@ -91,11 +91,8 @@ public class ThreadingDraftModel extends CopyableWeavingGridModel {
         return draft.getNumHarnesses();
     }
         
-    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-        WarpEnd end = draft.getEnds().get(columnIndex);
-        if ((Boolean)aValue && rowIndex != end.getHarnessId()) {
-            end.setHarnessId(rowIndex);
-        }        
+    private void doSetValueAt(boolean value, int rowIndex, int columnIndex) {
+        
     }
     
     public boolean getBooleanValueAt (int row, int column) {
@@ -113,4 +110,21 @@ public class ThreadingDraftModel extends CopyableWeavingGridModel {
     public EditedValueProvider getEditedValueProvider() {
     	return new SetValueProvider();
     }
+
+	@Override
+	protected Command getSetValueCommand(final Object aValue, final int row, final int column) {
+		final WarpEnd end = draft.getEnds().get(column);
+		final int oldHarness = end.getHarnessId();
+
+		return new Command () {	        
+			public void execute() {
+		        if ((Boolean)aValue && row != end.getHarnessId()) {
+		            end.setHarnessId(row);
+		        }
+			}
+			public void undo() {
+				end.setHarnessId(oldHarness);
+			}
+		};
+	}
 }

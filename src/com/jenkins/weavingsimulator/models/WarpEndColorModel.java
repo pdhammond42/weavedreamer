@@ -26,10 +26,6 @@
 package com.jenkins.weavingsimulator.models;
 
 import com.jenkins.weavingsimulator.datatypes.WarpEnd;
-import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
-import com.jenkins.weavingsimulator.models.AbstractWeavingDraftModel.ColorEditProvider;
-import com.jenkins.weavingsimulator.models.AbstractWeavingDraftModel.EditedValueProvider;
-
 import java.awt.Color;
 import java.beans.IndexedPropertyChangeEvent;
 import java.beans.PropertyChangeEvent;
@@ -45,7 +41,7 @@ public class WarpEndColorModel extends AbstractWeavingDraftModel {
 	
     /** Creates a new instance of WarpEndColorModel */
     public WarpEndColorModel(EditingSession session) {
-        super(session.getDraft());
+        super(session);
         this.session = session;
         setDraftListener(new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent ev) {
@@ -99,21 +95,20 @@ public class WarpEndColorModel extends AbstractWeavingDraftModel {
         return end.getColor();
     }
     
-    /** Sets the value in the cell at <code>columnIndex</code> and
-     * <code>rowIndex</code> to <code>aValue</code>.
-     *
-     * @param	aValue		 the new value
-     * @param	rowIndex	 the row whose value is to be changed
-     * @param	columnIndex 	 the column whose value is to be changed
-     * @see #getValueAt
-     * @see #isCellEditable
-     *
-     */
-    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-        WarpEnd end = draft.getEnds().get(columnIndex);
-        end.setColor((Color)aValue);
-    }
-    
+	@Override
+	protected Command getSetValueCommand(final Object aValue, final int row, final int column) {
+		return new Command (){
+			public void execute() {
+		        WarpEnd end = draft.getEnds().get(column);
+		        end.setColor((Color)aValue);
+			}
+
+			public void undo() {
+				// TODO Auto-generated method stub
+			}
+		};
+	}
+	
     /** Returns true if the cell at <code>rowIndex</code> and
      * <code>columnIndex</code>
      * is editable.  Otherwise, <code>setValueAt</code> on the cell will not

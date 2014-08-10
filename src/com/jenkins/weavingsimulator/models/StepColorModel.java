@@ -26,9 +26,6 @@
 package com.jenkins.weavingsimulator.models;
 
 import com.jenkins.weavingsimulator.datatypes.WeftPick;
-import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
-import com.jenkins.weavingsimulator.models.AbstractWeavingDraftModel.EditedValueProvider;
-
 import java.awt.Color;
 import java.beans.IndexedPropertyChangeEvent;
 import java.beans.PropertyChangeEvent;
@@ -43,7 +40,7 @@ public class StepColorModel extends AbstractWeavingDraftModel {
 	
     /** Creates a new instance of StepColorModel */
     public StepColorModel(EditingSession session) {
-        super(session.getDraft());
+        super(session);
         this.session=session;
         setDraftListener(new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent ev) {
@@ -96,20 +93,19 @@ public class StepColorModel extends AbstractWeavingDraftModel {
         return draft.getPicks().get(rowIndex).getColor();
     }
     
-    /** Sets the value in the cell at <code>columnIndex</code> and
-     * <code>rowIndex</code> to <code>aValue</code>.
-     *
-     * @param	aValue		 the new value
-     * @param	rowIndex	 the row whose value is to be changed
-     * @param	columnIndex 	 the column whose value is to be changed
-     * @see #getValueAt
-     * @see #isCellEditable
-     *
-     */
-    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-        WeftPick pick = draft.getPicks().get(rowIndex);
-        pick.setColor((Color)aValue);
-    }
+	@Override
+	protected Command getSetValueCommand(final Object aValue, final int row, final int column) {
+		return new Command (){
+			public void execute() {
+		        WeftPick pick = draft.getPicks().get(row);
+		        pick.setColor((Color)aValue);
+			}
+
+			public void undo() {
+				// TODO Auto-generated method stub
+			}
+		};
+	}
     
     /** Returns true if the cell at <code>rowIndex</code> and
      * <code>columnIndex</code>

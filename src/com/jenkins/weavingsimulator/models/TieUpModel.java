@@ -30,9 +30,6 @@ import java.beans.PropertyChangeListener;
 
 import java.beans.IndexedPropertyChangeEvent;
 import com.jenkins.weavingsimulator.datatypes.Treadle;
-import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
-import com.jenkins.weavingsimulator.models.AbstractWeavingDraftModel.ColorEditProvider;
-import com.jenkins.weavingsimulator.models.AbstractWeavingDraftModel.EditedValueProvider;
 
 /** A TableModel class for representing the treadle tie up part of the
  * weaving draft.
@@ -42,8 +39,8 @@ import com.jenkins.weavingsimulator.models.AbstractWeavingDraftModel.EditedValue
 public class TieUpModel extends AbstractWeavingDraftModel {
     
     /** Creates a new instance of TieUpModel */
-    public TieUpModel(WeavingDraft draft) {
-        super(draft);
+    public TieUpModel(EditingSession session) {
+        super(session);
         setDraftListener(new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent ev) {
                 String propName = ev.getPropertyName();
@@ -72,7 +69,7 @@ public class TieUpModel extends AbstractWeavingDraftModel {
      * @see #isCellEditable
      *
      */
-    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+    private void doSetValueAt(Object aValue, int rowIndex, int columnIndex) {
     	if (isCellEditable(rowIndex, columnIndex)) {
 	        Treadle treadle = draft.getTreadles().get(columnIndex);
 	        int harnessId = rowIndex;
@@ -85,6 +82,19 @@ public class TieUpModel extends AbstractWeavingDraftModel {
     	}
     }
     
+	@Override
+	protected Command getSetValueCommand(final Object aValue, final int row, final int column) {
+		return new Command (){
+			public void execute() {
+		        doSetValueAt(aValue, row, column);
+			}
+
+			public void undo() {
+				// TODO Auto-generated method stub
+			}
+		};
+	}
+	
     /** Returns true if the cell at <code>rowIndex</code> and
      * <code>columnIndex</code>
      * is editable.  Otherwise, <code>setValueAt</code> on the cell will not

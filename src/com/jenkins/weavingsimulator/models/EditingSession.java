@@ -32,6 +32,8 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.File;
+import java.util.ArrayDeque;
+import java.util.Deque;
 
 
 /**
@@ -44,6 +46,8 @@ public class EditingSession {
     public static final String FILE_PROPERTY = "file";
     public static final String PALETTE_PROPERTY = "palette";
     public static final String SELECTION_PROPERTY = "selection";
+    
+    private Deque<Command> undoList = new ArrayDeque<Command>();
     
     private PropertyChangeSupport propertySupport;
 
@@ -106,6 +110,16 @@ public class EditingSession {
         propertySupport.removePropertyChangeListener(propName, listener);
     }
 
+    public void execute (Command command) {
+    	command.execute();
+    	undoList.push(command);
+    }
+    
+	public void undo() {
+		Command command = undoList.pop();
+		command.undo();
+	}
+	
     /**
      * Getter for property palette.
      * @return Value of property palette.
@@ -131,7 +145,6 @@ public class EditingSession {
      * @return Value of property draft.
      */
     public WeavingDraft getDraft() {
-
         return this.draft;
     }
 

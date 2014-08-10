@@ -26,6 +26,7 @@
 package com.jenkins.weavingsimulator;
 
 import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
+import com.jenkins.weavingsimulator.models.EditingSession;
 import com.jenkins.weavingsimulator.models.TiledTableModelAdapter;
 import com.jenkins.weavingsimulator.models.WeavingPatternModel;
 import java.awt.Dimension;
@@ -39,7 +40,7 @@ public class WeavingPatternPanel extends javax.swing.JPanel {
     /** Creates new form WeavingPatternPanel */
     public WeavingPatternPanel(WeavingDraft draft) {
         initComponents();
-        WeavingPatternModel wmodel = new WeavingPatternModel(draft);
+        WeavingPatternModel wmodel = new WeavingPatternModel(new EditingSession(draft));
         TableModel model = new TiledTableModelAdapter(wmodel);
         weavingPatternGrid.setModel(model);
         weavingPatternGrid.setSquareWidth(10);

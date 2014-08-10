@@ -28,9 +28,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 import java.beans.IndexedPropertyChangeEvent;
-import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
-import com.jenkins.weavingsimulator.models.AbstractWeavingDraftModel.ColorEditProvider;
-import com.jenkins.weavingsimulator.models.AbstractWeavingDraftModel.EditedValueProvider;
 
 /**
  * TableModel representing the fabric resulting from a weaving pattern. Each row
@@ -43,8 +40,8 @@ import com.jenkins.weavingsimulator.models.AbstractWeavingDraftModel.EditedValue
 public class WeavingPatternModel extends AbstractWeavingDraftModel {
 
 	/** Creates a new instance of WeavingPatternModel */
-	public WeavingPatternModel(WeavingDraft draft) {
-		super(draft);
+	public WeavingPatternModel(EditingSession session) {
+		super(session);
 		setDraftListener(new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent ev) {
 				String propName = ev.getPropertyName();
@@ -136,5 +133,11 @@ public class WeavingPatternModel extends AbstractWeavingDraftModel {
 	
     public EditedValueProvider getEditedValueProvider() {
     	return null;
-    }   
+    }
+
+	@Override
+	protected Command getSetValueCommand(Object aValue, int row, int column) {
+		// Not editable
+		return null;
+	}   
 }

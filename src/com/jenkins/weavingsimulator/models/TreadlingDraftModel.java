@@ -91,27 +91,37 @@ public class TreadlingDraftModel extends CopyableWeavingGridModel {
      */
     public int getRowCount() {
         return draft.getPicks().size();
-    }
+    }    
     
-    /** Toggles the value in the cell at <code>columnIndex</code> and
-     * <code>rowIndex</code>.
-     *
-     * @param	aValue		 the new value (boolean).
-     * @param	rowIndex	 the row whose value is to be changed
-     * @param	columnIndex 	 the column whose value is to be changed
-     * @see #getValueAt
-     * @see #isCellEditable
-     *
-     */
-    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-        WeftPick pick = draft.getPicks().get(rowIndex);
-        if (draft.getIsLiftplan()) {
-        	pick.setTreadle(columnIndex, (Boolean)aValue);
-        } else {
-        	if ((Boolean)aValue) pick.setTreadleId(columnIndex);
-        }
-    }
-    
+	@Override
+	protected Command getSetValueCommand(final Object aValue, final int row, final int column) {
+		final WeftPick pick = draft.getPicks().get(row);
+		
+		if (draft.getIsLiftplan()) {
+			return new Command () {
+				boolean oldValue;
+				public void execute() {
+					oldValue = pick.getTreadles()[column];
+					pick.setTreadle(column, (Boolean)aValue);
+				}
+				public void undo() {
+					pick.setTreadle(column, oldValue);
+				}
+			};
+		} else {
+			return new Command () {
+				int oldId;
+				public void execute() {
+					oldId = pick.getSelection();
+		        	if ((Boolean)aValue) pick.setTreadleId(column);
+				}
+				public void undo() {
+					pick.setTreadleId(oldId);
+				}
+			};
+		}
+	}
+	
     public boolean getBooleanValueAt (int row, int column) {
     	return draft.getPicks().get(row).isTreadleSelected(column);
     }

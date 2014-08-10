@@ -33,7 +33,6 @@ import java.beans.PropertyChangeListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.table.AbstractTableModel;
 
-import com.jenkins.weavingsimulator.GridControl;
 import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
 
 /**
@@ -43,6 +42,7 @@ import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
 public abstract class AbstractWeavingDraftModel 
     extends AbstractTableModel 
 {
+	private EditingSession session;
     /** Holds value of property draft. */
     protected WeavingDraft draft;
     private PropertyChangeListener draftListener;
@@ -60,7 +60,7 @@ public abstract class AbstractWeavingDraftModel
     public static int CURSOR = 4;
     
     /** Creates a new instance of AbstractWeavingDraftModel */
-    public AbstractWeavingDraftModel(WeavingDraft draft) {
+    public AbstractWeavingDraftModel(EditingSession session) {
         draftListener = new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent e) {
                 // if one of the num* properties changed, number of columns
@@ -71,8 +71,30 @@ public abstract class AbstractWeavingDraftModel
                     fireTableStructureChanged();
             }
         };
-        this.draft = draft;
+        this.draft = session.getDraft();
+        this.session = session;
         if (draft != null) draft.addPropertyChangeListener(draftListener);
+    }
+    
+    /** Factory method that returns a command object to set the model's value
+     * This object is passed to the session to be actually executed with
+     * undo/redo support.
+     * 
+     * @param aValue Value to set
+     * @param row row to set 
+     * @param column column to set.
+     * @return
+     */
+	protected abstract Command getSetValueCommand(Object aValue, int row, int column);
+	
+	/** Override the AbstractTableModel method to set the value, 
+	 * working in terms of a command object that is passed to the session.
+	 * 
+	 * @see #getValueAt
+	 * @see #getSetValueCommand
+	 */
+    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+    	session.execute(getSetValueCommand(aValue, rowIndex, columnIndex));
     }
     
     /** Getter for property draft.

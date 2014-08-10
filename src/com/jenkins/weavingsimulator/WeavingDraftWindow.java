@@ -29,7 +29,6 @@ import java.io.File;
 
 import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
 import com.jenkins.weavingsimulator.models.AbstractWeavingDraftModel;
-import com.jenkins.weavingsimulator.models.CopyableWeavingGridModel;
 import com.jenkins.weavingsimulator.models.EditingSession;
 import com.jenkins.weavingsimulator.models.StatusBarModel;
 import com.jenkins.weavingsimulator.models.StepColorModel;
@@ -57,7 +56,7 @@ public class WeavingDraftWindow extends javax.swing.JInternalFrame {
 		this.session = session;
 		WeavingDraft draft = session.getDraft();
 		
-		weavingPatternGrid.setModel(new WeavingPatternModel(draft));
+		weavingPatternGrid.setModel(new WeavingPatternModel(session));
 		weavingPatternGrid.setSquareWidth(squareWidth);
 		weavingPatternGrid.setIntercellSpacing(new Dimension(0,0));
 		weavingPatternGrid.setShowGrid(false);
@@ -71,7 +70,7 @@ public class WeavingDraftWindow extends javax.swing.JInternalFrame {
 		warpEndColorGrid.setSquareWidth(squareWidth);
 		warpEndColorGrid.setName("warpEndColorGrid");
 		
-		tieUpGrid.setModel(new TieUpModel(draft));
+		tieUpGrid.setModel(new TieUpModel(session));
 		tieUpGrid.setSquareWidth(squareWidth);
 		tieUpGrid.setName("tieUpGrid");
 		

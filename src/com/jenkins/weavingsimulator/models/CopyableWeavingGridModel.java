@@ -4,9 +4,6 @@ import java.awt.Color;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import com.jenkins.weavingsimulator.GridControl;
-import com.jenkins.weavingsimulator.datatypes.WarpEnd;
-
 
 /** Extends the weaving draft grid model to provide copy and paste 
  * functionality via the session object.
@@ -20,7 +17,7 @@ public abstract class CopyableWeavingGridModel extends AbstractWeavingDraftModel
 	private boolean thisObjectSettingSelection = false;
 
 	public CopyableWeavingGridModel (EditingSession session) {
-		super (session.getDraft());
+		super (session);
 		this.session = session;
         selection = new GridSelection ();
         session.addPropertyChangeListener(EditingSession.SELECTION_PROPERTY, new PropertyChangeListener() {
@@ -51,16 +48,9 @@ public abstract class CopyableWeavingGridModel extends AbstractWeavingDraftModel
 			CellSelectionTransform transform) {
     	SelectedCells selection = transform.Transform(session.getSelectedCells());
 
-    	final int rowcount = Math.min(selection.getRows(), getRowCount() - rowIndex);
-    	final int colcount = Math.min(selection.getColumns(), getColumnCount() - columnIndex);
-    	
-    	for (int row = 0; row != rowcount; row++) {
-    		for (int col = 0; col != colcount; col++) {
-    				setValueAt (selection.getValue(row, col), row + rowIndex, col + columnIndex);
-    		}
-    	}
+    	session.execute(new PasteCommand(this, rowIndex, columnIndex, selection));
 	}
-	
+    
     /** Returns the value for the cell at <code>columnIndex</code> and
      * <code>rowIndex</code>.
      *
@@ -109,4 +99,28 @@ public abstract class CopyableWeavingGridModel extends AbstractWeavingDraftModel
 			return !model.getBooleanValueAt(row, column);
 		}
 	};
+	
+	protected class SetCellCommand implements Command {
+		private CopyableWeavingGridModel model;
+		private int row;
+		private int column;
+		private boolean value;
+		
+		public SetCellCommand (CopyableWeavingGridModel model, boolean value, int row, int column) {
+			this.model = model;
+			this.row = row;
+			this.column = column;
+			this.value = value;
+		}
+
+		public void execute() {
+			model.setValueAt(value, row, column);
+		}
+
+		public void undo() {
+			// TODO Auto-generated method stub	
+		}
+	}
+	
+	
  }

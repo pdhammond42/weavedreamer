@@ -1,9 +1,5 @@
 package com.jenkins.weavingsimulator.models;
 
-import java.util.List;
-
-import com.jenkins.weavingsimulator.datatypes.WeftPick;
-
 /** A set of cells selected from a grid model, which can be
  * transformed and pasted into a model.
  * Note that since they can be transformed, it is not necessarily 
@@ -14,6 +10,11 @@ import com.jenkins.weavingsimulator.datatypes.WeftPick;
 public class SelectedCells {
 	boolean[][] rows;
 
+	/** Construct a SelectedCells object by copying the indicated selection
+	 * from the given grid model.
+	 * @param model Model to copy the cells from
+	 * @param selection Which cells to copy
+	 */
 	SelectedCells (CopyableWeavingGridModel model, GridSelection selection) {
 		rows = new boolean[selection.getRows()][selection.getColumns()];
 		for (int row = 0; row != selection.getRows(); row++) {
@@ -25,26 +26,35 @@ public class SelectedCells {
 		}
 	}
 	
-	SelectedCells (int rows, int columns) {
+	/** Construct a SelectedCells object with the given capacity,
+	 * with no cells initially selected.
+	 * @param rows Number of rows to allocate
+	 * @param columns Number of columns to allocate
+	 */
+	public SelectedCells (int rows, int columns) {
 		this.rows = new boolean[rows][columns];
 	}
 	
-	SelectedCells() {
+	public SelectedCells() {
 		rows = new boolean[0][0];
 	}
 	
-	int getRows() {
+	/** Returns the number of rows in the selection */
+	public int getRows() {
 		return rows.length;
 	}
 	
-	int getColumns() { 
+	/** Returns the number of columns in the selection */
+	public int getColumns() { 
 		return rows.length > 0 ? rows[0].length : 0;
 	}
 	
-	boolean getValue(int row, int column) {
+	/** Gets the value at the requested index. */
+	public boolean getValue(int row, int column) {
 		return rows[row][column];
 	}
 
+	/** Sets the value at the requested index */
 	public void setValue(int row, int column, boolean value) {
 		rows[row][column] = value;
 	}
