@@ -91,12 +91,15 @@ public class ThreadingDraftModel extends CopyableWeavingGridModel {
         return draft.getNumHarnesses();
     }
         
-    private void doSetValueAt(boolean value, int rowIndex, int columnIndex) {
-        
-    }
-    
     public boolean getBooleanValueAt (int row, int column) {
     	return draft.getEnds().get(column).getHarnessId() == row;
+    }
+
+    public void setBooleanValueAt (boolean value, int row, int column) {
+    	final WarpEnd end = draft.getEnds().get(column);
+    	if (value && row != end.getHarnessId()) {
+    		end.setHarnessId(row);
+    	}    	
     }
     
     public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -126,5 +129,16 @@ public class ThreadingDraftModel extends CopyableWeavingGridModel {
 				end.setHarnessId(oldHarness);
 			}
 		};
+	}
+
+	@Override
+	protected PasteGrid getUndoSelection(PasteGrid selection) {
+		PasteGrid grid = new PasteGrid (this, 
+				new GridSelection(0, 
+						selection.getStartColumn(), 
+						this.getRowCount(), 
+						Math.min(selection.getStartColumn() + selection.getColumns(), this.getColumnCount())));
+		grid.setOrigin(0,selection.getStartColumn());
+		return grid;
 	}
 }

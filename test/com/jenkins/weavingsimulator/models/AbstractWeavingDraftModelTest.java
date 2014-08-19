@@ -42,6 +42,7 @@ import junit.framework.TestSuite;
 public class AbstractWeavingDraftModelTest extends TestCase {
     private AbstractWeavingDraftModel model;
     private WeavingDraft draft;
+    private EditingSession session;
     private TestTableModelListener listener;
     
     public AbstractWeavingDraftModelTest(String testName) {
@@ -50,7 +51,8 @@ public class AbstractWeavingDraftModelTest extends TestCase {
 
     protected void setUp() throws java.lang.Exception {
         draft = new WeavingDraft("TestDraft");
-        model = new AbstractWeavingDraftModelImpl(draft);
+        session = new EditingSession(draft);
+        model = new AbstractWeavingDraftModelImpl(session);
         listener = new TestTableModelListener();
     }
 
@@ -131,7 +133,7 @@ public class AbstractWeavingDraftModelTest extends TestCase {
         
     private class AbstractWeavingDraftModelImpl extends AbstractWeavingDraftModel {
 
-        AbstractWeavingDraftModelImpl(WeavingDraft draft) {
+        AbstractWeavingDraftModelImpl(EditingSession draft) {
             super(draft);
         }
 
@@ -149,5 +151,11 @@ public class AbstractWeavingDraftModelTest extends TestCase {
         public EditedValueProvider getEditedValueProvider() {
         	return null;
         }
+
+		@Override
+		protected Command getSetValueCommand(Object aValue, int row, int column) {
+			// TODO Auto-generated method stub
+			return null;
+		}
     }
 }

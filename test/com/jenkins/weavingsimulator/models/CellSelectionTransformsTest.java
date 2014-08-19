@@ -7,9 +7,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
 public class CellSelectionTransformsTest  extends TestCase {
-	private SelectedCells selection;
+	private PasteGrid selection;
 	public void setUp() {
-		selection = new SelectedCells (3, 2);
+		selection = new PasteGrid (3, 2);
 		// Setup up a selection for transforming:
 		// *.
 		// *.
@@ -30,7 +30,7 @@ public class CellSelectionTransformsTest  extends TestCase {
 	}
 	
 	public void testVerticalScale () {
-		SelectedCells cells = 
+		PasteGrid cells = 
 				CellSelectionTransforms.ScaleVertical (3).Transform(selection);
 		assertThat (cells.toString(), is (
 				"*.;" + 
@@ -46,7 +46,7 @@ public class CellSelectionTransformsTest  extends TestCase {
 	
 	public void testVerticalScaleMustBePositive () {
 		try {
-			SelectedCells cells = 
+			PasteGrid cells = 
 					CellSelectionTransforms.ScaleVertical (-3).Transform(selection);
 			fail("Expected Illegal Argument Exception");
 		}
@@ -56,7 +56,7 @@ public class CellSelectionTransformsTest  extends TestCase {
 	}
 	
 	public void testHorizontalScale () {
-		SelectedCells cells = 
+		PasteGrid cells = 
 				CellSelectionTransforms.ScaleHorizontal (3).Transform(selection);
 		assertThat (cells.toString(), is (
 				"***...;" + 
@@ -66,7 +66,7 @@ public class CellSelectionTransformsTest  extends TestCase {
 	
 	public void testHorzontalScaleMustBePositive () {
 		try {
-			SelectedCells cells = 
+			PasteGrid cells = 
 					CellSelectionTransforms.ScaleHorizontal (-3).Transform(selection);
 			fail("Expected Illegal Argument Exception");
 		}
@@ -76,7 +76,7 @@ public class CellSelectionTransformsTest  extends TestCase {
 	}
 
 	public void testVerticalReflect () {
-		SelectedCells cells = 
+		PasteGrid cells = 
 				CellSelectionTransforms.ReflectVertical().Transform(selection);
 		assertThat (cells.toString(), is (
 				".*;" + 
@@ -85,7 +85,7 @@ public class CellSelectionTransformsTest  extends TestCase {
 	}	
 
 	public void testHorizontalReflect () {
-		SelectedCells cells = 
+		PasteGrid cells = 
 				CellSelectionTransforms.ReflectHorizontal().Transform(selection);
 		assertThat (cells.toString(), is (
 				".*;" + 
@@ -94,7 +94,7 @@ public class CellSelectionTransformsTest  extends TestCase {
 	}	
 	
 	public void testTranspose () {
-		SelectedCells cells = 
+		PasteGrid cells = 
 				CellSelectionTransforms.Transpose().Transform(selection);
 		assertThat (cells.toString(), is (
 				"*..;" + 
@@ -106,7 +106,7 @@ public class CellSelectionTransformsTest  extends TestCase {
 		transforms.add(CellSelectionTransforms.ReflectHorizontal());
 		transforms.add(CellSelectionTransforms.ScaleHorizontal(2));
 		
-		SelectedCells cells = 
+		PasteGrid cells = 
 				CellSelectionTransforms.Combine(transforms).Transform(selection);
 		assertThat (cells.toString(), is (
 				"..**;" + 

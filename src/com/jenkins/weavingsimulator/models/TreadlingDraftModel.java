@@ -126,6 +126,25 @@ public class TreadlingDraftModel extends CopyableWeavingGridModel {
     	return draft.getPicks().get(row).isTreadleSelected(column);
     }
     
+    public void setBooleanValueAt (boolean value, int row, int column) {
+		final WeftPick pick = draft.getPicks().get(row);
+		if (draft.getIsLiftplan()) {
+			pick.setTreadle(column, value);
+		} else {
+			if (value) pick.setTreadleId(column);
+		}    	
+    }
+    
+    protected PasteGrid getUndoSelection (PasteGrid selection) {
+		PasteGrid grid = new PasteGrid (this, 
+				new GridSelection(selection.getStartRow(), 
+						0, 
+						Math.min(selection.getStartRow() + selection.getRows(), this.getRowCount()),
+						this.getColumnCount()));
+		grid.setOrigin(selection.getStartRow(), 0);
+		return grid;
+    }
+    
     /** Returns true if the cell at <code>rowIndex</code> and
      * <code>columnIndex</code>
      * is editable.  Otherwise, <code>setValueAt</code> on the cell will not

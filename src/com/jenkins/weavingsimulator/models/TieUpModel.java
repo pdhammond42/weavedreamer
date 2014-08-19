@@ -90,7 +90,7 @@ public class TieUpModel extends AbstractWeavingDraftModel {
 			}
 
 			public void undo() {
-				// TODO Auto-generated method stub
+		        doSetValueAt(aValue, row, column);
 			}
 		};
 	}

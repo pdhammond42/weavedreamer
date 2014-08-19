@@ -114,7 +114,39 @@ public class TreadlingDraftModelTest extends TestCase {
         assertTrue(draft.getPicks().get(1).isTreadleSelected(1));
         model.setValueAt(true, 1, 0);
         assertTrue(draft.getPicks().get(1).isTreadleSelected(0));
+        assertFalse(draft.getPicks().get(1).isTreadleSelected(1));
     }
+
+    public void testSetValueAtisUndoable() {
+        model.setValueAt(true, 1, 0);
+        assertTrue(draft.getPicks().get(1).isTreadleSelected(0));
+        session.undo();
+        assertTrue(draft.getPicks().get(1).isTreadleSelected(1));        
+    }
+    
+    public void testSetValueAtLiftplan() {
+        assertTrue(draft.getPicks().get(1).isTreadleSelected(1));
+        draft.setIsLiftplan(true);
+        
+        model.setValueAt(true, 1, 0);
+        assertTrue(draft.getPicks().get(1).isTreadleSelected(0));
+        assertTrue(draft.getPicks().get(1).isTreadleSelected(1));
+        
+        model.setValueAt(false, 1, 1);
+        assertTrue(draft.getPicks().get(1).isTreadleSelected(0));
+        assertFalse(draft.getPicks().get(1).isTreadleSelected(1));
+    }
+    
+    public void testSetValueAtisUndoableLiftplan() {
+        draft.setIsLiftplan(true);
+        model.setValueAt(true, 1, 0);
+        model.setValueAt(false, 1, 1);
+        session.undo();
+        session.undo();
+        assertFalse(draft.getPicks().get(1).isTreadleSelected(0));
+        assertTrue(draft.getPicks().get(1).isTreadleSelected(1));
+    }
+    
 
     public void testIsCellEditable() {
         for (int row = 0; row < model.getRowCount(); row++) {
@@ -173,7 +205,7 @@ public class TreadlingDraftModelTest extends TestCase {
     	assertThat (session.getSelectedCells().getColumns(), is(0));
     	model.copySelection();
     	
-    	SelectedCells selection = session.getSelectedCells();
+    	PasteGrid selection = session.getSelectedCells();
     	assertThat(selection.getRows(), equalTo(3));
         assertThat(selection.getColumns(), equalTo(2));
         assertThat(selection.getValue(0,0), is(true));
@@ -210,7 +242,7 @@ public class TreadlingDraftModelTest extends TestCase {
     	 *  .*..
     	 *  *... 
     	 */	
-    	session.setSelectedCells(new SelectedCells(model, new GridSelection(3, 1, 5, 4)));
+    	session.setSelectedCells(new PasteGrid(model, new GridSelection(3, 1, 5, 4)));
     	
     	model.pasteSelection(1, 0, CellSelectionTransforms.Null());
     	assertThat((Color)model.getValueAt(0, 0), is(Color.BLACK));
@@ -245,7 +277,7 @@ public class TreadlingDraftModelTest extends TestCase {
                 new WeftPick(Color.WHITE, 4, 1),
                 new WeftPick(Color.BLUE, 4, 0)));
 
-    	session.setSelectedCells(new SelectedCells(model, new GridSelection(0, 0, 5, 4)));
+    	session.setSelectedCells(new PasteGrid(model, new GridSelection(0, 0, 5, 4)));
     	
     	model.pasteSelection(3, 3, CellSelectionTransforms.Null());    	
     }
@@ -277,7 +309,7 @@ public class TreadlingDraftModelTest extends TestCase {
     	 *  .*..
     	 *  *... 
     	 */	
-    	session.setSelectedCells(new SelectedCells(model, new GridSelection(0, 0, 2, 2)));
+    	session.setSelectedCells(new PasteGrid(model, new GridSelection(0, 0, 2, 2)));
     	
     	model.pasteSelection(0, 0, CellSelectionTransforms.ScaleVertical(2));
     	assertThat((Color)model.getValueAt(0, 0), is(Color.BLACK));
@@ -314,7 +346,7 @@ public class TreadlingDraftModelTest extends TestCase {
     	draft.setNumHarnesses(4);
     	draft.setIsLiftplan(true);
     	
-    	session.setSelectedCells(new SelectedCells(model, new GridSelection(0, 0, 4, 4)));
+    	session.setSelectedCells(new PasteGrid(model, new GridSelection(0, 0, 4, 4)));
     	
     	model.pasteSelection(0, 0, CellSelectionTransforms.Null());
 
@@ -324,4 +356,54 @@ public class TreadlingDraftModelTest extends TestCase {
     	assertThat(model.getBooleanValueAt(3, 3), is(true));
     }
     
+    public void testSelectionPasteIsUndoable() {
+    	draft.setTreadles(Arrays.asList(new Treadle(), new Treadle(), 
+    			new Treadle(), new Treadle()));
+    	draft.setPicks(Arrays.asList(
+                new WeftPick(Color.BLACK, 4, 0), 
+                new WeftPick(Color.WHITE, 4, 1),
+                new WeftPick(Color.WHITE, 4, 2),
+                new WeftPick(Color.WHITE, 4, 3),
+                new WeftPick(Color.WHITE, 4, 1),
+                new WeftPick(Color.BLUE, 4, 0)));
+
+    	/* Start with
+    	 *  *...
+    	 *  .*..
+    	 *  ..*.
+    	 *  ...*
+    	 *  .*..
+    	 *  *...
+    	 *  Copy from 1, 1 paste to 0, 1, check undo works 
+    	 *  even when the column that has to be set is 
+    	 *  outside the paste area. 
+    	 */	
+    	session.setSelectedCells(new PasteGrid(model, new GridSelection(1, 1, 5, 4)));
+    	
+    	model.pasteSelection(0, 1, CellSelectionTransforms.Null());
+    	assertThat (session.canUndo(), is(true));
+    	session.undo();
+    	
+    	assertThat (session.canUndo(), is(false));
+    	
+    	assertThat((Color)model.getValueAt(0, 0), is(Color.BLACK));
+    	assertThat((Color)model.getValueAt(0, 1), is(Color.WHITE));
+    	assertThat((Color)model.getValueAt(0, 2), is(Color.WHITE));
+    	assertThat((Color)model.getValueAt(0, 3), is(Color.WHITE));
+    	
+    	assertThat((Color)model.getValueAt(1, 0), is(Color.WHITE));
+    	assertThat((Color)model.getValueAt(1, 1), is(Color.BLACK));
+    	assertThat((Color)model.getValueAt(1, 2), is(Color.WHITE));
+    	assertThat((Color)model.getValueAt(1, 3), is(Color.WHITE));
+    	
+    	assertThat((Color)model.getValueAt(2, 0), is(Color.WHITE));
+    	assertThat((Color)model.getValueAt(2, 1), is(Color.WHITE));
+    	assertThat((Color)model.getValueAt(2, 2), is(Color.BLACK));
+    	assertThat((Color)model.getValueAt(2, 3), is(Color.WHITE));
+    	
+    	assertThat((Color)model.getValueAt(3, 0), is(Color.WHITE));
+    	assertThat((Color)model.getValueAt(3, 1), is(Color.WHITE));
+    	assertThat((Color)model.getValueAt(3, 2), is(Color.WHITE));
+    	assertThat((Color)model.getValueAt(3, 3), is(Color.BLACK));
+    }
 }

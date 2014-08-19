@@ -1,48 +1,48 @@
 package com.jenkins.weavingsimulator.models;
 
 import com.jenkins.weavingsimulator.models.Command;
-import com.jenkins.weavingsimulator.models.SelectedCells;
+import com.jenkins.weavingsimulator.models.PasteGrid;
 
 public class PasteCommand implements Command{
 	CopyableWeavingGridModel model;
-	int originRow;
-	int originColumn;
-	int previousHarnessId;
-	SelectedCells selection;
-	SelectedCells previous;
+	PasteGrid selection;
+	PasteGrid previous;
 
-	
-	public PasteCommand (CopyableWeavingGridModel model, int row, int column,
-			SelectedCells selection) {
+
+	/** Creates a new PasteCommand that will paste the selection into the
+	 * model at row, column, and store the previous state of the model in the
+	 * undoSelection for undo. undoSelection is needed because the threading model,
+	 * and the treadling model in non-liftplan, need more than jsut the pasted area
+	 * to be able to undo.
+	 * @param model The model to act on
+	 * @param row The row to paste into
+	 * @param column The column to paste into
+	 * @param selection The selection to paste
+	 * @param undoSelection The cells that need to be stored to allow undo.
+	 */
+	public PasteCommand (CopyableWeavingGridModel model, PasteGrid selection) {
 		this.model = model;
-		this.originRow = row;
-		this.originColumn = column;
 		this.selection = selection;
+		previous = model.getUndoSelection(selection);
 	}
 	
 	public void execute() {
-    	final int rowcount = Math.min(selection.getRows(), model.getRowCount() - originRow);
-    	final int colcount = Math.min(selection.getColumns(), model.getColumnCount() - originColumn);
-		previous = new SelectedCells (model, 
-				new GridSelection(originRow, 
-						originColumn, 
-						originRow + rowcount, 
-						originColumn+colcount));
-
-    	for (int row = 0; row != rowcount; row++) {
-    		for (int col = 0; col != colcount; col++) {
-    			model.setValueAt (selection.getValue(row, col), row + originRow, col + originColumn);
-    		}
-    	}	
+		paste(selection);
 	}
 
 	public void undo() {
-    	final int rowcount = Math.min(previous.getRows(), model.getRowCount() - originRow);
-    	final int colcount = Math.min(previous.getColumns(), model.getColumnCount() - originColumn);
+		paste(previous);
+	}
+	
+	private void paste (PasteGrid cells) {
+    	final int rowcount = Math.min(cells.getRows(), model.getRowCount() - cells.getStartRow());
+    	final int colcount = Math.min(cells.getColumns(), model.getColumnCount() - cells.getStartColumn());
     	
     	for (int row = 0; row != rowcount; row++) {
     		for (int col = 0; col != colcount; col++) {
-    			model.setValueAt (previous.getValue(row, col), row + originRow, col + originColumn);
+    			model.setBooleanValueAt (cells.getValue(row, col), 
+    					row + cells.getStartRow(), 
+    					col + cells.getStartColumn());
     		}
     	}		
 	}

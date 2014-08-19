@@ -94,20 +94,22 @@ public class WarpEndColorModel extends AbstractWeavingDraftModel {
         WarpEnd end = draft.getEnds().get(columnIndex);
         return end.getColor();
     }
-    
-	@Override
-	protected Command getSetValueCommand(final Object aValue, final int row, final int column) {
-		return new Command (){
-			public void execute() {
-		        WarpEnd end = draft.getEnds().get(column);
-		        end.setColor((Color)aValue);
-			}
 
-			public void undo() {
-				// TODO Auto-generated method stub
-			}
-		};
-	}
+    @Override
+    protected Command getSetValueCommand(final Object aValue, final int row, final int column) {
+    	return new Command (){
+    		WarpEnd end = draft.getEnds().get(column);
+    		Color oldColor = end.getColor();
+    		public void execute() {
+
+    			end.setColor((Color)aValue);
+    		}
+
+    		public void undo() {
+    			end.setColor(oldColor);				
+    		}
+    	};
+    }
 	
     /** Returns true if the cell at <code>rowIndex</code> and
      * <code>columnIndex</code>

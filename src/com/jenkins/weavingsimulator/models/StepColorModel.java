@@ -96,13 +96,14 @@ public class StepColorModel extends AbstractWeavingDraftModel {
 	@Override
 	protected Command getSetValueCommand(final Object aValue, final int row, final int column) {
 		return new Command (){
-			public void execute() {
-		        WeftPick pick = draft.getPicks().get(row);
+	        WeftPick pick = draft.getPicks().get(row);
+	        Color oldColor = pick.getColor();
+	        public void execute() {
 		        pick.setColor((Color)aValue);
 			}
 
 			public void undo() {
-				// TODO Auto-generated method stub
+				 pick.setColor(oldColor);
 			}
 		};
 	}

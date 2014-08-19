@@ -66,7 +66,7 @@ public class EditingSession {
      */
     private boolean draftModified;
     
-    private SelectedCells selection;
+    private PasteGrid selection;
     
     public EditingSession(WeavingDraft draft) {
         propertySupport = new PropertyChangeSupport(this);
@@ -88,7 +88,7 @@ public class EditingSession {
 					setDraftModified(true);
 			}
 		});
-		selection = new SelectedCells();
+		selection = new PasteGrid();
     }
     
     
@@ -116,8 +116,18 @@ public class EditingSession {
     }
     
 	public void undo() {
-		Command command = undoList.pop();
-		command.undo();
+		if (!undoList.isEmpty()) {
+			Command command = undoList.pop();
+			command.undo();
+		}
+	}
+	
+	/** Mainly for testing, query if there is anything in the
+	 * undo buffer.
+	 * @return True if there is at least one command to undo.
+	 */
+	public boolean canUndo() {
+		return (!undoList.isEmpty());
 	}
 	
     /**
@@ -193,13 +203,13 @@ public class EditingSession {
      * with zero size.
      * @return
      */
-    public SelectedCells getSelectedCells() {
+    public PasteGrid getSelectedCells() {
 		return selection;
 	}
 
 
-	public void setSelectedCells(SelectedCells selectedCells) {
-		SelectedCells oldSelection = selection;
+	public void setSelectedCells(PasteGrid selectedCells) {
+		PasteGrid oldSelection = selection;
 		selection = selectedCells;		
         propertySupport.firePropertyChange (SELECTION_PROPERTY, 
         		oldSelection, selection);

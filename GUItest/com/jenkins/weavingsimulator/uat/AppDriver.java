@@ -176,13 +176,21 @@ public class AppDriver{
 		.getSubMenu("Zoom In")
 		.click();
     }
-    
-    void zoomOut() {
-    	mainWindow.getMenuBar()
+
+	void zoomOut() {
+		mainWindow.getMenuBar()
 		.getMenu("View")
 		.getSubMenu("Zoom Out")
 		.click();
-    }
+	}
+
+
+	public void undo() {
+		mainWindow.getMenuBar()
+		.getMenu("Edit")
+		.getSubMenu("Undo")
+		.click();	
+	}
     
     class TiledView {
     	Window window;

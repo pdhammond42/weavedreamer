@@ -40,15 +40,15 @@ public abstract class CopyableWeavingGridModel extends AbstractWeavingDraftModel
      */
     public void copySelection() {
     	thisObjectSettingSelection = true;
-    	session.setSelectedCells(new SelectedCells (this, selection));
+    	session.setSelectedCells(new PasteGrid (this, selection));
     	thisObjectSettingSelection = false;
     }
 
 	public void pasteSelection(int rowIndex, int columnIndex,
 			CellSelectionTransform transform) {
-    	SelectedCells selection = transform.Transform(session.getSelectedCells());
-
-    	session.execute(new PasteCommand(this, rowIndex, columnIndex, selection));
+    	PasteGrid selection = transform.Transform(session.getSelectedCells());
+    	selection.setOrigin(rowIndex, columnIndex);
+    	session.execute(new PasteCommand(this, selection));
 	}
     
     /** Returns the value for the cell at <code>columnIndex</code> and
@@ -69,7 +69,7 @@ public abstract class CopyableWeavingGridModel extends AbstractWeavingDraftModel
         }
     }
     
-	/** The usual getValueAt method returns a colur, for use in rendering the
+	/** The usual getValueAt method returns a colour, for use in rendering the
 	 * table. This returns a boolean for use in copy/paste.
 	 * @param row Row to query
 	 * @param column Column to query
@@ -77,6 +77,13 @@ public abstract class CopyableWeavingGridModel extends AbstractWeavingDraftModel
 	 */
 	public abstract boolean getBooleanValueAt(int row, int column);
 
+	/** Sets the value into the grid directly, not via a command. 
+	 * Provided for implementing commands.
+	 * @param row Row to set
+	 * @param column Column to set
+	 */
+    public abstract void setBooleanValueAt (boolean value, int row, int column);
+    
     protected boolean isSelected (int row, int column) {
     	return selection.contains(row, column);
     }    
@@ -100,27 +107,6 @@ public abstract class CopyableWeavingGridModel extends AbstractWeavingDraftModel
 		}
 	};
 	
-	protected class SetCellCommand implements Command {
-		private CopyableWeavingGridModel model;
-		private int row;
-		private int column;
-		private boolean value;
-		
-		public SetCellCommand (CopyableWeavingGridModel model, boolean value, int row, int column) {
-			this.model = model;
-			this.row = row;
-			this.column = column;
-			this.value = value;
-		}
-
-		public void execute() {
-			model.setValueAt(value, row, column);
-		}
-
-		public void undo() {
-			// TODO Auto-generated method stub	
-		}
-	}
-	
-	
+	/** Return the cells to restore to allow undoing pasting the given cells. */
+	protected abstract PasteGrid getUndoSelection (PasteGrid selection);
  }

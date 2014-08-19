@@ -70,7 +70,7 @@ public class WeavingPatternModelTest extends TestCase {
                 new WeftPick(Color.WHITE, 2, 1),
                 new WeftPick(Color.DARK_GRAY, 2)));
         
-        model = new WeavingPatternModel(draft);
+        model = new WeavingPatternModel(new EditingSession(draft));
         
         listener = new TestTableModelListener();
         model.addTableModelListener(listener);

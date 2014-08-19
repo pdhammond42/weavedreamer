@@ -12,5 +12,5 @@ public interface CellSelectionTransform {
 	 * @param from The SelectedCells to transform
 	 * @return the new SelectedCells
 	 */
-	public SelectedCells Transform(SelectedCells from);
+	public PasteGrid Transform(PasteGrid from);
 }

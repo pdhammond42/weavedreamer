@@ -180,6 +180,19 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
             }
         });
 
+        javax.swing.JMenuItem undoMenuItem = new javax.swing.JMenuItem();
+        undoMenuItem.setText("Undo");
+        undoMenuItem.setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_Z, ActionEvent.CTRL_MASK));
+        
+        undoMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                undoItemActionPerformed(evt);
+            }
+        });
+        editMenu.add(undoMenuItem);
+
+        
         editMenu.add(propertiesMenuItem);
 
         savePaletteMenuItem = new javax.swing.JMenuItem();
@@ -272,6 +285,10 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
         if (curFrame == null)
             return;
         curFrame.zoomOut();
+	}
+	
+	private void undoItemActionPerformed(ActionEvent evt) {
+		getCurrentSession().undo();
 	}
 
 	private void tiledViewMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tiledViewMenuItemActionPerformed

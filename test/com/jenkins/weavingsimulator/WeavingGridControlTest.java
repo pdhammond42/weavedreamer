@@ -30,8 +30,10 @@ import java.awt.event.MouseEvent;
 
 import junit.framework.TestCase;
 
+import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
 import com.jenkins.weavingsimulator.models.AbstractWeavingDraftModel;
-import com.jenkins.weavingsimulator.models.AbstractWeavingDraftModel.EditedValueProvider;
+import com.jenkins.weavingsimulator.models.Command;
+import com.jenkins.weavingsimulator.models.EditingSession;
 
 public class WeavingGridControlTest extends TestCase {
 	
@@ -171,15 +173,11 @@ public class WeavingGridControlTest extends TestCase {
 		};
 
 		public TestDraftModel() {
-			super(null);
+			super(new EditingSession(new WeavingDraft()));
 		}
 
 		public Object getValueAt(int rowIndex, int columnIndex) {
 			return model[rowIndex][columnIndex];
-		}
-
-		public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-			model[rowIndex][columnIndex] = (Boolean)aValue;
 		}
 
 		public int getRowCount() {
@@ -192,6 +190,22 @@ public class WeavingGridControlTest extends TestCase {
 		
 	    public EditedValueProvider getEditedValueProvider() {
 	    	return new SetValueProvider();
-	    }   
+	    }
+
+		@Override
+		protected Command getSetValueCommand(final Object aValue, final int row, final int column) {
+			return new Command() {
+				public void execute() {
+					model[row][column] = aValue;
+				}
+				public void undo() {
+				}
+			};
+		}
 	}
 }
+
+	
+	
+	
+	
