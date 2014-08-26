@@ -121,7 +121,9 @@ public class TreadlingDraftModelTest extends TestCase {
         model.setValueAt(true, 1, 0);
         assertTrue(draft.getPicks().get(1).isTreadleSelected(0));
         session.undo();
-        assertTrue(draft.getPicks().get(1).isTreadleSelected(1));        
+        assertTrue(draft.getPicks().get(1).isTreadleSelected(1));  
+        session.redo();
+        assertTrue(draft.getPicks().get(1).isTreadleSelected(0));        
     }
     
     public void testSetValueAtLiftplan() {
@@ -145,6 +147,8 @@ public class TreadlingDraftModelTest extends TestCase {
         session.undo();
         assertFalse(draft.getPicks().get(1).isTreadleSelected(0));
         assertTrue(draft.getPicks().get(1).isTreadleSelected(1));
+        session.redo();
+        assertTrue(draft.getPicks().get(1).isTreadleSelected(0));        
     }
     
 
@@ -404,6 +408,6 @@ public class TreadlingDraftModelTest extends TestCase {
     	assertThat((Color)model.getValueAt(3, 0), is(Color.WHITE));
     	assertThat((Color)model.getValueAt(3, 1), is(Color.WHITE));
     	assertThat((Color)model.getValueAt(3, 2), is(Color.WHITE));
-    	assertThat((Color)model.getValueAt(3, 3), is(Color.BLACK));
+    	assertThat((Color)model.getValueAt(3, 3), is(Color.BLACK));  	
     }
 }

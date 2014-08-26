@@ -192,6 +192,13 @@ public class AppDriver{
 		.click();	
 	}
     
+	public void redo() {
+		mainWindow.getMenuBar()
+		.getMenu("Edit")
+		.getSubMenu("Redo")
+		.click();			
+	}
+	
     class TiledView {
     	Window window;
     	

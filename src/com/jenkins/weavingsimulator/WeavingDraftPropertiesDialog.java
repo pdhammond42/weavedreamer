@@ -32,6 +32,8 @@ import java.util.Vector;
 import java.util.prefs.Preferences;
 
 import com.jenkins.weavingsimulator.datatypes.Palette;
+import com.jenkins.weavingsimulator.models.Command;
+import com.jenkins.weavingsimulator.models.EditingSession;
 import com.jenkins.weavingsimulator.models.PalettePreviewModel;
 
 /** A Dialog to edit the properties of a WeavingDraft.  To use this class,
@@ -208,19 +210,18 @@ public class WeavingDraftPropertiesDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
-       if (draft != null) {
+       if (session != null) {
             int numHarnesses = ((Number)numHarnessesField.getValue()).intValue();
             int numEnds = ((Number)numWarpEndsField.getValue()).intValue();
             int numPicks = ((Number)numWeftPicksField.getValue()).intValue();
             int numTreadles = ((Number)numTreadlesField.getValue()).intValue();
             boolean isLiftplan = liftplanCheck.isSelected();
 
-            draft.setProperties(numHarnesses, numTreadles, numEnds, numPicks, isLiftplan);
-            
-    		Palette p = (Palette)palettes_combo.getSelectedItem();
-    		if (p != null) {
-    			draft.setPalette(p);
-    		}
+            Palette p = (Palette)palettes_combo.getSelectedItem();
+    		
+            session.execute(new SetDraftPropertiesCommand(session.getDraft(), 
+            		numHarnesses, numTreadles, numEnds, numPicks, isLiftplan, 
+            		p));
         }
         
         editFinished = true;
@@ -242,21 +243,22 @@ public class WeavingDraftPropertiesDialog extends javax.swing.JDialog {
      * @return true if user pressed Ok, false if user pressed Cancel
      * or otherwise closed the dialog.
      */    
-    public boolean editProperties(com.jenkins.weavingsimulator.datatypes.WeavingDraft draft,
+    public boolean editProperties(EditingSession session,
     		List<Palette> palettes) {
-        this.draft = draft;
+        this.session = session;
+        
         this.palettes.clear();
-        if (draft.getPalette() != null) {
-        	this.palettes.add(draft.getPalette());
+        if (session.getDraft().getPalette() != null) {
+        	this.palettes.add(session.getDraft().getPalette());
         }
         this.palettes.addAll(palettes);
         palettes_combo.setSelectedItem(this.palettes.get(0));
 
-        numWarpEndsField.setValue(value_or_default(draft.getEnds().size(), "ends", 20));
-        numWeftPicksField.setValue(value_or_default(draft.getPicks().size(), "picks", 20));
-        numHarnessesField.setValue(value_or_default(draft.getNumHarnesses(), "harnesses", 4));
-        numTreadlesField.setValue(value_or_default(draft.getTreadles().size(), "treadles", 6));
-        liftplanCheck.setSelected(draft.getIsLiftplan());
+        numWarpEndsField.setValue(value_or_default(session.getDraft().getEnds().size(), "ends", 20));
+        numWeftPicksField.setValue(value_or_default(session.getDraft().getPicks().size(), "picks", 20));
+        numHarnessesField.setValue(value_or_default(session.getDraft().getNumHarnesses(), "harnesses", 4));
+        numTreadlesField.setValue(value_or_default(session.getDraft().getTreadles().size(), "treadles", 6));
+        liftplanCheck.setSelected(session.getDraft().getIsLiftplan());
         editFinished = false;
         
         setVisible(true);
@@ -264,7 +266,7 @@ public class WeavingDraftPropertiesDialog extends javax.swing.JDialog {
     }
     
     public void saveDefaults() {
-    	if (draft != null) {
+    	if (session != null) {
     		Preferences prefs = Preferences.userNodeForPackage(this.getClass());
     		prefs.putInt("harnesses", ((Number)numHarnessesField.getValue()).intValue());
     		prefs.putInt("treadles", ((Number)numTreadlesField.getValue()).intValue());
@@ -308,7 +310,7 @@ public class WeavingDraftPropertiesDialog extends javax.swing.JDialog {
     
     
     
-    private com.jenkins.weavingsimulator.datatypes.WeavingDraft draft = null;
+    private EditingSession session = null;
     // used to communicate between button handlers, and editProperties() function
     private boolean editFinished;
     // used by JFormattedTextFields.
@@ -317,4 +319,53 @@ public class WeavingDraftPropertiesDialog extends javax.swing.JDialog {
     private javax.swing.JComboBox palettes_combo;
     private javax.swing.JCheckBox liftplanCheck;
     private GridControl paletteGrid;
+    
+    private class SetDraftPropertiesCommand implements Command {
+
+    	int oldHarnesses;
+    	int oldTreadles;
+    	int oldEnds;
+    	int oldPicks;
+    	boolean oldLiftplan;
+    	Palette oldPalette;
+    	
+    	int newHarnesses;
+    	int newTreadles;
+    	int newEnds;
+    	int newPicks;
+    	boolean newLiftplan;
+    	Palette newPalette;
+    	
+    	com.jenkins.weavingsimulator.datatypes.WeavingDraft target;
+    	
+    	SetDraftPropertiesCommand (com.jenkins.weavingsimulator.datatypes.WeavingDraft draft,
+    			int numHarnesses, int numTreadles, int numEnds, int numPicks, 
+    			boolean isLiftplan,
+    			Palette palette) {
+    		target = draft;
+    		oldHarnesses = target.getNumHarnesses();
+    		oldTreadles = target.getTreadles().size();
+        	oldEnds = target.getEnds().size();
+        	oldPicks = target.getPicks().size();
+        	oldLiftplan = target.getIsLiftplan();
+        	oldPalette = target.getPalette();
+        	
+        	newHarnesses = numHarnesses;
+        	newTreadles = numTreadles;
+        	newEnds = numEnds;
+        	newPicks = numPicks;
+        	newLiftplan = isLiftplan;
+        	newPalette = palette;
+    	}
+
+		public void execute() {
+			target.setProperties(newHarnesses, newTreadles, newEnds, newPicks, newLiftplan);
+			if (newPalette != null) target.setPalette(newPalette);
+		}
+		
+		public void undo() {
+			target.setProperties(oldHarnesses, oldTreadles, oldEnds, oldPicks, oldLiftplan);
+			if (oldPalette != null) target.setPalette(oldPalette);
+		}
+    }
 }

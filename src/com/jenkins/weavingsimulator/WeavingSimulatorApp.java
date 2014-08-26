@@ -192,6 +192,17 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
         });
         editMenu.add(undoMenuItem);
 
+        javax.swing.JMenuItem redoMenuItem = new javax.swing.JMenuItem();
+        redoMenuItem.setText("Redo");
+        redoMenuItem.setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_Y, ActionEvent.CTRL_MASK));
+        
+        redoMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                redoItemActionPerformed(evt);
+            }
+        });
+        editMenu.add(redoMenuItem);
         
         editMenu.add(propertiesMenuItem);
 
@@ -290,6 +301,10 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
 	private void undoItemActionPerformed(ActionEvent evt) {
 		getCurrentSession().undo();
 	}
+		
+	private void redoItemActionPerformed(ActionEvent evt) {
+		getCurrentSession().redo();
+	}	
 
 	private void tiledViewMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tiledViewMenuItemActionPerformed
         WeavingDraftWindow curFrame =
@@ -326,7 +341,7 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
             return;
         WeavingDraftPropertiesDialog dlg =
                 new WeavingDraftPropertiesDialog(this, true);
-        dlg.editProperties(session.getDraft(), loadPalettes());
+        dlg.editProperties(session, loadPalettes());
     }//GEN-LAST:event_propertiesMenuItemActionPerformed
     
     private void saveAsMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveAsMenuItemActionPerformed
@@ -359,11 +374,12 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
         WeavingDraftPropertiesDialog dlg =
         		new WeavingDraftPropertiesDialog(this, true);
         
-        if (!dlg.editProperties(draft, loadPalettes()))
+        EditingSession session = new EditingSession(draft);
+        if (!dlg.editProperties(session, loadPalettes()))
             return;
         dlg.saveDefaults();
         //getCurrentSession().setPalette(dlg.getSelectedPalette());
-        openWeavingDraftWindow(draft, null);
+        openWeavingDraftWindow(session, null);
     }//GEN-LAST:event_newMenuItemActionPerformed
     
     private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
@@ -381,8 +397,8 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
     	prefs.putInt("y", getY());
     	prefs.putInt("w", getWidth());
     	prefs.putInt("h", getHeight());
-        closeAllFrames();
-        System.exit(0);
+        if (closeAllFrames())
+        	System.exit(0);
     }//GEN-LAST:event_exitForm
     
     private EditingSession getCurrentSession() {
@@ -394,14 +410,17 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
             return curFrame.getSession();
     }
     
-    private void closeAllFrames() {
+    private boolean closeAllFrames() {
         /* close all internal frames, so that close event will be called
-         * on them. */
+         * on them. Returns false if the close was cancelled.*/
         JInternalFrame[] wins = mainDesktop.getAllFrames();
         for (int i = 0; i < wins.length; i++) {
-            try { wins[i].setClosed(true); }
-            catch (java.beans.PropertyVetoException e) {}
+            try { 
+            	wins[i].setClosed(true);
+            } catch (java.beans.PropertyVetoException e) {
+            }
         }
+        return true;
     }
     
     private List<Palette> loadPalettes() {
@@ -548,7 +567,7 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
             return;
         }
         
-        openWeavingDraftWindow(draft, file);
+        openWeavingDraftWindow(new EditingSession(draft), file);
     }
     
     private void reportWifFailure (File file) {
@@ -562,9 +581,7 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
     
     /** Opens a new WeavingDraftWindow displaying draft.  If file is not
      * null, uses the filename as the window title. */
-    private void openWeavingDraftWindow(WeavingDraft draft, File file) {
-        EditingSession session = new EditingSession(draft);
-       
+    private void openWeavingDraftWindow(EditingSession session, File file) {
         // Until we can save a WIF, don't consider a draft loaded from WIF to have
         // a file for saving.
         if (file != null && ! (file.getName().toLowerCase().endsWith(WIF_EXTENSION))) 

@@ -11,6 +11,9 @@ public class UndoTest extends WeavingTestCase {
 		ui.draftIs(0, 0, blue);
 		ui.undo();
 		ui.draftIs(0, 0, orange);
+		ui.redo();
+		ui.draftIs(0, 0, blue);
+		ui.undo();
 		
 		ui.setThreading(1, 0);
 		ui.draftIs(0, 0, blue);

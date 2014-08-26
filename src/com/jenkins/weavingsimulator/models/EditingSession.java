@@ -48,6 +48,7 @@ public class EditingSession {
     public static final String SELECTION_PROPERTY = "selection";
     
     private Deque<Command> undoList = new ArrayDeque<Command>();
+    private Deque<Command> redoList = new ArrayDeque<Command>();
     
     private PropertyChangeSupport propertySupport;
 
@@ -119,7 +120,16 @@ public class EditingSession {
 		if (!undoList.isEmpty()) {
 			Command command = undoList.pop();
 			command.undo();
+			redoList.push(command);
 		}
+	}
+	
+	public void redo() {
+		if (!redoList.isEmpty()) {
+			Command command = redoList.pop();
+			command.execute();
+			undoList.push(command);
+		}		
 	}
 	
 	/** Mainly for testing, query if there is anything in the

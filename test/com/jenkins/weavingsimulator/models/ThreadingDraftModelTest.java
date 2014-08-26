@@ -101,7 +101,11 @@ public class ThreadingDraftModelTest extends TestCase {
         model.setValueAt((Object)true, 1, 0);
         assertEquals(1, draft.getEnds().get(0).getHarnessId());
         session.undo();
-        assertEquals(0, draft.getEnds().get(0).getHarnessId());        
+        assertEquals(0, draft.getEnds().get(0).getHarnessId());    
+        session.redo();
+        assertEquals(1, draft.getEnds().get(0).getHarnessId());        
+        session.undo();
+        assertEquals(0, draft.getEnds().get(0).getHarnessId());  
     }
 
     
@@ -220,20 +224,35 @@ public class ThreadingDraftModelTest extends TestCase {
     	 *  Undo should restore row 0 even though it is not in the pasted buffer.
     	 */	
     	session.setSelectedCells(new PasteGrid(model, new GridSelection(0, 2, 1, 5)));
-    	model.pasteSelection(0, 1, CellSelectionTransforms.Null());
-    	session.undo();
-    	assertThat(session.canUndo(), is(false));
-    	
+    	model.pasteSelection(1, 2, CellSelectionTransforms.Null());
     	assertThat((Color)model.getValueAt(0, 0), is(Color.BLACK));
     	assertThat((Color)model.getValueAt(1, 0), is(Color.WHITE));
-    	
     	assertThat((Color)model.getValueAt(0, 1), is(Color.WHITE));
     	assertThat((Color)model.getValueAt(1, 1), is(Color.BLACK));
+    	assertThat((Color)model.getValueAt(0, 2), is(Color.WHITE));
+    	assertThat((Color)model.getValueAt(1, 2), is(Color.BLACK));
+    	assertThat((Color)model.getValueAt(0, 3), is(Color.WHITE));
+    	assertThat((Color)model.getValueAt(1, 3), is(Color.BLACK));  
     	
+    	session.undo();
+    	assertThat(session.canUndo(), is(false));
+    	assertThat((Color)model.getValueAt(0, 0), is(Color.BLACK));
+    	assertThat((Color)model.getValueAt(1, 0), is(Color.WHITE));
+    	assertThat((Color)model.getValueAt(0, 1), is(Color.WHITE));
+    	assertThat((Color)model.getValueAt(1, 1), is(Color.BLACK));
     	assertThat((Color)model.getValueAt(0, 2), is(Color.BLACK));
     	assertThat((Color)model.getValueAt(1, 2), is(Color.WHITE));
-    	
     	assertThat((Color)model.getValueAt(0, 3), is(Color.BLACK));
     	assertThat((Color)model.getValueAt(1, 3), is(Color.WHITE));
+    	
+    	session.redo();
+    	assertThat((Color)model.getValueAt(0, 0), is(Color.BLACK));
+    	assertThat((Color)model.getValueAt(1, 0), is(Color.WHITE));
+    	assertThat((Color)model.getValueAt(0, 1), is(Color.WHITE));
+    	assertThat((Color)model.getValueAt(1, 1), is(Color.BLACK));
+    	assertThat((Color)model.getValueAt(0, 2), is(Color.WHITE));
+    	assertThat((Color)model.getValueAt(1, 2), is(Color.BLACK));
+    	assertThat((Color)model.getValueAt(0, 3), is(Color.WHITE));
+    	assertThat((Color)model.getValueAt(1, 3), is(Color.BLACK));   	
     }
 }
