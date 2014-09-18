@@ -24,11 +24,11 @@ extra dependencies and creates a Git tag, so should not be used all the time. --
 		<echo message="${ant.project.name}: ${an.file}" />
 		<copy file="res/com/jenkins/WeavingSimulator/about.txt" todir="bin/com/jenkins/weavingsimulator" overwrite="true" />
 		<replace file="bin/com/jenkins/weavingsimulator/about.txt" token="X.X" value="${version}" />
-		<javac debug="true" debuglevel="${debuglevel}" destdir="bin">
+		<javac debug="true"  destdir="bin">
 			<src path="src" />
 			<classpath refid="WeavingSimulator.classpath" />
 		</javac>
-		<javac debug="true" debuglevel="${debuglevel}" destdir="bin">
+		<javac debug="true"  destdir="bin">
 			<src path="test" />
 			<classpath refid="WeavingSimulator.classpath" />
 		</javac>
