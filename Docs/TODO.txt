@@ -1,5 +1,7 @@
+* "Paste" standard patterns
+* Cancel close
+* Insert picks/ends 
 
 
 * Support for writing WIF
 
-* Undo

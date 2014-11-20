@@ -136,10 +136,10 @@ public class WeftPick {
 		if (treadles == null) {
 			treadles = new boolean[i+1];
 		}
-		if (!treadles[i]) {
+		if (i==-1 || !treadles[i]) {
 			boolean[] oldTreadles = treadles;
 			treadles = new boolean[oldTreadles.length];
-			treadles[i] = true;
+			if (i != -1) treadles[i] = true;
 			propertyChangeSupport.firePropertyChange("treadles", oldTreadles, treadles);			
 		}
 	}

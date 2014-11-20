@@ -20,6 +20,15 @@ Unpack the zip archive. Either
 - or right click the .jar file and select the option along the lines of 
 "Open with Java runtime".
 
+Changes in 0.2.6
+----------------
+
+- Undo for all editing actions
+- Paste special to scale, transpose and paste between grids.
+
+There is a limitation that it is not possible to Undo a paste 
+operation back to a blank pick or end. 
+
 0.2.5.1
 -------
 Bugfix release, persistence was broken for liftplan.
