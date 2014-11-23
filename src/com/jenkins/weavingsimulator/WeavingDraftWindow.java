@@ -100,7 +100,7 @@ public class WeavingDraftWindow extends javax.swing.JInternalFrame {
 		gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
 		gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTH;
 		gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
-		jPanel1.add(statusBar, gridBagConstraints);
+		getContentPane().add(statusBar, java.awt.BorderLayout.SOUTH);
 		statusBar.setText("0,0");
 		
 		setName("WeavingDraftWindow");
