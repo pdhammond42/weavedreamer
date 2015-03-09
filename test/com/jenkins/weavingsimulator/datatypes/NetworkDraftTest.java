@@ -51,4 +51,27 @@ public class NetworkDraftTest extends TestCase {
 						  3,  2,  5,  4,  7,  6, 9, 8, 
 					  	 11, 10, 13, 12, 15, 14, 1, 0));
 	}
+	
+	@SuppressWarnings("unchecked")
+	public void testLiftPlanCanBeCreatedFromPatternAndKeys() {
+		// Schlein calls it a "peg plan", but it is a liftplan everywhere
+		// else in here.
+		List<Integer> pattern = Arrays.asList(0,1,2,3,4,5,6,7,8,9,10,11);
+		List<List<Boolean>> key1 = Arrays.asList(
+				Arrays.asList(true, true, true, false),
+				Arrays.asList(true, true, false, true),
+				Arrays.asList(true, false, true, true),
+				Arrays.asList(false, true, true, true)
+				);
+		List<List<Boolean>> key2 = Arrays.asList(
+				Arrays.asList(true, false, false, false),
+				Arrays.asList(false, true, false, false),
+				Arrays.asList(false, false, true, false),
+				Arrays.asList(false, false, false, true)
+				);		
+		int width=3;
+		// boolean[] here for easy interfacing to WeftPick.
+		List<boolean[]> liftplan =
+				NetworkDraft.Liftplan (pattern, key1, key2, width); 
+	}
 }

@@ -594,7 +594,7 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
         mainDesktop.add(win);
         try { win.setMaximum(true); }
         catch (java.beans.PropertyVetoException e) {}
-        
+       
         win.addInternalFrameListener(new InternalFrameAdapter() {
             public void internalFrameClosing(InternalFrameEvent e) {
                 WeavingDraftWindow w = (WeavingDraftWindow)e.getInternalFrame();
@@ -615,7 +615,10 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
         });
         
         win.show();
-    }
+        
+        NetworkWindow nwWin = new NetworkWindow(session);
+        mainDesktop.add(nwWin);
+        nwWin.show();    }
     
     private void writeWeavingDraft(WeavingDraft draft, OutputStream outs)
     throws IOException {

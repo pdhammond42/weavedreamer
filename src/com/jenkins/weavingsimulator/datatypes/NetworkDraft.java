@@ -95,4 +95,30 @@ public class NetworkDraft {
 		}
 		return threading;
 	}
+	
+	/**
+	 * Performs the "cut and paste" masking of the key liftplans with the
+	 * pattern line, expanded by width. The liftplan has the same dimensions as
+	 * the incoming pattern line.
+	 * @param pattern Pattern line
+	 * @param key1 Key liftplan used where the pattern line is not.
+	 * @param key2 Key liftplan used where the pattern line is.
+	 * @param width Width of the ribbon that the pattern line is expanded to.
+	 * @return A liftplan.
+	 */
+	public static List<boolean[]> Liftplan (List<Integer> pattern,
+			List<List<Boolean>> key1,
+			List<List<Boolean>> key2,
+			int width) {
+		List<boolean[]> liftplan = new ArrayList<boolean[]>();
+		
+		// The pattern line has been rotated to the vertical for this part.
+		
+		int columns = Collections.max(pattern) + 1;
+		for (int irow = 0; irow < pattern.size(); irow++) {
+			boolean[] row = new boolean[columns];
+			
+		}
+		return liftplan;
+	}
 }
