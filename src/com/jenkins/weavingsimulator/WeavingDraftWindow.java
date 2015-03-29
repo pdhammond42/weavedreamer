@@ -44,11 +44,11 @@ import com.jenkins.weavingsimulator.models.WeavingPatternModel;
  * 
  * @author ajenkins
  * 
- */
-public class WeavingDraftWindow extends javax.swing.JInternalFrame {
+ */public class WeavingDraftWindow extends EditingSessionWindow {
 
 	/** Creates new form WeavingDraftWindow */
 	public WeavingDraftWindow(EditingSession session) {
+		super(session);
 		initComponents();
 
 		jScrollPane1.getVerticalScrollBar().setUnitIncrement(16);
@@ -58,7 +58,6 @@ public class WeavingDraftWindow extends javax.swing.JInternalFrame {
 			g.setSquareWidth(15);
 		}
 		
-		this.session = session;
 		WeavingDraft draft = session.getDraft();
 		
 		weavingPatternGrid.setModel(new WeavingPatternModel(session));
@@ -103,9 +102,9 @@ public class WeavingDraftWindow extends javax.swing.JInternalFrame {
 		
 		setName("WeavingDraftWindow");
 		
-		fileChangedHandler(session.getFile());
-		draftModifiedChangedHandler(session.isDraftModified());
-		palettePanel.setSession(session);
+		fileChangedHandler(getSession().getFile());
+		draftModifiedChangedHandler(getSession().isDraftModified());
+		palettePanel.setSession(getSession());
 	}
 	
 	/**
@@ -177,7 +176,7 @@ public class WeavingDraftWindow extends javax.swing.JInternalFrame {
 
 	public void displayTiledView() {
 		if (tiledViewFrame == null) {
-			wpanel = new WeavingPatternPanel(session.getDraft());
+			wpanel = new WeavingPatternPanel(getSession().getDraft());
 			wpanel.setName("draftPanel");
 			tiledViewFrame = new javax.swing.JFrame(getTitle());
 			tiledViewFrame.getContentPane().add(wpanel);
@@ -210,15 +209,6 @@ public class WeavingDraftWindow extends javax.swing.JInternalFrame {
 		}
 	}
 
-	/**
-	 * Getter for property session.
-	 * 
-	 * @return Value of property session.
-	 */
-	public EditingSession getSession() {
-		return this.session;
-	}
-
 	public void zoomIn() {
 		int square = grids.get(0).getSquareWidth() * 2;
 		for (GridControl g: grids) {
@@ -249,7 +239,6 @@ public class WeavingDraftWindow extends javax.swing.JInternalFrame {
 
 	private javax.swing.JFrame tiledViewFrame = null;
 	private WeavingPatternPanel wpanel = null;
-	private EditingSession session;
 	
 	private ArrayList<GridControl> grids = new ArrayList<GridControl>();
 }

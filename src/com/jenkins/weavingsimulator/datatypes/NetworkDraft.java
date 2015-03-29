@@ -1,19 +1,20 @@
 package com.jenkins.weavingsimulator.datatypes;
 
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Vector;
+
+import org.apache.commons.lang.ArrayUtils;
 
 /**
- * The NetworkDraft class holds the algorithms and data for Netwok drafting. An
+ * The NetworkDraft class holds the algorithms and data for Network drafting. An
  * instance of this class controls a WeavingDraft, building the peg plan and
- * threading according to the Network drafting rules. It hodls the necessary
- * data to do that - pattern line, keys, inital etc - and exposes them to the
+ * threading according to the Network drafting rules. It holds the necessary
+ * data to do that - pattern line, keys, initial etc - and exposes them to the
  * GUI via grid models.
- * 
- * Since the data types needed are simple - mostly List<int> - I am intending to
- * do this is a fairly procedural style.
  * 
  * See "Network Drafting - an Introduction", Alice Schlein, Bridgewater Press
  * 1994.
@@ -22,19 +23,220 @@ import java.util.List;
  * 
  */
 public class NetworkDraft {
+	
+	public NetworkDraft (WeavingDraft draft) {
+		initial = new Vector<Integer>();
+		key1 = new Vector<List<Boolean>>(); 
+		key2 = new Vector<List<Boolean>>(); 
+		patternLine = new Vector<Integer>();
+	}
+	
+    private PropertyChangeSupport propertyChangeSupport =
+            new PropertyChangeSupport(this);
+    
+    public void addPropertyChangeListener(String propertyName, 
+            java.beans.PropertyChangeListener l) {
+        propertyChangeSupport.addPropertyChangeListener(propertyName, l);
+    }
+    
+    public PropertyChangeSupport getPropertyChangeSupport() {
+		return propertyChangeSupport;
+	}
+
+	public void setPropertyChangeSupport(PropertyChangeSupport propertyChangeSupport) {
+		this.propertyChangeSupport = propertyChangeSupport;
+	}
+
+	public List<Integer> getInitial() {
+		return initial;
+	}
+
+	public int getInitial(int index) {
+		return initial.get(index);
+	}
+
+	public void setInitial(int index, int row) {
+		int oldValue = initial.get(index);
+		this.initial.set(index, row);
+		propertyChangeSupport.fireIndexedPropertyChange("initial", index, oldValue, row);
+	}
+
+	public List<Integer> getPatternLine() {
+		return patternLine;
+	}
+
+	public int getPatternLine(int index) {
+		return patternLine.get(index);
+	}
+	
+	public void setPatternLine(int index, int row) {
+		int oldValue = patternLine.get(index);
+		this.patternLine.set(index, row);
+		propertyChangeSupport.fireIndexedPropertyChange("patternLine", index,  oldValue, row);
+	}
+
+	public List<List<Boolean>> getKey1() {
+		return key1;
+	}
+
+	public void setKey1(int column, int row, boolean val) {
+		Object oldValue = key1.clone();
+		this.key1.get(column).set(row, val);
+		propertyChangeSupport.firePropertyChange("key1", oldValue, key1);		
+	}
+	
+	public List<List<Boolean>> getKey2() {
+		return key2;
+	}
+
+	public void setKey2(int column, int row, boolean val) {
+		Object oldValue = key2.clone();
+		this.key2.get(column).set(row, val);
+		propertyChangeSupport.firePropertyChange("key2", oldValue, key2);		
+	}
+	
+	public boolean isTelescoped() {
+		return isTelescoped;
+	}
+
+	public void setTelescoped(boolean isTelescoped) {
+		boolean oldValue = this.isTelescoped;
+		this.isTelescoped = isTelescoped;
+		propertyChangeSupport.firePropertyChange("isTelescoped", oldValue, isTelescoped);		
+	}
+
+	public boolean isUsingShaftRule() {
+		return isUsingShaftRule;
+	}
+
+	public void setUsingShaftRule(boolean isUsingShaftRule) {
+		boolean oldValue = isUsingShaftRule;
+		this.isUsingShaftRule = isUsingShaftRule;
+		propertyChangeSupport.firePropertyChange("isUsingShaftRule", oldValue, isUsingShaftRule);				
+	}
+
+	public int getInitialRows() {
+		return initialRows;
+	}
+
+	public void setInitialRows(int initialRows) {
+		int oldValue= this.initialRows;
+		this.initialRows = initialRows;
+		for (List<Boolean> i: key1) {
+			setSizeBool(((Vector<Boolean>)i), initialRows);
+		}
+		for (List<Boolean> i: key2) {
+			setSizeBool(((Vector<Boolean>)i), initialRows);
+		}
+		propertyChangeSupport.firePropertyChange("initialRows", oldValue, initialRows);						
+	}
+
+	public int getInitialCols() {
+		return initial.size();
+	}
+
+	public void setInitialCols(int initialCols) {
+		int oldValue = initial.size();
+		setSizeInt(initial, initialCols);
+		setSizeVBool(key1, initialCols, initialRows);
+		setSizeVBool(key2, initialCols, initialRows);
+		propertyChangeSupport.firePropertyChange("initialCols", oldValue, initialCols);						
+	}
+
+	public int getPatternLineRows() {
+		return patternLineRows;
+	}
+
+	public void setPatternLineRows(int patternLineRows) {
+		int oldValue = this.patternLineRows;
+		this.patternLineRows = patternLineRows;
+		propertyChangeSupport.firePropertyChange("patternLineRows", oldValue, patternLineRows);
+	}
+
+	public int getPatternLineCols() {
+		return patternLine.size();
+	}
+
+	public void setPatternLineCols(int patternLineCols) {
+		int oldValue = patternLine.size();
+		setSizeInt(patternLine, patternLineCols);
+		propertyChangeSupport.firePropertyChange("patternLineCols", oldValue, patternLine.size());
+	}
+
+	public int getRibbonWidth() {
+		return ribbonWidth;
+	}
+	
+	public void setRibbonWidth(int ribbonWidth) {
+		int oldValue = this.ribbonWidth;
+		this.ribbonWidth = ribbonWidth;
+		propertyChangeSupport.firePropertyChange("ribbonWidth", oldValue, ribbonWidth);		
+	}
+	
+	/** Removes a PropertyChangeListener from the listener list.
+     * @param l The listener to remove.
+     *
+     */
+    public void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
+        propertyChangeSupport.removePropertyChangeListener(l);
+    }
+    
+    /** Removes a PropertyChangeListener from the listener list for a specific property.
+     * @param propertyName The name of the property to remove listener for
+     * @param l The listener to remove.
+     *
+     */
+    public void removePropertyChangeListener(String propertyName, 
+            java.beans.PropertyChangeListener l) {
+        propertyChangeSupport.removePropertyChangeListener(propertyName, l);
+    }	
+	
+	// Properties
 	/**
 	 * The selected column in each row of the Initial.
 	 */
-	private List<Integer> intital;
+	private Vector<Integer> initial;
 	
 	/**
 	 * The selected column in each row of the pattern line.
 	 */
-	private List<Integer> patternLine;
+	private Vector<Integer> patternLine;
 	
-	public NetworkDraft (WeavingDraft draft) {
-
-	}
+	/** 
+	 * The first key pattern, row first.
+	 */
+	private  Vector<List<Boolean>> key1;
+	
+	/** 
+	 * The first key pattern, row first.
+	 */
+	private Vector<List<Boolean>> key2;
+	
+	/**
+	 * If true, the telescope algorithm is used when the patterns line
+	 * has to be compressed. When false, the digitise algorithm is used.
+	 */
+	private boolean isTelescoped;
+	
+	/**
+	 * True is the shaft rule is used.
+	 */
+	private boolean isUsingShaftRule;
+	
+	/**
+	 * Number of rows in the initial grid, and by implication the key grids.
+	 */
+	private int initialRows;
+		
+	/**
+	 * Number of rows in the pattern line
+	 */
+	private int patternLineRows;
+		
+	/** 
+	 * Width of the ribbon that the pattern line is expanded to.
+	 */
+	private int ribbonWidth;
 	
 	/**
 	 * Takes a pattern line and returns a copy of it reduced to fit in the given height
@@ -69,7 +271,7 @@ public class NetworkDraft {
 		}
 		return ret;
 	}
-	
+		
 	/**
 	 * Given an Initial and a Pattern line, creates a Threading line by applying
 	 * the pattern line to a network formed by repeating the initial to fit
@@ -96,6 +298,10 @@ public class NetworkDraft {
 		return threading;
 	}
 	
+	public List<Integer> Threading() {
+		return Threading (patternLine, initial);
+	}
+	
 	/**
 	 * Performs the "cut and paste" masking of the key liftplans with the
 	 * pattern line, expanded by width. The liftplan has the same dimensions as
@@ -113,12 +319,54 @@ public class NetworkDraft {
 		List<boolean[]> liftplan = new ArrayList<boolean[]>();
 		
 		// The pattern line has been rotated to the vertical for this part.
-		
+		// Set the liftplan to the corresponding value from key1 where
+		// the pattern ribbon is, or the value from key2 where it isn't.
 		int columns = Collections.max(pattern) + 1;
+		int keyColumns = key1.size();
+		int keyRows = key1.get(0).size();
 		for (int irow = 0; irow < pattern.size(); irow++) {
 			boolean[] row = new boolean[columns];
-			
+			int ribbonLeft = pattern.get(irow);
+			int ribbonRight = ribbonLeft + width;
+			for (int icol = 0; icol < columns; icol++) {
+				boolean inRibbon = (icol >= ribbonLeft && icol < ribbonRight) ||
+						(ribbonRight > columns && icol < ribbonRight % columns);
+				List<List<Boolean>> key = inRibbon ? key1 : key2;
+				row[icol] = key.get(icol % keyColumns).get(irow % keyRows);
+			}
+			liftplan.add(row);
 		}
 		return liftplan;
+	}
+	
+	public List<boolean[]> Liftplan () {
+		return Liftplan(patternLine, key1, key2, ribbonWidth);
+	}
+	
+	// Vector is not nearly as helpful as you might expect here...
+	private static void setSizeInt(Vector<Integer> collection, int size) {
+		int oldSize = collection.size();
+		collection.setSize(size);
+		for (int i = oldSize; i < size; ++i) {
+			collection.set(i, 0);
+		}
+	}
+
+	private static void setSizeBool(Vector<Boolean> collection, int size) {
+		int oldSize = collection.size();
+		collection.setSize(size);
+		for (int i = oldSize; i < size; ++i) {
+			collection.set(i, false);
+		}
+	}
+
+	private static void setSizeVBool(Vector<List<Boolean>> collection, int size, int otherSize) {
+		int oldSize = collection.size();
+		collection.setSize(size);
+		for (int i = oldSize; i < size; ++i) {
+			Vector<Boolean>v = new Vector<Boolean>();
+			setSizeBool(v,  otherSize);
+			collection.set(i, v);
+		}
 	}
 }

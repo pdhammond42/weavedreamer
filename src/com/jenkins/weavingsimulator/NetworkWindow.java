@@ -14,7 +14,7 @@ import com.jenkins.weavingsimulator.models.EditingSession;
 import com.jenkins.weavingsimulator.models.ThreadingDraftModel;
 import com.jenkins.weavingsimulator.models.TieUpModel;
 
-public class NetworkWindow extends javax.swing.JInternalFrame {
+public class NetworkWindow extends EditingSessionWindow {
 	private JPanel panel1;
 	private JPanel panel2;
 	private JFormattedTextField initialRows;
@@ -30,10 +30,9 @@ public class NetworkWindow extends javax.swing.JInternalFrame {
 	
 	private NonNegativeIntFormatter formatter = new NonNegativeIntFormatter();
 	
-	private EditingSession session;
-	
-	public NetworkWindow (EditingSession session) {
-		this.session = session;
+	public NetworkWindow (EditingSession session)
+	{
+		super(session);
 		
 		setClosable(true);
 		setMaximizable(true);
@@ -98,25 +97,25 @@ public class NetworkWindow extends javax.swing.JInternalFrame {
         addLabel ("Initial", 0, 0, panel2);
         initialGrid = new GridControl();
         initialGrid.setName("initialGrid");
-        initialGrid.setModel(new TieUpModel(session));
+        initialGrid.setModel(new TieUpModel(getSession()));
         panel2.add(initialGrid, makeConstraints(0,1));
      
         addLabel ("Key 1", 1, 0, panel2);
         key1 = new GridControl();
         key1.setName("key1");
-        key1.setModel(new TieUpModel(session));
+        key1.setModel(new TieUpModel(getSession()));
         panel2.add(key1, makeConstraints(1,1));
 
         addLabel ("Key 2", 2, 0, panel2);
         key2 = new GridControl();
         key2.setName("key2");
-        key2.setModel(new TieUpModel(session));
+        key2.setModel(new TieUpModel(getSession()));
         panel2.add(key2, makeConstraints(2,1));
         
         addLabel ("Pattern line", 0, 3, panel2);
         patternLineGrid = new GridControl();
         patternLineGrid.setName("patternLineGrid");
-        patternLineGrid.setModel(new ThreadingDraftModel(session));
+        patternLineGrid.setModel(new ThreadingDraftModel(getSession()));
         panel2.add(patternLineGrid, makeConstraints(0, 4, GridBagConstraints.REMAINDER));
         
         pack();
