@@ -92,7 +92,7 @@ public class WeavingGridControl extends GridControl {
     	allowDrag = allow;
     }
     
-    /** We would like to constrains the model to be instanceof AbstractWeavingDraftModel,
+    /** We would like to constrain the model to be instanceof AbstractWeavingDraftModel,
      * but JTable creates a default model so we can't.
      * 
      */

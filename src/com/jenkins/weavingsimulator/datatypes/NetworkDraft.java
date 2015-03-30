@@ -24,11 +24,13 @@ import org.apache.commons.lang.ArrayUtils;
  */
 public class NetworkDraft {
 	
-	public NetworkDraft (WeavingDraft draft) {
-		initial = new Vector<Integer>();
+	public NetworkDraft () {
+		initial = new Vector<Integer>(4);
+		initialRows = 4;
 		key1 = new Vector<List<Boolean>>(); 
 		key2 = new Vector<List<Boolean>>(); 
-		patternLine = new Vector<Integer>();
+		patternLine = new Vector<Integer>(12);
+		patternLineRows = 4;
 	}
 	
     private PropertyChangeSupport propertyChangeSupport =
@@ -38,14 +40,10 @@ public class NetworkDraft {
             java.beans.PropertyChangeListener l) {
         propertyChangeSupport.addPropertyChangeListener(propertyName, l);
     }
-    
-    public PropertyChangeSupport getPropertyChangeSupport() {
-		return propertyChangeSupport;
-	}
 
-	public void setPropertyChangeSupport(PropertyChangeSupport propertyChangeSupport) {
-		this.propertyChangeSupport = propertyChangeSupport;
-	}
+    public void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
+        propertyChangeSupport.addPropertyChangeListener(l);
+    }
 
 	public List<Integer> getInitial() {
 		return initial;
@@ -80,7 +78,7 @@ public class NetworkDraft {
 	}
 
 	public void setKey1(int column, int row, boolean val) {
-		Object oldValue = key1.clone();
+		Object oldValue = deepClone(key1);
 		this.key1.get(column).set(row, val);
 		propertyChangeSupport.firePropertyChange("key1", oldValue, key1);		
 	}
@@ -90,7 +88,7 @@ public class NetworkDraft {
 	}
 
 	public void setKey2(int column, int row, boolean val) {
-		Object oldValue = key2.clone();
+		Object oldValue = deepClone(key2);
 		this.key2.get(column).set(row, val);
 		propertyChangeSupport.firePropertyChange("key2", oldValue, key2);		
 	}
@@ -298,8 +296,8 @@ public class NetworkDraft {
 		return threading;
 	}
 	
-	public List<Integer> Threading() {
-		return Threading (patternLine, initial);
+	public List<Integer> Threading(int shafts) {
+		return Threading (compressPatternLine(shafts), initial);
 	}
 	
 	/**
@@ -339,8 +337,13 @@ public class NetworkDraft {
 		return liftplan;
 	}
 	
-	public List<boolean[]> Liftplan () {
-		return Liftplan(patternLine, key1, key2, ribbonWidth);
+	public List<boolean[]> Liftplan (int shafts) {
+		return Liftplan(compressPatternLine(shafts), key1, key2, ribbonWidth);
+	}
+	
+	List<Integer> compressPatternLine (int shafts) {
+		return isTelescoped ? 
+				Telescope(patternLine, shafts) : Digitize(patternLine, shafts);
 	}
 	
 	// Vector is not nearly as helpful as you might expect here...
@@ -368,5 +371,14 @@ public class NetworkDraft {
 			setSizeBool(v,  otherSize);
 			collection.set(i, v);
 		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	private static Vector<List<Boolean>> deepClone (Vector<List<Boolean>> collection) {
+		Vector<List<Boolean>> clone = new Vector<List<Boolean>> ();
+		for (List<Boolean> l : collection) {
+			clone.add((Vector<Boolean>)((Vector<Boolean>)l).clone());
+		}
+		return clone;
 	}
 }

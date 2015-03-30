@@ -402,8 +402,8 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
     }//GEN-LAST:event_exitForm
     
     private EditingSession getCurrentSession() {
-        WeavingDraftWindow curFrame =
-                (WeavingDraftWindow)mainDesktop.getSelectedFrame();
+    	EditingSessionWindow curFrame =
+                (EditingSessionWindow)mainDesktop.getSelectedFrame();
         if (curFrame == null)
             return null;
         else
@@ -616,9 +616,13 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
         
         win.show();
         
-        NetworkWindow nwWin = new NetworkWindow(session);
-        mainDesktop.add(nwWin);
-        nwWin.show();    }
+        if (session.getDraft().getNetwork() != null) { 
+        	NetworkWindow nwWin = new NetworkWindow(session);
+	        
+	        mainDesktop.add(nwWin);
+	        nwWin.show();    
+        }
+    }
     
     private void writeWeavingDraft(WeavingDraft draft, OutputStream outs)
     throws IOException {

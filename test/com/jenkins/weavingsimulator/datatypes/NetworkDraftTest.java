@@ -1,6 +1,9 @@
 package com.jenkins.weavingsimulator.datatypes;
 
 import java.awt.Color;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
 import org.apache.commons.lang.ArrayUtils;
 import java.util.Arrays;
 import java.util.List;
@@ -79,9 +82,9 @@ public class NetworkDraftTest extends TestCase {
 		assertThat(ArrayUtils.toObject(liftplan.get(0)), is(arrayContaining(true, true, true, false, true, false, false, false, true, false, false, false)));
 	}
 	
-	// String the lot together and test for bean behaviour.
+	// String the lot together 
 	public void testNetworkAccess(){
-		NetworkDraft draft = new NetworkDraft(null);
+		NetworkDraft draft = new NetworkDraft();
 		
 		draft.setInitialRows (4);
 		draft.setInitialCols(4);
@@ -127,14 +130,35 @@ public class NetworkDraftTest extends TestCase {
 		assertThat(draft.getKey1().size(), is(4));
 		assertThat(draft.getKey1().get(0).size(), is(4));
 		
-		assertThat(draft.Threading(), 
+		assertThat(draft.Threading(16), 
 				contains(15, 14,  1,  0, 15,  2, 1, 0, 
 						  3,  2,  5,  4,  7,  6, 9, 8, 
-					  	 11, 10, 13, 12, 15, 14, 1, 0));		
-	}
+					  	 11, 10, 13, 12, 15, 14, 1, 0));
+		
+		draft.setRibbonWidth(3);
+		for (int x =0; x < 4; ++x) {
+			for (int y=0; y<4; ++y) {
+				draft.setKey1(x, y, true);
+			}
+		}
+		
+		List<boolean[]> liftplan = draft.Liftplan(16);
+		assertThat (ArrayUtils.toObject(liftplan.get(0)), 
+				is(arrayContaining(
+						true, false, false, false, 
+						false, false, false, false,
+						false, false, false, false,
+						false, false, true, true)));
+		assertThat (ArrayUtils.toObject(liftplan.get(7)), 
+				is(arrayContaining(
+						true, true, true, false, 
+						false, false, false, false,
+						false, false, false, false,
+						false, false, false, false)));	
+		}
 	
 	public void testResizeInitial() {
-		NetworkDraft draft = new NetworkDraft(null);
+		NetworkDraft draft = new NetworkDraft();
 		
 		draft.setInitialRows (4);
 		draft.setInitialCols(4);
@@ -171,5 +195,25 @@ public class NetworkDraftTest extends TestCase {
 		assertThat(draft.getInitial(), contains(3,2,1,0,0,0));
 		assertThat(draft.getKey1().get(0), contains(true, false, false, false, false));
 		assertThat(draft.getKey2().get(0), contains(false, false, false, true, false));
+	}
+	
+	private class Listener implements PropertyChangeListener {
+		public boolean notified = false;
+		public PropertyChangeEvent event;
+		public void propertyChange(PropertyChangeEvent evt) {
+			notified = true;
+			event = evt;
+		}
+	};
+	
+	public void testNotifyKeyChange() {
+		NetworkDraft draft = new NetworkDraft();
+		draft.setInitialRows (4);
+		draft.setInitialCols(4);
+		
+		Listener l = new Listener();
+		draft.addPropertyChangeListener("key1", l);
+		draft.setKey1(1, 1, true);
+		assertThat(l.notified, is(true));
 	}
 }

@@ -27,6 +27,8 @@ package com.jenkins.weavingsimulator.datatypes;
 
 import java.awt.Color;
 import java.beans.PropertyChangeSupport;
+import java.io.Console;
+import java.rmi.UnexpectedException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -426,10 +428,12 @@ public class WeavingDraft {
     /** Resets the properties of the draft in one go, maintaining the state as 
      *  best as possible while maintaining consistency. Used by the draft properties GUI.
      */
-    public void setProperties (int numHarnesses, int numTreadles, int numEnds, int numPicks, boolean isLiftplan) {
+    public void setProperties (int numHarnesses, int numTreadles, int numEnds, int numPicks, boolean isLiftplan, boolean isNetwork) {
     	setDoValidation(false);
     	
     	setNumHarnesses(numHarnesses);
+    
+    	if (isNetwork) isLiftplan = true;
     	
         if (isLiftplan) {
    		    numTreadles = numHarnesses;
@@ -448,6 +452,18 @@ public class WeavingDraft {
         }
 		this.isLiftplan = isLiftplan;
 
+		if (isNetwork && network == null) {
+			network = unusedNetwork == null ? new NetworkDraft() : unusedNetwork;
+			network.addPropertyChangeListener(networkListener);
+			unusedNetwork = null;
+			
+		}
+		else if(!isNetwork && network != null) {
+			unusedNetwork = network;
+			network.removePropertyChangeListener(networkListener);
+			network = null;
+		}
+		
         if (numEnds > getEnds().size()) {
             while (numEnds > getEnds().size())
                 getEnds().add(new com.jenkins.weavingsimulator.datatypes.WarpEnd(java.awt.Color.WHITE, -1));
@@ -500,6 +516,20 @@ public class WeavingDraft {
     	}
     	palette = new Palette(new ArrayList<Color>(colors), "custom");
     }
+    
+    /**
+     * Gets the Network property, which is a NetworkDraft object bound to this draft.
+     * @return
+     */
+    public NetworkDraft getNetwork () {
+    	return network;
+    }
+        
+    private NetworkDraft network;
+    // If a network has been set, but then removed, keep
+    // persisting it in case it is returned.
+    private NetworkDraft unusedNetwork;
+    private NetworkListener networkListener = new NetworkListener();
     
     /** validates that newStep is in the correct range.
      * @exception IllegalArgumentException if newStep is not in correct range.
@@ -722,6 +752,30 @@ public class WeavingDraft {
         }
     }
     
+    private class NetworkListener implements java.beans.PropertyChangeListener {
+        
+        /** This method gets called when a bound property is changed.
+         * @param evt A PropertyChangeEvent object describing the event source
+         *   	and the property that has changed.
+         *
+         */
+    	public void propertyChange(java.beans.PropertyChangeEvent evt) {
+    		try{
+    			List<Integer> threads = network.Threading(getNumHarnesses());
+    			for (int i = 0; i != getEnds().size(); ++i) {
+    				getEnds().get(i).setHarnessId(threads.get(i%threads.size()));
+    			}
+
+    			List<boolean[]> picks = network.Liftplan(getNumHarnesses());
+    			for (int i = 0; i != getPicks().size(); ++i) {
+    				getPicks().get(i).setTreadles(picks.get(i % picks.size()));
+    			} 
+    		} catch (Exception w) {
+    			String s = w.toString();
+    		}
+    	}
+    }
+    
     public boolean equals(Object obj) {
     	if (obj == null) { return false; }
     	if (obj == this) { return true; }
@@ -737,6 +791,7 @@ public class WeavingDraft {
 				.append(ends, d.ends)
 				.append(picks, d.picks)
 				.append(treadles, d.treadles)
+				.append(network, d.network)
 				.isEquals();
 	}
 
@@ -749,6 +804,7 @@ public class WeavingDraft {
 		.append(ends)
 		.append(picks)
 		.append(treadles)
+	    .append(network)
 		.toHashCode();
     }
 }

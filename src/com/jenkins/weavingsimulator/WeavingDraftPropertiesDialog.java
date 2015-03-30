@@ -59,6 +59,13 @@ public class WeavingDraftPropertiesDialog extends javax.swing.JDialog {
 				numTreadlesField.setEnabled(!liftplanCheck.isSelected());
 			}
         });
+
+        networkCheck.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				numTreadlesField.setEnabled(!networkCheck.isSelected());				
+				liftplanCheck.setEnabled(!networkCheck.isSelected());
+			}
+        });
         
         java.awt.Dimension dim = getPreferredSize();
         dim.setSize(dim.width + 20, dim.height + 20);
@@ -133,6 +140,12 @@ public class WeavingDraftPropertiesDialog extends javax.swing.JDialog {
         gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         getContentPane().add(liftplanCheck, gridBagConstraints);
+        
+        networkCheck = new javax.swing.JCheckBox("Network");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        getContentPane().add(networkCheck, gridBagConstraints);        
 
         jLabel3.setText("Num Warp Ends: ");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -216,11 +229,12 @@ public class WeavingDraftPropertiesDialog extends javax.swing.JDialog {
             int numPicks = ((Number)numWeftPicksField.getValue()).intValue();
             int numTreadles = ((Number)numTreadlesField.getValue()).intValue();
             boolean isLiftplan = liftplanCheck.isSelected();
+            boolean isNetwork = networkCheck.isSelected();
 
             Palette p = (Palette)palettes_combo.getSelectedItem();
     		
             session.execute(new SetDraftPropertiesCommand(session.getDraft(), 
-            		numHarnesses, numTreadles, numEnds, numPicks, isLiftplan, 
+            		numHarnesses, numTreadles, numEnds, numPicks, isLiftplan, isNetwork,
             		p));
         }
         
@@ -318,6 +332,7 @@ public class WeavingDraftPropertiesDialog extends javax.swing.JDialog {
     private Vector<Palette> palettes = new Vector<Palette>();
     private javax.swing.JComboBox palettes_combo;
     private javax.swing.JCheckBox liftplanCheck;
+    private javax.swing.JCheckBox networkCheck;
     private GridControl paletteGrid;
     
     private class SetDraftPropertiesCommand implements Command {
@@ -327,6 +342,7 @@ public class WeavingDraftPropertiesDialog extends javax.swing.JDialog {
     	int oldEnds;
     	int oldPicks;
     	boolean oldLiftplan;
+    	boolean oldNetwork;
     	Palette oldPalette;
     	
     	int newHarnesses;
@@ -334,13 +350,14 @@ public class WeavingDraftPropertiesDialog extends javax.swing.JDialog {
     	int newEnds;
     	int newPicks;
     	boolean newLiftplan;
+    	boolean newNetwork;
     	Palette newPalette;
     	
     	com.jenkins.weavingsimulator.datatypes.WeavingDraft target;
     	
     	SetDraftPropertiesCommand (com.jenkins.weavingsimulator.datatypes.WeavingDraft draft,
     			int numHarnesses, int numTreadles, int numEnds, int numPicks, 
-    			boolean isLiftplan,
+    			boolean isLiftplan, boolean isNetwork,
     			Palette palette) {
     		target = draft;
     		oldHarnesses = target.getNumHarnesses();
@@ -348,6 +365,7 @@ public class WeavingDraftPropertiesDialog extends javax.swing.JDialog {
         	oldEnds = target.getEnds().size();
         	oldPicks = target.getPicks().size();
         	oldLiftplan = target.getIsLiftplan();
+        	oldNetwork = target.getNetwork() == null;
         	oldPalette = target.getPalette();
         	
         	newHarnesses = numHarnesses;
@@ -355,16 +373,17 @@ public class WeavingDraftPropertiesDialog extends javax.swing.JDialog {
         	newEnds = numEnds;
         	newPicks = numPicks;
         	newLiftplan = isLiftplan;
+        	newNetwork = isNetwork;
         	newPalette = palette;
     	}
 
 		public void execute() {
-			target.setProperties(newHarnesses, newTreadles, newEnds, newPicks, newLiftplan);
+			target.setProperties(newHarnesses, newTreadles, newEnds, newPicks, newLiftplan, newNetwork);
 			if (newPalette != null) target.setPalette(newPalette);
 		}
 		
 		public void undo() {
-			target.setProperties(oldHarnesses, oldTreadles, oldEnds, oldPicks, oldLiftplan);
+			target.setProperties(oldHarnesses, oldTreadles, oldEnds, oldPicks, oldLiftplan, newNetwork);
 			if (oldPalette != null) target.setPalette(oldPalette);
 		}
     }

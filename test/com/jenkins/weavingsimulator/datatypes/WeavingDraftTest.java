@@ -406,7 +406,7 @@ public class WeavingDraftTest extends TestCase {
     }
     
     public void testPropertyUpdate() {
-    	draft.setProperties (4, 6, 18, 22, false);
+    	draft.setProperties (4, 6, 18, 22, false, false);
     	assertThat(draft.getIsLiftplan(), is(false));
     	assertThat(draft.getEnds().size(), is(18));
     	assertThat(draft.getPicks().size(), is(22));
@@ -415,8 +415,8 @@ public class WeavingDraftTest extends TestCase {
     }
 
     public void testPropertyChangesTreadlesConsistently() {
-    	draft.setProperties (4, 6, 18, 12, false);
-    	draft.setProperties (4, 8, 18, 16, false);
+    	draft.setProperties (4, 6, 18, 12, false, false);
+    	draft.setProperties (4, 8, 18, 16, false, false);
     	assertThat(draft.getPicks().size(), is(16));
     	assertThat(draft.getTreadles().size(), is(8));
     	for (WeftPick p : draft.getPicks()) {
@@ -425,7 +425,7 @@ public class WeavingDraftTest extends TestCase {
     }
     
     public void testPropertyChangePreservesDraftToLiftplan() {
-    	draft.setProperties (3, 2, 8, 8, false);
+    	draft.setProperties (3, 2, 8, 8, false, false);
     	/* Set up a draft like this:
     	 *  .*
     	 *  **  treadle
@@ -452,7 +452,7 @@ public class WeavingDraftTest extends TestCase {
     	draft.getPicks().get(1).setTreadleId(1);
     	draft.getPicks().get(2).setTreadleId(0);
     	
-    	draft.setProperties(3, 2, 8, 8, true);
+    	draft.setProperties(3, 2, 8, 8, true, false);
     	assertThat(draft.getIsLiftplan(), is(true));
     	assertThat(draft.getTreadles().get(0), contains(2));
     	assertThat(draft.getTreadles().get(1), contains(1));
