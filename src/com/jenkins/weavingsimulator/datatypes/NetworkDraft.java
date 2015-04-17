@@ -25,12 +25,15 @@ import org.apache.commons.lang.ArrayUtils;
 public class NetworkDraft {
 	
 	public NetworkDraft () {
-		initial = new Vector<Integer>(4);
-		initialRows = 4;
+		initial = new Vector<Integer>();
 		key1 = new Vector<List<Boolean>>(); 
 		key2 = new Vector<List<Boolean>>(); 
-		patternLine = new Vector<Integer>(12);
-		patternLineRows = 4;
+		patternLine = new Vector<Integer>();
+		setInitialRows (4);
+		setInitialCols(4);
+		setPatternLineRows(16);
+		setPatternLineCols(24);
+		setRibbonWidth(4);
 	}
 	
     private PropertyChangeSupport propertyChangeSupport =
@@ -101,16 +104,6 @@ public class NetworkDraft {
 		boolean oldValue = this.isTelescoped;
 		this.isTelescoped = isTelescoped;
 		propertyChangeSupport.firePropertyChange("isTelescoped", oldValue, isTelescoped);		
-	}
-
-	public boolean isUsingShaftRule() {
-		return isUsingShaftRule;
-	}
-
-	public void setUsingShaftRule(boolean isUsingShaftRule) {
-		boolean oldValue = isUsingShaftRule;
-		this.isUsingShaftRule = isUsingShaftRule;
-		propertyChangeSupport.firePropertyChange("isUsingShaftRule", oldValue, isUsingShaftRule);				
 	}
 
 	public int getInitialRows() {
@@ -215,11 +208,6 @@ public class NetworkDraft {
 	 * has to be compressed. When false, the digitise algorithm is used.
 	 */
 	private boolean isTelescoped;
-	
-	/**
-	 * True is the shaft rule is used.
-	 */
-	private boolean isUsingShaftRule;
 	
 	/**
 	 * Number of rows in the initial grid, and by implication the key grids.

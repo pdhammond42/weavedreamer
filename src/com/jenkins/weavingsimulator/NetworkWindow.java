@@ -16,8 +16,10 @@ import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import com.jenkins.weavingsimulator.datatypes.NetworkDraft;
+import com.jenkins.weavingsimulator.models.BeanPropertyCommand;
 import com.jenkins.weavingsimulator.models.EditingSession;
 import com.jenkins.weavingsimulator.models.NetworkInitialModel;
 import com.jenkins.weavingsimulator.models.NetworkKeyModel;
@@ -26,6 +28,7 @@ import com.jenkins.weavingsimulator.models.ThreadingDraftModel;
 import com.jenkins.weavingsimulator.models.TieUpModel;
 
 public class NetworkWindow extends EditingSessionWindow {
+	private JScrollPane pane;
 	private JPanel panel1;
 	private JPanel panel2;
 	private JFormattedTextField initialRows;
@@ -33,7 +36,6 @@ public class NetworkWindow extends EditingSessionWindow {
 	private JFormattedTextField patternLineRows;
 	private JFormattedTextField patternLineCols;
 	private JFormattedTextField ribbonWidth;
-	private JCheckBox shaftRule;
 	private JComboBox compressionRule;
 	private GridControl initialGrid;
 	private GridControl patternLineGrid;
@@ -62,7 +64,7 @@ public class NetworkWindow extends EditingSessionWindow {
 					initialRows.commitEdit();
 				} catch (ParseException e1) {
 				}
-				network.setInitialRows(((Long) initialRows.getValue()).intValue());				
+				getSession().execute(new BeanPropertyCommand<Integer>(network, "initialRows", ((Long) initialRows.getValue()).intValue()));				
 			}
 			
 			public void focusGained(FocusEvent e) {
@@ -75,7 +77,8 @@ public class NetworkWindow extends EditingSessionWindow {
 					initialCols.commitEdit();
 				} catch (ParseException e1) {
 				}
-				network.setInitialCols(((Long) initialCols.getValue()).intValue());
+				getSession().execute(new BeanPropertyCommand<Integer>(network, "initialCols", 
+						((Long) initialCols.getValue()).intValue()));				
 			}
 			public void focusGained(FocusEvent e) {
 			}
@@ -87,8 +90,8 @@ public class NetworkWindow extends EditingSessionWindow {
 					patternLineRows.commitEdit();
 				} catch (ParseException e1) {
 				}
-				network.setPatternLineRows(((Long) patternLineRows.getValue()).intValue());
-			}
+				getSession().execute(new BeanPropertyCommand<Integer>(network, "patternLineRows", 
+						((Long) patternLineRows.getValue()).intValue()));				}
 			public void focusGained(FocusEvent e) {
 			}
         });
@@ -99,8 +102,8 @@ public class NetworkWindow extends EditingSessionWindow {
 					patternLineCols.commitEdit();
 				} catch (ParseException e1) {
 				}
-				network.setPatternLineCols(((Long) patternLineCols.getValue()).intValue());
-			}
+				getSession().execute(new BeanPropertyCommand<Integer>(network, "patternLineCols", 
+						((Long) patternLineCols.getValue()).intValue()));			}
 			public void focusGained(FocusEvent e) {
 			}
         });
@@ -108,15 +111,10 @@ public class NetworkWindow extends EditingSessionWindow {
 		compressionRule.addItemListener(new ItemListener() {	
 			public void itemStateChanged(ItemEvent e) {
 				if (e.getStateChange() == ItemEvent.SELECTED) {
-					network.setTelescoped(e.getItem().toString() == "Telescope");
+					getSession().execute(new BeanPropertyCommand<Boolean>(network, "telescoped", 
+							e.getItem().toString() == "Telescope"));			
+					}
 				}
-			}
-		});
-		
-		shaftRule.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				network.setUsingShaftRule(shaftRule.isSelected());
-			}
 		});
 		
 		ribbonWidth.addFocusListener(new FocusListener() {	
@@ -125,7 +123,8 @@ public class NetworkWindow extends EditingSessionWindow {
 					ribbonWidth.commitEdit();
 				} catch (ParseException e1) {
 				}
-				network.setRibbonWidth(((Long) ribbonWidth.getValue()).intValue());
+				getSession().execute(new BeanPropertyCommand<Integer>(network, "ribbonWidth", 
+						((Long) ribbonWidth.getValue()).intValue()));	
 			}
 			public void focusGained(FocusEvent e) {
 			}
@@ -135,11 +134,15 @@ public class NetworkWindow extends EditingSessionWindow {
 	}
 	
 	private void initComponents() {
-		getContentPane().setLayout(new GridBagLayout());
+		pane = new JScrollPane();
 		panel1 = new JPanel(new GridBagLayout());
 		panel2 = new JPanel(new GridBagLayout());
-		getContentPane().add(panel1, makeConstraints(0,0));
-		getContentPane().add(panel2, makeConstraints(0,1));
+		getContentPane().add(pane);
+		JPanel scrollable = new JPanel();
+		scrollable.setLayout(new GridBagLayout());
+		scrollable.add(panel1, makeConstraints(0,0));
+		scrollable.add(panel2, makeConstraints(0,1));
+		pane.setViewportView(scrollable);
 
 		int y = 0;
 		addLabel("Initial", y, 0, panel1);
@@ -149,7 +152,7 @@ public class NetworkWindow extends EditingSessionWindow {
 		initialRows.setColumns(2);
 		initialRows.setValue(network.getInitialRows());
 		panel1.add(initialRows, makeConstraints(1, y));	
-
+		network.addPropertyChangeListener("initialRows", new TextFieldBinder(initialRows));
         addLabel("x", 2, y, panel1);
 
 		initialCols = new JFormattedTextField(formatter);
@@ -157,6 +160,7 @@ public class NetworkWindow extends EditingSessionWindow {
 		initialCols.setColumns(2);
 		initialCols.setValue(network.getInitialCols());
 		panel1.add(initialCols, makeConstraints(3, y));
+		network.addPropertyChangeListener("initialCols", new TextFieldBinder(initialCols));
         
 		addLabel("Pattern line", 0, ++y, panel1);
 		
@@ -165,6 +169,7 @@ public class NetworkWindow extends EditingSessionWindow {
 		patternLineRows.setColumns(2);
 		patternLineRows.setValue(network.getPatternLineRows());
 		panel1.add(patternLineRows, makeConstraints(1, y));	
+		network.addPropertyChangeListener("patternLineRows", new TextFieldBinder(patternLineRows));
 
         addLabel("x", 2, y, panel1);
 
@@ -173,7 +178,8 @@ public class NetworkWindow extends EditingSessionWindow {
         patternLineCols.setColumns(2);
         patternLineCols.setValue(network.getPatternLineCols());
         panel1.add(patternLineCols, makeConstraints(3, y));
-        
+		network.addPropertyChangeListener("patternLineCols", new TextFieldBinder(patternLineCols));
+       
         addLabel("Ribbon", 0, ++y, panel1);
         
         ribbonWidth = new JFormattedTextField(formatter);
@@ -181,13 +187,8 @@ public class NetworkWindow extends EditingSessionWindow {
         ribbonWidth.setColumns(2);
         ribbonWidth.setValue(network.getRibbonWidth());
         panel1.add(ribbonWidth, makeConstraints(1, y));
-        
-        shaftRule = new JCheckBox();
-        shaftRule.setText("Use shaft rule");
-        shaftRule.setName("shaftRule");
-        shaftRule.setSelected(network.isUsingShaftRule());
-        panel1.add(shaftRule, makeConstraints(0, 3, ++y));
-        
+		network.addPropertyChangeListener("ribbonWidth", new TextFieldBinder(ribbonWidth));
+       
         addLabel ("Compression rule", 0, ++y, panel1);
         compressionRule = new JComboBox();
         compressionRule.addItem("Telescope");
