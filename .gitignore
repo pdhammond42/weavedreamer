@@ -13,3 +13,7 @@ temp
 guitest.wsml
 testdata/*.wsml
 target
+.metadata
+.settings
+.classpath
+release.properties
