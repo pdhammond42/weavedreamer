@@ -1,4 +1,4 @@
-Weaving Simulator X.X
+Weaving Simulator VERSION
 
 Copyright 2003-2006 Adam P. Jenkins, 2013 Peter Hammond
 

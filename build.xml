@@ -81,7 +81,7 @@ extra dependencies and creates a Git tag, so should not be used all the time. --
 		</zip>
 	</target>
 	<target name="guitest" depends="package">
-		<unzip src="freeweave_${version}.zip" dest="GUItest/temp" />
+		<unzip src="freeweave_${version}.zip" dest="temp" />
 		<junit fork="yes" printsummary="withOutAndErr" haltonfailure="true">
 			<formatter type="xml" />
 			<batchtest todir="GUItest">
