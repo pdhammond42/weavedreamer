@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Vector;
 
 import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 
 /**
  * The NetworkDraft class holds the algorithms and data for Network drafting. An
@@ -56,7 +58,7 @@ public class NetworkDraft {
 		return initial.get(index);
 	}
 
-	public void setInitial(int index, int row) {
+	public void setInitialRow(int index, int row) {
 		int oldValue = initial.get(index);
 		this.initial.set(index, row);
 		propertyChangeSupport.fireIndexedPropertyChange("initial", index, oldValue, row);
@@ -70,7 +72,12 @@ public class NetworkDraft {
 		return patternLine.get(index);
 	}
 	
-	public void setPatternLine(int index, int row) {
+	/**
+	 * Set the selected row of the given column of the pattern line.
+	 * @param index The column
+	 * @param row The row
+	 */
+	public void setPatternLineRow(int index, int row) {
 		int oldValue = patternLine.get(index);
 		this.patternLine.set(index, row);
 		propertyChangeSupport.fireIndexedPropertyChange("patternLine", index,  oldValue, row);
@@ -182,7 +189,41 @@ public class NetworkDraft {
         propertyChangeSupport.removePropertyChangeListener(propertyName, l);
     }	
 	
-	// Properties
+    /** Property setter for persistence only
+     * 
+     */
+    public void setInitial(List<Integer> init) {
+    	initial = new Vector<Integer>(init);
+    }
+    
+    /** Property setter for persistence only
+     * 
+     */
+    public void setPatternLine(List<Integer> pattern) {
+    	patternLine = new Vector<Integer>(pattern);
+    }
+ 
+    /** Property setter for persistence only
+     * 
+     */
+    public void setKey1(List<List<Boolean>> key1) {
+    	this.key1 = new Vector<List<Boolean>>();
+    	for (List<Boolean> l : key1) {
+    		this.key1.add(new Vector<Boolean>(l));
+    	}
+    }
+    
+    /** Property setter for persistence only
+     * 
+     */
+    public void setKey2(List<List<Boolean>> key2) {
+    	this.key2 = new Vector<List<Boolean>>();
+    	for (List<Boolean> l : key2) {
+    		this.key2.add(new Vector<Boolean>(l));
+    	}
+    }
+    
+    // Properties
 	/**
 	 * The selected column in each row of the Initial.
 	 */
@@ -369,4 +410,52 @@ public class NetworkDraft {
 		}
 		return clone;
 	}
+	
+    public boolean equals(Object obj) {
+    	if (obj == null) { return false; }
+    	if (obj == this) { return true; }
+    	if (obj.getClass() != getClass()) {
+    		return false;
+    	}
+    	NetworkDraft n = (NetworkDraft)obj;
+    	return new EqualsBuilder()
+    	.append(initial, n.initial)
+    	.append(patternLine, n.patternLine)
+    	.append(key1, n.key1)
+    	.append(key2, n.key2)
+    	.append(isTelescoped, n.isTelescoped)
+    	.append(initialRows, n.initialRows)
+    	.append(patternLineRows, n.patternLineRows)
+    	.append(ribbonWidth, n.ribbonWidth)
+    	.isEquals();
+    }
+
+    public int hashCode() {
+		return new HashCodeBuilder()
+    	.append(initial)
+    	.append(patternLine)
+    	.append(key1)
+    	.append(key2)
+    	.append(isTelescoped)
+    	.append(initialRows)
+    	.append(patternLineRows)
+    	.append(ribbonWidth)
+		.toHashCode();
+    }
+
+    public String toString() {
+    	return new StringBuilder()
+    	.append(initial)
+    	.append(patternLine)
+    	.append(key1)
+    	.append(key2)
+    	.append(isTelescoped)
+    	.append(",")
+    	.append(initialRows)
+    	.append(",")
+    	.append(patternLineRows)
+    	.append(",")
+    	.append(ribbonWidth)
+    	.toString();
+    }
 }

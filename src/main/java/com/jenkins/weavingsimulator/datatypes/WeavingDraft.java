@@ -525,6 +525,14 @@ public class WeavingDraft {
     	return network;
     }
         
+    /** 
+     * Sets the network property. This should only be used for persistence.
+     * @param network The new network object.
+     */
+    public void setNetwork (NetworkDraft network) {
+    	this.network = network;
+    }
+    
     private NetworkDraft network;
     // If a network has been set, but then removed, keep
     // persisting it in case it is returned.

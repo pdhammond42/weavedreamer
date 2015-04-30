@@ -47,11 +47,11 @@ public class PatternLineModel extends AbstractWeavingDraftModel {
 		final int old_row = network.getPatternLine(column);
 		return new Command (){
 			public void execute() {
-		        network.setPatternLine(c, r);
+		        network.setPatternLineRow(c, r);
 			}
 
 			public void undo() {
-		        network.setPatternLine(c, old_row);
+		        network.setPatternLineRow(c, old_row);
 			}
 		};
 	}

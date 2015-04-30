@@ -38,6 +38,18 @@ public class SaveAndLoadTest extends WeavingTestCase {
 		ui.endIs (0, 1, Color.WHITE);
 	}
 	
+	public void testLoadFileSavedFrom2_6() {
+		ui.open("testdata/103-2.6.wsml");
+		ui.draftIs(0, 0, orange);
+		ui.draftIs(0, 1, blue);				
+		ui.pickIs(0, 0, Color.BLACK);
+		ui.pickIs (0, 1, Color.WHITE);
+		ui.pickIs(1, 0, Color.WHITE);
+		ui.pickIs (1, 1, Color.BLACK);
+		ui.endIs (0, 0, Color.BLACK);
+		ui.endIs (0, 1, Color.WHITE);
+	}
+	
 	public void testLoadAndSaveLiftplan() {
 		File leftover = new File("testdata/56737.wsml");
 		if (leftover.exists()) leftover.delete();

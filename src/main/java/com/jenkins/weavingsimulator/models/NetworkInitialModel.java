@@ -45,11 +45,11 @@ public class NetworkInitialModel extends AbstractWeavingDraftModel {
 		final int old_row = network.getInitial(column);
 		return new Command() {
 			public void execute() {
-				network.setInitial(c, r);
+				network.setInitialRow(c, r);
 			}
 
 			public void undo() {
-				network.setInitial(c, old_row);
+				network.setInitialRow(c, old_row);
 			}
 		};
 	}

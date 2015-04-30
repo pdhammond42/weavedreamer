@@ -5,6 +5,7 @@ import static org.uispec4j.assertion.UISpecAssert.assertThat;
 import java.awt.Color;
 import java.awt.Point;
 
+import javax.swing.JCheckBox;
 import javax.swing.JDesktopPane;
 import javax.swing.JFormattedTextField;
 import javax.swing.JInternalFrame;
@@ -42,6 +43,17 @@ public class AppDriver{
     			.run();
     }
     
+    public void newNetwork(final int harnesses, final int ends, final int picks, final String palette) {
+    	WindowInterceptor
+    	.init(mainWindow.getMenuBar()
+    			.getMenu("File")
+    			.getSubMenu("New")
+    			.triggerClick())
+    			.process(new NetworkPropertiesHandler (harnesses, 
+    					ends, picks, palette))
+    			.run();
+    }
+        
     public void editDraftProperties(final int harnesses, final int treadles, final int ends, final int picks, final String palette) {
     	WindowInterceptor
     	.init(mainWindow.getMenuBar()
@@ -291,7 +303,12 @@ public class AppDriver{
     	return (JFormattedTextField)(window.getTextBox(name).getAwtComponent());
     }
     
-	private Table weavingPatternGrid(){
+	//
+    private static JCheckBox getJCheckBox(Window window, String name) {
+    	return (JCheckBox)(window.getCheckBox(name).getAwtComponent());
+    }
+    
+    private Table weavingPatternGrid(){
 		return mainWindow.getTable("weavingPatternGrid");
 	}
 	
@@ -342,6 +359,29 @@ public class AppDriver{
 			getJTextBox(window, "numHarnessesField").setValue(harnesses);
 			getJTextBox(window, "numWarpEndsField").setValue(ends);
 			getJTextBox(window, "numWeftPicksField").setValue(picks);
+			window.getComboBox("palettes_combo").select(palette);
+			return window.getButton("OK").triggerClick();
+		}
+	}
+	
+	private class NetworkPropertiesHandler extends WindowHandler {
+		final int harnesses;
+		final int ends;
+		final int picks;
+		final String palette;
+		
+		public NetworkPropertiesHandler (final int harnesses, final int ends, final int picks, final String palette) {
+			this.harnesses = harnesses;
+			this.ends = ends;
+			this.picks = picks;
+			this.palette = palette;
+		}
+		
+		public Trigger process(Window window) {
+			getJTextBox(window, "numHarnessesField").setValue(harnesses);
+			getJTextBox(window, "numWarpEndsField").setValue(ends);
+			getJTextBox(window, "numWeftPicksField").setValue(picks);
+			getJCheckBox(window, "Network").setSelected(true);
 			window.getComboBox("palettes_combo").select(palette);
 			return window.getButton("OK").triggerClick();
 		}

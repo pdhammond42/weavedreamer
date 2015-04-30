@@ -518,6 +518,36 @@ public class WeavingDraftTest extends TestCase {
         assertThat(newDraft, is(equalTo(draft)));
     }
     
+    public void testNetworkPersistence() throws IOException {
+        draft.setProperties(6, 4, 8, 8, true, true);
+        NetworkDraft net = draft.getNetwork();
+        net.setInitialRows(2);
+        net.setInitialCols(2);
+        net.setPatternLineRows(8);
+        net.setPatternLineCols(8);
+        net.setPatternLineRow(1, 2);
+        net.setPatternLineRow(2, 2);
+        net.setKey1(1, 1, true);
+        net.setKey2(0, 0, true);
+        net.setRibbonWidth(3);
+        net.setInitialRow(1, 1);
+                
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        XMLEncoder enc = new XMLEncoder(os);
+        enc.writeObject(draft);
+        enc.close();
+        
+        FileOutputStream out = new FileOutputStream("out.xml");
+        out.write(os.toByteArray());
+        out.close();
+        
+        ByteArrayInputStream ins = new ByteArrayInputStream(os.toByteArray());
+        XMLDecoder dec = new XMLDecoder(ins);
+        WeavingDraft newDraft = (WeavingDraft)dec.readObject();
+        
+        assertThat(newDraft.getNetwork(), is(equalTo(draft.getNetwork())));
+    }   
+    
     public void testEquality() {
     	WeavingDraft d1 = new WeavingDraft();
     	WeavingDraft d2 = new WeavingDraft();   
