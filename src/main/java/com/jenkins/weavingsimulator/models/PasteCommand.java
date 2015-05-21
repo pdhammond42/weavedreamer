@@ -1,7 +1,5 @@
 package com.jenkins.weavingsimulator.models;
 
-import com.jenkins.weavingsimulator.models.Command;
-import com.jenkins.weavingsimulator.models.PasteGrid;
 
 public class PasteCommand implements Command{
 	CopyableWeavingGridModel model;

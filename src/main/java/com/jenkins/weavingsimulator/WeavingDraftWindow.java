@@ -26,7 +26,6 @@ package com.jenkins.weavingsimulator;
 
 import java.awt.Component;
 import java.awt.Dimension;
-import java.io.File;
 import java.util.ArrayList;
 
 import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
@@ -45,6 +44,11 @@ import com.jenkins.weavingsimulator.models.WeavingPatternModel;
  * @author ajenkins
  * 
  */public class WeavingDraftWindow extends EditingSessionWindow {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	/** Creates new form WeavingDraftWindow */
 	public WeavingDraftWindow(EditingSession session) {
@@ -101,9 +105,7 @@ import com.jenkins.weavingsimulator.models.WeavingPatternModel;
 		statusBar.setText("0,0");
 		
 		setName("WeavingDraftWindow");
-		
-		fileChangedHandler(getSession().getFile());
-		draftModifiedChangedHandler(getSession().isDraftModified());
+	
 		palettePanel.setSession(getSession());
 	}
 	
@@ -169,46 +171,6 @@ import com.jenkins.weavingsimulator.models.WeavingPatternModel;
 		grids.add(comp);
 	}
 
-	private void fileChangedHandler(File file) {
-		if (file != null)
-			setTitle(file.getName());
-	}
-
-	public void displayTiledView() {
-		if (tiledViewFrame == null) {
-			wpanel = new WeavingPatternPanel(getSession().getDraft());
-			wpanel.setName("draftPanel");
-			tiledViewFrame = new javax.swing.JFrame(getTitle());
-			tiledViewFrame.getContentPane().add(wpanel);
-			tiledViewFrame.pack();
-			tiledViewFrame.setSize(400, 400);
-			addPropertyChangeListener(
-					javax.swing.JInternalFrame.TITLE_PROPERTY,
-					new java.beans.PropertyChangeListener() {
-						public void propertyChange(
-								java.beans.PropertyChangeEvent e) {
-							tiledViewFrame.setTitle((String) e.getNewValue());
-						}
-					});
-		}
-		tiledViewFrame.setVisible(true);
-	}
-
-	public void hideTiledView() {
-		if (tiledViewFrame != null)
-			tiledViewFrame.setVisible(false);
-	}
-
-	private void draftModifiedChangedHandler(boolean draftModified) {
-		if (draftModified) {
-			setTitle(getTitle() + " *");
-		} else {
-			String oldTitle = getTitle();
-			if (oldTitle.endsWith(" *"))
-				setTitle(oldTitle.substring(0, oldTitle.length() - 2));
-		}
-	}
-
 	public void zoomIn() {
 		int square = grids.get(0).getSquareWidth() * 2;
 		for (GridControl g: grids) {
@@ -237,8 +199,13 @@ import com.jenkins.weavingsimulator.models.WeavingPatternModel;
 
 	private StatusBarControl statusBar;
 
-	private javax.swing.JFrame tiledViewFrame = null;
-	private WeavingPatternPanel wpanel = null;
+	//private javax.swing.JFrame tiledViewFrame = null;
+	//private WeavingPatternPanel wpanel = null;
 	
 	private ArrayList<GridControl> grids = new ArrayList<GridControl>();
+
+	@Override
+	public String getViewName() {
+		return "Draft";
+	}
 }

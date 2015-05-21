@@ -1,8 +1,6 @@
 
 package com.jenkins.weavingsimulator.datatypes;
 
-import com.jenkins.wifio.WIFException;
-import com.jenkins.wifio.WIFFile;
 import java.awt.Color;
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,6 +8,9 @@ import java.io.OutputStream;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.jenkins.wifio.WIFException;
+import com.jenkins.wifio.WIFFile;
 
 /** Implements reading and writing WeavingDrafts in WIF format
  *

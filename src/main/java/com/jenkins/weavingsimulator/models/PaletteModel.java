@@ -25,18 +25,23 @@
 
 package com.jenkins.weavingsimulator.models;
 
-import com.jenkins.weavingsimulator.datatypes.Palette;
 import java.awt.Color;
 import java.beans.IndexedPropertyChangeEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+
+import com.jenkins.weavingsimulator.datatypes.Palette;
 
 /**
  * TableModel implementation which represents a color palette.
  * @author ajenkins
  */
 public class PaletteModel extends javax.swing.table.AbstractTableModel {
-    private Palette palette;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private Palette palette;
     
     /**
      * Creates a new instance of PaletteModel

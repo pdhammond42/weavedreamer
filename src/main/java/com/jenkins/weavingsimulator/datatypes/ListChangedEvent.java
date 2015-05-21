@@ -34,7 +34,12 @@ import java.util.List;
  */
 public class ListChangedEvent<E> extends java.util.EventObject {
     
-    /** Holds value of property itemIndex. */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/** Holds value of property itemIndex. */
     private int itemIndex;
     
     /** Holds value of property oldValue. */

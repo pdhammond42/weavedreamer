@@ -30,8 +30,8 @@ import java.awt.Component;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import javax.swing.JTable;
 
+import javax.swing.JTable;
 
 import com.jenkins.weavingsimulator.models.AbstractWeavingDraftModel;
 import com.jenkins.weavingsimulator.models.WeavingPatternCellModel;
@@ -44,7 +44,11 @@ import com.jenkins.weavingsimulator.models.WeavingPatternCellModel;
  */
 public class GridControl extends JTable {
     
-    /** Holds value of property squareWidth. */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	/** Holds value of property squareWidth. */
     private int squareWidth = 10;
     
     /** Creates a new instance of GridControl */

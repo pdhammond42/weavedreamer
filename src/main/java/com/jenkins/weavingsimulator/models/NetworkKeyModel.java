@@ -1,14 +1,16 @@
 package com.jenkins.weavingsimulator.models;
 
-import java.beans.IndexedPropertyChangeEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 import com.jenkins.weavingsimulator.datatypes.NetworkDraft;
-import com.jenkins.weavingsimulator.models.AbstractWeavingDraftModel.SetValueProvider;
 
 public class NetworkKeyModel extends AbstractWeavingDraftModel {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	NetworkDraft network;	
 	
 	public interface KeyModelAdapter {

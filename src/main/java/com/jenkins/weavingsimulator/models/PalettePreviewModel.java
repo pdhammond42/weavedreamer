@@ -1,6 +1,7 @@
 package com.jenkins.weavingsimulator.models;
 
 import java.awt.Color;
+
 import com.jenkins.weavingsimulator.datatypes.Palette;
 
 /**
@@ -10,7 +11,11 @@ import com.jenkins.weavingsimulator.datatypes.Palette;
  *
  */
 public class PalettePreviewModel  extends javax.swing.table.AbstractTableModel {
-    private Palette palette;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private Palette palette;
     
     /**
      * Creates a new instance of PalettePreviewModel

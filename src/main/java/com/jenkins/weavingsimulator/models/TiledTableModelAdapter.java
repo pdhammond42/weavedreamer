@@ -37,7 +37,12 @@ import javax.swing.table.TableModel;
  * @author  ajenkins
  */
 public class TiledTableModelAdapter extends javax.swing.table.AbstractTableModel {
-    private TableModel model;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private TableModel model;
     
     /** Holds value of property tiledRowCount. */
     private int tiledRowCount;

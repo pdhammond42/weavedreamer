@@ -133,7 +133,12 @@ public class AbstractWeavingDraftModelTest extends TestCase {
         
     private class AbstractWeavingDraftModelImpl extends AbstractWeavingDraftModel {
 
-        AbstractWeavingDraftModelImpl(EditingSession draft) {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
+		AbstractWeavingDraftModelImpl(EditingSession draft) {
             super(draft);
         }
 

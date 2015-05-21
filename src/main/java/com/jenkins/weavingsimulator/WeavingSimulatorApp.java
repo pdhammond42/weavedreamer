@@ -25,16 +25,12 @@
 
 package com.jenkins.weavingsimulator;
 
-import com.jenkins.weavingsimulator.datatypes.Palette;
-import com.jenkins.weavingsimulator.datatypes.WIFIO;
-import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
-import com.jenkins.weavingsimulator.models.EditingSession;
-import com.jenkins.wifio.WIFException;
-
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.beans.PropertyVetoException;
 import java.beans.XMLEncoder;
 import java.io.BufferedReader;
 import java.io.File;
@@ -43,23 +39,38 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.List;
-import java.util.prefs.*;
+import java.util.prefs.BackingStoreException;
+import java.util.prefs.Preferences;
 
 import javax.swing.JFileChooser;
 import javax.swing.JInternalFrame;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
+import javax.swing.event.MenuEvent;
+import javax.swing.event.MenuListener;
+import javax.swing.filechooser.FileView;
+
+import com.jenkins.weavingsimulator.datatypes.Palette;
+import com.jenkins.weavingsimulator.datatypes.WIFIO;
+import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
+import com.jenkins.weavingsimulator.models.EditingSession;
+import com.jenkins.wifio.WIFException;
 
 /**
  *
  * @author  ajenkins
  */
 public class WeavingSimulatorApp extends javax.swing.JFrame {
-    public static final String WIF_EXTENSION = ".wif";
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	public static final String WIF_EXTENSION = ".wif";
     private static final String DRAFT_EXTENSION = ".wsml";
     
     /** Creates new form WeavingSimulatorApp */
@@ -93,8 +104,8 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
         exitMenuItem = new javax.swing.JMenuItem();
         editMenu = new javax.swing.JMenu();
         propertiesMenuItem = new javax.swing.JMenuItem();
-        deleteMenuItem = new javax.swing.JMenuItem();
         tiledViewMenuItem = new javax.swing.JMenuItem();
+        windowMenu = new javax.swing.JMenu();
         helpMenu = new javax.swing.JMenu();
         contentsMenuItem = new javax.swing.JMenuItem();
         aboutMenuItem = new javax.swing.JMenuItem();
@@ -250,6 +261,19 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
         });
         viewMenu.add(tiledViewMenuItem);
         menuBar.add(viewMenu);
+        
+        windowMenu.setText("Windows");
+        windowMenu.setMnemonic('w');
+        windowMenu.addMenuListener(new MenuListener() {
+			public void menuSelected(MenuEvent e) {
+				windowMenuSelected(e);
+			}
+			public void menuDeselected(MenuEvent e) {
+			}
+			public void menuCanceled(MenuEvent e) {
+			}
+        });
+        menuBar.add(windowMenu);
 
         helpMenu.setMnemonic('h');
         helpMenu.setText("Help");
@@ -275,7 +299,25 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
     }//GEN-END:initComponents
     
     
-    protected void savePaletteItemActionPerformed(ActionEvent evt) {
+    protected void windowMenuSelected(MenuEvent e) {
+    	windowMenu.removeAll();
+    	for (JInternalFrame w : mainDesktop.getAllFrames() ) {
+    		JMenuItem item = new JMenuItem(w.getTitle());
+    		item.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					try {
+						w.setSelected(true);
+					} catch (PropertyVetoException e1) {
+					}
+					w.setVisible(true);
+				}
+			});
+    		windowMenu.add(item);
+    	}
+
+	}
+
+	protected void savePaletteItemActionPerformed(ActionEvent evt) {
     	String name = javax.swing.JOptionPane.showInputDialog("Name your palette");
     	if (name != null) {
     		savePalette(name, getCurrentSession().getPalette());
@@ -307,8 +349,8 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
 	}	
 
 	private void tiledViewMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tiledViewMenuItemActionPerformed
-        WeavingDraftWindow curFrame =
-                (WeavingDraftWindow)mainDesktop.getSelectedFrame();
+        EditingSessionWindow curFrame =
+                (EditingSessionWindow)mainDesktop.getSelectedFrame();
         if (curFrame == null)
             return;
         curFrame.displayTiledView();
@@ -370,7 +412,7 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
     }//GEN-LAST:event_openMenuItemActionPerformed
     
     private void newMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newMenuItemActionPerformed
-        WeavingDraft draft = new WeavingDraft("New Draft");
+        WeavingDraft draft = new WeavingDraft("*New Draft " + newFileNum++);
         WeavingDraftPropertiesDialog dlg =
         		new WeavingDraftPropertiesDialog(this, true);
         
@@ -498,7 +540,6 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
         try {
             OutputStream outs = new java.io.FileOutputStream(file);
             writeWeavingDraft(draft, outs);
-            session.setFile(file);
             session.setDraftModified(false);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(this, "Failed to save " + file + ": " + e.getMessage(),
@@ -508,24 +549,13 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
     }
     
     private void saveAsWeavingDraft(EditingSession session) {
-        WeavingDraft draft = session.getDraft();
     	fileChooser.removeChoosableFileFilter(wifFilter);
     	fileChooser.setSelectedFile(new File(""));
         int res = fileChooser.showSaveDialog(this);
         if (res == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
-        	if (!file.getName().endsWith(DRAFT_EXTENSION)) {
-        		file = new File(file.getPath() + DRAFT_EXTENSION);
-        	}
-            try {
-                OutputStream outs = new java.io.FileOutputStream(file);
-                writeWeavingDraft(draft, outs);
-                session.setFile(file);
-                session.setDraftModified(false);
-            } catch (IOException e) {
-                JOptionPane.showMessageDialog(this, "Failed to save " + file + ": " + e.getMessage(),
-                "Save Error", JOptionPane.ERROR_MESSAGE);
-            }
+            session.setFile(file);
+            saveWeavingDraft(session);
         }
     }
     
@@ -546,6 +576,7 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
                 WIFIO io = new WIFIO();
                 try {
                 	draft = io.readWeavingDraft(ins);
+                	draft.setName(file.getName());
                 }
                 catch(WIFException e) {
                 	reportWifFailure (file);
@@ -588,16 +619,14 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
         	session.setFile(file);
         session.setDraftModified(false);
         
-        WeavingDraftWindow win = new WeavingDraftWindow(session);
-        if (file == null)
-            win.setTitle("*New Draft " + newFileNum++ + "*");
+        EditingSessionWindow win = new WeavingDraftWindow(session);
         mainDesktop.add(win);
         try { win.setMaximum(true); }
         catch (java.beans.PropertyVetoException e) {}
        
         win.addInternalFrameListener(new InternalFrameAdapter() {
             public void internalFrameClosing(InternalFrameEvent e) {
-                WeavingDraftWindow w = (WeavingDraftWindow)e.getInternalFrame();
+                EditingSessionWindow w = (EditingSessionWindow)e.getInternalFrame();
                 EditingSession session = w.getSession();
                 String name = w.getTitle();
                 if (session.getFile() != null)
@@ -610,6 +639,10 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
                     JOptionPane.QUESTION_MESSAGE);
                     if (res == JOptionPane.YES_OPTION)
                         saveWeavingDraft(session);
+                }
+                for (EditingSession.View v : session.getViews()) {
+                	if (v != e.getSource())
+                		v.closeView();
                 }
             }
         });
@@ -694,7 +727,8 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
     private javax.swing.JMenuItem aboutMenuItem;
     private javax.swing.JMenuItem contentsMenuItem;
     private javax.swing.JMenu helpMenu;
-    private javax.swing.JMenuItem deleteMenuItem;
+    private javax.swing.JMenu windowMenu;
+    
     // End of variables declaration//GEN-END:variables
     private javax.swing.JMenuItem savePaletteMenuItem;
     

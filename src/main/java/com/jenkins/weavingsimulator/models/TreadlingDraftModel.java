@@ -26,10 +26,10 @@
 package com.jenkins.weavingsimulator.models;
 
 import java.awt.Color;
+import java.beans.IndexedPropertyChangeEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import java.beans.IndexedPropertyChangeEvent;
 import com.jenkins.weavingsimulator.datatypes.WeftPick;
 
 /** Represents the treadling draft display of a weaving draft.  The treadling
@@ -44,7 +44,12 @@ import com.jenkins.weavingsimulator.datatypes.WeftPick;
  */
 public class TreadlingDraftModel extends CopyableWeavingGridModel {
     
-    /** Creates a new instance of TreadlingDraftModel */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/** Creates a new instance of TreadlingDraftModel */
     public TreadlingDraftModel(EditingSession session) {
         super(session);
         setDraftListener(new PropertyChangeListener() {

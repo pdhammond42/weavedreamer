@@ -27,7 +27,7 @@ package com.jenkins.weavingsimulator.datatypes;
 import java.beans.PropertyChangeEvent;
 import java.util.Map;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 import java.beans.IndexedPropertyChangeEvent;
 

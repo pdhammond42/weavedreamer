@@ -25,19 +25,26 @@
 
 package com.jenkins.weavingsimulator;
 
+import java.awt.Dimension;
+
+import javax.swing.table.TableModel;
+
 import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
 import com.jenkins.weavingsimulator.models.EditingSession;
 import com.jenkins.weavingsimulator.models.TiledTableModelAdapter;
 import com.jenkins.weavingsimulator.models.WeavingPatternModel;
-import java.awt.Dimension;
-import javax.swing.table.TableModel;
 
 /**
  *
  * @author  ajenkins
  */
 public class WeavingPatternPanel extends javax.swing.JPanel {    
-    /** Creates new form WeavingPatternPanel */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/** Creates new form WeavingPatternPanel */
     public WeavingPatternPanel(WeavingDraft draft) {
         initComponents();
         WeavingPatternModel wmodel = new WeavingPatternModel(new EditingSession(draft));

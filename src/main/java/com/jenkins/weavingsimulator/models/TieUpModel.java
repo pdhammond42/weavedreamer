@@ -25,10 +25,10 @@
 
 package com.jenkins.weavingsimulator.models;
 
+import java.beans.IndexedPropertyChangeEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import java.beans.IndexedPropertyChangeEvent;
 import com.jenkins.weavingsimulator.datatypes.Treadle;
 
 /** A TableModel class for representing the treadle tie up part of the
@@ -38,7 +38,12 @@ import com.jenkins.weavingsimulator.datatypes.Treadle;
  */
 public class TieUpModel extends AbstractWeavingDraftModel {
     
-    /** Creates a new instance of TieUpModel */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/** Creates a new instance of TieUpModel */
     public TieUpModel(EditingSession session) {
         super(session);
         setDraftListener(new PropertyChangeListener() {

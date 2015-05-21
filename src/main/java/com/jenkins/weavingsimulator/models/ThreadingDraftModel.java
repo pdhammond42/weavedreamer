@@ -25,12 +25,12 @@
 
 package com.jenkins.weavingsimulator.models;
 
-import com.jenkins.weavingsimulator.datatypes.WarpEnd;
-
 import java.awt.Color;
 import java.beans.IndexedPropertyChangeEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+
+import com.jenkins.weavingsimulator.datatypes.WarpEnd;
 
 
 /** This TableModel represents the threading draft part of a weaving draft. 
@@ -45,7 +45,12 @@ import java.beans.PropertyChangeListener;
  * @author  ajenkins
  */
 public class ThreadingDraftModel extends CopyableWeavingGridModel {
-    /** Creates a new instance of ThreadingDraftModel */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/** Creates a new instance of ThreadingDraftModel */
     public ThreadingDraftModel(EditingSession session) {
         super(session);
         setDraftListener(new PropertyChangeListener() {

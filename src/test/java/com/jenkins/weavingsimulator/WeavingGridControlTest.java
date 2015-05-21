@@ -162,6 +162,10 @@ public class WeavingGridControlTest extends TestCase {
 	}
 
 	private class TestDraftModel extends AbstractWeavingDraftModel {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 		Object[][] model = new Object[][] {
 				{false,false,false},
 				{false,false,false},

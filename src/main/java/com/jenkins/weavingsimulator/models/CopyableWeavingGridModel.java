@@ -12,6 +12,10 @@ import java.beans.PropertyChangeListener;
  */
 public abstract class CopyableWeavingGridModel extends AbstractWeavingDraftModel {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private EditingSession session;
     private GridSelection selection;
 	private boolean thisObjectSettingSelection = false;

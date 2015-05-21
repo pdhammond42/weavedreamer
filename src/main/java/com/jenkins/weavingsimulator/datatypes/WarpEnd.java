@@ -26,6 +26,7 @@
 package com.jenkins.weavingsimulator.datatypes;
 
 import java.awt.Color;
+
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 

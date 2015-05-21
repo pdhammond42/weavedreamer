@@ -24,10 +24,9 @@
 
 package com.jenkins.weavingsimulator.models;
 
+import java.beans.IndexedPropertyChangeEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-
-import java.beans.IndexedPropertyChangeEvent;
 
 /**
  * TableModel representing the fabric resulting from a weaving pattern. Each row
@@ -38,6 +37,11 @@ import java.beans.IndexedPropertyChangeEvent;
  * @author ajenkins
  */
 public class WeavingPatternModel extends AbstractWeavingDraftModel {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	/** Creates a new instance of WeavingPatternModel */
 	public WeavingPatternModel(EditingSession session) {

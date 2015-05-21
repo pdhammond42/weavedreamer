@@ -27,8 +27,6 @@ package com.jenkins.weavingsimulator.datatypes;
 
 import java.awt.Color;
 import java.beans.PropertyChangeSupport;
-import java.io.Console;
-import java.rmi.UnexpectedException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -531,6 +529,7 @@ public class WeavingDraft {
      */
     public void setNetwork (NetworkDraft network) {
     	this.network = network;
+    	network.addPropertyChangeListener(networkListener);
     }
     
     private NetworkDraft network;

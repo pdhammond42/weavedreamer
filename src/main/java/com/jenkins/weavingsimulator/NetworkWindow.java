@@ -3,15 +3,12 @@ package com.jenkins.weavingsimulator;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.text.ParseException;
 
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
@@ -24,10 +21,12 @@ import com.jenkins.weavingsimulator.models.EditingSession;
 import com.jenkins.weavingsimulator.models.NetworkInitialModel;
 import com.jenkins.weavingsimulator.models.NetworkKeyModel;
 import com.jenkins.weavingsimulator.models.PatternLineModel;
-import com.jenkins.weavingsimulator.models.ThreadingDraftModel;
-import com.jenkins.weavingsimulator.models.TieUpModel;
 
 public class NetworkWindow extends EditingSessionWindow {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JScrollPane pane;
 	private JPanel panel1;
 	private JPanel panel2;
@@ -52,8 +51,8 @@ public class NetworkWindow extends EditingSessionWindow {
 		
 		network = session.getDraft().getNetwork();
 		
-		setClosable(true);
-		setMaximizable(true);
+		setClosable(false);
+		setMaximizable(false);
 		setResizable(true);
 		
 		initComponents();
@@ -129,8 +128,6 @@ public class NetworkWindow extends EditingSessionWindow {
 			public void focusGained(FocusEvent e) {
 			}
         });
-		
-		setTitle ("network");
 	}
 	
 	private void initComponents() {
@@ -263,5 +260,13 @@ public class NetworkWindow extends EditingSessionWindow {
 		GridBagConstraints c = makeConstraints(x, y);
 		c.gridwidth = width;
 		return c;
+	}
+	
+	protected String getWindowTitleSuffix() {
+		return " network";
+	}
+	
+	public String getViewName() {
+		return "Network";
 	}
 }

@@ -43,7 +43,12 @@ import com.jenkins.weavingsimulator.models.PalettePreviewModel;
  */
 public class WeavingDraftPropertiesDialog extends javax.swing.JDialog {
     
-    /** Creates new form WeavingDraftPropertiesDialog */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/** Creates new form WeavingDraftPropertiesDialog */
     public WeavingDraftPropertiesDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
   	
@@ -383,7 +388,7 @@ public class WeavingDraftPropertiesDialog extends javax.swing.JDialog {
 		}
 		
 		public void undo() {
-			target.setProperties(oldHarnesses, oldTreadles, oldEnds, oldPicks, oldLiftplan, newNetwork);
+			target.setProperties(oldHarnesses, oldTreadles, oldEnds, oldPicks, oldLiftplan, oldNetwork);
 			if (oldPalette != null) target.setPalette(oldPalette);
 		}
     }

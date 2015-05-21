@@ -5,7 +5,11 @@ import java.text.ParseException;
 // formatter for JFormattedTextField which only allows integers >= 0.
 public class NonNegativeIntFormatter 
     extends javax.swing.JFormattedTextField.AbstractFormatter {
-    java.text.NumberFormat format = java.text.NumberFormat.getIntegerInstance();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	java.text.NumberFormat format = java.text.NumberFormat.getIntegerInstance();
     
     /** Parses <code>text</code> returning an arbitrary Object. Some
      * formatters may return null.

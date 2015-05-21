@@ -487,6 +487,7 @@ public class WeavingDraftTest extends TestCase {
         ByteArrayInputStream ins = new ByteArrayInputStream(os.toByteArray());
         XMLDecoder dec = new XMLDecoder(ins);
         WeavingDraft newDraft = (WeavingDraft)dec.readObject();
+        dec.close();
         
         assertThat (newDraft, is(equalTo (draft)));
     }
@@ -514,7 +515,7 @@ public class WeavingDraftTest extends TestCase {
         ByteArrayInputStream ins = new ByteArrayInputStream(os.toByteArray());
         XMLDecoder dec = new XMLDecoder(ins);
         WeavingDraft newDraft = (WeavingDraft)dec.readObject();
-        
+        dec.close();
         assertThat(newDraft, is(equalTo(draft)));
     }
     
@@ -544,7 +545,7 @@ public class WeavingDraftTest extends TestCase {
         ByteArrayInputStream ins = new ByteArrayInputStream(os.toByteArray());
         XMLDecoder dec = new XMLDecoder(ins);
         WeavingDraft newDraft = (WeavingDraft)dec.readObject();
-        
+        dec.close();
         assertThat(newDraft.getNetwork(), is(equalTo(draft.getNetwork())));
     }   
     

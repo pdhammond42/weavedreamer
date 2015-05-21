@@ -14,6 +14,12 @@ package com.jenkins.wifio;
 public class WIFException extends java.lang.RuntimeException {
     
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+
+	/**
      * Creates a new instance of <code>WIFException</code> without detail message.
      */
     public WIFException() {

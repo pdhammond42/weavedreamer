@@ -7,6 +7,10 @@ import com.jenkins.weavingsimulator.datatypes.NetworkDraft;
 
 public class PatternLineModel extends AbstractWeavingDraftModel {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	NetworkDraft network;	
 
 	public PatternLineModel(EditingSession session) {

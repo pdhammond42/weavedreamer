@@ -15,6 +15,10 @@ import com.jenkins.weavingsimulator.models.StatusBarModel;
  *
  */
 public class StatusBarControl extends JTextField implements PropertyChangeListener{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	StatusBarModel model;
 	
 	public StatusBarControl (StatusBarModel model) {

@@ -3,6 +3,11 @@ package com.jenkins.weavingsimulator.models;
 
 public class ThreadingPatternLineModel extends CopyableWeavingGridModel {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public ThreadingPatternLineModel(EditingSession session) {
 		super(session);
 		// TODO Auto-generated constructor stub

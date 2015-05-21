@@ -27,7 +27,11 @@ import com.jenkins.weavingsimulator.models.AbstractWeavingDraftModel;
  */
 public class WeavingGridControl extends GridControl {
     
-    /** To save lots of downcasting from TableModel. */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	/** To save lots of downcasting from TableModel. */
     private AbstractWeavingDraftModel model;
     Point dragStart = null;
     Point dragEnd = null;

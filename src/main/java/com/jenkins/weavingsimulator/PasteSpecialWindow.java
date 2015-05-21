@@ -10,6 +10,10 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 
 public class PasteSpecialWindow extends javax.swing.JDialog {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JCheckBox transpose;
 	private JCheckBox mirror_v;
 	private JCheckBox mirror_h;

@@ -25,19 +25,23 @@
 
 package com.jenkins.weavingsimulator.models;
 
-import com.jenkins.weavingsimulator.datatypes.Palette;
-import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
-
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.File;
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Deque;
+import java.util.List;
+
+import com.jenkins.weavingsimulator.datatypes.Palette;
+import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
 
 
 /**
  * An EditingSession holds the state for editing a WeavingDraft.
+ * It binds together various aspects of the editing into one place to
+ * allow navigation between them.
  * @author ajenkins
  */
 public class EditingSession {
@@ -68,7 +72,8 @@ public class EditingSession {
     private boolean draftModified;
     
     private PasteGrid selection;
-    
+	private List<View> views = new ArrayList<View>();
+	
     public EditingSession(WeavingDraft draft) {
         propertySupport = new PropertyChangeSupport(this);
 
@@ -91,9 +96,19 @@ public class EditingSession {
 		});
 		selection = new PasteGrid();
     }
+
+    /** Interface to a view of the editing session. The session's idea 
+     * of the view is very limited, basically it can enumerate them and 
+     * close them.
+     * @author pete
+     *
+     */
+    public interface View {
+    	public abstract void closeView();
+    	public abstract String getViewName();
+    }
     
-    
-    public void addPropertyChangeListener(PropertyChangeListener listener) {
+	public void addPropertyChangeListener(PropertyChangeListener listener) {
         propertySupport.addPropertyChangeListener(listener);
     }
 
@@ -173,7 +188,6 @@ public class EditingSession {
      * @return Value of property file.
      */
     public File getFile() {
-
         return this.file;
     }
 
@@ -182,9 +196,9 @@ public class EditingSession {
      * @param file New value of property file.
      */
     public void setFile(File file) {
-
         File oldFile = this.file;
         this.file = file;
+        draft.setName(file.getName());
         propertySupport.firePropertyChange (FILE_PROPERTY, oldFile, file);
     }
 
@@ -193,7 +207,6 @@ public class EditingSession {
      * @return Value of property modified.
      */
     public boolean isDraftModified()  {
-
         return this.draftModified;
     }
 
@@ -202,7 +215,6 @@ public class EditingSession {
      * @param draftModified New value of property modified.
      */
     public void setDraftModified(boolean draftModified) {
-
         boolean oldDraftModified = this.draftModified;
         this.draftModified = draftModified;
         propertySupport.firePropertyChange (DRAFT_MODIFIED_PROPERTY, 
@@ -223,5 +235,9 @@ public class EditingSession {
 		selection = selectedCells;		
         propertySupport.firePropertyChange (SELECTION_PROPERTY, 
         		oldSelection, selection);
+	}
+	
+	public List<View> getViews() {
+		return views;
 	}
 }

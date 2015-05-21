@@ -2,6 +2,7 @@ package com.jenkins.weavingsimulator;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+
 import javax.swing.JFormattedTextField;
 
 public class TextFieldBinder implements PropertyChangeListener{

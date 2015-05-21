@@ -1,8 +1,10 @@
 package com.jenkins.weavingsimulator.models;
 
+import java.beans.BeanInfo;
+import java.beans.IntrospectionException;
+import java.beans.Introspector;
+import java.beans.PropertyDescriptor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.Map;
-import java.beans.*;
 
 public class BeanPropertyCommand<T> implements Command {
 	
@@ -11,6 +13,7 @@ public class BeanPropertyCommand<T> implements Command {
 	T oldValue;
 	PropertyDescriptor theProperty;
 
+	@SuppressWarnings("unchecked")
 	public BeanPropertyCommand (Object bean, String property, T value) {
 		theBean = bean;
 		newValue = value;
@@ -18,8 +21,6 @@ public class BeanPropertyCommand<T> implements Command {
 			BeanInfo info = Introspector.getBeanInfo(bean.getClass());
 			PropertyDescriptor[] pd = info.getPropertyDescriptors();
 			for (PropertyDescriptor p : pd) {
-				String x = p.getName();
-				String y = property;
 				if (p.getName().equals(property)) {
 					theProperty = p;
 				}

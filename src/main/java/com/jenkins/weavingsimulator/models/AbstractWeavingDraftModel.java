@@ -42,6 +42,10 @@ import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
 public abstract class AbstractWeavingDraftModel 
     extends AbstractTableModel 
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private EditingSession session;
     /** Holds value of property draft. */
     protected WeavingDraft draft;

@@ -49,6 +49,11 @@ import java.util.prefs.Preferences;
  */
 public class Palette implements Serializable {
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
      * Default color for palette entries, if a color hasn't been set
      */
     public static final Color DEFAULT_COLOR = Color.WHITE;

@@ -56,7 +56,6 @@ public class NetworkDraftTest extends TestCase {
 					  	 11, 10, 13, 12, 15, 14, 1, 0));
 	}
 	
-	@SuppressWarnings("unchecked")
 	public void testLiftPlanCanBeCreatedFromPatternAndKeys() {
 		// Schlein calls it a "peg plan", but it is a liftplan everywhere
 		// else in here.

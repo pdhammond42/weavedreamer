@@ -25,17 +25,22 @@
 
 package com.jenkins.weavingsimulator.models;
 
-import com.jenkins.weavingsimulator.datatypes.WeftPick;
 import java.awt.Color;
 import java.beans.IndexedPropertyChangeEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+
+import com.jenkins.weavingsimulator.datatypes.WeftPick;
 
 /**
  *
  * @author  ajenkins
  */
 public class StepColorModel extends AbstractWeavingDraftModel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private EditingSession session;
 	
     /** Creates a new instance of StepColorModel */

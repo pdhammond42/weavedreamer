@@ -28,7 +28,7 @@ package com.jenkins.weavingsimulator.models;
 import javax.swing.event.TableModelEvent;
 import javax.swing.table.TableModel;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 /**
  *
