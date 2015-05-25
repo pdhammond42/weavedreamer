@@ -28,7 +28,6 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.util.ArrayList;
 
-import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
 import com.jenkins.weavingsimulator.models.AbstractWeavingDraftModel;
 import com.jenkins.weavingsimulator.models.EditingSession;
 import com.jenkins.weavingsimulator.models.StatusBarModel;
@@ -61,8 +60,6 @@ import com.jenkins.weavingsimulator.models.WeavingPatternModel;
 		for (GridControl g: grids) {
 			g.setSquareWidth(15);
 		}
-		
-		WeavingDraft draft = session.getDraft();
 		
 		weavingPatternGrid.setModel(new WeavingPatternModel(session));
 		weavingPatternGrid.setName("weavingPatternGrid");
@@ -112,12 +109,9 @@ import com.jenkins.weavingsimulator.models.WeavingPatternModel;
 	/**
 	 * This method is called from within the constructor to initialize the form.
 	 * This has been modified beyond recognition of the form editor, 
-	 * don't try to use it with Netbeans.
-	 * A specialisation of this class should create its component objects,
-	 * then call the base class method. 
+	 * don't try to use it with Netbeans. 
 	 */
 	protected void initComponents() {
-		java.awt.GridBagConstraints gridBagConstraints;
 
 		jScrollPane1 = new javax.swing.JScrollPane();
 		jPanel1 = new javax.swing.JPanel();
@@ -134,19 +128,6 @@ import com.jenkins.weavingsimulator.models.WeavingPatternModel;
 		setResizable(true);
 
 		jPanel1.setLayout(new java.awt.GridBagLayout());
-		layoutComponents();
-		
-		jScrollPane1.setViewportView(jPanel1);
-		getContentPane().add(jScrollPane1, java.awt.BorderLayout.CENTER);
-
-		pack();
-	}
-	
-	/** Insert the components into the display. An override should 
-	 * insert the base class's components into the specialisation's layout. 
-	 * The implementation should use insertComponent to actually do the layout.
-	 */
-	protected void layoutComponents() {
 		insertComponent(warpEndColorGrid, 1, 0);
 		insertComponent(threadingDraftGrid, 1, 1);
 		insertComponent(tieUpGrid, 2, 1);
@@ -154,10 +135,15 @@ import com.jenkins.weavingsimulator.models.WeavingPatternModel;
 		insertComponent(treadlingDraftGrid, 2, 2);
 		insertComponent(pickColorGrid, 3,2);
 		insertComponent(palettePanel, 0,2);		
+		
+		jScrollPane1.setViewportView(jPanel1);
+		getContentPane().add(jScrollPane1, java.awt.BorderLayout.CENTER);
+
+		pack();
 	}
 	
 	// Inserts the given component into the control grid on the main scroll panel.
-	protected void insertComponent (Component comp, int gridX, int gridY) {
+	private void insertComponent (Component comp, int gridX, int gridY) {
 		java.awt.GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
 		gridBagConstraints.gridx = gridX;
 		gridBagConstraints.gridy = gridY;
@@ -166,7 +152,7 @@ import com.jenkins.weavingsimulator.models.WeavingPatternModel;
 	}
 	
 	// Overload to ensure the control gets added to the list of zoomable grids.
-	protected void insertComponent (GridControl comp, int gridX, int gridY) {
+	private void insertComponent (GridControl comp, int gridX, int gridY) {
 		insertComponent((Component)comp, gridX, gridY);
 		grids.add(comp);
 	}

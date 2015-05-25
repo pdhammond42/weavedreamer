@@ -124,7 +124,8 @@ public class NetworkDraft {
 		for (List<Boolean> i: key2) {
 			setSizeBool(((Vector<Boolean>)i), initialRows);
 		}
-		propertyChangeSupport.firePropertyChange("initialRows", oldValue, initialRows);						
+		propertyChangeSupport.firePropertyChange("initialRows", oldValue, initialRows);		
+		calculateShaftLimit();
 	}
 
 	public int getInitialCols() {
@@ -167,6 +168,32 @@ public class NetworkDraft {
 		int oldValue = this.ribbonWidth;
 		this.ribbonWidth = ribbonWidth;
 		propertyChangeSupport.firePropertyChange("ribbonWidth", oldValue, ribbonWidth);		
+	}
+	
+	public int getShaftLimit() {
+		return shaftLimit;
+	}
+	
+	public void setShaftLimit(int shaftLimit) {
+		int oldValue = this.shaftLimit;
+		this.shaftLimit = shaftLimit;
+		propertyChangeSupport.firePropertyChange("shaftLimit", oldValue, shaftLimit);		
+	}
+	
+	public int getLoomShafts() {
+		return loomShafts;
+	}
+
+	public void setLoomShafts(int loomShafts) {
+		int oldValue = this.loomShafts;
+		this.loomShafts = loomShafts;
+		propertyChangeSupport.firePropertyChange("loomShafts", oldValue, loomShafts);
+		calculateShaftLimit();
+	}
+	
+	private void calculateShaftLimit() {
+		int limit= Math.max(getLoomShafts() - getInitialRows() + 1, 1);
+		setShaftLimit(limit);
 	}
 	
 	/** Removes a PropertyChangeListener from the listener list.
@@ -263,6 +290,15 @@ public class NetworkDraft {
 	 */
 	private int ribbonWidth;
 	
+	/** Number of shafts available	
+	 */
+	private int loomShafts;
+	
+	/** Number of shafts to be used for the pattern. Defaults to the 
+	 * shaft rule (loomShafts - initialRows + 1)
+	 */
+	private int shaftLimit;
+	
 	/**
 	 * Takes a pattern line and returns a copy of it reduced to fit in the given height
 	 * by the Telescope approach (i.e. wrapping, but that is used to mean something else in 
@@ -289,27 +325,31 @@ public class NetworkDraft {
 	 * @return A new line such that 0 <= line[i] < height. 
 	 */
 	public static List<Integer> Digitize(List<Integer> line, int height) {
-		List<Integer> ret = new ArrayList<Integer>();
 		int max = Collections.max(line) + 1;
-		for (Integer i : line) {
-			ret.add(i * height / max);
+		if (max > height) {
+			List<Integer> ret = new ArrayList<Integer>();
+			for (Integer i : line) {
+				ret.add(i * height / max);
+			}
+			return ret;
 		}
-		return ret;
+		else {
+			return line;
+		}
 	}
 		
 	/**
-	 * Given an Initial and a Pattern line, creates a Threading line by applying
+	 * Creates a Threading line by applying
 	 * the pattern line to a network formed by repeating the initial to fit
-	 * the dimensions of the pattern. It follows from that that the pattern line
-	 * should be reduced to the appropriate height before calling.
-	 * @param pattern Pattern line
-	 * @param initial Initial grid
+	 * the dimensions of the pattern. The pattern line will be 
+	 * reduced to the appropriate height if necessary.
 	 * @return A set of shaft threadings.
 	 */
-	public static List<Integer> Threading(List<Integer> pattern, List<Integer> initial) {
+	public List<Integer> Threading() {
+		List<Integer> pattern = compressPatternLine(shaftLimit);
 		List<Integer> threading = new ArrayList<Integer>();
 		int initialRows = Collections.max(initial) + 1;
-		int patternRows = Collections.max(pattern) + 1;
+		int patternRows = Collections.max(patternLine) + 1;
 		for (int i = 0; i < pattern.size(); i++) {
 			int networkRow = initial.get(i % initial.size());
 			// I'm sure there is a mathsy way of doing this but this is all 
@@ -318,54 +358,38 @@ public class NetworkDraft {
 			while (row > networkRow) {
 				networkRow += initialRows;
 			}
-			threading.add(networkRow % patternRows);
+			threading.add(networkRow % loomShafts);
 		}
 		return threading;
 	}
-	
-	public List<Integer> Threading(int shafts) {
-		return Threading (compressPatternLine(shafts), initial);
-	}
-	
+
 	/**
 	 * Performs the "cut and paste" masking of the key liftplans with the
-	 * pattern line, expanded by width. The liftplan has the same dimensions as
-	 * the incoming pattern line.
-	 * @param pattern Pattern line
-	 * @param key1 Key liftplan used where the pattern line is not.
-	 * @param key2 Key liftplan used where the pattern line is.
-	 * @param width Width of the ribbon that the pattern line is expanded to.
+	 * pattern line, expanded by width. 
 	 * @return A liftplan.
 	 */
-	public static List<boolean[]> Liftplan (List<Integer> pattern,
-			List<List<Boolean>> key1,
-			List<List<Boolean>> key2,
-			int width) {
+	public List<boolean[]> Liftplan () {
+		List<Integer> pattern = compressPatternLine(shaftLimit);
 		List<boolean[]> liftplan = new ArrayList<boolean[]>();
 		
 		// The pattern line has been rotated to the vertical for this part.
 		// Set the liftplan to the corresponding value from key1 where
 		// the pattern ribbon is, or the value from key2 where it isn't.
-		int columns = Collections.max(pattern) + 1;
 		int keyColumns = key1.size();
 		int keyRows = key1.get(0).size();
 		for (int irow = 0; irow < pattern.size(); irow++) {
-			boolean[] row = new boolean[columns];
+			boolean[] row = new boolean[loomShafts];
 			int ribbonLeft = pattern.get(irow);
-			int ribbonRight = ribbonLeft + width;
-			for (int icol = 0; icol < columns; icol++) {
+			int ribbonRight = ribbonLeft + ribbonWidth;
+			for (int icol = 0; icol < loomShafts; icol++) {
 				boolean inRibbon = (icol >= ribbonLeft && icol < ribbonRight) ||
-						(ribbonRight > columns && icol < ribbonRight % columns);
+						(ribbonRight > loomShafts && icol < ribbonRight % loomShafts);
 				List<List<Boolean>> key = inRibbon ? key1 : key2;
 				row[icol] = key.get(icol % keyColumns).get(irow % keyRows);
 			}
 			liftplan.add(row);
 		}
 		return liftplan;
-	}
-	
-	public List<boolean[]> Liftplan (int shafts) {
-		return Liftplan(compressPatternLine(shafts), key1, key2, ribbonWidth);
 	}
 	
 	List<Integer> compressPatternLine (int shafts) {
@@ -425,6 +449,8 @@ public class NetworkDraft {
     	.append(initialRows, n.initialRows)
     	.append(patternLineRows, n.patternLineRows)
     	.append(ribbonWidth, n.ribbonWidth)
+    	.append(shaftLimit, n.shaftLimit)
+    	.append(loomShafts, n.loomShafts)
     	.isEquals();
     }
 
@@ -438,6 +464,8 @@ public class NetworkDraft {
     	.append(initialRows)
     	.append(patternLineRows)
     	.append(ribbonWidth)
+    	.append(shaftLimit)
+    	.append(loomShafts)
 		.toHashCode();
     }
 

@@ -55,6 +55,8 @@ import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 import javax.swing.filechooser.FileView;
 
+import org.hamcrest.core.IsInstanceOf;
+
 import com.jenkins.weavingsimulator.datatypes.Palette;
 import com.jenkins.weavingsimulator.datatypes.WIFIO;
 import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
@@ -231,7 +233,7 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
         javax.swing.JMenu viewMenu = new javax.swing.JMenu();
     	viewMenu.setMnemonic('v');
         viewMenu.setText("View");
-
+        
         javax.swing.JMenuItem zoomInMenuItem = new javax.swing.JMenuItem();
         zoomInMenuItem.setText("Zoom In");
         zoomInMenuItem.addActionListener(new java.awt.event.ActionListener() {
@@ -249,6 +251,18 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
             }
         });
         viewMenu.add(zoomOutMenuItem);
+        
+        viewMenu.addMenuListener(new MenuListener() {
+			public void menuSelected(MenuEvent e) {
+	        	boolean enabled = mainDesktop.getSelectedFrame() instanceof WeavingDraftWindow;
+	        	zoomInMenuItem.setEnabled(enabled);
+	        	zoomOutMenuItem.setEnabled(enabled);
+			}
+			public void menuDeselected(MenuEvent e) {
+			}
+			public void menuCanceled(MenuEvent e) {
+			}
+        });
 
         tiledViewMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_T,
             Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
@@ -314,7 +328,6 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
 			});
     		windowMenu.add(item);
     	}
-
 	}
 
 	protected void savePaletteItemActionPerformed(ActionEvent evt) {

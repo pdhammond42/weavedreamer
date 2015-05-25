@@ -211,7 +211,23 @@ public class AppDriver{
 		.click();			
 	}
 	
-    class TiledView {
+	public void setInitial (int row, int column) {
+		initialGrid().click(row, column);
+	}
+	
+	public void setKey1 (int row, int column) {
+		key1Grid().click(row, column);
+	}
+
+	public void setKey2 (int row, int column) {
+		key2Grid().click(row, column);
+	}
+
+	public void setPatternLine (int row, int column) {
+		patternLineGrid().click(row, column);
+	}
+
+	class TiledView {
     	Window window;
     	
     	public TiledView (Window window) {
@@ -296,6 +312,10 @@ public class AppDriver{
     	assertThat (mainWindow.getTextBox("statusBar").textContains(text));
     }
     
+    public void initialIs (int row, int column, Color expected) {
+		assertThat(initialGrid().backgroundNear(row, column, expected));
+    }
+    
     //
 	// UI element access
 	//
@@ -336,7 +356,22 @@ public class AppDriver{
 		return mainWindow.getTable("paletteGrid");
 	}
 	
-	//
+	private Table initialGrid() {
+		return mainWindow.getTable("initialGrid");
+	}
+	
+	private Table key1Grid() {
+		return mainWindow.getTable("key1Grid");
+	}
+	
+	private Table key2Grid() {
+		return mainWindow.getTable("key2Grid");
+	}
+	
+	private Table patternLineGrid() {
+		return mainWindow.getTable("patternLineGrid");
+	}
+		//
 	// Helpers
 	//
 	private class PropertiesHandler extends WindowHandler {

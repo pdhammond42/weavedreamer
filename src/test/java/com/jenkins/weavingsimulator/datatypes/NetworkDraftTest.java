@@ -43,14 +43,24 @@ public class NetworkDraftTest extends TestCase {
 				contains(0, 0, 3));
 	}
 	
+	public void testDigitizeDoesNotChangeWhenNotNeeded() {
+		List<Integer> pl = Arrays.asList(0, 1, 2);
+		
+		assertThat(NetworkDraft.Digitize(pl, 6), 
+				contains(0, 1, 2));			
+	}
+	
 	public void testPatternLineCanProjectToNetwork() {
 		// Test case taken from Schlein p28.
-		List<Integer> initial = Arrays.asList(3, 2, 1, 0);
-		List<Integer> pattern = Arrays.asList
+		NetworkDraft draft = new NetworkDraft();
+		draft.setLoomShafts(16);
+		draft.setShaftLimit(16);
+		draft.setInitial(Arrays.asList(3, 2, 1, 0));
+		draft.setPatternLine(Arrays.asList
 				(14, 14, 15, 15, 15, 15, 15,  0, 
 				  1,  2,  3,  4,  5,  6,  7,  8, 
-				  8,  9, 10, 11, 12, 13, 14, 15);
-		assertThat(NetworkDraft.Threading (pattern, initial), 
+				  8,  9, 10, 11, 12, 13, 14, 15));
+		assertThat(draft.Threading (), 
 				contains(15, 14,  1,  0, 15,  2, 1, 0, 
 						  3,  2,  5,  4,  7,  6, 9, 8, 
 					  	 11, 10, 13, 12, 15, 14, 1, 0));
@@ -59,26 +69,38 @@ public class NetworkDraftTest extends TestCase {
 	public void testLiftPlanCanBeCreatedFromPatternAndKeys() {
 		// Schlein calls it a "peg plan", but it is a liftplan everywhere
 		// else in here.
-		List<Integer> pattern = Arrays.asList(0,1,2,3,4,5,6,7,8,9,10,11);
-		List<List<Boolean>> key1 = Arrays.asList(
+		NetworkDraft draft = new NetworkDraft();
+		draft.setPatternLine(Arrays.asList(0,1,2,3,4,5,6,7,8,9,10,11));
+		draft.setKey1(Arrays.asList(
 				Arrays.asList(true, true, true, false),
 				Arrays.asList(true, true, false, true),
 				Arrays.asList(true, false, true, true),
 				Arrays.asList(false, true, true, true)
-				);
-		List<List<Boolean>> key2 = Arrays.asList(
+				));
+		draft.setKey2(Arrays.asList(
 				Arrays.asList(true, false, false, false),
 				Arrays.asList(false, true, false, false),
 				Arrays.asList(false, false, true, false),
 				Arrays.asList(false, false, false, true)
-				);		
-		int width=3;
+				));		
+		draft.setRibbonWidth(3);
+		draft.setLoomShafts(12);
+		draft.setShaftLimit(12);
 		// boolean[] here for easy interfacing to WeftPick.
-		List<boolean[]> liftplan =
-				NetworkDraft.Liftplan (pattern, key1, key2, width); 
+		List<boolean[]> liftplan = draft.Liftplan(); 
 		
 		// Should be true, true true from col 0-2 key1, then false from col 3 of key2, then 2 repeats of key2.
 		assertThat(ArrayUtils.toObject(liftplan.get(0)), is(arrayContaining(true, true, true, false, true, false, false, false, true, false, false, false)));
+	}
+	
+	public void testShaftLimitDefaultsToShaftRule() {
+		NetworkDraft draft = new NetworkDraft();
+		draft.setLoomShafts (16);
+		draft.setInitialRows(6);
+		assertThat(draft.getShaftLimit(), is(11));
+		
+		draft.setLoomShafts(12);
+		assertThat(draft.getShaftLimit(), is(7));
 	}
 	
 	// String the lot together 
@@ -129,7 +151,9 @@ public class NetworkDraftTest extends TestCase {
 		assertThat(draft.getKey1().size(), is(4));
 		assertThat(draft.getKey1().get(0).size(), is(4));
 		
-		assertThat(draft.Threading(16), 
+		draft.setLoomShafts(16);
+		draft.setShaftLimit(16);
+		assertThat(draft.Threading(), 
 				contains(15, 14,  1,  0, 15,  2, 1, 0, 
 						  3,  2,  5,  4,  7,  6, 9, 8, 
 					  	 11, 10, 13, 12, 15, 14, 1, 0));
@@ -141,7 +165,7 @@ public class NetworkDraftTest extends TestCase {
 			}
 		}
 		
-		List<boolean[]> liftplan = draft.Liftplan(16);
+		List<boolean[]> liftplan = draft.Liftplan();
 		assertThat (ArrayUtils.toObject(liftplan.get(0)), 
 				is(arrayContaining(
 						true, false, false, false, 
@@ -154,8 +178,52 @@ public class NetworkDraftTest extends TestCase {
 						false, false, false, false,
 						false, false, false, false,
 						false, false, false, false)));	
-		}
+	}
 	
+	public void testPatternLineWorksWhenNotFull(){
+		// A straight pattern line of 0 should give a repeat of 
+		// the initial into the threading, and a copy of key1 in 
+		// the first ribbonWidth columns of the liftplan and a copy of key2 in the rest.
+		
+		NetworkDraft draft = new NetworkDraft();
+		draft.setLoomShafts(12);
+		draft.setInitialRows (4);
+		draft.setInitialCols(4);
+
+		draft.setPatternLineRows(8);
+		draft.setPatternLineCols(6);
+
+		draft.setInitialRow(0, 3);
+		draft.setInitialRow(1, 2);
+		draft.setInitialRow(2, 1);
+		draft.setInitialRow(3, 0);	
+	
+		draft.setPatternLineRow(0, 0);
+		draft.setPatternLineRow(1, 0);
+		draft.setPatternLineRow(2, 0);
+		draft.setPatternLineRow(3, 0);
+		draft.setPatternLineRow(4, 0);
+		draft.setPatternLineRow(5, 0);
+		
+		assertThat(draft.Threading(), 
+				contains(3, 2, 1, 0, 3, 2));
+		
+		draft.setRibbonWidth(3);
+		for (int x =0; x < 4; ++x) {
+			for (int y=0; y<4; ++y) {
+				draft.setKey1(x, y, true);
+			}
+		}
+		
+		List<boolean[]> liftplan = draft.Liftplan();
+		assertThat (ArrayUtils.toObject(liftplan.get(0)), 
+				is(arrayContaining(
+						true, true, true, false, false, false, false, false, false, false, false, false)));
+		assertThat (ArrayUtils.toObject(liftplan.get(5)), 
+				is(arrayContaining(
+						true, true, true, false, false, false, false, false, false, false, false, false)));
+		}
+
 	public void testResizeInitial() {
 		NetworkDraft draft = new NetworkDraft();
 		

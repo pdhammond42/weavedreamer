@@ -461,6 +461,9 @@ public class WeavingDraft {
 			network.removePropertyChangeListener(networkListener);
 			network = null;
 		}
+		if (isNetwork) {
+			network.setLoomShafts(numHarnesses);
+		}
 		
         if (numEnds > getEnds().size()) {
             while (numEnds > getEnds().size())
@@ -768,17 +771,16 @@ public class WeavingDraft {
          */
     	public void propertyChange(java.beans.PropertyChangeEvent evt) {
     		try{
-    			List<Integer> threads = network.Threading(getNumHarnesses());
+    			List<Integer> threads = network.Threading();
     			for (int i = 0; i != getEnds().size(); ++i) {
     				getEnds().get(i).setHarnessId(threads.get(i%threads.size()));
     			}
 
-    			List<boolean[]> picks = network.Liftplan(getNumHarnesses());
+    			List<boolean[]> picks = network.Liftplan();
     			for (int i = 0; i != getPicks().size(); ++i) {
     				getPicks().get(i).setTreadles(picks.get(i % picks.size()));
     			} 
     		} catch (Exception w) {
-    			String s = w.toString();
     		}
     	}
     }

@@ -26,7 +26,7 @@ public class WifIOTest extends TestCase {
     // A minimal WIF file as specified should not raise an exception.
     public void testMinimalWif () throws IOException {
     	WIFIO io = new WIFIO();
-    	WeavingDraft draft = io.readWeavingDraft(new StringReader(minimal));
+    	io.readWeavingDraft(new StringReader(minimal));
     };
     
     // A minimal usable WIF file can be read. Specifically,

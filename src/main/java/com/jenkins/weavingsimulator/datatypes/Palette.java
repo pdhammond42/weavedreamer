@@ -85,7 +85,9 @@ public class Palette implements Serializable {
      * @param colors The palette will be initialized with a copy of <CODE>colors</CODE>.
      */
     public Palette(List<Color> colors, String name) {
-        this.colors = new ArrayList<Color>(colors);
+    	if (colors != null) {
+    		this.colors = new ArrayList<Color>(colors);
+    	}
         this.name = name;
     }
     

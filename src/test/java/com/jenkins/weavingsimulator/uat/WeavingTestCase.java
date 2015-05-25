@@ -1,6 +1,8 @@
 package com.jenkins.weavingsimulator.uat;
 
 import java.awt.Color;
+import java.lang.reflect.InvocationTargetException;
+import java.util.Properties;
 
 import org.uispec4j.UISpecTestCase;
 import org.uispec4j.interception.MainClassAdapter;
@@ -16,12 +18,24 @@ abstract class WeavingTestCase extends UISpecTestCase {
 	protected final Color white = new Color(0xffffff);
 	
 	protected AppDriver ui;
-	
+
 	public void setUp() {
-		setAdapter(new MainClassAdapter(WeavingSimulatorApp.class,
-				new String[0]));
-		
-		ui = new AppDriver(getMainWindow());
+		try {
+			setAdapter(new MainClassAdapter(WeavingSimulatorApp.class,
+					new String[0]));
+
+			ui = new AppDriver(getMainWindow());
+		} 	catch (RuntimeException e) {
+			if(e.getCause() instanceof InvocationTargetException) {
+				InvocationTargetException te = (InvocationTargetException)e.getCause();
+				if (te.getTargetException().getMessage().contains("UISpecToolkit cannot be cast")) {
+					throw new ClassCastException ("Failed to initialise the toolkit.\n" +
+							"Set the VM argument '-Dawt.toolkit=net.java.openjdk.cacio.ctc.CTCToolkit'" +
+							"to avoid this");
+				}
+			}
+			throw(e);
+		}
 	}
 
 	public void tearDown() {

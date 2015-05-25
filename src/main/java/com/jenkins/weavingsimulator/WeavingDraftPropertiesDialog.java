@@ -102,7 +102,7 @@ public class WeavingDraftPropertiesDialog extends javax.swing.JDialog {
         okButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
         
-        palettes_combo = new javax.swing.JComboBox(palettes);
+        palettes_combo = new javax.swing.JComboBox<Palette>(palettes);
         palettes_combo.setName("palettes_combo");
 
         setTitle("Weaving Draft Properties");
@@ -184,7 +184,7 @@ public class WeavingDraftPropertiesDialog extends javax.swing.JDialog {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         getContentPane().add(palette_label, gridBagConstraints);
         
-        palettes_combo.setPrototypeDisplayValue("about this wide");
+        palettes_combo.setPrototypeDisplayValue(new Palette(null, "about this wide"));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
@@ -278,6 +278,8 @@ public class WeavingDraftPropertiesDialog extends javax.swing.JDialog {
         numHarnessesField.setValue(value_or_default(session.getDraft().getNumHarnesses(), "harnesses", 4));
         numTreadlesField.setValue(value_or_default(session.getDraft().getTreadles().size(), "treadles", 6));
         liftplanCheck.setSelected(session.getDraft().getIsLiftplan());
+        networkCheck.setSelected(session.getDraft().getNetwork() != null);
+        liftplanCheck.setEnabled(!networkCheck.isSelected());
         editFinished = false;
         
         setVisible(true);
@@ -335,7 +337,7 @@ public class WeavingDraftPropertiesDialog extends javax.swing.JDialog {
     // used by JFormattedTextFields.
     private NonNegativeIntFormatter formatter = new NonNegativeIntFormatter();
     private Vector<Palette> palettes = new Vector<Palette>();
-    private javax.swing.JComboBox palettes_combo;
+    private javax.swing.JComboBox<Palette> palettes_combo;
     private javax.swing.JCheckBox liftplanCheck;
     private javax.swing.JCheckBox networkCheck;
     private GridControl paletteGrid;

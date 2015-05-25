@@ -46,8 +46,7 @@ public class CellSelectionTransformsTest  extends TestCase {
 	
 	public void testVerticalScaleMustBePositive () {
 		try {
-			PasteGrid cells = 
-					CellSelectionTransforms.ScaleVertical (-3).Transform(selection);
+			CellSelectionTransforms.ScaleVertical (-3).Transform(selection);
 			fail("Expected Illegal Argument Exception");
 		}
 		catch(IllegalArgumentException e) {
@@ -66,8 +65,7 @@ public class CellSelectionTransformsTest  extends TestCase {
 	
 	public void testHorzontalScaleMustBePositive () {
 		try {
-			PasteGrid cells = 
-					CellSelectionTransforms.ScaleHorizontal (-3).Transform(selection);
+			CellSelectionTransforms.ScaleHorizontal (-3).Transform(selection);
 			fail("Expected Illegal Argument Exception");
 		}
 		catch(IllegalArgumentException e) {

@@ -145,8 +145,13 @@ public class WeavingGridControl extends GridControl {
     			final int steps = Math.max(Math.abs(diffX), Math.abs(diffY))+1;
     			if (editedValueProvider != null) {
     				setValueAt (editedValueProvider.getValue(start.row, start.column), start.row, start.column);
-    				for (int i = 1; i < steps; i++) {
-    					setValueAt (editedValueProvider.getValue(start.row + i*diffY/(steps-1), start.column+i*diffX/(steps-1)), start.row + i*diffY/(steps-1), start.column+i*diffX/(steps-1));
+    				try {
+    					for (int i = 1; i < steps; i++) {
+    						setValueAt (editedValueProvider.getValue(start.row + i*diffY/(steps-1), start.column+i*diffX/(steps-1)), start.row + i*diffY/(steps-1), start.column+i*diffX/(steps-1));
+    					}	
+    				} catch (IndexOutOfBoundsException e) {
+    					// Must have been released outside the grid. 
+    					// Ignore, we've done all the cells we can.
     				}	
     			}	
     		}

@@ -78,12 +78,6 @@ public class WIFFileTest extends TestCase {
         assertBadFormat(contents);
     }
 
-    // Ill-formed because its contents promises a colour palette that is not there.
-    public void testMissingSection() throws Exception {
-        String contents = WIF_SECTION + "[CONTENTS]\n" + "COLOR PALETTE=true\n";
-        //assertBadFormat(contents);
-    }
-
     public void testSectionCanbeExcluded() throws Exception {
         String contents = WIF_SECTION + "[CONTENTS]\n" + "COLOR PALETTE=no\n";
         assertGoodFormat(contents);
