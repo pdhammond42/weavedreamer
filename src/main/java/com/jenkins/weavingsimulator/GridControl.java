@@ -32,6 +32,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.JTable;
+import javax.swing.KeyStroke;
 
 import com.jenkins.weavingsimulator.models.AbstractWeavingDraftModel;
 import com.jenkins.weavingsimulator.models.WeavingPatternCellModel;
@@ -96,6 +97,11 @@ public class GridControl extends JTable {
 			public void mouseReleased(MouseEvent e) {
 			}    
         });
+        
+        // Prevent the grid from handling arrow events, otherwise the scroll panel behaviour get really confusing.
+        for (String key: new String[] {"UP","DOWN","LEFT","RIGHT"}){
+        	getInputMap(WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(KeyStroke.getKeyStroke(key), "none");
+        }
     }
     
     
