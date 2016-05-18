@@ -4,4 +4,3 @@
 
 
 * Support for writing WIF
-

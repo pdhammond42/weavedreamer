@@ -7,7 +7,7 @@
   <groupId>com.jenkins.weavingsimulator</groupId>
   <artifactId>weavingSimulator</artifactId>
   <packaging>jar</packaging>
-  <version>0.2.7-SNAPSHOT</version>
+  <version>0.2.8-PRERELEASE</version>
   <name>weavingSimulator</name>
   <url>https://sourceforge.net/projects/weavingsim/</url>
   <scm>
