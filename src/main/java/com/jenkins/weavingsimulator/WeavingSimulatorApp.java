@@ -55,8 +55,6 @@ import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 import javax.swing.filechooser.FileView;
 
-import org.hamcrest.core.IsInstanceOf;
-
 import com.jenkins.weavingsimulator.datatypes.Palette;
 import com.jenkins.weavingsimulator.datatypes.WIFIO;
 import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
