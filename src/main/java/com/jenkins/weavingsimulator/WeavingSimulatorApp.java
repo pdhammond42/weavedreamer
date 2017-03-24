@@ -41,14 +41,9 @@ import java.io.OutputStream;
 import java.util.List;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
+import java.util.stream.Collectors;
 
-import javax.swing.JFileChooser;
-import javax.swing.JInternalFrame;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.KeyStroke;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.*;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.MenuEvent;
@@ -82,7 +77,13 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
         		prefs.getInt("y", getY()),
         		prefs.getInt("w", getWidth()),
         		prefs.getInt("h", getHeight()));
-        
+
+        if (prefs.getBoolean("showGettingStarted", true)) {
+            gettingStartedWindow = new GettingStartedWindow();
+            mainDesktop.add(gettingStartedWindow);
+            gettingStartedWindow.show();
+        }
+
         fileChooser = new JFileChooser(prefs.get("last_browse", ""));
         fileChooser.addChoosableFileFilter(new DraftFileFilter());
         wifFilter = new WifFileFilter();
@@ -370,22 +371,12 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
     private void helpAboutMenuItemActionPerformed () {
     	try {
     		BufferedReader reader = new BufferedReader(new InputStreamReader (this.getClass().getResourceAsStream("about.txt")));
-    		StringBuilder about = new StringBuilder();
-    		String line = reader.readLine();
-    		while (line != null) {
-    			about.append(line);
-    			about.append("\n");
-    			line = reader.readLine();
-    		}
+            String about = reader.lines().collect(Collectors.joining("\n"));
 			JOptionPane.showMessageDialog(this, about.toString(), "About", JOptionPane.INFORMATION_MESSAGE);
 		} catch (HeadlessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
-    	catch (IOException e) {
-    		// TODO Auto-generated catch block
-    		e.printStackTrace();
-    	}     
     };
     
     private void propertiesMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_propertiesMenuItemActionPerformed
@@ -450,6 +441,9 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
     	prefs.putInt("y", getY());
     	prefs.putInt("w", getWidth());
     	prefs.putInt("h", getHeight());
+        if (gettingStartedWindow != null) {
+            prefs.putBoolean("showGettingStarted", gettingStartedWindow.getShow());
+        }
         if (closeAllFrames())
         	System.exit(0);
     }//GEN-LAST:event_exitForm
@@ -742,6 +736,8 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
     
     // End of variables declaration//GEN-END:variables
     private javax.swing.JMenuItem savePaletteMenuItem;
+
+    private GettingStartedWindow gettingStartedWindow;
     
     private WifFileFilter wifFilter;
     private int newFileNum = 0;

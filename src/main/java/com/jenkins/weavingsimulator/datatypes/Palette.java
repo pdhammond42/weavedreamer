@@ -255,7 +255,7 @@ public class Palette implements Serializable {
 	}
 
 	/**
-     * Saves the given palettes into a preferences node, replacing any rpevious content.
+     * Saves the given palettes into a preferences node, replacing any previous content.
      * Adding a layer of indirection between here and preferences would be more extensible, 
      * but I don't want to extend it right now.
      * @param palettes A list of palettes to store.
