@@ -46,37 +46,35 @@ public class WeavingPatternModel extends AbstractWeavingDraftModel {
 	/** Creates a new instance of WeavingPatternModel */
 	public WeavingPatternModel(EditingSession session) {
 		super(session);
-		setDraftListener(new PropertyChangeListener() {
-			public void propertyChange(PropertyChangeEvent ev) {
-				String propName = ev.getPropertyName();
+		setDraftListener(ev -> {
+            String propName = ev.getPropertyName();
 
-				IndexedPropertyChangeEvent iev = null;
-				if (ev instanceof IndexedPropertyChangeEvent)
-					iev = (IndexedPropertyChangeEvent) ev;
+            IndexedPropertyChangeEvent iev = null;
+            if (ev instanceof IndexedPropertyChangeEvent)
+                iev = (IndexedPropertyChangeEvent) ev;
 
-				if (propName.equals("ends")) {
-					if (iev == null) {
-						// number of columns may have changed
-						fireTableStructureChanged();
-					} else { // else just end column changed
-						fireTableColumnUpdated(iev.getIndex());
-					}
-				} else if (propName.equals("picks")) {
-					if (iev == null) {
-						// number of rows changed
-						fireTableDataChanged();
-					} else {
-						// just pick row changed
-						fireTableRowsUpdated(iev.getIndex(), iev.getIndex());
-					}
-				} else if (propName.equals("treadles")) {
-					// a treadle changing can change all rows whose pick uses
-					// this treadle,
-					// so just update all rows
-					fireTableRowsUpdated(0, getRowCount());
-				}
-			}
-		});
+            if (propName.equals("ends")) {
+                if (iev == null) {
+                    // number of columns may have changed
+                    fireTableStructureChanged();
+                } else { // else just end column changed
+                    fireTableColumnUpdated(iev.getIndex());
+                }
+            } else if (propName.equals("picks")) {
+                if (iev == null) {
+                    // number of rows changed
+                    fireTableDataChanged();
+                } else {
+                    // just pick row changed
+                    fireTableRowsUpdated(iev.getIndex(), iev.getIndex());
+                }
+            } else if (propName.equals("treadles")) {
+                // a treadle changing can change all rows whose pick uses
+                // this treadle,
+                // so just update all rows
+                fireTableRowsUpdated(0, getRowCount());
+            }
+        });
 	}
 
 	/**

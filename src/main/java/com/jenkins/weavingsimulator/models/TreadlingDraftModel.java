@@ -52,22 +52,20 @@ public class TreadlingDraftModel extends CopyableWeavingGridModel {
 	/** Creates a new instance of TreadlingDraftModel */
     public TreadlingDraftModel(EditingSession session) {
         super(session);
-        setDraftListener(new PropertyChangeListener() {
-            public void propertyChange(PropertyChangeEvent ev) {
-                String propName = ev.getPropertyName();
-                if (propName.equals("treadles")) {
-                    // we only care if the *number* of treadles changes
-                    if (!(ev instanceof IndexedPropertyChangeEvent)) {
-                        fireTableStructureChanged();
-                    }
-                } else if (propName.equals("picks")) {
-                    // each pick represents a row
-                    if (ev instanceof IndexedPropertyChangeEvent) {
-                        IndexedPropertyChangeEvent iev = (IndexedPropertyChangeEvent)ev;
-                        fireTableRowsUpdated(iev.getIndex(), iev.getIndex());
-                    } else {
-                        fireTableDataChanged();
-                    }
+        setDraftListener(ev -> {
+            String propName = ev.getPropertyName();
+            if (propName.equals("treadles")) {
+                // we only care if the *number* of treadles changes
+                if (!(ev instanceof IndexedPropertyChangeEvent)) {
+                    fireTableStructureChanged();
+                }
+            } else if (propName.equals("picks")) {
+                // each pick represents a row
+                if (ev instanceof IndexedPropertyChangeEvent) {
+                    IndexedPropertyChangeEvent iev = (IndexedPropertyChangeEvent)ev;
+                    fireTableRowsUpdated(iev.getIndex(), iev.getIndex());
+                } else {
+                    fireTableDataChanged();
                 }
             }
         });

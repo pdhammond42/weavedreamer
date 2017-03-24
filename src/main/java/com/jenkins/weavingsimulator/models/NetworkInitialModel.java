@@ -17,17 +17,15 @@ public class NetworkInitialModel extends AbstractWeavingDraftModel {
 		super(session);
 		network = session.getDraft().getNetwork();
 
-		network.addPropertyChangeListener(new PropertyChangeListener() {
-			public void propertyChange(PropertyChangeEvent ev) {
-				String propName = ev.getPropertyName();
-				if (propName.equals("intitialRows")
-						|| propName.equals("initial")) {
-					fireTableDataChanged();
-				} else if (propName.equals("initialCols")) {
-					fireTableStructureChanged();
-				}
-			}
-		});
+		network.addPropertyChangeListener(ev -> {
+            String propName = ev.getPropertyName();
+            if (propName.equals("intitialRows")
+                    || propName.equals("initial")) {
+                fireTableDataChanged();
+            } else if (propName.equals("initialCols")) {
+                fireTableStructureChanged();
+            }
+        });
 	}
 
 	public int getRowCount() {

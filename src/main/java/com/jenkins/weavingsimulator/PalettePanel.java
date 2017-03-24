@@ -69,16 +69,10 @@ public class PalettePanel extends JPanel {
     private void initComponents() {
         setLayout(new BorderLayout());
     
-        ActionListener okListener = new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                session.getPalette().setColor(
-                        session.getPalette().getSelection(),
-                        colorChooser.getColor());
-            }
-        };
-        ActionListener cancelListener = new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-            }
+        ActionListener okListener = e -> session.getPalette().setColor(
+                session.getPalette().getSelection(),
+                colorChooser.getColor());
+        ActionListener cancelListener = e -> {
         };
         
         colorChooser = new JColorChooser();
@@ -92,11 +86,9 @@ public class PalettePanel extends JPanel {
         addColorBtn = new JButton("+");
         addColorBtn.setToolTipText(
                 "Add a color to the palette");
-        addColorBtn.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-            	Palette p = session.getPalette();
-            	p.setNumColors(p.getNumColors()+1);
-            }
+        addColorBtn.addActionListener(e -> {
+            Palette p = session.getPalette();
+            p.setNumColors(p.getNumColors()+1);
         });
         addColorBtn.setEnabled(true);
         addColorBtn.setName("addColorBtn");
@@ -152,11 +144,7 @@ public class PalettePanel extends JPanel {
         this.session = session;
         paletteGrid.setModel(new PaletteModel(session.getPalette()));
         session.addPropertyChangeListener(EditingSession.PALETTE_PROPERTY,
-                new PropertyChangeListener() {
-            public void propertyChange(PropertyChangeEvent ev) {
-                paletteGrid.setModel(new PaletteModel((Palette)ev.getNewValue()));
-            }
-        });
+                ev -> paletteGrid.setModel(new PaletteModel((Palette)ev.getNewValue())));
         paletteGrid.setRowSelectionInterval(0,0);
         paletteGrid.setEnabled(true);
     }

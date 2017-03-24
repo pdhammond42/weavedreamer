@@ -65,15 +65,13 @@ public abstract class AbstractWeavingDraftModel
     
     /** Creates a new instance of AbstractWeavingDraftModel */
     public AbstractWeavingDraftModel(EditingSession session) {
-        draftListener = new PropertyChangeListener() {
-            public void propertyChange(PropertyChangeEvent e) {
-                // if one of the num* properties changed, number of columns
-                // may have changed
-                if (e instanceof IndexedPropertyChangeEvent)
-                    fireTableDataChanged();
-                else
-                    fireTableStructureChanged();
-            }
+        draftListener = e -> {
+            // if one of the num* properties changed, number of columns
+            // may have changed
+            if (e instanceof IndexedPropertyChangeEvent)
+                fireTableDataChanged();
+            else
+                fireTableStructureChanged();
         };
         this.draft = session.getDraft();
         this.session = session;

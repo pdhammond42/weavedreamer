@@ -80,20 +80,16 @@ public class EditingSession {
         this.draft = draft;
         // The palette may get changed directly on the draft. The session
         // needs to propagate this.
-        this.draft.addPropertyChangeListener("palette", new PropertyChangeListener() {
-            public void propertyChange(PropertyChangeEvent e) {
-            	if (e.getPropertyName() == "palette") 
-            		propertySupport.firePropertyChange (PALETTE_PROPERTY, 
-            				e.getOldValue(), e.getNewValue());
-            }
+        this.draft.addPropertyChangeListener("palette", e -> {
+            if (e.getPropertyName() == "palette")
+                propertySupport.firePropertyChange (PALETTE_PROPERTY,
+                        e.getOldValue(), e.getNewValue());
         });
         
-		draft.addPropertyChangeListener(new PropertyChangeListener() {
-			public void propertyChange(PropertyChangeEvent ev) {
-				if (!isDraftModified())
-					setDraftModified(true);
-			}
-		});
+		draft.addPropertyChangeListener(ev -> {
+            if (!isDraftModified())
+                setDraftModified(true);
+        });
 		selection = new PasteGrid();
     }
 

@@ -24,16 +24,14 @@ public abstract class EditingSessionWindow extends JInternalFrame implements Edi
 	public EditingSessionWindow (EditingSession session) {
 		this.session = session;
 	
-		session.addPropertyChangeListener(new PropertyChangeListener() {
-			public void propertyChange(PropertyChangeEvent evt) {
-				if (evt.getPropertyName().equals(
-						EditingSession.FILE_PROPERTY))
-					fileChangedHandler((File) evt.getNewValue());
-				else if (evt.getPropertyName().equals(
-						EditingSession.DRAFT_MODIFIED_PROPERTY))
-					draftModifiedChangedHandler((Boolean) evt.getNewValue());
-			}
-		});
+		session.addPropertyChangeListener(evt -> {
+            if (evt.getPropertyName().equals(
+                    EditingSession.FILE_PROPERTY))
+                fileChangedHandler((File) evt.getNewValue());
+            else if (evt.getPropertyName().equals(
+                    EditingSession.DRAFT_MODIFIED_PROPERTY))
+                draftModifiedChangedHandler((Boolean) evt.getNewValue());
+        });
 		fileChangedHandler(getSession().getFile());
 		draftModifiedChangedHandler(getSession().isDraftModified());
 		session.getViews().add(this);
@@ -68,12 +66,7 @@ public abstract class EditingSessionWindow extends JInternalFrame implements Edi
 			tiledViewFrame.setSize(400, 400);
 			addPropertyChangeListener(
 					javax.swing.JInternalFrame.TITLE_PROPERTY,
-					new java.beans.PropertyChangeListener() {
-						public void propertyChange(
-								java.beans.PropertyChangeEvent e) {
-							tiledViewFrame.setTitle((String) e.getNewValue());
-						}
-					});
+					e -> tiledViewFrame.setTitle((String) e.getNewValue()));
 			theTiledViewFrame = tiledViewFrame;
 			session.getViews().add(theTiledViewFrame);
 		}

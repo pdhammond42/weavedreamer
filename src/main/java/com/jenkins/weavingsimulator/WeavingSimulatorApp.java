@@ -126,11 +126,7 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
             Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
         newMenuItem.setMnemonic('n');
         newMenuItem.setText("New");
-        newMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                newMenuItemActionPerformed(evt);
-            }
-        });
+        newMenuItem.addActionListener(this::newMenuItemActionPerformed);
 
         fileMenu.add(newMenuItem);
 
@@ -138,11 +134,7 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
             Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
         openMenuItem.setMnemonic('o');
         openMenuItem.setText("Open");
-        openMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                openMenuItemActionPerformed(evt);
-            }
-        });
+        openMenuItem.addActionListener(this::openMenuItemActionPerformed);
 
         fileMenu.add(openMenuItem);
 
@@ -150,31 +142,19 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
             Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
         saveMenuItem.setMnemonic('s');
         saveMenuItem.setText("Save");
-        saveMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                saveMenuItemActionPerformed(evt);
-            }
-        });
+        saveMenuItem.addActionListener(this::saveMenuItemActionPerformed);
 
         fileMenu.add(saveMenuItem);
 
         saveAsMenuItem.setMnemonic('a');
         saveAsMenuItem.setText("Save As ...");
-        saveAsMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                saveAsMenuItemActionPerformed(evt);
-            }
-        });
+        saveAsMenuItem.addActionListener(this::saveAsMenuItemActionPerformed);
 
         fileMenu.add(saveAsMenuItem);
         
         exitMenuItem.setMnemonic('x');
         exitMenuItem.setText("Exit");
-        exitMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                exitMenuItemActionPerformed(evt);
-            }
-        });
+        exitMenuItem.addActionListener(this::exitMenuItemActionPerformed);
 
         fileMenu.add(exitMenuItem);
 
@@ -186,22 +166,14 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
             Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
         propertiesMenuItem.setMnemonic('p');
         propertiesMenuItem.setText("Edit Properties");
-        propertiesMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                propertiesMenuItemActionPerformed(evt);
-            }
-        });
+        propertiesMenuItem.addActionListener(this::propertiesMenuItemActionPerformed);
 
         javax.swing.JMenuItem undoMenuItem = new javax.swing.JMenuItem();
         undoMenuItem.setText("Undo");
         undoMenuItem.setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_Z, ActionEvent.CTRL_MASK));
         
-        undoMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                undoItemActionPerformed(evt);
-            }
-        });
+        undoMenuItem.addActionListener(this::undoItemActionPerformed);
         editMenu.add(undoMenuItem);
 
         javax.swing.JMenuItem redoMenuItem = new javax.swing.JMenuItem();
@@ -209,11 +181,7 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
         redoMenuItem.setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_Y, ActionEvent.CTRL_MASK));
         
-        redoMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                redoItemActionPerformed(evt);
-            }
-        });
+        redoMenuItem.addActionListener(this::redoItemActionPerformed);
         editMenu.add(redoMenuItem);
         
         editMenu.add(propertiesMenuItem);
@@ -221,11 +189,7 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
         savePaletteMenuItem = new javax.swing.JMenuItem();
         savePaletteMenuItem.setMnemonic('p');
         savePaletteMenuItem.setText("Save Palette ...");
-        savePaletteMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                savePaletteItemActionPerformed(evt);
-            }
-        });
+        savePaletteMenuItem.addActionListener(this::savePaletteItemActionPerformed);
         editMenu.add(savePaletteMenuItem);
         menuBar.add(editMenu);
         
@@ -235,20 +199,12 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
         
         javax.swing.JMenuItem zoomInMenuItem = new javax.swing.JMenuItem();
         zoomInMenuItem.setText("Zoom In");
-        zoomInMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                zoomInItemActionPerformed(evt);
-            }
-        });
+        zoomInMenuItem.addActionListener(this::zoomInItemActionPerformed);
         viewMenu.add(zoomInMenuItem);
         
         javax.swing.JMenuItem zoomOutMenuItem = new javax.swing.JMenuItem();
         zoomOutMenuItem.setText("Zoom Out");
-        zoomOutMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                zoomOutItemActionPerformed(evt);
-            }
-        });
+        zoomOutMenuItem.addActionListener(this::zoomOutItemActionPerformed);
         viewMenu.add(zoomOutMenuItem);
         
         viewMenu.addMenuListener(new MenuListener() {
@@ -267,11 +223,7 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
             Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
         tiledViewMenuItem.setMnemonic('t');
         tiledViewMenuItem.setText("Tiled View");
-        tiledViewMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tiledViewMenuItemActionPerformed(evt);
-            }
-        });
+        tiledViewMenuItem.addActionListener(this::tiledViewMenuItemActionPerformed);
         viewMenu.add(tiledViewMenuItem);
         menuBar.add(viewMenu);
         
@@ -295,11 +247,7 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
         //helpMenu.add(contentsMenuItem);
 
         aboutMenuItem.setText("About");
-        aboutMenuItem.addActionListener(new java.awt.event.ActionListener () {
-        	public void actionPerformed(java.awt.event.ActionEvent evt) {
-        		helpAboutMenuItemActionPerformed();
-        	}
-        });
+        aboutMenuItem.addActionListener(evt -> helpAboutMenuItemActionPerformed());
         helpMenu.add(aboutMenuItem);
         menuBar.add(helpMenu);
 
@@ -316,15 +264,13 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
     	windowMenu.removeAll();
     	for (JInternalFrame w : mainDesktop.getAllFrames() ) {
     		JMenuItem item = new JMenuItem(w.getTitle());
-    		item.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					try {
-						w.setSelected(true);
-					} catch (PropertyVetoException e1) {
-					}
-					w.setVisible(true);
-				}
-			});
+    		item.addActionListener(evt -> {
+                try {
+                    w.setSelected(true);
+                } catch (PropertyVetoException ex) {
+                }
+                w.setVisible(true);
+            });
     		windowMenu.add(item);
     	}
 	}

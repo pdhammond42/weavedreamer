@@ -83,21 +83,13 @@ public class PasteSpecialWindow extends javax.swing.JDialog {
         ok = new JButton();
         ok.setText("OK");
         ok.setName("ok");
-        ok.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                onOk(evt);
-            }
-        });        
+        ok.addActionListener(evt -> onOk(evt));
         getContentPane().add(ok, makeConstraints(GridBagConstraints.RELATIVE));
         
         cancel = new JButton();
         cancel.setText("Cancel");
         cancel.setName("cancel");
-        cancel.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                onCancel(evt);
-            }
-        }); 
+        cancel.addActionListener(evt -> onCancel(evt));
         getContentPane().add(cancel, makeConstraints(GridBagConstraints.RELATIVE));
 
         pack();

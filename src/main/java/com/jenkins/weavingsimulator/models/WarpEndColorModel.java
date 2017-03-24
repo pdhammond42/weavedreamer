@@ -48,15 +48,13 @@ public class WarpEndColorModel extends AbstractWeavingDraftModel {
     public WarpEndColorModel(EditingSession session) {
         super(session);
         this.session = session;
-        setDraftListener(new PropertyChangeListener() {
-            public void propertyChange(PropertyChangeEvent ev) {
-                if (ev.getPropertyName().equals("ends")) {
-                    if (ev instanceof IndexedPropertyChangeEvent) {
-                        IndexedPropertyChangeEvent iev = (IndexedPropertyChangeEvent)ev;
-                        fireTableCellUpdated(0, iev.getIndex());
-                    } else {
-                        fireTableStructureChanged();
-                    }
+        setDraftListener(ev -> {
+            if (ev.getPropertyName().equals("ends")) {
+                if (ev instanceof IndexedPropertyChangeEvent) {
+                    IndexedPropertyChangeEvent iev = (IndexedPropertyChangeEvent)ev;
+                    fireTableCellUpdated(0, iev.getIndex());
+                } else {
+                    fireTableStructureChanged();
                 }
             }
         });

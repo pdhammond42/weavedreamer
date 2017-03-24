@@ -40,21 +40,13 @@ public class PasteMenu {
 			JMenuItem item;
 			
 	    	item = new JMenuItem("Paste");
-	    	item.addActionListener(new ActionListener () {
-				public void actionPerformed(ActionEvent e) {
-					model.pasteSelection(row, column, CellSelectionTransforms.Null());
-				}	    		
-	    	});
+	    	item.addActionListener(e -> model.pasteSelection(row, column, CellSelectionTransforms.Null()));
 	    	item.setEnabled(model.canPaste());
 	    	menu.add(item);
 
 	    	final Point loc = invoker.getLocationOnScreen();
 	    	item = new JMenuItem("Paste Special...");
-	    	item.addActionListener (new ActionListener () {
-				public void actionPerformed(ActionEvent e) {
-					showPasteSpecial(loc.x + x, loc.y + y);
-				}	    		
-	    	});
+	    	item.addActionListener (e -> showPasteSpecial(loc.x + x, loc.y + y));
 	    	item.setEnabled(model.canPaste());
 	    	menu.add(item);
 	    	

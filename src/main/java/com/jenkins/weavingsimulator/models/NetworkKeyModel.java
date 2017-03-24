@@ -27,15 +27,13 @@ public class NetworkKeyModel extends AbstractWeavingDraftModel {
 		
 		network = session.getDraft().getNetwork();
 
-		network.addPropertyChangeListener(new PropertyChangeListener() {
-            public void propertyChange(PropertyChangeEvent ev) {
-                String propName = ev.getPropertyName();
-                if (propName.equals("intitialRows") || propName.equals(adapter.getKeyProperty())) {
-                    fireTableDataChanged();
-                }
-                else if (propName.equals("initialCols")) {
-                	fireTableStructureChanged();
-                }
+		network.addPropertyChangeListener(ev -> {
+            String propName = ev.getPropertyName();
+            if (propName.equals("intitialRows") || propName.equals(adapter.getKeyProperty())) {
+                fireTableDataChanged();
+            }
+            else if (propName.equals("initialCols")) {
+                fireTableStructureChanged();
             }
         });
 	}

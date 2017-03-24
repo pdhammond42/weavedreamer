@@ -47,16 +47,14 @@ public class StepColorModel extends AbstractWeavingDraftModel {
     public StepColorModel(EditingSession session) {
         super(session);
         this.session=session;
-        setDraftListener(new PropertyChangeListener() {
-            public void propertyChange(PropertyChangeEvent ev) {
-                if (!ev.getPropertyName().equals("picks"))
-                    return;
-                if (ev instanceof IndexedPropertyChangeEvent) {
-                    IndexedPropertyChangeEvent iev = (IndexedPropertyChangeEvent)ev;
-                    fireTableCellUpdated(iev.getIndex(), 0);
-                } else {
-                    fireTableDataChanged();
-                }
+        setDraftListener(ev -> {
+            if (!ev.getPropertyName().equals("picks"))
+                return;
+            if (ev instanceof IndexedPropertyChangeEvent) {
+                IndexedPropertyChangeEvent iev = (IndexedPropertyChangeEvent)ev;
+                fireTableCellUpdated(iev.getIndex(), 0);
+            } else {
+                fireTableDataChanged();
             }
         });
     }

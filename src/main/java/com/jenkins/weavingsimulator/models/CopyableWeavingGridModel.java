@@ -24,11 +24,9 @@ public abstract class CopyableWeavingGridModel extends AbstractWeavingDraftModel
 		super (session);
 		this.session = session;
         selection = new GridSelection ();
-        session.addPropertyChangeListener(EditingSession.SELECTION_PROPERTY, new PropertyChangeListener() {
-			public void propertyChange(PropertyChangeEvent evt) {
-				if (!thisObjectSettingSelection) showSelection(0,0,0,0);
-			}
-		});
+        session.addPropertyChangeListener(EditingSession.SELECTION_PROPERTY, evt -> {
+            if (!thisObjectSettingSelection) showSelection(0,0,0,0);
+        });
     }
 	    
     /** Sets the selection to be the rows [startRow..endRow)

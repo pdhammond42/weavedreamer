@@ -67,7 +67,7 @@ public class NetworkWindow extends EditingSessionWindow {
 					initialRows.commitEdit();
 				} catch (ParseException e1) {
 				}
-				getSession().execute(new BeanPropertyCommand<Integer>(network, "initialRows", ((Long) initialRows.getValue()).intValue()));				
+				getSession().execute(new BeanPropertyCommand<>(network, "initialRows", ((Long) initialRows.getValue()).intValue()));
 			}
 			
 			public void focusGained(FocusEvent e) {
@@ -80,7 +80,7 @@ public class NetworkWindow extends EditingSessionWindow {
 					initialCols.commitEdit();
 				} catch (ParseException e1) {
 				}
-				getSession().execute(new BeanPropertyCommand<Integer>(network, "initialCols", 
+				getSession().execute(new BeanPropertyCommand<>(network, "initialCols",
 						((Long) initialCols.getValue()).intValue()));				
 			}
 			public void focusGained(FocusEvent e) {
@@ -93,7 +93,7 @@ public class NetworkWindow extends EditingSessionWindow {
 					patternLineRows.commitEdit();
 				} catch (ParseException e1) {
 				}
-				getSession().execute(new BeanPropertyCommand<Integer>(network, "patternLineRows", 
+				getSession().execute(new BeanPropertyCommand<>(network, "patternLineRows",
 						((Long) patternLineRows.getValue()).intValue()));				}
 			public void focusGained(FocusEvent e) {
 			}
@@ -105,20 +105,18 @@ public class NetworkWindow extends EditingSessionWindow {
 					patternLineCols.commitEdit();
 				} catch (ParseException e1) {
 				}
-				getSession().execute(new BeanPropertyCommand<Integer>(network, "patternLineCols", 
+				getSession().execute(new BeanPropertyCommand<>(network, "patternLineCols",
 						((Long) patternLineCols.getValue()).intValue()));			}
 			public void focusGained(FocusEvent e) {
 			}
         });
 		
-		compressionRule.addItemListener(new ItemListener() {	
-			public void itemStateChanged(ItemEvent e) {
-				if (e.getStateChange() == ItemEvent.SELECTED) {
-					getSession().execute(new BeanPropertyCommand<Boolean>(network, "telescoped", 
-							e.getItem().toString() == "Telescope"));			
-					}
-				}
-		});
+		compressionRule.addItemListener(e -> {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                getSession().execute(new BeanPropertyCommand<>(network, "telescoped",
+                        e.getItem().toString() == "Telescope"));
+                }
+            });
 		
 		ribbonWidth.addFocusListener(new FocusListener() {	
 			public void focusLost(FocusEvent e) {			
@@ -126,7 +124,7 @@ public class NetworkWindow extends EditingSessionWindow {
 					ribbonWidth.commitEdit();
 				} catch (ParseException e1) {
 				}
-				getSession().execute(new BeanPropertyCommand<Integer>(network, "ribbonWidth", 
+				getSession().execute(new BeanPropertyCommand<>(network, "ribbonWidth",
 						((Long) ribbonWidth.getValue()).intValue()));	
 			}
 			public void focusGained(FocusEvent e) {
@@ -139,7 +137,7 @@ public class NetworkWindow extends EditingSessionWindow {
 					shaftLimit.commitEdit();
 				} catch (ParseException e1) {
 				}
-				getSession().execute(new BeanPropertyCommand<Integer>(network, "shaftLimit", 
+				getSession().execute(new BeanPropertyCommand<>(network, "shaftLimit",
 						((Long) shaftLimit.getValue()).intValue()));	
 			}
 			public void focusGained(FocusEvent e) {
@@ -214,7 +212,7 @@ public class NetworkWindow extends EditingSessionWindow {
 		network.addPropertyChangeListener("shaftLimit", new TextFieldBinder(shaftLimit));
 		
         addLabel ("Compression rule", 0, ++y, panel1);
-        compressionRule = new JComboBox<String>();
+        compressionRule = new JComboBox<>();
         compressionRule.addItem("Telescope");
         compressionRule.addItem("Digitize");
         compressionRule.setName("compressionRule");

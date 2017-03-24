@@ -77,7 +77,7 @@ public class Palette implements Serializable {
     }
     
     public Palette() {
-    	colors = new ArrayList<Color>();
+    	colors = new ArrayList<>();
     }
     
     /**
@@ -140,7 +140,7 @@ public class Palette implements Serializable {
      */
     public void setColors(List<Color> colors) {
         List<Color> oldColors = this.colors;
-        this.colors = new ArrayList<Color>(colors);
+        this.colors = new ArrayList<>(colors);
         if (selection >= colors.size())
             setSelection(-1);
         propertyChangeSupport.firePropertyChange("colors", oldColors, colors);
@@ -282,7 +282,7 @@ public class Palette implements Serializable {
      * @throws IOException 
      */
     public static List<Palette> loadPalettes (Preferences prefs) throws BackingStoreException, IOException {
-		List<Palette> palettes = new ArrayList<Palette>();
+		List<Palette> palettes = new ArrayList<>();
 		String[] keys = prefs.keys();
 		Arrays.sort(keys);
 		for (String key: keys) {
@@ -303,7 +303,7 @@ public class Palette implements Serializable {
      * @return
      */
     public static List<Palette> getDefaultPalettes() {
-		List<Palette> palettes = new ArrayList<Palette>();
+		List<Palette> palettes = new ArrayList<>();
 		palettes.add(new Palette(Arrays.asList(
 				Color.black, Color.darkGray, Color.lightGray, Color.white), 
 				"Monochrome"));

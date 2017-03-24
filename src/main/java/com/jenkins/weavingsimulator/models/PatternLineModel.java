@@ -17,17 +17,15 @@ public class PatternLineModel extends AbstractWeavingDraftModel {
 		super(session);
 		network = session.getDraft().getNetwork();
 
-		network.addPropertyChangeListener(new PropertyChangeListener() {
-            public void propertyChange(PropertyChangeEvent ev) {
-                String propName = ev.getPropertyName();
-                if (propName.equals("patternLineRows") || propName.equals("patternLine")) {
-                    fireTableDataChanged();
-                }
-                else if (propName.equals("patternLineCols")) {
-                	fireTableStructureChanged();
-                }
+		network.addPropertyChangeListener(ev -> {
+            String propName = ev.getPropertyName();
+            if (propName.equals("patternLineRows") || propName.equals("patternLine")) {
+                fireTableDataChanged();
             }
-		});
+            else if (propName.equals("patternLineCols")) {
+                fireTableStructureChanged();
+            }
+        });
 	}
 
 	public int getRowCount() {

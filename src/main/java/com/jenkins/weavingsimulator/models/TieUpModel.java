@@ -46,20 +46,18 @@ public class TieUpModel extends AbstractWeavingDraftModel {
 	/** Creates a new instance of TieUpModel */
     public TieUpModel(EditingSession session) {
         super(session);
-        setDraftListener(new PropertyChangeListener() {
-            public void propertyChange(PropertyChangeEvent ev) {
-                String propName = ev.getPropertyName();
-                if (propName.equals("treadles")) {
-                    if (ev instanceof IndexedPropertyChangeEvent) {
-                        // Each treadle is a column, so a single table column has changed
-                        IndexedPropertyChangeEvent iev = (IndexedPropertyChangeEvent)ev;
-                        fireTableColumnUpdated(iev.getIndex());
-                    } else {
-                        fireTableStructureChanged();
-                    }
-                } else if (propName.equals("numHarnesses")) {
-                    fireTableDataChanged();
+        setDraftListener(ev -> {
+            String propName = ev.getPropertyName();
+            if (propName.equals("treadles")) {
+                if (ev instanceof IndexedPropertyChangeEvent) {
+                    // Each treadle is a column, so a single table column has changed
+                    IndexedPropertyChangeEvent iev = (IndexedPropertyChangeEvent)ev;
+                    fireTableColumnUpdated(iev.getIndex());
+                } else {
+                    fireTableStructureChanged();
                 }
+            } else if (propName.equals("numHarnesses")) {
+                fireTableDataChanged();
             }
         });
     }

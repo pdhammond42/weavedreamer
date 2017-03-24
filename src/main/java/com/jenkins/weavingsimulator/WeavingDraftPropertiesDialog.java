@@ -53,23 +53,13 @@ public class WeavingDraftPropertiesDialog extends javax.swing.JDialog {
         super(parent, modal);
   	
         initComponents();
-        palettes_combo.addActionListener(new ActionListener (){
-			public void actionPerformed(ActionEvent arg0) {
-				paletteGrid.setModel(new PalettePreviewModel((Palette)palettes_combo.getSelectedItem()));
-			}
-        });
+        palettes_combo.addActionListener(arg0 -> paletteGrid.setModel(new PalettePreviewModel((Palette)palettes_combo.getSelectedItem())));
         
-        liftplanCheck.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				numTreadlesField.setEnabled(!liftplanCheck.isSelected());
-			}
-        });
+        liftplanCheck.addActionListener(e -> numTreadlesField.setEnabled(!liftplanCheck.isSelected()));
 
-        networkCheck.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				numTreadlesField.setEnabled(!networkCheck.isSelected());				
-				liftplanCheck.setEnabled(!networkCheck.isSelected());
-			}
+        networkCheck.addActionListener(e -> {
+            numTreadlesField.setEnabled(!networkCheck.isSelected());
+            liftplanCheck.setEnabled(!networkCheck.isSelected());
         });
         
         java.awt.Dimension dim = getPreferredSize();
@@ -198,19 +188,11 @@ public class WeavingDraftPropertiesDialog extends javax.swing.JDialog {
         paletteGrid.setSquareWidth(10);
         
         okButton.setText("OK");
-        okButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                okButtonActionPerformed(evt);
-            }
-        });
+        okButton.addActionListener(evt -> okButtonActionPerformed(evt));
         jPanel1.add(okButton);
 
         cancelButton.setText("Cancel");
-        cancelButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cancelButtonActionPerformed(evt);
-            }
-        });
+        cancelButton.addActionListener(evt -> cancelButtonActionPerformed(evt));
         jPanel1.add(cancelButton);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -301,14 +283,12 @@ public class WeavingDraftPropertiesDialog extends javax.swing.JDialog {
     public static void main(String args[]) {
         final WeavingDraftPropertiesDialog dlg =
             new WeavingDraftPropertiesDialog(new javax.swing.JFrame(), true);
-        dlg.okButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                String msg = "warp ends = " + dlg.numWarpEndsField.getValue() + "\n" +
-                    "weft picks = " + dlg.numWeftPicksField.getValue() + "\n" +
-                    "treadles = " + dlg.numTreadlesField.getValue() + "\n" +
-                    "harnesses = " + dlg.numHarnessesField.getValue();
-                javax.swing.JOptionPane.showMessageDialog(null, msg);
-            }
+        dlg.okButton.addActionListener(e -> {
+            String msg = "warp ends = " + dlg.numWarpEndsField.getValue() + "\n" +
+                "weft picks = " + dlg.numWeftPicksField.getValue() + "\n" +
+                "treadles = " + dlg.numTreadlesField.getValue() + "\n" +
+                "harnesses = " + dlg.numHarnessesField.getValue();
+            javax.swing.JOptionPane.showMessageDialog(null, msg);
         });
         dlg.setVisible(true);
     }

@@ -53,20 +53,18 @@ public class ThreadingDraftModel extends CopyableWeavingGridModel {
 	/** Creates a new instance of ThreadingDraftModel */
     public ThreadingDraftModel(EditingSession session) {
         super(session);
-        setDraftListener(new PropertyChangeListener() {
-            public void propertyChange(PropertyChangeEvent ev) {
-                String propName = ev.getPropertyName();
-                if (propName.equals("ends")) {
-                    if (ev instanceof IndexedPropertyChangeEvent) {
-                        // Each end is a column, so a single table column has changed
-                        IndexedPropertyChangeEvent iev = (IndexedPropertyChangeEvent)ev;
-                        fireTableColumnUpdated(iev.getIndex());
-                    } else {
-                        fireTableStructureChanged();
-                    }
-                } else if (propName.equals("numHarnesses")) {
-                    fireTableDataChanged();
+        setDraftListener(ev -> {
+            String propName = ev.getPropertyName();
+            if (propName.equals("ends")) {
+                if (ev instanceof IndexedPropertyChangeEvent) {
+                    // Each end is a column, so a single table column has changed
+                    IndexedPropertyChangeEvent iev = (IndexedPropertyChangeEvent)ev;
+                    fireTableColumnUpdated(iev.getIndex());
+                } else {
+                    fireTableStructureChanged();
                 }
+            } else if (propName.equals("numHarnesses")) {
+                fireTableDataChanged();
             }
         });
     }
