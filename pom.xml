@@ -150,7 +150,7 @@
 	  </execution>
 	</executions>
 	<configuration>
-	  <file>res/com/jenkins/WeavingSimulator/about.txt</file>
+	  <file>src/main/resources/com/jenkins/weavingsimulator/about.txt</file>
 	  <outputFile>target/classes/com/jenkins/weavingsimulator/about.txt</outputFile>
 	  <replacements>
 	    <replacement>
