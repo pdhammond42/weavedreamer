@@ -102,6 +102,8 @@ public class PalettePanel extends JPanel {
         paletteGrid.addMouseListener(new MouseListener() {
         	public void mouseClicked(MouseEvent e) {
         		if (e.getClickCount() == 2) {
+        		    colorChooser.setColor(session.getPalette().getColor(
+                            session.getPalette().getSelection()));
         			colorChooserDialog.setVisible(true);
         		}
         	}

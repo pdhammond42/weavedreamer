@@ -113,8 +113,9 @@ public class Palette implements Serializable {
         
         int oldSize = colors.size();
         if (size > colors.size()) {
+            final Color color = selection == -1 ? DEFAULT_COLOR : colors.get(selection);
             while (size > colors.size())
-                colors.add(DEFAULT_COLOR);
+                colors.add(color);
         } else {
             while (colors.size() > size)
                 colors.remove(colors.size() - 1);
