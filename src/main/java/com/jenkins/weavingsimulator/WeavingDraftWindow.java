@@ -89,7 +89,10 @@ import com.jenkins.weavingsimulator.models.WeavingPatternModel;
 		StatusBarModel sbModel = new StatusBarModel();
 		sbModel.listen((AbstractWeavingDraftModel)treadlingDraftGrid.getModel());
 		sbModel.listen((AbstractWeavingDraftModel)threadingDraftGrid.getModel());
-		
+		sbModel.listen((AbstractWeavingDraftModel)pickColorGrid.getModel());
+		sbModel.listen((AbstractWeavingDraftModel)warpEndColorGrid.getModel());
+		sbModel.listen((AbstractWeavingDraftModel)tieUpGrid.getModel());
+
 		statusBar = new StatusBarControl(sbModel);
 		statusBar.setName("statusBar");
 		java.awt.GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();

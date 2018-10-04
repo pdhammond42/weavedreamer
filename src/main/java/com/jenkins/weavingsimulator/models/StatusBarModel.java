@@ -35,10 +35,18 @@ public class StatusBarModel implements TableModelListener {
 	public void tableChanged(TableModelEvent e) {
 		if (e.getType() == AbstractWeavingDraftModel.CURSOR) {
 			String oldText = text;
-			Rectangle rect = ((AbstractWeavingDraftModel)e.getSource()).getCurrentCell();
-			text = String.format("%d, %d %dx%d", 
-					rect.x + 1, rect.y + 1, rect.width + 1, rect.height + 1);
-			
+			AbstractWeavingDraftModel model = (AbstractWeavingDraftModel)e.getSource();
+			Rectangle rect = model.getCurrentCell();
+			if (model.getColumnCount() == 1) {
+				text = String.format("%d (%d)",
+						rect.y + 1, rect.height + 1);
+			} else if (model.getRowCount() == 1) {
+				text = String.format("%d (%d)",
+						rect.x + 1, rect.width + 1);
+			} else {
+				text = String.format("%d, %d (%dx%d)",
+						rect.x + 1, rect.y + 1, rect.width + 1, rect.height + 1);
+			}
 			for (PropertyChangeListener l : listeners.getListeners(PropertyChangeListener.class)) {
 				l.propertyChange(new PropertyChangeEvent(this, "text", oldText, text));
 			}
