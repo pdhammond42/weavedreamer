@@ -52,6 +52,15 @@ public class WeavingPatternPanel extends javax.swing.JPanel {
         weavingPatternGrid.setModel(model);
         weavingPatternGrid.setSquareWidth(10);
         weavingPatternGrid.setName("grid");
+
+        addMouseWheelListener(e -> {
+                final int width = weavingPatternGrid.getSquareWidth();
+                if (e.getWheelRotation() > 0) {
+                    weavingPatternGrid.setSquareWidth(width + 1);
+                } else {
+                    weavingPatternGrid.setSquareWidth(width - 1);
+                }
+        });
     }
     
     /** This method is called from within the constructor to
@@ -82,6 +91,8 @@ public class WeavingPatternPanel extends javax.swing.JPanel {
             }
         ));
         weavingPatternGrid.setRowSelectionAllowed(false);
+        weavingPatternGrid.setIntercellSpacing(new Dimension(0,0));
+        weavingPatternGrid.setShowGrid(false);
         add(weavingPatternGrid, java.awt.BorderLayout.CENTER);
 
     }//GEN-END:initComponents
