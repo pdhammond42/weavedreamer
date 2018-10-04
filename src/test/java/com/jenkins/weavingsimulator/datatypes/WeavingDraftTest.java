@@ -225,7 +225,7 @@ public class WeavingDraftTest extends TestCase {
 
         // test adding single value
         treadle = new Treadle();
-        treadle.add(new Integer(1));
+        treadle.add(Integer.valueOf(1));
         listener.events.clear();
         int numTreadles = draft.getTreadles().size();
         draft.getTreadles().add(treadle);
@@ -282,8 +282,8 @@ public class WeavingDraftTest extends TestCase {
     /** Test of setNumHarnesses method, of class com.jenkins.weavingsimulator.WeavingDraft. */
     public void testSetNumHarnesses() {
         draft.setNumHarnesses(4);
-        BeanTestUtils.assertPropertyChangeFired(listener.events, "numHarnesses", 
-            new Integer(0), new Integer(4), -1);
+        BeanTestUtils.assertPropertyChangeFired(listener.events, "numHarnesses",
+                Integer.valueOf(0), Integer.valueOf(4), -1);
         
         draft.getEnds().add(new WarpEnd(Color.BLACK, 0));
         draft.getEnds().add(new WarpEnd(Color.BLACK, 1));

@@ -79,7 +79,7 @@ public class TieUpModel extends AbstractWeavingDraftModel {
 	        if (treadle.contains(harnessId))
 	            // need to wrap harnessId in Integer, otherwise the remove(index) method is called 
 	            // instead of the remove(Object) version.
-	            treadle.remove(new Integer(harnessId));
+	            treadle.remove(Integer.valueOf(harnessId));
 	        else
 	            treadle.add(harnessId);
     	}

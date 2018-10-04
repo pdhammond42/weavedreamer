@@ -144,7 +144,7 @@ public class WIFFile {
 
 		List<Integer> ints = new ArrayList<Integer>(vals.length);
 		for (String val : vals) {
-			ints.add(new Integer(val));
+			ints.add(Integer.valueOf(val));
 		}
 
 		return ints;

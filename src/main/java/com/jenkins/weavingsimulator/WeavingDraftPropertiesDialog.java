@@ -111,7 +111,7 @@ public class WeavingDraftPropertiesDialog extends javax.swing.JDialog {
         getContentPane().add(jLabel1, gridBagConstraints);
 
         numHarnessesField.setColumns(2);
-        numHarnessesField.setValue(new Integer(0));
+        numHarnessesField.setValue(Integer.valueOf(0));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
@@ -124,7 +124,7 @@ public class WeavingDraftPropertiesDialog extends javax.swing.JDialog {
         getContentPane().add(jLabel2, gridBagConstraints);
 
         numTreadlesField.setColumns(2);
-        numTreadlesField.setValue(new Integer(0));
+        numTreadlesField.setValue(Integer.valueOf(0));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
@@ -149,7 +149,7 @@ public class WeavingDraftPropertiesDialog extends javax.swing.JDialog {
         getContentPane().add(jLabel3, gridBagConstraints);
 
         numWarpEndsField.setColumns(3);
-        numWarpEndsField.setValue(new Integer(0));
+        numWarpEndsField.setValue(Integer.valueOf(0));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
@@ -162,7 +162,7 @@ public class WeavingDraftPropertiesDialog extends javax.swing.JDialog {
         getContentPane().add(jLabel4, gridBagConstraints);
 
         numWeftPicksField.setColumns(3);
-        numWeftPicksField.setValue(new Integer(0));
+        numWeftPicksField.setValue(Integer.valueOf(0));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
@@ -296,8 +296,8 @@ public class WeavingDraftPropertiesDialog extends javax.swing.JDialog {
     private Integer value_or_default (int value, String default_key, int deflt) {
     	// Returns a new Integer with value, unless value is 0, then returns
     	// the preferences value for default_key if available, or deflt.
-    	if (value != 0) return new Integer(value);
-    	return new Integer (Preferences.userNodeForPackage(this.getClass()).getInt(default_key, deflt));
+    	if (value != 0) return Integer.valueOf(value);
+    	return Integer.valueOf(Preferences.userNodeForPackage(this.getClass()).getInt(default_key, deflt));
     }
   
     // Variables declaration - do not modify//GEN-BEGIN:variables
