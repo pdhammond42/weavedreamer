@@ -25,13 +25,10 @@
 
 package com.jenkins.weavingsimulator;
 
-import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
+import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
@@ -41,6 +38,7 @@ import javax.swing.event.ListSelectionListener;
 
 import com.jenkins.weavingsimulator.datatypes.Palette;
 import com.jenkins.weavingsimulator.models.EditingSession;
+import com.jenkins.weavingsimulator.models.PaletteColorChangeCommand;
 import com.jenkins.weavingsimulator.models.PaletteModel;
 
 
@@ -69,11 +67,9 @@ public class PalettePanel extends JPanel {
     private void initComponents() {
         setLayout(new BorderLayout());
     
-        ActionListener okListener = e -> session.getPalette().setColor(
-                session.getPalette().getSelection(),
-                colorChooser.getColor());
-        ActionListener cancelListener = e -> {
-        };
+        ActionListener okListener = e -> session.execute(
+                new PaletteColorChangeCommand(session.getPalette(), colorChooser.getColor()));
+        ActionListener cancelListener = e -> { };
         
         colorChooser = new JColorChooser();
         colorChooserDialog = JColorChooser.createDialog(this,
@@ -122,7 +118,7 @@ public class PalettePanel extends JPanel {
         add(addColorBtn, BorderLayout.PAGE_END);
         paletteGrid.setName("paletteGrid");
     }
-    
+
     private class PaletteSelectionListener implements ListSelectionListener {
         public void valueChanged(javax.swing.event.ListSelectionEvent e) {
             if (e.getValueIsAdjusting())
