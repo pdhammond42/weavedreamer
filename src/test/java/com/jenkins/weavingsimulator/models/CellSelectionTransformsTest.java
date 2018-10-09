@@ -97,8 +97,31 @@ public class CellSelectionTransformsTest  extends TestCase {
 		assertThat (cells.toString(), is (
 				"*..;" + 
 				".**;"));
-	}	
-	
+	}
+
+	public void testRepeatHorizontal() {
+		PasteGrid cells =
+				CellSelectionTransforms.RepeatHorizontal(2).Transform(selection);
+		assertThat (cells.toString(), is (
+				"*.*.;" +
+						"*.*.;" +
+						".*.*;" ));
+
+	}
+
+	public void testRepeatVertical() {
+		PasteGrid cells =
+				CellSelectionTransforms.RepeatVertical(2).Transform(selection);
+		assertThat (cells.toString(), is (
+				"*.;" +
+						"*.;" +
+						".*;" +
+						"*.;" +
+						"*.;" +
+						".*;"));
+
+	}
+
 	public void testCompositeTransform() {
 		ArrayList<CellSelectionTransform> transforms = new ArrayList<CellSelectionTransform>();
 		transforms.add(CellSelectionTransforms.ReflectHorizontal());

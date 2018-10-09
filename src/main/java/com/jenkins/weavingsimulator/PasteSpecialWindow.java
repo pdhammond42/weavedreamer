@@ -21,6 +21,8 @@ public class PasteSpecialWindow extends javax.swing.JDialog {
 	private JFormattedTextField scale_v;
 	private JFormattedTextField skip_h;
 	private JFormattedTextField skip_v;
+	private JFormattedTextField repeat_h;
+	private JFormattedTextField repeat_v;
 	private JButton ok;
 	private JButton cancel;
 	
@@ -79,7 +81,27 @@ public class PasteSpecialWindow extends javax.swing.JDialog {
         scale_v.setColumns(2);
         scale_v.setText("1");
         getContentPane().add(scale_v, makeConstraints(GridBagConstraints.REMAINDER));
-        
+
+		JLabel rhlabel = new JLabel();
+		rhlabel.setText("Repeat across");
+		getContentPane().add(rhlabel, makeConstraints(GridBagConstraints.RELATIVE));
+
+		repeat_h = new JFormattedTextField(formatter);
+		repeat_h.setName("repeat_h");
+		repeat_h.setColumns(2);
+		repeat_h.setText("1");
+		getContentPane().add(repeat_h, makeConstraints(GridBagConstraints.REMAINDER));
+
+		JLabel rvlabel = new JLabel();
+		rvlabel.setText("Repeat down");
+		getContentPane().add(rvlabel, makeConstraints(GridBagConstraints.RELATIVE));
+
+		repeat_v = new JFormattedTextField(formatter);
+		repeat_v.setName("repeat_v");
+		repeat_v.setColumns(2);
+		repeat_v.setText("1");
+		getContentPane().add(repeat_v, makeConstraints(GridBagConstraints.REMAINDER));
+
         ok = new JButton();
         ok.setText("OK");
         ok.setName("ok");
@@ -127,4 +149,13 @@ public class PasteSpecialWindow extends javax.swing.JDialog {
 
 	public int getScaleV() {
 		return Integer.parseInt(scale_v.getText());
-	}}
+	}
+
+	public int getRepeatH() {
+		return Integer.parseInt(repeat_h.getText());
+	}
+
+	public int getRepeatV() {
+		return Integer.parseInt(repeat_v.getText());
+	}
+}

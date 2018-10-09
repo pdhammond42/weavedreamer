@@ -65,6 +65,8 @@ public class PasteMenu {
 			if(dlg.isReflectV()) transforms.add(CellSelectionTransforms.ReflectVertical());
 			if(dlg.isReflectH()) transforms.add(CellSelectionTransforms.ReflectHorizontal());
 			if(dlg.isTranspose()) transforms.add(CellSelectionTransforms.Transpose());
+			if(dlg.getRepeatH() > 1) transforms.add(CellSelectionTransforms.RepeatHorizontal(dlg.getRepeatH()));
+			if(dlg.getRepeatV() > 1) transforms.add(CellSelectionTransforms.RepeatVertical(dlg.getRepeatV()));
 			model.pasteSelection(row, column, CellSelectionTransforms.Combine(transforms));
 		}
 	}

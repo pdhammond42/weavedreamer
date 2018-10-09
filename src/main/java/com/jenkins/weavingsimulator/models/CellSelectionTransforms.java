@@ -83,6 +83,42 @@ public class CellSelectionTransforms {
         };
 	}
 
+	/** Factory method that creates a transform object that repeats the
+	 * selection in the horizontal axis
+	 * @return A transform object
+	 */
+	public static CellSelectionTransform RepeatHorizontal (int count) {
+		return from -> {
+			PasteGrid s = new PasteGrid (from.getRows(), from.getColumns() * count);
+			for (int r = 0; r != from.getRows(); ++r) {
+				for (int c = 0; c != from.getColumns(); ++c) {
+					for (int i = 0; i < count; ++i) {
+						s.setValue(r, c+from.getColumns()*i, from.getValue(r, c));
+					}
+				}
+			}
+			return s;
+		};
+	}
+
+	/** Factory method that creates a transform object that repeats the
+	 * selection in the vertical axis
+	 * @return A transform object
+	 */
+	public static CellSelectionTransform RepeatVertical (int count) {
+		return from -> {
+			PasteGrid s = new PasteGrid (from.getRows() * count, from.getColumns());
+			for (int r = 0; r != from.getRows(); ++r) {
+				for (int c = 0; c != from.getColumns(); ++c) {
+					for (int i = 0; i < count; ++i) {
+						s.setValue(r+from.getRows()*i, c, from.getValue(r, c));
+					}
+				}
+			}
+			return s;
+		};
+	}
+
 	/** Factory method that creates a transform object that transposes
 	 * the selection
 	 * @return A transform object
