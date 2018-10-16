@@ -29,10 +29,13 @@ public class PasteSpecialWindow extends javax.swing.JDialog {
 	private NonNegativeIntFormatter formatter = new NonNegativeIntFormatter();
 	
 	private boolean okClicked = false;
+
+	public static final String name = "pasteSpecialWindow";
 	
 	public PasteSpecialWindow(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setName(name);
 	}
 	
 	private GridBagConstraints makeConstraints(int width) {
@@ -49,7 +52,7 @@ public class PasteSpecialWindow extends javax.swing.JDialog {
 		
 		transpose = new JCheckBox();
 		transpose.setText("Transpose");
-		transpose.setName("Transpose");
+		transpose.setName("transpose");
         getContentPane().add(transpose, makeConstraints(GridBagConstraints.REMAINDER));
         
         mirror_v = new JCheckBox();

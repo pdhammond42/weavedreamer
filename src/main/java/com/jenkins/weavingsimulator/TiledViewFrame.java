@@ -15,9 +15,11 @@ public class TiledViewFrame extends JFrame implements EditingSession.View {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	public static final String name = "tiledView";
 
-	public TiledViewFrame(String name) {
-		super(name);
+	public TiledViewFrame(String title) {
+		super(title);
+		setName (name);
 	}
 
 	@Override

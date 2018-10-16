@@ -1,9 +1,14 @@
 package com.jenkins.weavingsimulator.uat;
 
+import org.junit.Test;
+
 import java.awt.Color;
+import java.io.File;
+import java.io.IOException;
 
 public class NetworkTest  extends WeavingTestCase {
-	public void testCreateSaveAndLoad() {
+	@Test
+	public void testCreateSaveAndLoad() throws IOException {
 		ui.newNetwork(12, 20, 20, "Monochrome");
 		ui.setInitial(1,1);
 		ui.setInitial(2,2);
@@ -40,9 +45,9 @@ public class NetworkTest  extends WeavingTestCase {
 		ui.pickIs(4, 4, Color.WHITE);
 		ui.pickIs(4, 5, Color.WHITE);
 
-		ui.saveAs("network.wsml");		
+		ui.saveAs(new File("network.wsml"));
 		ui.close();
-		ui.open("network.wsml");
+		ui.open(new File("network.wsml"));
 		ui.initialIs(0,0,Color.BLACK);
 		ui.initialIs(1,1,Color.BLACK);
 		ui.initialIs(2,2,Color.BLACK);

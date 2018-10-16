@@ -1,14 +1,20 @@
 package com.jenkins.weavingsimulator.uat;
 
+import org.junit.Test;
+
 import java.awt.Color;
 import java.io.File;
+import java.io.IOException;
 
 public class SaveAndLoadTest extends WeavingTestCase {
-	public void testLoadAndSave() {
-		File leftover = new File("testdata/103.wsml");
-		if (leftover.exists()) leftover.delete();
-		
-		ui.open("testdata/103.wif");
+	@Test
+	public void testLoadAndSave() throws IOException {
+		File wsml = new File("testdata/103.wsml");
+		if (wsml.exists()) wsml.delete();
+
+		File wif = new File("testdata/103.wif");
+
+		ui.open(wif);
 		ui.draftIs(0, 0, orange);
 		ui.draftIs(0, 1, blue);
 		ui.pickIs(0, 0, Color.BLACK);
@@ -16,10 +22,10 @@ public class SaveAndLoadTest extends WeavingTestCase {
 		ui.endIs (0,0, Color.BLACK);
 		ui.endIs (0,1, Color.WHITE);
 		
-		ui.saveAs("testdata/103.wsml");
+		ui.saveAs(wsml);
 		ui.close();
 		
-		ui.open("testdata/103.wsml");
+		ui.open(wsml);
 		ui.draftIs(0, 0, orange);
 		ui.draftIs(0, 1, blue);		
 		ui.pickIs(0, 0, Color.BLACK);
@@ -27,9 +33,10 @@ public class SaveAndLoadTest extends WeavingTestCase {
 		ui.endIs (0, 0, Color.BLACK);
 		ui.endIs (0, 1, Color.WHITE);
 	}
-	
-	public void testLoadFileSavedFrom2_5() {
-		ui.open("testdata/103-2.5.wsml");
+
+	@Test
+	public void testLoadFileSavedFrom2_5() throws IOException {
+		ui.open(new File("testdata/103-2.5.wsml"));
 		ui.draftIs(0, 0, orange);
 		ui.draftIs(0, 1, blue);				
 		ui.pickIs(0, 0, Color.BLACK);
@@ -37,9 +44,10 @@ public class SaveAndLoadTest extends WeavingTestCase {
 		ui.endIs (0, 0, Color.BLACK);
 		ui.endIs (0, 1, Color.WHITE);
 	}
-	
-	public void testLoadFileSavedFrom2_6() {
-		ui.open("testdata/103-2.6.wsml");
+
+	@Test
+	public void testLoadFileSavedFrom2_6() throws IOException {
+		ui.open(new File("testdata/103-2.6.wsml"));
 		ui.draftIs(0, 0, orange);
 		ui.draftIs(0, 1, blue);				
 		ui.pickIs(0, 0, Color.BLACK);
@@ -49,12 +57,15 @@ public class SaveAndLoadTest extends WeavingTestCase {
 		ui.endIs (0, 0, Color.BLACK);
 		ui.endIs (0, 1, Color.WHITE);
 	}
-	
-	public void testLoadAndSaveLiftplan() {
-		File leftover = new File("testdata/56737.wsml");
-		if (leftover.exists()) leftover.delete();
-		
-		ui.open("testdata/56737.wif");
+
+	@Test
+	public void testLoadAndSaveLiftplan() throws IOException {
+		File wsml = new File("testdata/56737.wsml");
+		if (wsml.exists()) wsml.delete();
+
+		File wif = new File("testdata/56737.wif");
+
+		ui.open(wif);
 		ui.draftIs(0, 0, red);
 		ui.draftIs(0, 127, white);
 		ui.draftIs(295, 127, red);
@@ -63,10 +74,10 @@ public class SaveAndLoadTest extends WeavingTestCase {
 		ui.endIs (0, 0, Color.BLACK);
 		ui.endIs (0, 1, Color.WHITE);
 		
-		ui.saveAs("testdata/56737.wsml");
+		ui.saveAs(wsml);
 		ui.close();
 		
-		ui.open("testdata/56737.wsml");
+		ui.open(wsml);
 		ui.draftIs(0, 0, red);
 		ui.draftIs(0, 127, white);
 		ui.draftIs(295, 127, red);			
@@ -75,9 +86,10 @@ public class SaveAndLoadTest extends WeavingTestCase {
 		ui.endIs (0, 0, Color.BLACK);
 		ui.endIs (0, 1, Color.WHITE);
 	}
-	
-	public void testLoadNoColours() {
-		ui.open("testdata/12233.wif");
+
+	@Test
+	public void testLoadNoColours() throws IOException {
+		ui.open(new File("testdata/12233.wif"));
 		ui.draftIs(0, 0, Color.WHITE);
 		ui.draftIs(0, 47, Color.BLACK);
 	}

@@ -44,7 +44,8 @@ public class GettingStartedWindow extends JInternalFrame {
 
         pack();
 
-        this.setResizable(true);
+        this.setResizable(false);
+        setTitle("Getting Started");
     }
 
     private void close() {

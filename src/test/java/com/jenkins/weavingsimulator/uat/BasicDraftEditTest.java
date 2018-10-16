@@ -1,18 +1,20 @@
 package com.jenkins.weavingsimulator.uat;
 
 import java.awt.Color;
+import java.io.File;
+import java.io.IOException;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
-import org.hamcrest.MatcherAssert;
-
 import com.jenkins.weavingsimulator.WeavingSimulatorApp;
+import org.junit.Test;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
 
 public class BasicDraftEditTest extends WeavingTestCase {
-	
+	@Test
 	public void testNewDraft() {
 		
 		final int harnesses = 12;
@@ -27,6 +29,7 @@ public class BasicDraftEditTest extends WeavingTestCase {
 		ui.hasPicks(picks);
 	}
 
+	@Test
 	public void testEditWeave() {
 		ui.newDraft(4, 6, 20, 20, "Monochrome");
 		
@@ -83,9 +86,10 @@ public class BasicDraftEditTest extends WeavingTestCase {
 		ui.draftIs(6, 0, Color.lightGray);	
 		ui.draftIs(0, 0, Color.darkGray);		
 	}
-	
-	public void testEditProperties () {
-		ui.open("testdata/103.wif");
+
+	@Test
+	public void testEditProperties () throws IOException {
+		ui.open(new File("testdata/103.wif"));
 		
 		final int harnesses = 12;
 		final int treadles = 8;
@@ -98,8 +102,9 @@ public class BasicDraftEditTest extends WeavingTestCase {
 		ui.hasEnds(ends);
 		ui.hasPicks(picks);
 	}
-	
-	public void testSavePalette () {
+
+	@Test
+	public void testSavePalette () throws IOException {
 		// Rather ugly having this here but it works.
 		try {
 			Preferences.userNodeForPackage(WeavingSimulatorApp.class).node("Palettes").clear();
@@ -108,7 +113,7 @@ public class BasicDraftEditTest extends WeavingTestCase {
 		
 		final String testPaletteName ="blue and orange";
 		
-		ui.open("testdata/103.wif");
+		ui.open(new File("testdata/103.wif"));
 		
 		ui.savePalette(testPaletteName);
 		ui.close();
@@ -117,29 +122,32 @@ public class BasicDraftEditTest extends WeavingTestCase {
 		ui.paletteIs(0, blue);
 		ui.paletteIs(1, orange);
 	}
-	
-	public void testZoom() {
-		ui.open("testdata/103.wif");
+
+	@Test
+	public void testZoom() throws IOException {
+		ui.open(new File("testdata/103.wif"));
 		
 		final int initialZoom = ui.zoomLevel();
 		
 		ui.zoomIn();
-		MatcherAssert.assertThat(ui.zoomLevel(), greaterThan(initialZoom));
+		assertThat(ui.zoomLevel(), greaterThan(initialZoom));
 		
 		ui.zoomOut();
-		MatcherAssert.assertThat(ui.zoomLevel(), equalTo(initialZoom));
+		assertThat(ui.zoomLevel(), equalTo(initialZoom));
 		
 		ui.zoomOut();
-		MatcherAssert.assertThat(ui.zoomLevel(), lessThan(initialZoom));
+		assertThat(ui.zoomLevel(), lessThan(initialZoom));
 
 		// Zoom back in is allowed to miss by 1 pixel due to rounding an odd value.
 		ui.zoomIn();
-		MatcherAssert.assertThat(ui.zoomLevel(),
+		assertThat(ui.zoomLevel(),
 				allOf(greaterThan(initialZoom-2), lessThan(initialZoom+1)));	
 	}
-	
-	public void testTileView() {
-		ui.open("testdata/103.wif");
+
+	@Test
+	public void testTileView() throws Exception{
+		File file = new java.io.File("testdata/103.wif");
+		ui.open(file);
 
 		AppDriver.TiledView tiledView = ui.showTiledView();	
 		tiledView.hasColour(0, 0, orange);
@@ -147,11 +155,13 @@ public class BasicDraftEditTest extends WeavingTestCase {
 		tiledView.hasColour(0, 32, orange);
 		tiledView.hasColour(32, 1, blue);
 	}
-	
+
+	@Test
 	public void testHelpAbout () {
-		ui.checkAboutBox();
+		assertThat(ui.aboutBoxText(), containsString("Weaving Simulator 0.2"));
 	}
-	
+
+	@Test
 	public void testPastePickToEnd() {
 		ui.newDraft(4, 6, 20, 20, "Monochrome");
 		
@@ -167,6 +177,7 @@ public class BasicDraftEditTest extends WeavingTestCase {
 		ui.endIs(2, 2, Color.BLACK);
 	}
 
+	@Test
 	public void testPasteEndToPick() {
 		ui.newDraft(4, 6, 20, 20, "Monochrome");
 		
@@ -183,6 +194,7 @@ public class BasicDraftEditTest extends WeavingTestCase {
 		ui.pickIs(3, 3, Color.BLACK);
 	}
 
+	@Test
 	public void testPasteTranspose() {
 		ui.newDraft(4, 6, 20, 20, "Monochrome");
 		

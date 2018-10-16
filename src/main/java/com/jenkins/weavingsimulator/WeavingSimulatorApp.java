@@ -36,6 +36,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.util.HashSet;
 import java.util.List;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
@@ -53,6 +54,8 @@ import com.jenkins.weavingsimulator.datatypes.WIFIO;
 import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
 import com.jenkins.weavingsimulator.models.EditingSession;
 import com.jenkins.wifio.WIFException;
+
+import static java.util.Arrays.asList;
 
 /**
  *
@@ -259,7 +262,8 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
     
     protected void windowMenuSelected(MenuEvent e) {
     	windowMenu.removeAll();
-    	for (JInternalFrame w : mainDesktop.getAllFrames() ) {
+        // Prevent the task bar's view of the window causing a duplicate entry.
+    	for (JInternalFrame w : new HashSet<>(asList(mainDesktop.getAllFrames()))) {
     		JMenuItem item = new JMenuItem(w.getTitle());
     		item.addActionListener(evt -> {
                 try {
@@ -273,7 +277,7 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
 	}
 
 	protected void savePaletteItemActionPerformed(ActionEvent evt) {
-    	String name = javax.swing.JOptionPane.showInputDialog("Name your palette");
+    	String name = javax.swing.JOptionPane.showInputDialog("Name your palette", this);
     	if (name != null) {
     		savePalette(name, getCurrentSession().getPalette());
     	}

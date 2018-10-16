@@ -47,12 +47,15 @@ public class WeavingDraftPropertiesDialog extends javax.swing.JDialog {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	public static final String title = "Weaving Draft Properties";
+    public static final String name = "WeavingDraftProperties";
 
 	/** Creates new form WeavingDraftPropertiesDialog */
     public WeavingDraftPropertiesDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
   	
         initComponents();
+        setName(name);
         palettes_combo.addActionListener(arg0 -> paletteGrid.setModel(new PalettePreviewModel((Palette)palettes_combo.getSelectedItem())));
         
         liftplanCheck.addActionListener(e -> numTreadlesField.setEnabled(!liftplanCheck.isSelected()));
@@ -95,7 +98,7 @@ public class WeavingDraftPropertiesDialog extends javax.swing.JDialog {
         palettes_combo = new javax.swing.JComboBox<Palette>(palettes);
         palettes_combo.setName("palettes_combo");
 
-        setTitle("Weaving Draft Properties");
+        setTitle(title);
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -131,12 +134,14 @@ public class WeavingDraftPropertiesDialog extends javax.swing.JDialog {
         getContentPane().add(numTreadlesField, gridBagConstraints);
         
         liftplanCheck = new javax.swing.JCheckBox("Liftplan");
+        liftplanCheck.setName("liftplan");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         getContentPane().add(liftplanCheck, gridBagConstraints);
         
         networkCheck = new javax.swing.JCheckBox("Network");
+        networkCheck.setName("network");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
@@ -188,6 +193,7 @@ public class WeavingDraftPropertiesDialog extends javax.swing.JDialog {
         paletteGrid.setSquareWidth(10);
         
         okButton.setText("OK");
+        okButton.setName("OK");
         okButton.addActionListener(evt -> okButtonActionPerformed(evt));
         jPanel1.add(okButton);
 

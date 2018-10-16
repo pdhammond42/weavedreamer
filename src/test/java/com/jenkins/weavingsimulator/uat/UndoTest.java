@@ -1,10 +1,15 @@
 package com.jenkins.weavingsimulator.uat;
 
+import org.junit.Test;
+
 import java.awt.Color;
+import java.io.File;
+import java.io.IOException;
 
 public class UndoTest extends WeavingTestCase {
-	public void testUndo() {
-		ui.open("testdata/103.wif");
+	@Test
+	public void testUndo() throws IOException {
+		ui.open(new File("testdata/103.wif"));
 		
 		// Too many undo should be harmless.
 		ui.undo();
@@ -40,6 +45,7 @@ public class UndoTest extends WeavingTestCase {
 		ui.draftIs(0, 1, blue);	
 	}
 
+	@Test
 	public void testUndoToStart() {
 		ui.newDraft(4, 6, 24, 24, "Monochrome");
 		
@@ -54,6 +60,7 @@ public class UndoTest extends WeavingTestCase {
 		ui.endIs(1, 0, Color.white);
 	}
 
+	@Test
 	public void testUndoPasteToStart() {
 		ui.newDraft(4, 6, 24, 24, "Monochrome");	
 		
