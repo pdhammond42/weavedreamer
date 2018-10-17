@@ -102,9 +102,7 @@
 		      <pathelement location="target/test-classes" />
 		      <pathelement location="${junit:junit:jar}"/>
 		      <pathelement location="${org.hamcrest:hamcrest-all:jar}"/>
-		      <pathelement location="${net.java.openjdk.cacio:cacio-tta:jar}"/>
-		      <pathelement location="${uispec4j:uispec4j:jar}"/>
-		      <pathelement location="${net.java.openjdk.cacio:cacio-shared:jar}"/>
+              <pathelement location="${org.assertj:assertj-swing-junit:jar"/>
 		    </path>
 		  </classpath>
 		</junit>
@@ -174,12 +172,6 @@
 
   <dependencies>
     <dependency>
-      <groupId>net.java.openjdk.cacio</groupId>
-      <artifactId>cacio-tta</artifactId>
-      <version>1.3</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>4.12</version>
@@ -201,12 +193,11 @@
       <artifactId>commons-lang</artifactId>
       <version>2.6</version>
    </dependency>
-   <dependency>
-     <groupId>uispec4j</groupId>
-     <artifactId>uispec4j</artifactId>
-     <version>2.5-SNAPSHOT</version>
-     <scope>system</scope>
-     <systemPath>${project.basedir}/lib/uispec4j-2.5-SNAPSHOT-jdk8.jar</systemPath>
-   </dependency>
+      <dependency>
+          <groupId>org.assertj</groupId>
+          <artifactId>assertj-swing-junit</artifactId>
+          <version>3.8.0</version>
+          <scope>test</scope>
+      </dependency>
   </dependencies>
 </project>
