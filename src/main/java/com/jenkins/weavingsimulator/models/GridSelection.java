@@ -19,10 +19,21 @@ public class GridSelection {
 	}
 	
 	GridSelection (int startRow, int startColumn, int endRow, int endColumn) {
-		this.startRow = startRow;
-		this.startColumn = startColumn;
-		this.endRow = endRow;
-		this.endColumn = endColumn;
+		if (startRow > endRow) {
+			this.startRow = endRow + 1;
+			this.endRow = startRow + 1;
+		} else {
+			this.startRow = startRow;
+			this.endRow = endRow;
+		}
+
+		if (startColumn > endColumn) {
+			this.startColumn = endColumn + 1;
+			this.endColumn = startColumn + 1;
+		} else {
+			this.startColumn = startColumn;
+			this.endColumn = endColumn;
+		}
 	}
 	
 	int getRows() {

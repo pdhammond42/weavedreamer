@@ -24,8 +24,7 @@
 
 package com.jenkins.weavingsimulator;
 
-import java.awt.Component;
-import java.awt.Point;
+import java.awt.*;
 import java.awt.event.MouseEvent;
 
 import junit.framework.TestCase;
@@ -45,7 +44,16 @@ public class WeavingGridControlTest extends TestCase {
 				pos.x, pos.y,
 				0, false);
 	}
-	
+
+	private MouseEvent shiftLeftDragEvent (Component source, Point pos) {
+		return new MouseEvent (source,
+				MouseEvent.MOUSE_DRAGGED,
+				0,
+				MouseEvent.BUTTON1_DOWN_MASK | MouseEvent.SHIFT_DOWN_MASK,
+				pos.x, pos.y,
+				0, false);
+	}
+
 	private MouseEvent rightDragEvent (Component source, Point pos) {
 		return new MouseEvent (source, 
 				MouseEvent.MOUSE_DRAGGED,
@@ -161,6 +169,40 @@ public class WeavingGridControlTest extends TestCase {
 		assertFalse((Boolean) model.getValueAt(6,0));
 	}
 
+	public void testLeftShiftDragDownRight() {
+		TestDraftModel model = new TestDraftModel();
+		// Each is by default 10 pixels square.
+		// Cell pixel positions
+		Point cell_r1c0 = new Point (5, 15);
+		Point cell_r5c2 = new Point (25, 55);
+		WeavingGridControl grid = new WeavingGridControl(model);
+		grid.doDrag(shiftLeftDragEvent(grid, cell_r1c0));
+		grid.doDrag(shiftLeftDragEvent(grid, cell_r5c2));
+		grid.endDrag();
+		assertTrue (model.isCopied);
+		assertEquals(0, model.startColumn);
+		assertEquals(2, model.endColumn);
+		assertEquals(1, model.startRow);
+		assertEquals(5, model.endRow);
+	}
+
+	public void testLeftShiftDragUpLeft() {
+		TestDraftModel model = new TestDraftModel();
+		// Each is by default 10 pixels square.
+		// Cell pixel positions
+		Point cell_r1c0 = new Point (5, 15);
+		Point cell_r5c2 = new Point (25, 55);
+		WeavingGridControl grid = new WeavingGridControl(model);
+		grid.doDrag(shiftLeftDragEvent(grid, cell_r5c2));
+		grid.doDrag(shiftLeftDragEvent(grid, cell_r1c0));
+		grid.endDrag();
+		assertTrue (model.isCopied);
+		assertEquals(2, model.startColumn);
+		assertEquals(0, model.endColumn);
+		assertEquals(5, model.startRow);
+		assertEquals(1, model.endRow);
+	}
+
 	private class TestDraftModel extends AbstractWeavingDraftModel {
 		/**
 		 * 
@@ -175,6 +217,9 @@ public class WeavingGridControlTest extends TestCase {
 				{false,false,false},
 				{false,false,false},
 		};
+
+		int startRow, startColumn, endRow, endColumn;
+		boolean isCopied;
 
 		public TestDraftModel() {
 			super(new EditingSession(new WeavingDraft()));
@@ -205,6 +250,19 @@ public class WeavingGridControlTest extends TestCase {
 				public void undo() {
 				}
 			};
+		}
+
+		@Override
+		public void showSelection (int startRow, int startColumn, int endRow, int endColumn){
+			this.startRow = startRow;
+			this.startColumn = startColumn;
+			this.endRow = endRow;
+			this.endColumn = endColumn;
+		}
+
+		@Override
+		public void copySelection() {
+			isCopied = true;
 		}
 	}
 }

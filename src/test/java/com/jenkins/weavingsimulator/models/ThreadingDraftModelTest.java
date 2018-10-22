@@ -186,7 +186,35 @@ public class ThreadingDraftModelTest extends TestCase {
     	assertThat((Color)model.getValueAt(0, 3), is(Color.WHITE));
     	assertThat((Color)model.getValueAt(1, 3), is(Color.BLACK));
     }
-    
+
+    public void testSelectionLeftUpIsPastedFromSession() {
+        draft.setNumHarnesses(4);
+        draft.setTreadles(Arrays.asList(new Treadle(), new Treadle(),
+                new Treadle(), new Treadle()));
+        draft.setEnds(Arrays.asList(
+                new WarpEnd(Color.BLACK, 0),
+                new WarpEnd(Color.WHITE, 1),
+                new WarpEnd(Color.WHITE, 0),
+                new WarpEnd(Color.WHITE, 1),
+                new WarpEnd(Color.WHITE, 0),
+                new WarpEnd(Color.BLUE, 1)));
+
+        session.setSelectedCells(new PasteGrid(model, new GridSelection(1, 1, -1, -1)));
+
+        model.pasteSelection(0, 1, CellSelectionTransforms.Null());
+        assertThat((Color)model.getValueAt(0, 0), is(Color.BLACK));
+        assertThat((Color)model.getValueAt(1, 0), is(Color.WHITE));
+
+        assertThat((Color)model.getValueAt(0, 1), is(Color.BLACK));
+        assertThat((Color)model.getValueAt(1, 1), is(Color.WHITE));
+
+        assertThat((Color)model.getValueAt(0, 2), is(Color.WHITE));
+        assertThat((Color)model.getValueAt(1, 2), is(Color.BLACK));
+
+        assertThat((Color)model.getValueAt(0, 3), is(Color.WHITE));
+        assertThat((Color)model.getValueAt(1, 3), is(Color.BLACK));
+    }
+
     public void testPasteTooBigIsTruncated() {
     	draft.setTreadles(Arrays.asList(new Treadle(), new Treadle(), 
     			new Treadle(), new Treadle()));
