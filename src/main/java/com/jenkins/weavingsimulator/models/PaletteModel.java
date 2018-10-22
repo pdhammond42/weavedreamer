@@ -55,23 +55,27 @@ public class PaletteModel extends javax.swing.table.AbstractTableModel {
     }
     
     public Object getValueAt(int row, int col) {
-        if (col != 0)
-            throw new IndexOutOfBoundsException("col out of bounds: " + col);
-        return palette.getColor(row);
+        if (row >= getRowCount())
+            throw new IndexOutOfBoundsException("row out of bounds");
+        if (col >= getColumnCount())
+            throw new IndexOutOfBoundsException("col out of bounds");
+        return palette.getColor(col);
     }
 
     public int getRowCount() {
-        return palette.getNumColors();
-    }
-
-    public int getColumnCount() {
         return 1;
     }
 
+    public int getColumnCount() {
+        return palette.getNumColors();
+    }
+
     public void setValueAt(Object value, int row, int col) {
-        if (col != 0)
-            throw new IndexOutOfBoundsException("col out of bounds: " + col);
-        palette.setColor(row, (Color)value);
+        if (row >= getRowCount())
+            throw new IndexOutOfBoundsException("row out of bounds");
+        if (col >= getColumnCount())
+            throw new IndexOutOfBoundsException("col out of bounds");
+        palette.setColor(col, (Color)value);
     }
 
     public Class<?> getColumnClass(int columnIndex) {
@@ -89,9 +93,10 @@ public class PaletteModel extends javax.swing.table.AbstractTableModel {
             
             if (evt instanceof IndexedPropertyChangeEvent) {
                 fireTableCellUpdated(
-                        ((IndexedPropertyChangeEvent)evt).getIndex(), 0);
-            } else
-                fireTableDataChanged();
+                        0, ((IndexedPropertyChangeEvent)evt).getIndex());
+            } else {
+                fireTableStructureChanged();
+            }
         }
     }
 }

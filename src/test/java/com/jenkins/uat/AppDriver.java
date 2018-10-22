@@ -139,8 +139,8 @@ public class AppDriver{
     	drag (pickColorGrid(), start, 0, end, 0);
     }
 
-    void selectColour(final int row) {
-    	paletteGrid().cell(row(row).column(0)).click();
+    void selectColour(final int colour) {
+    	paletteGrid().cell(row(0).column(colour)).click();
     }
 
     void setThreading (final int r, final int c){
@@ -297,7 +297,7 @@ public class AppDriver{
 	}
 
 	public void paletteIs(int index, Color color) {
-		paletteGrid().cell(row(index).column(0)).background().requireEqualTo(color);
+		paletteGrid().cell(row(0).column(index)).background().requireEqualTo(color);
 	}
 
     public void statusBarContains(String text) {

@@ -38,14 +38,11 @@ public class StatusBarModel implements TableModelListener {
 			AbstractWeavingDraftModel model = (AbstractWeavingDraftModel)e.getSource();
 			Rectangle rect = model.getCurrentCell();
 			if (model.getColumnCount() == 1) {
-				text = String.format("%d (%d)",
-						rect.y + 1, rect.height + 1);
+				text = format1d(rect.y, rect.height);
 			} else if (model.getRowCount() == 1) {
-				text = String.format("%d (%d)",
-						rect.x + 1, rect.width + 1);
+				text = format1d(rect.x, rect.width);
 			} else {
-				text = String.format("%d, %d (%dx%d)",
-						rect.x + 1, rect.y + 1, rect.width + 1, rect.height + 1);
+				text = format2d(rect);
 			}
 			for (PropertyChangeListener l : listeners.getListeners(PropertyChangeListener.class)) {
 				l.propertyChange(new PropertyChangeEvent(this, "text", oldText, text));
@@ -59,5 +56,22 @@ public class StatusBarModel implements TableModelListener {
 	
 	public void removePropertyChangeListener (PropertyChangeListener listener) {
 		listeners.remove(PropertyChangeListener.class, listener);
+	}
+
+	/**
+     * Returns a string that can be measured to find a suitable width for the container.
+	 */
+    public String getMetricsString() {
+    	return format2d(new Rectangle(999, 999, 999, 999));
+    }
+
+    private String format2d(Rectangle rect) {
+		return String.format("%d, %d (%dx%d)",
+				rect.x + 1, rect.y + 1, rect.width + 1, rect.height + 1);
+	}
+
+	private String format1d(int start, int count) {
+		return String.format("%d (%d)",
+				start + 1, count + 1);
 	}
 }

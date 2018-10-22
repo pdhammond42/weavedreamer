@@ -1,5 +1,6 @@
 package com.jenkins.weavingsimulator;
 
+import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -15,15 +16,17 @@ import com.jenkins.weavingsimulator.models.StatusBarModel;
  *
  */
 public class StatusBarControl extends JTextField implements PropertyChangeListener{
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	StatusBarModel model;
 	
 	public StatusBarControl (StatusBarModel model) {
 		this.model = model;
 		this.model.addPropertyChangeListener(this);
+		FontMetrics metrics = getFontMetrics(getFont());
+		Dimension dim = new Dimension ((int)(metrics.stringWidth(model.getMetricsString()) * 1.1),
+				(int)(metrics.getHeight() * 1.3));
+		setPreferredSize(dim);
+		setEditable(false);
 	}
 
 	public void propertyChange(PropertyChangeEvent evt) {

@@ -34,7 +34,8 @@ import javax.swing.JButton;
 import javax.swing.JColorChooser;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
-import javax.swing.event.ListSelectionListener;
+import javax.swing.event.*;
+import javax.swing.table.AbstractTableModel;
 
 import com.jenkins.weavingsimulator.datatypes.Palette;
 import com.jenkins.weavingsimulator.models.EditingSession;
@@ -88,11 +89,36 @@ public class PalettePanel extends JPanel {
         });
         addColorBtn.setEnabled(true);
         addColorBtn.setName("addColorBtn");
-                
+
         paletteGrid = new GridControl();
+        paletteGrid.setAutoCreateColumnsFromModel(true);
         paletteGrid.setSquareWidth(20);
-        paletteGrid.getSelectionModel().addListSelectionListener(
-                new PaletteSelectionListener());
+
+        paletteGrid.getColumnModel().addColumnModelListener(new TableColumnModelListener() {
+
+            @Override
+            public void columnAdded(TableColumnModelEvent e) {
+                paletteGrid.changeSelection(0, paletteGrid.getModel().getColumnCount()-1, false, false);
+            }
+
+            @Override
+            public void columnRemoved(TableColumnModelEvent e) {
+            }
+
+            @Override
+            public void columnMoved(TableColumnModelEvent e) {
+            }
+
+            @Override
+            public void columnMarginChanged(ChangeEvent e) {
+            }
+
+            @Override
+            public void columnSelectionChanged(ListSelectionEvent e) {
+                session.getPalette().setSelection(paletteGrid.getSelectedColumn());
+            }
+        });
+
         paletteGrid.setCellSelectionEnabled(true);
         paletteGrid.setEnabled(false);
         paletteGrid.addMouseListener(new MouseListener() {
@@ -115,21 +141,10 @@ public class PalettePanel extends JPanel {
         paletteGrid.setToolTipText(
                 "Click to select color. Double click to change.");
         add(paletteGrid, BorderLayout.CENTER);
-        add(addColorBtn, BorderLayout.PAGE_END);
+        add(addColorBtn, BorderLayout.EAST);
         paletteGrid.setName("paletteGrid");
-    }
 
-    private class PaletteSelectionListener implements ListSelectionListener {
-        public void valueChanged(javax.swing.event.ListSelectionEvent e) {
-            if (e.getValueIsAdjusting())
-                return;
-  
-            // getSelectedRow can return -1, but that's ok because -1 means the
-            // same thing to setSelection -- nothing is selected.
-            session.getPalette().setSelection(paletteGrid.getSelectedRow());
-            //changeColorBtn.setEnabled (paletteGrid.getSelectedRow() != -1);
-        }
-        
+        addColorBtn.setPreferredSize(new Dimension(paletteGrid.getSquareWidth(), paletteGrid.getSquareWidth()));
     }
 
     public EditingSession getSession() {
@@ -143,7 +158,7 @@ public class PalettePanel extends JPanel {
         paletteGrid.setModel(new PaletteModel(session.getPalette()));
         session.addPropertyChangeListener(EditingSession.PALETTE_PROPERTY,
                 ev -> paletteGrid.setModel(new PaletteModel((Palette)ev.getNewValue())));
-        paletteGrid.setRowSelectionInterval(0,0);
+        paletteGrid.changeSelection(0,0, false, false);
         paletteGrid.setEnabled(true);
     }
 }

@@ -24,8 +24,7 @@
 
 package com.jenkins.weavingsimulator;
 
-import java.awt.Component;
-import java.awt.Dimension;
+import java.awt.*;
 import java.util.ArrayList;
 
 import com.jenkins.weavingsimulator.models.AbstractWeavingDraftModel;
@@ -37,6 +36,10 @@ import com.jenkins.weavingsimulator.models.TieUpModel;
 import com.jenkins.weavingsimulator.models.TreadlingDraftModel;
 import com.jenkins.weavingsimulator.models.WarpEndColorModel;
 import com.jenkins.weavingsimulator.models.WeavingPatternModel;
+
+import javax.swing.*;
+
+import static java.awt.GridBagConstraints.*;
 
 /**
  * 
@@ -93,19 +96,28 @@ import com.jenkins.weavingsimulator.models.WeavingPatternModel;
 		sbModel.listen((AbstractWeavingDraftModel)warpEndColorGrid.getModel());
 		sbModel.listen((AbstractWeavingDraftModel)tieUpGrid.getModel());
 
+		statusPanel = new JPanel();
+        statusPanel.setLayout(new java.awt.GridBagLayout());
+
 		statusBar = new StatusBarControl(sbModel);
 		statusBar.setName("statusBar");
-		java.awt.GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
-		gridBagConstraints.gridx = 0;
-		gridBagConstraints.gridy = 4;
-		gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-		gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTH;
-		gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
-		getContentPane().add(statusBar, java.awt.BorderLayout.SOUTH);
+        java.awt.GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = HORIZONTAL;
+        statusPanel.add(statusBar, gridBagConstraints);
 		statusBar.setText("0,0");
-		
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.weightx = 0.9;
+        statusPanel.add(palettePanel, gridBagConstraints);
+
+        getContentPane().add(statusPanel, BorderLayout.NORTH);
 		setName("WeavingDraftWindow");
-	
+
+		pack();
 		palettePanel.setSession(getSession());
 	}
 	
@@ -115,9 +127,8 @@ import com.jenkins.weavingsimulator.models.WeavingPatternModel;
 	 * don't try to use it with Netbeans. 
 	 */
 	protected void initComponents() {
-
-		jScrollPane1 = new javax.swing.JScrollPane();
-		jPanel1 = new javax.swing.JPanel();
+		jScrollPane1 = new JScrollPane();
+		draftPanel = new JPanel();
 		warpEndColorGrid = new WeavingGridControl();
 		threadingDraftGrid = new WeavingGridControl();
 		tieUpGrid = new WeavingGridControl();
@@ -130,19 +141,17 @@ import com.jenkins.weavingsimulator.models.WeavingPatternModel;
 		setMaximizable(true);
 		setResizable(true);
 
-		jPanel1.setLayout(new java.awt.GridBagLayout());
+		draftPanel.setLayout(new java.awt.GridBagLayout());
 		insertComponent(warpEndColorGrid, 1, 0);
 		insertComponent(threadingDraftGrid, 1, 1);
 		insertComponent(tieUpGrid, 2, 1);
 		insertComponent(weavingPatternGrid, 1, 2);
 		insertComponent(treadlingDraftGrid, 2, 2);
 		insertComponent(pickColorGrid, 3,2);
-		insertComponent(palettePanel, 0,2);		
-		
-		jScrollPane1.setViewportView(jPanel1);
-		getContentPane().add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
-		pack();
+		jScrollPane1.setViewportView(draftPanel);
+
+		getContentPane().add(jScrollPane1, BorderLayout.CENTER);
 	}
 	
 	// Inserts the given component into the control grid on the main scroll panel.
@@ -151,7 +160,7 @@ import com.jenkins.weavingsimulator.models.WeavingPatternModel;
 		gridBagConstraints.gridx = gridX;
 		gridBagConstraints.gridy = gridY;
 		gridBagConstraints.insets = new java.awt.Insets(5, 5,5, 5);
-		jPanel1.add(comp, gridBagConstraints);		
+        draftPanel.add(comp, gridBagConstraints);
 	}
 	
 	// Overload to ensure the control gets added to the list of zoomable grids.
@@ -176,8 +185,9 @@ import com.jenkins.weavingsimulator.models.WeavingPatternModel;
 	
 	// Nasty code alert: these are protected so the derived class can
 	// put them into the correct place in the grid layout.
-	protected javax.swing.JPanel jPanel1;
-	protected javax.swing.JScrollPane jScrollPane1;
+	protected JPanel draftPanel;
+	protected JPanel statusPanel;
+	protected JScrollPane jScrollPane1;
 	protected PalettePanel palettePanel;
 	protected WeavingGridControl pickColorGrid;
 	protected WeavingGridControl threadingDraftGrid;

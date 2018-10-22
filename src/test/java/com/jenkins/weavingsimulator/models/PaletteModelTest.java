@@ -61,18 +61,18 @@ public class PaletteModelTest extends TestCase {
     }
 
     public void testGetValueAt() {
-        for (int row = 0; row < model.getRowCount(); row++) {
-            assertEquals("row="+row, 
-                    palette.getColor(row), model.getValueAt(row, 0));
+        for (int col = 0; col < model.getColumnCount(); col++) {
+            assertEquals("colour " + col,
+                    palette.getColor(col), model.getValueAt(0, col));
         }
     }
 
     public void testGetRowCount() {
-        assertEquals(palette.getNumColors(), model.getRowCount());
+        assertEquals(palette.getNumColors(), model.getColumnCount());
     }
 
     public void testGetColumnCount() {
-        assertEquals(1, model.getColumnCount());
+        assertEquals(palette.getNumColors(), model.getColumnCount());
     }
 
     public void testSetValueAt() {
@@ -96,7 +96,7 @@ public class PaletteModelTest extends TestCase {
     
     public void testNotifyListenerOnSet() {
         palette.setColor(1, Color.CYAN);
-        TableModelTestUtils.assertOneTableCellUpdateEvent(listener.event, 1, 0);
+        TableModelTestUtils.assertOneTableCellUpdateEvent(listener.event, 0, 1);
     }
     
     public void testNotifyListenerOnNumColorsChanged() {
