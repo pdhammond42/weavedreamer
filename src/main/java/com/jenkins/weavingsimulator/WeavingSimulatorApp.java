@@ -28,6 +28,7 @@ package com.jenkins.weavingsimulator;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 import java.beans.PropertyVetoException;
 import java.beans.XMLEncoder;
 import java.io.BufferedReader;
@@ -42,6 +43,7 @@ import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 import java.util.stream.Collectors;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
@@ -89,6 +91,12 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
         fileChooser = new JFileChooser(prefs.get("last_browse", ""));
         fileChooser.addChoosableFileFilter(new DraftFileFilter());
         wifFilter = new WifFileFilter();
+
+        InputStream imgStream = getClass().getResourceAsStream("icon.png" );
+        try {
+            setIconImage(ImageIO.read(imgStream));
+        } catch (IOException e) {
+        }
     }
     
     private void initComponents() {
@@ -459,19 +467,19 @@ public class WeavingSimulatorApp extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-	try {
-	    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-	} 
-	catch (UnsupportedLookAndFeelException e) {
-	}
-	catch (ClassNotFoundException e) {
-	}
-	catch (InstantiationException e) {
-	}
-	catch (IllegalAccessException e) {
-	}
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        }
+        catch (UnsupportedLookAndFeelException e) {
+        }
+        catch (ClassNotFoundException e) {
+        }
+        catch (InstantiationException e) {
+        }
+        catch (IllegalAccessException e) {
+        }
 
-	WeavingSimulatorApp app = new WeavingSimulatorApp();
+        WeavingSimulatorApp app = new WeavingSimulatorApp();
         if (args.length > 0) {
             File draftFile = new File(args[0]);
             try {
