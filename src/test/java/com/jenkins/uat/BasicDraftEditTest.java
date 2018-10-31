@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
-import com.jenkins.weavingsimulator.WeavingSimulatorApp;
+import com.jenkins.weavedreamer.WeaveDreamerApp;
 import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -107,7 +107,7 @@ public class BasicDraftEditTest extends WeavingTestCase {
 	public void testSavePalette () throws IOException {
 		// Rather ugly having this here but it works.
 		try {
-			Preferences.userNodeForPackage(WeavingSimulatorApp.class).node("Palettes").clear();
+			Preferences.userNodeForPackage(WeaveDreamerApp.class).node("Palettes").clear();
 		} catch (BackingStoreException e) {
 		}
 		

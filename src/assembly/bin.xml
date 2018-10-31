@@ -7,9 +7,9 @@
   </formats>
   <files>
        <file>
-      <source>${project.build.directory}/weavingSimulator-${pom.version}.jar</source>
+      <source>${project.build.directory}/weavedreamer-${pom.version}.jar</source>
       <outputDirectory>/</outputDirectory>
-      <destName>WeavingSimulator.jar</destName>
+      <destName>weavedreamer.jar</destName>
    </file>
   </files>
   <fileSets>
@@ -38,7 +38,7 @@
       <scope>runtime</scope>
       <outputDirectory>lib</outputDirectory>
       <excludes>
-	<exclude>weavingSimulator*</exclude>
+	<exclude>weavedreamer*</exclude>
       </excludes>
     </dependencySet>
   </dependencySets>
