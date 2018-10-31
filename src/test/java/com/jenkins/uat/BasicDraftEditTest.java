@@ -158,7 +158,7 @@ public class BasicDraftEditTest extends WeavingTestCase {
 
 	@Test
 	public void testHelpAbout () {
-		assertThat(ui.aboutBoxText(), containsString("Weaving Simulator 0.2"));
+		assertThat(ui.aboutBoxText(), containsString("Weave Dreamer 0.2"));
 	}
 
 	@Test
