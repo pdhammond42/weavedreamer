@@ -1,4 +1,4 @@
-package com.jenkins.weavedreamer.datatypes;
+package com.jenkins.weavingsimulator.datatypes;
 
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;

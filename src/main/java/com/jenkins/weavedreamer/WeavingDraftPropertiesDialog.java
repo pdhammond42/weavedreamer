@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.Vector;
 import java.util.prefs.Preferences;
 
-import com.jenkins.weavedreamer.datatypes.Palette;
+import com.jenkins.weavingsimulator.datatypes.Palette;
 import com.jenkins.weavedreamer.models.Command;
 import com.jenkins.weavedreamer.models.EditingSession;
 import com.jenkins.weavedreamer.models.PalettePreviewModel;
@@ -244,7 +244,8 @@ public class WeavingDraftPropertiesDialog extends javax.swing.JDialog {
      * The function displays the dialog, and doesn't return until
      * editing has finished.  The draft is only modified if the
      * user presses OK.
-     * @param draft The WeavingDraft whose properties will be edited.
+     * @param session The Weaving session whose properties will be edited.
+     * @param palettes The palettes to offer for selection
      * @return true if user pressed Ok, false if user pressed Cancel
      * or otherwise closed the dialog.
      */    
@@ -344,9 +345,9 @@ public class WeavingDraftPropertiesDialog extends javax.swing.JDialog {
     	boolean newNetwork;
     	Palette newPalette;
     	
-    	com.jenkins.weavedreamer.datatypes.WeavingDraft target;
+    	com.jenkins.weavingsimulator.datatypes.WeavingDraft target;
     	
-    	SetDraftPropertiesCommand (com.jenkins.weavedreamer.datatypes.WeavingDraft draft,
+    	SetDraftPropertiesCommand (com.jenkins.weavingsimulator.datatypes.WeavingDraft draft,
     			int numHarnesses, int numTreadles, int numEnds, int numPicks, 
     			boolean isLiftplan, boolean isNetwork,
     			Palette palette) {

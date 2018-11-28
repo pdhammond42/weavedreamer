@@ -4,6 +4,9 @@ import java.awt.Color;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import com.jenkins.weavingsimulator.datatypes.NetworkDraft;
+import com.jenkins.weavingsimulator.datatypes.WarpEnd;
+import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
 import org.apache.commons.lang.ArrayUtils;
 import java.util.Arrays;
 import java.util.List;
@@ -25,7 +28,7 @@ public class NetworkDraftTest extends TestCase {
 	public void testPatternLineCanBeTelescoped() {
 		List<Integer> pl = Arrays.asList(1, 2, 3, 4, 5, 4, 5, 8, 14);
 		
-		assertThat(NetworkDraft.Telescope(pl, 4), 
+		assertThat(NetworkDraft.Telescope(pl, 4),
 				contains(1, 2, 3, 0, 1, 0, 1, 0, 2));
 	}
 		

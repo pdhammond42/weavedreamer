@@ -25,14 +25,14 @@
 
 package com.jenkins.weavedreamer.models;
 
+import com.jenkins.weavingsimulator.datatypes.*;
+
 import java.awt.Rectangle;
 import java.beans.IndexedPropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 import javax.swing.event.TableModelEvent;
 import javax.swing.table.AbstractTableModel;
-
-import com.jenkins.weavedreamer.datatypes.WeavingDraft;
 
 /**
  *

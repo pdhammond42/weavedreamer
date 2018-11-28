@@ -1,6 +1,6 @@
 package com.jenkins.weavedreamer.models;
 
-import com.jenkins.weavedreamer.datatypes.NetworkDraft;
+import com.jenkins.weavingsimulator.datatypes.NetworkDraft;
 
 public class PatternLineModel extends AbstractWeavingDraftModel {
 

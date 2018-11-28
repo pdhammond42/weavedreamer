@@ -23,7 +23,7 @@
  */
 
 
-package com.jenkins.weavedreamer.datatypes;
+package com.jenkins.weavingsimulator.datatypes;
 
 import java.awt.Color;
 import java.beans.PropertyChangeSupport;
@@ -33,6 +33,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import com.jenkins.weavedreamer.datatypes.ListChangeListener;
+import com.jenkins.weavedreamer.datatypes.ListChangedEvent;
+import com.jenkins.weavedreamer.datatypes.ObservableList;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
@@ -467,7 +470,7 @@ public class WeavingDraft {
 		
         if (numEnds > getEnds().size()) {
             while (numEnds > getEnds().size())
-                getEnds().add(new com.jenkins.weavedreamer.datatypes.WarpEnd(java.awt.Color.WHITE, -1));
+                getEnds().add(new WarpEnd(java.awt.Color.WHITE, -1));
         } else if (numEnds < getEnds().size()) {
             while (numEnds < getEnds().size())
                 getEnds().remove(getEnds().size() - 1);
@@ -475,7 +478,7 @@ public class WeavingDraft {
         
         if (numTreadles > getTreadles().size()) {
             while (numTreadles > getTreadles().size())
-                getTreadles().add(new com.jenkins.weavedreamer.datatypes.Treadle());
+                getTreadles().add(new Treadle());
         } else if (numTreadles < getTreadles().size()) {
             while (numTreadles < getTreadles().size())
                 getTreadles().remove(getTreadles().size() - 1);
@@ -494,7 +497,7 @@ public class WeavingDraft {
         
         if (numPicks > getPicks().size()) {
             while (numPicks > getPicks().size())
-                getPicks().add(new com.jenkins.weavedreamer.datatypes.WeftPick(numTreadles));
+                getPicks().add(new WeftPick(numTreadles));
         } else if (numPicks < getPicks().size()) {
             while (numPicks < getPicks().size())
                 getPicks().remove(getPicks().size() - 1);

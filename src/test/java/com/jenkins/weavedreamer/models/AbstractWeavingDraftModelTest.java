@@ -26,7 +26,7 @@
 
 package com.jenkins.weavedreamer.models;
 
-import com.jenkins.weavedreamer.datatypes.WeavingDraft;
+import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
 
 import java.awt.Rectangle;
 import java.beans.PropertyChangeListener;

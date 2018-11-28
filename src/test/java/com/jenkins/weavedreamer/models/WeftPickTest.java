@@ -8,7 +8,7 @@ import junit.framework.TestCase;
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.MatcherAssert.*;
 import static org.apache.commons.lang.ArrayUtils.*;
-import com.jenkins.weavedreamer.datatypes.WeftPick;
+import com.jenkins.weavingsimulator.datatypes.WeftPick;
 
 public class WeftPickTest extends TestCase {
 	public void testRestorePick() {

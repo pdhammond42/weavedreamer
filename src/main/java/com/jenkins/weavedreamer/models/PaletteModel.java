@@ -30,7 +30,7 @@ import java.beans.IndexedPropertyChangeEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import com.jenkins.weavedreamer.datatypes.Palette;
+import com.jenkins.weavingsimulator.datatypes.Palette;
 
 /**
  * TableModel implementation which represents a color palette.

@@ -29,7 +29,7 @@ import java.awt.Dimension;
 
 import javax.swing.table.TableModel;
 
-import com.jenkins.weavedreamer.datatypes.WeavingDraft;
+import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
 import com.jenkins.weavedreamer.models.EditingSession;
 import com.jenkins.weavedreamer.models.TiledTableModelAdapter;
 import com.jenkins.weavedreamer.models.WeavingPatternModel;

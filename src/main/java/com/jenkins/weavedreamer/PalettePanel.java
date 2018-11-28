@@ -36,7 +36,7 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.event.*;
 
-import com.jenkins.weavedreamer.datatypes.Palette;
+import com.jenkins.weavingsimulator.datatypes.Palette;
 import com.jenkins.weavedreamer.models.EditingSession;
 import com.jenkins.weavedreamer.models.PaletteColorChangeCommand;
 import com.jenkins.weavedreamer.models.PaletteModel;

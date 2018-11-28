@@ -28,7 +28,7 @@ package com.jenkins.weavedreamer.models;
 import java.awt.Color;
 import java.beans.IndexedPropertyChangeEvent;
 
-import com.jenkins.weavedreamer.datatypes.WarpEnd;
+import com.jenkins.weavingsimulator.datatypes.WarpEnd;
 
 
 /** This TableModel represents the threading draft part of a weaving draft. 

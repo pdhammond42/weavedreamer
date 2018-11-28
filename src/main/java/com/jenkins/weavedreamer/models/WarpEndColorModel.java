@@ -28,7 +28,7 @@ package com.jenkins.weavedreamer.models;
 import java.awt.Color;
 import java.beans.IndexedPropertyChangeEvent;
 
-import com.jenkins.weavedreamer.datatypes.WarpEnd;
+import com.jenkins.weavingsimulator.datatypes.WarpEnd;
 
 /** A TableModel for editing warp thread colors.  It has a single row, and 
  * a column for each thread.

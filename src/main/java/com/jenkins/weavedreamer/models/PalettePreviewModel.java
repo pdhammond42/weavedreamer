@@ -2,7 +2,7 @@ package com.jenkins.weavedreamer.models;
 
 import java.awt.Color;
 
-import com.jenkins.weavedreamer.datatypes.Palette;
+import com.jenkins.weavingsimulator.datatypes.Palette;
 
 /**
  * Similar to the PaletteModel used for editing, but provides a Read-only view 

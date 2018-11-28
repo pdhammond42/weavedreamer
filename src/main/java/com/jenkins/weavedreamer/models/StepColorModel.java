@@ -28,7 +28,7 @@ package com.jenkins.weavedreamer.models;
 import java.awt.Color;
 import java.beans.IndexedPropertyChangeEvent;
 
-import com.jenkins.weavedreamer.datatypes.WeftPick;
+import com.jenkins.weavingsimulator.datatypes.WeftPick;
 
 /**
  *

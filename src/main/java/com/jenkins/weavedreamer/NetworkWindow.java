@@ -14,7 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import com.jenkins.weavedreamer.datatypes.NetworkDraft;
+import com.jenkins.weavingsimulator.datatypes.NetworkDraft;
 import com.jenkins.weavedreamer.models.AbstractWeavingDraftModel;
 import com.jenkins.weavedreamer.models.BeanPropertyCommand;
 import com.jenkins.weavedreamer.models.EditingSession;

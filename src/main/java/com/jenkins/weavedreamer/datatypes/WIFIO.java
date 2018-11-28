@@ -9,6 +9,7 @@ import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.jenkins.weavingsimulator.datatypes.*;
 import com.jenkins.wifio.WIFException;
 import com.jenkins.wifio.WIFFile;
 
@@ -42,7 +43,7 @@ public class WIFIO {
         }
         
         if (wif.getBooleanField("CONTENTS", "TIEUP", false)) {
-        	List<Treadle> treadles = readTieup(wif);        
+        	List<Treadle> treadles = readTieup(wif);
         	draft.setTreadles(treadles);
         }
         

@@ -1,5 +1,8 @@
 package com.jenkins.weavedreamer.datatypes;
 
+import com.jenkins.weavingsimulator.datatypes.Treadle;
+import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
+import com.jenkins.weavingsimulator.datatypes.WeftPick;
 import junit.framework.*;
 import static org.apache.commons.lang.ArrayUtils.toObject;
 import static org.hamcrest.Matchers.*;

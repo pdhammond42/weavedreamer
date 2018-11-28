@@ -1,6 +1,6 @@
 package com.jenkins.weavedreamer.models;
 
-import com.jenkins.weavedreamer.datatypes.Palette;
+import com.jenkins.weavingsimulator.datatypes.Palette;
 import junit.framework.TestCase;
 
 import java.awt.*;

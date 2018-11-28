@@ -23,7 +23,7 @@
  */
 
 
-package com.jenkins.weavedreamer.datatypes;
+package com.jenkins.weavingsimulator.datatypes;
 
 import java.awt.Color;
 import java.beans.PropertyChangeListener;

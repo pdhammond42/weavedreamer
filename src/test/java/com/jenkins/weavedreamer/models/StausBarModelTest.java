@@ -3,7 +3,7 @@ package com.jenkins.weavedreamer.models;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import com.jenkins.weavedreamer.datatypes.WeavingDraft;
+import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 

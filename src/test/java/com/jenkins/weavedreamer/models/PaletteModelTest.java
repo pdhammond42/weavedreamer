@@ -31,7 +31,7 @@ import java.util.Arrays;
 
 import junit.framework.TestCase;
 
-import com.jenkins.weavedreamer.datatypes.Palette;
+import com.jenkins.weavingsimulator.datatypes.Palette;
 
 /**
  *

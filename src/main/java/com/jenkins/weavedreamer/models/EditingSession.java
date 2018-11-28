@@ -33,8 +33,8 @@ import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
 
-import com.jenkins.weavedreamer.datatypes.Palette;
-import com.jenkins.weavedreamer.datatypes.WeavingDraft;
+import com.jenkins.weavingsimulator.datatypes.Palette;
+import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
 
 
 /**

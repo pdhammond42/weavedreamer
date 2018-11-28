@@ -25,10 +25,10 @@
 
 package com.jenkins.weavedreamer.models;
 
-import com.jenkins.weavedreamer.datatypes.WeftPick;
-import com.jenkins.weavedreamer.datatypes.Treadle;
-import com.jenkins.weavedreamer.datatypes.WarpEnd;
-import com.jenkins.weavedreamer.datatypes.WeavingDraft;
+import com.jenkins.weavingsimulator.datatypes.WeftPick;
+import com.jenkins.weavingsimulator.datatypes.Treadle;
+import com.jenkins.weavingsimulator.datatypes.WarpEnd;
+import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
 import java.awt.Color;
 import java.util.Arrays;
 import javax.swing.table.TableModel;

@@ -27,7 +27,7 @@ package com.jenkins.weavedreamer.models;
 
 import java.beans.IndexedPropertyChangeEvent;
 
-import com.jenkins.weavedreamer.datatypes.Treadle;
+import com.jenkins.weavingsimulator.datatypes.Treadle;
 
 /** A TableModel class for representing the treadle tie up part of the
  * weaving draft.

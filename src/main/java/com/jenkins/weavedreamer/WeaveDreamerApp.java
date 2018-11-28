@@ -50,9 +50,9 @@ import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 import javax.swing.filechooser.FileView;
 
-import com.jenkins.weavedreamer.datatypes.Palette;
+import com.jenkins.weavingsimulator.datatypes.Palette;
 import com.jenkins.weavedreamer.datatypes.WIFIO;
-import com.jenkins.weavedreamer.datatypes.WeavingDraft;
+import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
 import com.jenkins.weavedreamer.models.EditingSession;
 import com.jenkins.wifio.WIFException;
 

@@ -29,7 +29,7 @@ import java.awt.event.MouseEvent;
 
 import junit.framework.TestCase;
 
-import com.jenkins.weavedreamer.datatypes.WeavingDraft;
+import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
 import com.jenkins.weavedreamer.models.AbstractWeavingDraftModel;
 import com.jenkins.weavedreamer.models.Command;
 import com.jenkins.weavedreamer.models.EditingSession;

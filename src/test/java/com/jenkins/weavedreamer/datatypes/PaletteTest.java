@@ -41,6 +41,7 @@ import java.util.List;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
+import com.jenkins.weavingsimulator.datatypes.Palette;
 import junit.framework.*;
 
 /**

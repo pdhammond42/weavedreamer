@@ -37,13 +37,14 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.jenkins.weavingsimulator.datatypes.*;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.apache.commons.lang.ArrayUtils.*;
+import static org.apache.commons.lang.ArrayUtils.toObject;
 
 /**
  *
