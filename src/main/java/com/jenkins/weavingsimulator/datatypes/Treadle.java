@@ -25,6 +25,8 @@
 
 package com.jenkins.weavingsimulator.datatypes;
 
+import com.jenkins.weavedreamer.datatypes.ObservableList;
+
 /** A treadle is represented as a list of harnessIds, which are the harnesses
  * tied to this treadle.
  *

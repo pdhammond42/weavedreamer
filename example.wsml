@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <java version="1.8.0_20" class="java.beans.XMLDecoder">
- <object class="com.jenkins.weavingsimulator.datatypes.WeavingDraft" id="WeavingDraft0">
+ <object class="com.jenkins.weavedreamer.datatypes.WeavingDraft" id="WeavingDraft0">
   <void property="ends">
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object class="java.awt.Color" id="Color0">
        <int>0</int>
@@ -18,7 +18,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -28,7 +28,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -38,7 +38,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -48,7 +48,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -58,7 +58,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -68,7 +68,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -78,7 +78,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -88,7 +88,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -98,14 +98,14 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -115,7 +115,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -125,14 +125,14 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -142,7 +142,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -152,7 +152,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -162,7 +162,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -172,7 +172,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -182,7 +182,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -192,7 +192,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -202,7 +202,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -212,7 +212,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -222,7 +222,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -232,7 +232,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -242,7 +242,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -252,7 +252,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -262,7 +262,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -272,7 +272,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -282,7 +282,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -292,7 +292,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -302,7 +302,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -312,7 +312,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -322,7 +322,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -332,7 +332,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -342,7 +342,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -352,7 +352,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -362,7 +362,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -372,7 +372,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -382,7 +382,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -392,7 +392,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -402,7 +402,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -412,7 +412,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -422,14 +422,14 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -439,7 +439,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -449,7 +449,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -459,7 +459,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -469,7 +469,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -479,7 +479,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -489,7 +489,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -499,7 +499,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -509,7 +509,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -519,7 +519,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -529,7 +529,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -539,7 +539,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -549,7 +549,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -559,7 +559,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -569,7 +569,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -579,7 +579,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -589,7 +589,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -599,7 +599,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -609,7 +609,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -619,7 +619,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -629,7 +629,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -639,7 +639,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -649,7 +649,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -659,7 +659,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -669,7 +669,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -679,7 +679,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -689,7 +689,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -699,7 +699,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -709,7 +709,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -719,14 +719,14 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -736,7 +736,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -746,14 +746,14 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -763,7 +763,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -773,14 +773,14 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -790,7 +790,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -800,7 +800,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -810,7 +810,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -820,7 +820,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -830,7 +830,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -840,7 +840,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -850,7 +850,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -860,7 +860,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -870,7 +870,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -880,7 +880,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpEnd">
+    <object class="com.jenkins.weavedreamer.datatypes.WarpEnd">
      <void property="color">
       <object idref="Color0"/>
      </void>
@@ -897,7 +897,7 @@
    <string>example.wsml</string>
   </void>
   <void property="network">
-   <object class="com.jenkins.weavingsimulator.datatypes.NetworkDraft" id="NetworkDraft0">
+   <object class="com.jenkins.weavedreamer.datatypes.NetworkDraft" id="NetworkDraft0">
     <void property="initial">
      <void method="clear"/>
      <void method="add">
@@ -1266,7 +1266,7 @@
    <int>8</int>
   </void>
   <void property="palette">
-   <object class="com.jenkins.weavingsimulator.datatypes.Palette">
+   <object class="com.jenkins.weavedreamer.datatypes.Palette">
     <void property="colors">
      <object class="java.util.Collections" method="unmodifiableList">
       <object class="java.util.ArrayList">
@@ -1307,7 +1307,7 @@
   </void>
   <void property="picks">
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
      <void property="treadles">
       <array class="boolean" length="8">
        <void index="0">
@@ -1327,7 +1327,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
      <void property="treadles">
       <array class="boolean" length="8">
        <void index="1">
@@ -1347,7 +1347,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
      <void property="treadles">
       <array class="boolean" length="8">
        <void index="2">
@@ -1364,7 +1364,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
      <void property="treadles">
       <array class="boolean" length="8">
        <void index="0">
@@ -1384,7 +1384,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
      <void property="treadles">
       <array class="boolean" length="8">
        <void index="1">
@@ -1404,7 +1404,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
      <void property="treadles">
       <array class="boolean" length="8">
        <void index="2">
@@ -1421,7 +1421,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
      <void property="treadles">
       <array class="boolean" length="8">
        <void index="0">
@@ -1441,7 +1441,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
      <void property="treadles">
       <array class="boolean" length="8">
        <void index="1">
@@ -1461,7 +1461,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
      <void property="treadles">
       <array class="boolean" length="8">
        <void index="1">
@@ -1478,7 +1478,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
      <void property="treadles">
       <array class="boolean" length="8">
        <void index="0">
@@ -1498,64 +1498,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
-     <void property="treadles">
-      <array class="boolean" length="8">
-       <void index="0">
-        <boolean>true</boolean>
-       </void>
-       <void index="1">
-        <boolean>true</boolean>
-       </void>
-       <void index="4">
-        <boolean>true</boolean>
-       </void>
-       <void index="7">
-        <boolean>true</boolean>
-       </void>
-      </array>
-     </void>
-    </object>
-   </void>
-   <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
-     <void property="treadles">
-      <array class="boolean" length="8">
-       <void index="1">
-        <boolean>true</boolean>
-       </void>
-       <void index="2">
-        <boolean>true</boolean>
-       </void>
-       <void index="5">
-        <boolean>true</boolean>
-       </void>
-      </array>
-     </void>
-    </object>
-   </void>
-   <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
-     <void property="treadles">
-      <array class="boolean" length="8">
-       <void index="0">
-        <boolean>true</boolean>
-       </void>
-       <void index="2">
-        <boolean>true</boolean>
-       </void>
-       <void index="3">
-        <boolean>true</boolean>
-       </void>
-       <void index="6">
-        <boolean>true</boolean>
-       </void>
-      </array>
-     </void>
-    </object>
-   </void>
-   <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
      <void property="treadles">
       <array class="boolean" length="8">
        <void index="0">
@@ -1575,7 +1518,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
      <void property="treadles">
       <array class="boolean" length="8">
        <void index="1">
@@ -1592,7 +1535,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
      <void property="treadles">
       <array class="boolean" length="8">
        <void index="0">
@@ -1612,520 +1555,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
-     <void property="treadles">
-      <array class="boolean" length="8">
-       <void index="1">
-        <boolean>true</boolean>
-       </void>
-       <void index="3">
-        <boolean>true</boolean>
-       </void>
-       <void index="4">
-        <boolean>true</boolean>
-       </void>
-       <void index="7">
-        <boolean>true</boolean>
-       </void>
-      </array>
-     </void>
-    </object>
-   </void>
-   <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
-     <void property="treadles">
-      <array class="boolean" length="8">
-       <void index="1">
-        <boolean>true</boolean>
-       </void>
-       <void index="2">
-        <boolean>true</boolean>
-       </void>
-       <void index="5">
-        <boolean>true</boolean>
-       </void>
-      </array>
-     </void>
-    </object>
-   </void>
-   <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
-     <void property="treadles">
-      <array class="boolean" length="8">
-       <void index="0">
-        <boolean>true</boolean>
-       </void>
-       <void index="2">
-        <boolean>true</boolean>
-       </void>
-       <void index="3">
-        <boolean>true</boolean>
-       </void>
-       <void index="6">
-        <boolean>true</boolean>
-       </void>
-      </array>
-     </void>
-    </object>
-   </void>
-   <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
-     <void property="treadles">
-      <array class="boolean" length="8">
-       <void index="1">
-        <boolean>true</boolean>
-       </void>
-       <void index="3">
-        <boolean>true</boolean>
-       </void>
-       <void index="4">
-        <boolean>true</boolean>
-       </void>
-       <void index="7">
-        <boolean>true</boolean>
-       </void>
-      </array>
-     </void>
-    </object>
-   </void>
-   <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
-     <void property="treadles">
-      <array class="boolean" length="8">
-       <void index="2">
-        <boolean>true</boolean>
-       </void>
-       <void index="4">
-        <boolean>true</boolean>
-       </void>
-       <void index="5">
-        <boolean>true</boolean>
-       </void>
-      </array>
-     </void>
-    </object>
-   </void>
-   <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
-     <void property="treadles">
-      <array class="boolean" length="8">
-       <void index="0">
-        <boolean>true</boolean>
-       </void>
-       <void index="3">
-        <boolean>true</boolean>
-       </void>
-       <void index="5">
-        <boolean>true</boolean>
-       </void>
-       <void index="6">
-        <boolean>true</boolean>
-       </void>
-      </array>
-     </void>
-    </object>
-   </void>
-   <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
-     <void property="treadles">
-      <array class="boolean" length="8">
-       <void index="1">
-        <boolean>true</boolean>
-       </void>
-       <void index="4">
-        <boolean>true</boolean>
-       </void>
-       <void index="6">
-        <boolean>true</boolean>
-       </void>
-       <void index="7">
-        <boolean>true</boolean>
-       </void>
-      </array>
-     </void>
-    </object>
-   </void>
-   <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
-     <void property="treadles">
-      <array class="boolean" length="8">
-       <void index="2">
-        <boolean>true</boolean>
-       </void>
-       <void index="4">
-        <boolean>true</boolean>
-       </void>
-       <void index="5">
-        <boolean>true</boolean>
-       </void>
-      </array>
-     </void>
-    </object>
-   </void>
-   <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
-     <void property="treadles">
-      <array class="boolean" length="8">
-       <void index="0">
-        <boolean>true</boolean>
-       </void>
-       <void index="3">
-        <boolean>true</boolean>
-       </void>
-       <void index="5">
-        <boolean>true</boolean>
-       </void>
-       <void index="6">
-        <boolean>true</boolean>
-       </void>
-      </array>
-     </void>
-    </object>
-   </void>
-   <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
-     <void property="treadles">
-      <array class="boolean" length="8">
-       <void index="1">
-        <boolean>true</boolean>
-       </void>
-       <void index="4">
-        <boolean>true</boolean>
-       </void>
-       <void index="6">
-        <boolean>true</boolean>
-       </void>
-       <void index="7">
-        <boolean>true</boolean>
-       </void>
-      </array>
-     </void>
-    </object>
-   </void>
-   <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
-     <void property="treadles">
-      <array class="boolean" length="8">
-       <void index="2">
-        <boolean>true</boolean>
-       </void>
-       <void index="4">
-        <boolean>true</boolean>
-       </void>
-       <void index="5">
-        <boolean>true</boolean>
-       </void>
-      </array>
-     </void>
-    </object>
-   </void>
-   <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
-     <void property="treadles">
-      <array class="boolean" length="8">
-       <void index="0">
-        <boolean>true</boolean>
-       </void>
-       <void index="3">
-        <boolean>true</boolean>
-       </void>
-       <void index="5">
-        <boolean>true</boolean>
-       </void>
-       <void index="6">
-        <boolean>true</boolean>
-       </void>
-      </array>
-     </void>
-    </object>
-   </void>
-   <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
-     <void property="treadles">
-      <array class="boolean" length="8">
-       <void index="1">
-        <boolean>true</boolean>
-       </void>
-       <void index="3">
-        <boolean>true</boolean>
-       </void>
-       <void index="4">
-        <boolean>true</boolean>
-       </void>
-       <void index="7">
-        <boolean>true</boolean>
-       </void>
-      </array>
-     </void>
-    </object>
-   </void>
-   <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
-     <void property="treadles">
-      <array class="boolean" length="8">
-       <void index="2">
-        <boolean>true</boolean>
-       </void>
-       <void index="4">
-        <boolean>true</boolean>
-       </void>
-       <void index="5">
-        <boolean>true</boolean>
-       </void>
-      </array>
-     </void>
-    </object>
-   </void>
-   <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
-     <void property="treadles">
-      <array class="boolean" length="8">
-       <void index="0">
-        <boolean>true</boolean>
-       </void>
-       <void index="3">
-        <boolean>true</boolean>
-       </void>
-       <void index="5">
-        <boolean>true</boolean>
-       </void>
-       <void index="6">
-        <boolean>true</boolean>
-       </void>
-      </array>
-     </void>
-    </object>
-   </void>
-   <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
-     <void property="treadles">
-      <array class="boolean" length="8">
-       <void index="1">
-        <boolean>true</boolean>
-       </void>
-       <void index="3">
-        <boolean>true</boolean>
-       </void>
-       <void index="4">
-        <boolean>true</boolean>
-       </void>
-       <void index="7">
-        <boolean>true</boolean>
-       </void>
-      </array>
-     </void>
-    </object>
-   </void>
-   <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
-     <void property="treadles">
-      <array class="boolean" length="8">
-       <void index="2">
-        <boolean>true</boolean>
-       </void>
-       <void index="4">
-        <boolean>true</boolean>
-       </void>
-       <void index="5">
-        <boolean>true</boolean>
-       </void>
-      </array>
-     </void>
-    </object>
-   </void>
-   <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
-     <void property="treadles">
-      <array class="boolean" length="8">
-       <void index="0">
-        <boolean>true</boolean>
-       </void>
-       <void index="3">
-        <boolean>true</boolean>
-       </void>
-       <void index="5">
-        <boolean>true</boolean>
-       </void>
-       <void index="6">
-        <boolean>true</boolean>
-       </void>
-      </array>
-     </void>
-    </object>
-   </void>
-   <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
-     <void property="treadles">
-      <array class="boolean" length="8">
-       <void index="1">
-        <boolean>true</boolean>
-       </void>
-       <void index="3">
-        <boolean>true</boolean>
-       </void>
-       <void index="4">
-        <boolean>true</boolean>
-       </void>
-       <void index="7">
-        <boolean>true</boolean>
-       </void>
-      </array>
-     </void>
-    </object>
-   </void>
-   <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
-     <void property="treadles">
-      <array class="boolean" length="8">
-       <void index="2">
-        <boolean>true</boolean>
-       </void>
-       <void index="4">
-        <boolean>true</boolean>
-       </void>
-       <void index="5">
-        <boolean>true</boolean>
-       </void>
-      </array>
-     </void>
-    </object>
-   </void>
-   <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
-     <void property="treadles">
-      <array class="boolean" length="8">
-       <void index="0">
-        <boolean>true</boolean>
-       </void>
-       <void index="2">
-        <boolean>true</boolean>
-       </void>
-       <void index="3">
-        <boolean>true</boolean>
-       </void>
-       <void index="6">
-        <boolean>true</boolean>
-       </void>
-      </array>
-     </void>
-    </object>
-   </void>
-   <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
-     <void property="treadles">
-      <array class="boolean" length="8">
-       <void index="1">
-        <boolean>true</boolean>
-       </void>
-       <void index="3">
-        <boolean>true</boolean>
-       </void>
-       <void index="4">
-        <boolean>true</boolean>
-       </void>
-       <void index="7">
-        <boolean>true</boolean>
-       </void>
-      </array>
-     </void>
-    </object>
-   </void>
-   <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
-     <void property="treadles">
-      <array class="boolean" length="8">
-       <void index="1">
-        <boolean>true</boolean>
-       </void>
-       <void index="2">
-        <boolean>true</boolean>
-       </void>
-       <void index="5">
-        <boolean>true</boolean>
-       </void>
-      </array>
-     </void>
-    </object>
-   </void>
-   <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
-     <void property="treadles">
-      <array class="boolean" length="8">
-       <void index="0">
-        <boolean>true</boolean>
-       </void>
-       <void index="2">
-        <boolean>true</boolean>
-       </void>
-       <void index="3">
-        <boolean>true</boolean>
-       </void>
-       <void index="6">
-        <boolean>true</boolean>
-       </void>
-      </array>
-     </void>
-    </object>
-   </void>
-   <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
-     <void property="treadles">
-      <array class="boolean" length="8">
-       <void index="1">
-        <boolean>true</boolean>
-       </void>
-       <void index="3">
-        <boolean>true</boolean>
-       </void>
-       <void index="4">
-        <boolean>true</boolean>
-       </void>
-       <void index="7">
-        <boolean>true</boolean>
-       </void>
-      </array>
-     </void>
-    </object>
-   </void>
-   <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
-     <void property="treadles">
-      <array class="boolean" length="8">
-       <void index="1">
-        <boolean>true</boolean>
-       </void>
-       <void index="2">
-        <boolean>true</boolean>
-       </void>
-       <void index="5">
-        <boolean>true</boolean>
-       </void>
-      </array>
-     </void>
-    </object>
-   </void>
-   <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
-     <void property="treadles">
-      <array class="boolean" length="8">
-       <void index="0">
-        <boolean>true</boolean>
-       </void>
-       <void index="2">
-        <boolean>true</boolean>
-       </void>
-       <void index="3">
-        <boolean>true</boolean>
-       </void>
-       <void index="6">
-        <boolean>true</boolean>
-       </void>
-      </array>
-     </void>
-    </object>
-   </void>
-   <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
      <void property="treadles">
       <array class="boolean" length="8">
        <void index="0">
@@ -2145,7 +1575,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
      <void property="treadles">
       <array class="boolean" length="8">
        <void index="1">
@@ -2162,7 +1592,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
      <void property="treadles">
       <array class="boolean" length="8">
        <void index="0">
@@ -2182,7 +1612,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
      <void property="treadles">
       <array class="boolean" length="8">
        <void index="1">
@@ -2202,13 +1632,13 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
      <void property="treadles">
       <array class="boolean" length="8">
-       <void index="2">
+       <void index="1">
         <boolean>true</boolean>
        </void>
-       <void index="4">
+       <void index="2">
         <boolean>true</boolean>
        </void>
        <void index="5">
@@ -2219,16 +1649,16 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
      <void property="treadles">
       <array class="boolean" length="8">
        <void index="0">
         <boolean>true</boolean>
        </void>
-       <void index="3">
+       <void index="2">
         <boolean>true</boolean>
        </void>
-       <void index="5">
+       <void index="3">
         <boolean>true</boolean>
        </void>
        <void index="6">
@@ -2239,7 +1669,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
      <void property="treadles">
       <array class="boolean" length="8">
        <void index="1">
@@ -2259,7 +1689,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
      <void property="treadles">
       <array class="boolean" length="8">
        <void index="2">
@@ -2276,7 +1706,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
      <void property="treadles">
       <array class="boolean" length="8">
        <void index="0">
@@ -2296,7 +1726,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
      <void property="treadles">
       <array class="boolean" length="8">
        <void index="1">
@@ -2316,81 +1746,24 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
      <void property="treadles">
       <array class="boolean" length="8">
        <void index="2">
-        <boolean>true</boolean>
-       </void>
-       <void index="5">
-        <boolean>true</boolean>
-       </void>
-       <void index="7">
-        <boolean>true</boolean>
-       </void>
-      </array>
-     </void>
-    </object>
-   </void>
-   <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
-     <void property="treadles">
-      <array class="boolean" length="8">
-       <void index="0">
-        <boolean>true</boolean>
-       </void>
-       <void index="3">
-        <boolean>true</boolean>
-       </void>
-       <void index="5">
-        <boolean>true</boolean>
-       </void>
-       <void index="6">
-        <boolean>true</boolean>
-       </void>
-      </array>
-     </void>
-    </object>
-   </void>
-   <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
-     <void property="treadles">
-      <array class="boolean" length="8">
-       <void index="1">
         <boolean>true</boolean>
        </void>
        <void index="4">
         <boolean>true</boolean>
        </void>
-       <void index="6">
-        <boolean>true</boolean>
-       </void>
-       <void index="7">
-        <boolean>true</boolean>
-       </void>
-      </array>
-     </void>
-    </object>
-   </void>
-   <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
-     <void property="treadles">
-      <array class="boolean" length="8">
-       <void index="2">
-        <boolean>true</boolean>
-       </void>
        <void index="5">
         <boolean>true</boolean>
        </void>
-       <void index="7">
-        <boolean>true</boolean>
-       </void>
       </array>
      </void>
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
      <void property="treadles">
       <array class="boolean" length="8">
        <void index="0">
@@ -2410,7 +1783,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
      <void property="treadles">
       <array class="boolean" length="8">
        <void index="1">
@@ -2430,7 +1803,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
      <void property="treadles">
       <array class="boolean" length="8">
        <void index="2">
@@ -2447,7 +1820,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
      <void property="treadles">
       <array class="boolean" length="8">
        <void index="0">
@@ -2467,7 +1840,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
      <void property="treadles">
       <array class="boolean" length="8">
        <void index="1">
@@ -2487,7 +1860,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
      <void property="treadles">
       <array class="boolean" length="8">
        <void index="2">
@@ -2504,16 +1877,16 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
      <void property="treadles">
       <array class="boolean" length="8">
        <void index="0">
         <boolean>true</boolean>
        </void>
-       <void index="2">
+       <void index="3">
         <boolean>true</boolean>
        </void>
-       <void index="3">
+       <void index="5">
         <boolean>true</boolean>
        </void>
        <void index="6">
@@ -2524,7 +1897,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
      <void property="treadles">
       <array class="boolean" length="8">
        <void index="1">
@@ -2544,7 +1917,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
      <void property="treadles">
       <array class="boolean" length="8">
        <void index="2">
@@ -2561,16 +1934,16 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
      <void property="treadles">
       <array class="boolean" length="8">
        <void index="0">
         <boolean>true</boolean>
        </void>
-       <void index="2">
+       <void index="3">
         <boolean>true</boolean>
        </void>
-       <void index="3">
+       <void index="5">
         <boolean>true</boolean>
        </void>
        <void index="6">
@@ -2581,7 +1954,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
      <void property="treadles">
       <array class="boolean" length="8">
        <void index="1">
@@ -2601,13 +1974,13 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
      <void property="treadles">
       <array class="boolean" length="8">
-       <void index="1">
+       <void index="2">
         <boolean>true</boolean>
        </void>
-       <void index="2">
+       <void index="4">
         <boolean>true</boolean>
        </void>
        <void index="5">
@@ -2618,7 +1991,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
      <void property="treadles">
       <array class="boolean" length="8">
        <void index="0">
@@ -2638,7 +2011,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
      <void property="treadles">
       <array class="boolean" length="8">
        <void index="1">
@@ -2658,7 +2031,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
      <void property="treadles">
       <array class="boolean" length="8">
        <void index="1">
@@ -2675,7 +2048,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
      <void property="treadles">
       <array class="boolean" length="8">
        <void index="0">
@@ -2695,178 +2068,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
-     <void property="treadles">
-      <array class="boolean" length="8">
-       <void index="0">
-        <boolean>true</boolean>
-       </void>
-       <void index="1">
-        <boolean>true</boolean>
-       </void>
-       <void index="4">
-        <boolean>true</boolean>
-       </void>
-       <void index="7">
-        <boolean>true</boolean>
-       </void>
-      </array>
-     </void>
-    </object>
-   </void>
-   <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
-     <void property="treadles">
-      <array class="boolean" length="8">
-       <void index="1">
-        <boolean>true</boolean>
-       </void>
-       <void index="2">
-        <boolean>true</boolean>
-       </void>
-       <void index="5">
-        <boolean>true</boolean>
-       </void>
-      </array>
-     </void>
-    </object>
-   </void>
-   <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
-     <void property="treadles">
-      <array class="boolean" length="8">
-       <void index="0">
-        <boolean>true</boolean>
-       </void>
-       <void index="2">
-        <boolean>true</boolean>
-       </void>
-       <void index="3">
-        <boolean>true</boolean>
-       </void>
-       <void index="6">
-        <boolean>true</boolean>
-       </void>
-      </array>
-     </void>
-    </object>
-   </void>
-   <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
-     <void property="treadles">
-      <array class="boolean" length="8">
-       <void index="0">
-        <boolean>true</boolean>
-       </void>
-       <void index="1">
-        <boolean>true</boolean>
-       </void>
-       <void index="4">
-        <boolean>true</boolean>
-       </void>
-       <void index="7">
-        <boolean>true</boolean>
-       </void>
-      </array>
-     </void>
-    </object>
-   </void>
-   <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
-     <void property="treadles">
-      <array class="boolean" length="8">
-       <void index="1">
-        <boolean>true</boolean>
-       </void>
-       <void index="2">
-        <boolean>true</boolean>
-       </void>
-       <void index="5">
-        <boolean>true</boolean>
-       </void>
-      </array>
-     </void>
-    </object>
-   </void>
-   <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
-     <void property="treadles">
-      <array class="boolean" length="8">
-       <void index="0">
-        <boolean>true</boolean>
-       </void>
-       <void index="2">
-        <boolean>true</boolean>
-       </void>
-       <void index="3">
-        <boolean>true</boolean>
-       </void>
-       <void index="6">
-        <boolean>true</boolean>
-       </void>
-      </array>
-     </void>
-    </object>
-   </void>
-   <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
-     <void property="treadles">
-      <array class="boolean" length="8">
-       <void index="0">
-        <boolean>true</boolean>
-       </void>
-       <void index="1">
-        <boolean>true</boolean>
-       </void>
-       <void index="4">
-        <boolean>true</boolean>
-       </void>
-       <void index="7">
-        <boolean>true</boolean>
-       </void>
-      </array>
-     </void>
-    </object>
-   </void>
-   <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
-     <void property="treadles">
-      <array class="boolean" length="8">
-       <void index="1">
-        <boolean>true</boolean>
-       </void>
-       <void index="2">
-        <boolean>true</boolean>
-       </void>
-       <void index="5">
-        <boolean>true</boolean>
-       </void>
-      </array>
-     </void>
-    </object>
-   </void>
-   <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
-     <void property="treadles">
-      <array class="boolean" length="8">
-       <void index="0">
-        <boolean>true</boolean>
-       </void>
-       <void index="2">
-        <boolean>true</boolean>
-       </void>
-       <void index="3">
-        <boolean>true</boolean>
-       </void>
-       <void index="6">
-        <boolean>true</boolean>
-       </void>
-      </array>
-     </void>
-    </object>
-   </void>
-   <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
      <void property="treadles">
       <array class="boolean" length="8">
        <void index="1">
@@ -2886,7 +2088,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
      <void property="treadles">
       <array class="boolean" length="8">
        <void index="1">
@@ -2903,7 +2105,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
      <void property="treadles">
       <array class="boolean" length="8">
        <void index="0">
@@ -2923,7 +2125,64 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
+     <void property="treadles">
+      <array class="boolean" length="8">
+       <void index="0">
+        <boolean>true</boolean>
+       </void>
+       <void index="1">
+        <boolean>true</boolean>
+       </void>
+       <void index="4">
+        <boolean>true</boolean>
+       </void>
+       <void index="7">
+        <boolean>true</boolean>
+       </void>
+      </array>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
+     <void property="treadles">
+      <array class="boolean" length="8">
+       <void index="1">
+        <boolean>true</boolean>
+       </void>
+       <void index="2">
+        <boolean>true</boolean>
+       </void>
+       <void index="5">
+        <boolean>true</boolean>
+       </void>
+      </array>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
+     <void property="treadles">
+      <array class="boolean" length="8">
+       <void index="0">
+        <boolean>true</boolean>
+       </void>
+       <void index="2">
+        <boolean>true</boolean>
+       </void>
+       <void index="3">
+        <boolean>true</boolean>
+       </void>
+       <void index="6">
+        <boolean>true</boolean>
+       </void>
+      </array>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
      <void property="treadles">
       <array class="boolean" length="8">
        <void index="1">
@@ -2943,7 +2202,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
      <void property="treadles">
       <array class="boolean" length="8">
        <void index="2">
@@ -2960,7 +2219,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
      <void property="treadles">
       <array class="boolean" length="8">
        <void index="0">
@@ -2980,7 +2239,64 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
+     <void property="treadles">
+      <array class="boolean" length="8">
+       <void index="1">
+        <boolean>true</boolean>
+       </void>
+       <void index="3">
+        <boolean>true</boolean>
+       </void>
+       <void index="4">
+        <boolean>true</boolean>
+       </void>
+       <void index="7">
+        <boolean>true</boolean>
+       </void>
+      </array>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
+     <void property="treadles">
+      <array class="boolean" length="8">
+       <void index="2">
+        <boolean>true</boolean>
+       </void>
+       <void index="4">
+        <boolean>true</boolean>
+       </void>
+       <void index="5">
+        <boolean>true</boolean>
+       </void>
+      </array>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
+     <void property="treadles">
+      <array class="boolean" length="8">
+       <void index="0">
+        <boolean>true</boolean>
+       </void>
+       <void index="3">
+        <boolean>true</boolean>
+       </void>
+       <void index="5">
+        <boolean>true</boolean>
+       </void>
+       <void index="6">
+        <boolean>true</boolean>
+       </void>
+      </array>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
      <void property="treadles">
       <array class="boolean" length="8">
        <void index="1">
@@ -3000,7 +2316,691 @@
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.WeftPick">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
+     <void property="treadles">
+      <array class="boolean" length="8">
+       <void index="2">
+        <boolean>true</boolean>
+       </void>
+       <void index="5">
+        <boolean>true</boolean>
+       </void>
+       <void index="7">
+        <boolean>true</boolean>
+       </void>
+      </array>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
+     <void property="treadles">
+      <array class="boolean" length="8">
+       <void index="0">
+        <boolean>true</boolean>
+       </void>
+       <void index="3">
+        <boolean>true</boolean>
+       </void>
+       <void index="5">
+        <boolean>true</boolean>
+       </void>
+       <void index="6">
+        <boolean>true</boolean>
+       </void>
+      </array>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
+     <void property="treadles">
+      <array class="boolean" length="8">
+       <void index="1">
+        <boolean>true</boolean>
+       </void>
+       <void index="4">
+        <boolean>true</boolean>
+       </void>
+       <void index="6">
+        <boolean>true</boolean>
+       </void>
+       <void index="7">
+        <boolean>true</boolean>
+       </void>
+      </array>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
+     <void property="treadles">
+      <array class="boolean" length="8">
+       <void index="2">
+        <boolean>true</boolean>
+       </void>
+       <void index="5">
+        <boolean>true</boolean>
+       </void>
+       <void index="7">
+        <boolean>true</boolean>
+       </void>
+      </array>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
+     <void property="treadles">
+      <array class="boolean" length="8">
+       <void index="0">
+        <boolean>true</boolean>
+       </void>
+       <void index="3">
+        <boolean>true</boolean>
+       </void>
+       <void index="5">
+        <boolean>true</boolean>
+       </void>
+       <void index="6">
+        <boolean>true</boolean>
+       </void>
+      </array>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
+     <void property="treadles">
+      <array class="boolean" length="8">
+       <void index="1">
+        <boolean>true</boolean>
+       </void>
+       <void index="4">
+        <boolean>true</boolean>
+       </void>
+       <void index="6">
+        <boolean>true</boolean>
+       </void>
+       <void index="7">
+        <boolean>true</boolean>
+       </void>
+      </array>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
+     <void property="treadles">
+      <array class="boolean" length="8">
+       <void index="2">
+        <boolean>true</boolean>
+       </void>
+       <void index="4">
+        <boolean>true</boolean>
+       </void>
+       <void index="5">
+        <boolean>true</boolean>
+       </void>
+      </array>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
+     <void property="treadles">
+      <array class="boolean" length="8">
+       <void index="0">
+        <boolean>true</boolean>
+       </void>
+       <void index="3">
+        <boolean>true</boolean>
+       </void>
+       <void index="5">
+        <boolean>true</boolean>
+       </void>
+       <void index="6">
+        <boolean>true</boolean>
+       </void>
+      </array>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
+     <void property="treadles">
+      <array class="boolean" length="8">
+       <void index="1">
+        <boolean>true</boolean>
+       </void>
+       <void index="3">
+        <boolean>true</boolean>
+       </void>
+       <void index="4">
+        <boolean>true</boolean>
+       </void>
+       <void index="7">
+        <boolean>true</boolean>
+       </void>
+      </array>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
+     <void property="treadles">
+      <array class="boolean" length="8">
+       <void index="2">
+        <boolean>true</boolean>
+       </void>
+       <void index="4">
+        <boolean>true</boolean>
+       </void>
+       <void index="5">
+        <boolean>true</boolean>
+       </void>
+      </array>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
+     <void property="treadles">
+      <array class="boolean" length="8">
+       <void index="0">
+        <boolean>true</boolean>
+       </void>
+       <void index="2">
+        <boolean>true</boolean>
+       </void>
+       <void index="3">
+        <boolean>true</boolean>
+       </void>
+       <void index="6">
+        <boolean>true</boolean>
+       </void>
+      </array>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
+     <void property="treadles">
+      <array class="boolean" length="8">
+       <void index="1">
+        <boolean>true</boolean>
+       </void>
+       <void index="3">
+        <boolean>true</boolean>
+       </void>
+       <void index="4">
+        <boolean>true</boolean>
+       </void>
+       <void index="7">
+        <boolean>true</boolean>
+       </void>
+      </array>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
+     <void property="treadles">
+      <array class="boolean" length="8">
+       <void index="2">
+        <boolean>true</boolean>
+       </void>
+       <void index="4">
+        <boolean>true</boolean>
+       </void>
+       <void index="5">
+        <boolean>true</boolean>
+       </void>
+      </array>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
+     <void property="treadles">
+      <array class="boolean" length="8">
+       <void index="0">
+        <boolean>true</boolean>
+       </void>
+       <void index="2">
+        <boolean>true</boolean>
+       </void>
+       <void index="3">
+        <boolean>true</boolean>
+       </void>
+       <void index="6">
+        <boolean>true</boolean>
+       </void>
+      </array>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
+     <void property="treadles">
+      <array class="boolean" length="8">
+       <void index="1">
+        <boolean>true</boolean>
+       </void>
+       <void index="3">
+        <boolean>true</boolean>
+       </void>
+       <void index="4">
+        <boolean>true</boolean>
+       </void>
+       <void index="7">
+        <boolean>true</boolean>
+       </void>
+      </array>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
+     <void property="treadles">
+      <array class="boolean" length="8">
+       <void index="1">
+        <boolean>true</boolean>
+       </void>
+       <void index="2">
+        <boolean>true</boolean>
+       </void>
+       <void index="5">
+        <boolean>true</boolean>
+       </void>
+      </array>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
+     <void property="treadles">
+      <array class="boolean" length="8">
+       <void index="0">
+        <boolean>true</boolean>
+       </void>
+       <void index="2">
+        <boolean>true</boolean>
+       </void>
+       <void index="3">
+        <boolean>true</boolean>
+       </void>
+       <void index="6">
+        <boolean>true</boolean>
+       </void>
+      </array>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
+     <void property="treadles">
+      <array class="boolean" length="8">
+       <void index="1">
+        <boolean>true</boolean>
+       </void>
+       <void index="3">
+        <boolean>true</boolean>
+       </void>
+       <void index="4">
+        <boolean>true</boolean>
+       </void>
+       <void index="7">
+        <boolean>true</boolean>
+       </void>
+      </array>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
+     <void property="treadles">
+      <array class="boolean" length="8">
+       <void index="1">
+        <boolean>true</boolean>
+       </void>
+       <void index="2">
+        <boolean>true</boolean>
+       </void>
+       <void index="5">
+        <boolean>true</boolean>
+       </void>
+      </array>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
+     <void property="treadles">
+      <array class="boolean" length="8">
+       <void index="0">
+        <boolean>true</boolean>
+       </void>
+       <void index="2">
+        <boolean>true</boolean>
+       </void>
+       <void index="3">
+        <boolean>true</boolean>
+       </void>
+       <void index="6">
+        <boolean>true</boolean>
+       </void>
+      </array>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
+     <void property="treadles">
+      <array class="boolean" length="8">
+       <void index="0">
+        <boolean>true</boolean>
+       </void>
+       <void index="1">
+        <boolean>true</boolean>
+       </void>
+       <void index="4">
+        <boolean>true</boolean>
+       </void>
+       <void index="7">
+        <boolean>true</boolean>
+       </void>
+      </array>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
+     <void property="treadles">
+      <array class="boolean" length="8">
+       <void index="1">
+        <boolean>true</boolean>
+       </void>
+       <void index="2">
+        <boolean>true</boolean>
+       </void>
+       <void index="5">
+        <boolean>true</boolean>
+       </void>
+      </array>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
+     <void property="treadles">
+      <array class="boolean" length="8">
+       <void index="0">
+        <boolean>true</boolean>
+       </void>
+       <void index="2">
+        <boolean>true</boolean>
+       </void>
+       <void index="3">
+        <boolean>true</boolean>
+       </void>
+       <void index="6">
+        <boolean>true</boolean>
+       </void>
+      </array>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
+     <void property="treadles">
+      <array class="boolean" length="8">
+       <void index="0">
+        <boolean>true</boolean>
+       </void>
+       <void index="1">
+        <boolean>true</boolean>
+       </void>
+       <void index="4">
+        <boolean>true</boolean>
+       </void>
+       <void index="7">
+        <boolean>true</boolean>
+       </void>
+      </array>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
+     <void property="treadles">
+      <array class="boolean" length="8">
+       <void index="1">
+        <boolean>true</boolean>
+       </void>
+       <void index="2">
+        <boolean>true</boolean>
+       </void>
+       <void index="5">
+        <boolean>true</boolean>
+       </void>
+      </array>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
+     <void property="treadles">
+      <array class="boolean" length="8">
+       <void index="0">
+        <boolean>true</boolean>
+       </void>
+       <void index="2">
+        <boolean>true</boolean>
+       </void>
+       <void index="3">
+        <boolean>true</boolean>
+       </void>
+       <void index="6">
+        <boolean>true</boolean>
+       </void>
+      </array>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
+     <void property="treadles">
+      <array class="boolean" length="8">
+       <void index="0">
+        <boolean>true</boolean>
+       </void>
+       <void index="1">
+        <boolean>true</boolean>
+       </void>
+       <void index="4">
+        <boolean>true</boolean>
+       </void>
+       <void index="7">
+        <boolean>true</boolean>
+       </void>
+      </array>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
+     <void property="treadles">
+      <array class="boolean" length="8">
+       <void index="1">
+        <boolean>true</boolean>
+       </void>
+       <void index="2">
+        <boolean>true</boolean>
+       </void>
+       <void index="5">
+        <boolean>true</boolean>
+       </void>
+      </array>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
+     <void property="treadles">
+      <array class="boolean" length="8">
+       <void index="0">
+        <boolean>true</boolean>
+       </void>
+       <void index="2">
+        <boolean>true</boolean>
+       </void>
+       <void index="3">
+        <boolean>true</boolean>
+       </void>
+       <void index="6">
+        <boolean>true</boolean>
+       </void>
+      </array>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
+     <void property="treadles">
+      <array class="boolean" length="8">
+       <void index="1">
+        <boolean>true</boolean>
+       </void>
+       <void index="3">
+        <boolean>true</boolean>
+       </void>
+       <void index="4">
+        <boolean>true</boolean>
+       </void>
+       <void index="7">
+        <boolean>true</boolean>
+       </void>
+      </array>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
+     <void property="treadles">
+      <array class="boolean" length="8">
+       <void index="1">
+        <boolean>true</boolean>
+       </void>
+       <void index="2">
+        <boolean>true</boolean>
+       </void>
+       <void index="5">
+        <boolean>true</boolean>
+       </void>
+      </array>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
+     <void property="treadles">
+      <array class="boolean" length="8">
+       <void index="0">
+        <boolean>true</boolean>
+       </void>
+       <void index="2">
+        <boolean>true</boolean>
+       </void>
+       <void index="3">
+        <boolean>true</boolean>
+       </void>
+       <void index="6">
+        <boolean>true</boolean>
+       </void>
+      </array>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
+     <void property="treadles">
+      <array class="boolean" length="8">
+       <void index="1">
+        <boolean>true</boolean>
+       </void>
+       <void index="3">
+        <boolean>true</boolean>
+       </void>
+       <void index="4">
+        <boolean>true</boolean>
+       </void>
+       <void index="7">
+        <boolean>true</boolean>
+       </void>
+      </array>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
+     <void property="treadles">
+      <array class="boolean" length="8">
+       <void index="2">
+        <boolean>true</boolean>
+       </void>
+       <void index="4">
+        <boolean>true</boolean>
+       </void>
+       <void index="5">
+        <boolean>true</boolean>
+       </void>
+      </array>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
+     <void property="treadles">
+      <array class="boolean" length="8">
+       <void index="0">
+        <boolean>true</boolean>
+       </void>
+       <void index="3">
+        <boolean>true</boolean>
+       </void>
+       <void index="5">
+        <boolean>true</boolean>
+       </void>
+       <void index="6">
+        <boolean>true</boolean>
+       </void>
+      </array>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
+     <void property="treadles">
+      <array class="boolean" length="8">
+       <void index="1">
+        <boolean>true</boolean>
+       </void>
+       <void index="4">
+        <boolean>true</boolean>
+       </void>
+       <void index="6">
+        <boolean>true</boolean>
+       </void>
+       <void index="7">
+        <boolean>true</boolean>
+       </void>
+      </array>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.jenkins.weavedreamer.datatypes.WeftPick">
      <void property="treadles">
       <array class="boolean" length="8">
        <void index="2">
@@ -3019,56 +3019,56 @@
   </void>
   <void property="treadles">
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.Treadle">
+    <object class="com.jenkins.weavedreamer.datatypes.Treadle">
      <void method="add">
       <int>7</int>
      </void>
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.Treadle">
+    <object class="com.jenkins.weavedreamer.datatypes.Treadle">
      <void method="add">
       <int>6</int>
      </void>
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.Treadle">
+    <object class="com.jenkins.weavedreamer.datatypes.Treadle">
      <void method="add">
       <int>5</int>
      </void>
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.Treadle">
+    <object class="com.jenkins.weavedreamer.datatypes.Treadle">
      <void method="add">
       <int>4</int>
      </void>
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.Treadle">
+    <object class="com.jenkins.weavedreamer.datatypes.Treadle">
      <void method="add">
       <int>3</int>
      </void>
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.Treadle">
+    <object class="com.jenkins.weavedreamer.datatypes.Treadle">
      <void method="add">
       <int>2</int>
      </void>
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.Treadle">
+    <object class="com.jenkins.weavedreamer.datatypes.Treadle">
      <void method="add">
       <int>1</int>
      </void>
     </object>
    </void>
    <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.Treadle">
+    <object class="com.jenkins.weavedreamer.datatypes.Treadle">
      <void method="add">
       <int>0</int>
      </void>

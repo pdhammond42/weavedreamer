@@ -1,6 +1,6 @@
 package com.jenkins.uat;
 
-import com.jenkins.weavingsimulator.WeavingSimulatorApp;
+import com.jenkins.weavedreamer.WeaveDreamerApp;
 import org.assertj.swing.edt.GuiActionRunner;
 import org.assertj.swing.fixture.FrameFixture;
 import org.assertj.swing.junit.testcase.AssertJSwingJUnitTestCase;
@@ -20,7 +20,7 @@ abstract class WeavingTestCase extends AssertJSwingJUnitTestCase {
 
 	@Before
 	public void onSetUp() {
-		WeavingSimulatorApp frame = GuiActionRunner.execute(() -> new WeavingSimulatorApp());
+		WeaveDreamerApp frame = GuiActionRunner.execute(() -> new WeaveDreamerApp());
 		frame.setVisible(true);
         ui = new AppDriver(new FrameFixture(robot(), frame));
     }

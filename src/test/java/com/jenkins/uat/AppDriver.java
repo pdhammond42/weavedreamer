@@ -1,10 +1,10 @@
 package com.jenkins.uat;
 
 
-import com.jenkins.weavingsimulator.PasteSpecialWindow;
-import com.jenkins.weavingsimulator.TiledViewFrame;
-import com.jenkins.weavingsimulator.WeavingDraftPropertiesDialog;
-import com.jenkins.weavingsimulator.WeavingGridControl;
+import com.jenkins.weavedreamer.PasteSpecialWindow;
+import com.jenkins.weavedreamer.TiledViewFrame;
+import com.jenkins.weavedreamer.WeavingDraftPropertiesDialog;
+import com.jenkins.weavedreamer.WeavingGridControl;
 import org.assertj.swing.core.GenericTypeMatcher;
 import org.assertj.swing.core.MouseButton;
 import org.assertj.swing.finder.JFileChooserFinder;

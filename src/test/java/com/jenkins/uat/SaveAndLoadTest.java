@@ -46,8 +46,8 @@ public class SaveAndLoadTest extends WeavingTestCase {
 	}
 
 	@Test
-	public void testLoadFileSavedFrom2_6() throws IOException {
-		ui.open(new File("testdata/103-2.6.wsml"));
+	public void testLoadFileSavedFrom2_7() throws IOException {
+		ui.open(new File("testdata/103-2.7.wsml"));
 		ui.draftIs(0, 0, orange);
 		ui.draftIs(0, 1, blue);				
 		ui.pickIs(0, 0, Color.BLACK);
@@ -85,6 +85,14 @@ public class SaveAndLoadTest extends WeavingTestCase {
 		ui.pickIs (2, 2, Color.WHITE);
 		ui.endIs (0, 0, Color.BLACK);
 		ui.endIs (0, 1, Color.WHITE);
+	}
+
+	@Test
+	public void testLoadNetworkFrom2_8() throws IOException {
+		File wsml = new File("testdata/network-2.8.wsml");
+		ui.open(wsml);
+		ui.draftIs(0, 0, Color.WHITE);
+		ui.draftIs(0, 1, Color.BLACK);
 	}
 
 	@Test

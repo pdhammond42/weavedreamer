@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?> 
 <java version="1.5.0" class="java.beans.XMLDecoder"> 
- <object class="com.jenkins.weavingsimulator.datatypes.WeavingDraft"> 
+ <object class="com.jenkins.weavedreamer.datatypes.WeavingDraft">
   <void property="name"> 
    <string>New Draft</string> 
   </void> 
@@ -9,70 +9,70 @@
   </void> 
   <void property="steps"> 
    <void method="add"> 
-    <object class="com.jenkins.weavingsimulator.datatypes.Step"> 
+    <object class="com.jenkins.weavedreamer.datatypes.Step">
      <void property="treadleId"> 
       <int>2</int> 
      </void> 
     </object> 
    </void> 
    <void method="add"> 
-    <object class="com.jenkins.weavingsimulator.datatypes.Step"> 
+    <object class="com.jenkins.weavedreamer.datatypes.Step">
      <void property="treadleId"> 
       <int>3</int> 
      </void> 
     </object> 
    </void> 
    <void method="add"> 
-    <object class="com.jenkins.weavingsimulator.datatypes.Step"> 
+    <object class="com.jenkins.weavedreamer.datatypes.Step">
      <void property="treadleId"> 
       <int>2</int> 
      </void> 
     </object> 
    </void> 
    <void method="add"> 
-    <object class="com.jenkins.weavingsimulator.datatypes.Step"> 
+    <object class="com.jenkins.weavedreamer.datatypes.Step">
      <void property="treadleId"> 
       <int>3</int> 
      </void> 
     </object> 
    </void> 
    <void method="add"> 
-    <object class="com.jenkins.weavingsimulator.datatypes.Step"> 
+    <object class="com.jenkins.weavedreamer.datatypes.Step">
      <void property="treadleId"> 
       <int>2</int> 
      </void> 
     </object> 
    </void> 
    <void method="add"> 
-    <object class="com.jenkins.weavingsimulator.datatypes.Step"> 
+    <object class="com.jenkins.weavedreamer.datatypes.Step">
      <void property="treadleId"> 
       <int>3</int> 
      </void> 
     </object> 
    </void> 
    <void method="add"> 
-    <object class="com.jenkins.weavingsimulator.datatypes.Step"> 
+    <object class="com.jenkins.weavedreamer.datatypes.Step">
      <void property="treadleId"> 
       <int>2</int> 
      </void> 
     </object> 
    </void> 
    <void method="add"> 
-    <object class="com.jenkins.weavingsimulator.datatypes.Step"> 
+    <object class="com.jenkins.weavedreamer.datatypes.Step">
      <void property="treadleId"> 
       <int>3</int> 
      </void> 
     </object> 
    </void> 
    <void method="add"> 
-    <object class="com.jenkins.weavingsimulator.datatypes.Step"> 
+    <object class="com.jenkins.weavedreamer.datatypes.Step">
      <void property="treadleId"> 
       <int>2</int> 
      </void> 
     </object> 
    </void> 
    <void method="add"> 
-    <object class="com.jenkins.weavingsimulator.datatypes.Step"> 
+    <object class="com.jenkins.weavedreamer.datatypes.Step">
      <void property="color"> 
       <object id="Color0" class="java.awt.Color"> 
        <int>51</int> 
@@ -87,7 +87,7 @@
     </object> 
    </void> 
    <void method="add"> 
-    <object class="com.jenkins.weavingsimulator.datatypes.Step"> 
+    <object class="com.jenkins.weavedreamer.datatypes.Step">
      <void property="color"> 
       <object idref="Color0"/> 
      </void> 
@@ -97,7 +97,7 @@
     </object> 
    </void> 
    <void method="add"> 
-    <object class="com.jenkins.weavingsimulator.datatypes.Step"> 
+    <object class="com.jenkins.weavedreamer.datatypes.Step">
      <void property="color"> 
       <object idref="Color0"/> 
      </void> 
@@ -107,7 +107,7 @@
     </object> 
    </void> 
    <void method="add"> 
-    <object class="com.jenkins.weavingsimulator.datatypes.Step"> 
+    <object class="com.jenkins.weavedreamer.datatypes.Step">
      <void property="color"> 
       <object idref="Color0"/> 
      </void> 
@@ -117,7 +117,7 @@
     </object> 
    </void> 
    <void method="add"> 
-    <object class="com.jenkins.weavingsimulator.datatypes.Step"> 
+    <object class="com.jenkins.weavedreamer.datatypes.Step">
      <void property="color"> 
       <object idref="Color0"/> 
      </void> 
@@ -127,7 +127,7 @@
     </object> 
    </void> 
    <void method="add"> 
-    <object class="com.jenkins.weavingsimulator.datatypes.Step"> 
+    <object class="com.jenkins.weavedreamer.datatypes.Step">
      <void property="color"> 
       <object id="Color1" class="java.awt.Color"> 
        <int>255</int> 
@@ -142,7 +142,7 @@
     </object> 
    </void> 
    <void method="add"> 
-    <object class="com.jenkins.weavingsimulator.datatypes.Step"> 
+    <object class="com.jenkins.weavedreamer.datatypes.Step">
      <void property="color"> 
       <object idref="Color1"/> 
      </void> 
@@ -152,27 +152,7 @@
     </object> 
    </void> 
    <void method="add"> 
-    <object class="com.jenkins.weavingsimulator.datatypes.Step"> 
-     <void property="color"> 
-      <object idref="Color1"/> 
-     </void> 
-     <void property="treadleId"> 
-      <int>5</int> 
-     </void> 
-    </object> 
-   </void> 
-   <void method="add"> 
-    <object class="com.jenkins.weavingsimulator.datatypes.Step"> 
-     <void property="color"> 
-      <object idref="Color1"/> 
-     </void> 
-     <void property="treadleId"> 
-      <int>3</int> 
-     </void> 
-    </object> 
-   </void> 
-   <void method="add"> 
-    <object class="com.jenkins.weavingsimulator.datatypes.Step"> 
+    <object class="com.jenkins.weavedreamer.datatypes.Step">
      <void property="color"> 
       <object idref="Color1"/> 
      </void> 
@@ -182,35 +162,55 @@
     </object> 
    </void> 
    <void method="add"> 
-    <object class="com.jenkins.weavingsimulator.datatypes.Step"> 
+    <object class="com.jenkins.weavedreamer.datatypes.Step">
+     <void property="color"> 
+      <object idref="Color1"/> 
+     </void> 
      <void property="treadleId"> 
       <int>3</int> 
      </void> 
     </object> 
    </void> 
    <void method="add"> 
-    <object class="com.jenkins.weavingsimulator.datatypes.Step"> 
+    <object class="com.jenkins.weavedreamer.datatypes.Step">
+     <void property="color"> 
+      <object idref="Color1"/> 
+     </void> 
      <void property="treadleId"> 
-      <int>2</int> 
+      <int>5</int> 
      </void> 
     </object> 
    </void> 
    <void method="add"> 
-    <object class="com.jenkins.weavingsimulator.datatypes.Step"> 
+    <object class="com.jenkins.weavedreamer.datatypes.Step">
      <void property="treadleId"> 
       <int>3</int> 
      </void> 
     </object> 
    </void> 
    <void method="add"> 
-    <object class="com.jenkins.weavingsimulator.datatypes.Step"> 
+    <object class="com.jenkins.weavedreamer.datatypes.Step">
      <void property="treadleId"> 
       <int>2</int> 
      </void> 
     </object> 
    </void> 
    <void method="add"> 
-    <object class="com.jenkins.weavingsimulator.datatypes.Step"> 
+    <object class="com.jenkins.weavedreamer.datatypes.Step">
+     <void property="treadleId"> 
+      <int>3</int> 
+     </void> 
+    </object> 
+   </void> 
+   <void method="add"> 
+    <object class="com.jenkins.weavedreamer.datatypes.Step">
+     <void property="treadleId"> 
+      <int>2</int> 
+     </void> 
+    </object> 
+   </void> 
+   <void method="add"> 
+    <object class="com.jenkins.weavedreamer.datatypes.Step">
      <void property="treadleId"> 
       <int>3</int> 
      </void> 
@@ -219,7 +219,7 @@
   </void> 
   <void property="threads"> 
    <void method="add"> 
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpThread"> 
+    <object class="com.jenkins.weavedreamer.datatypes.WarpThread">
      <void property="color"> 
       <object id="Color2" class="java.awt.Color"> 
        <int>0</int> 
@@ -231,7 +231,7 @@
     </object> 
    </void> 
    <void method="add"> 
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpThread"> 
+    <object class="com.jenkins.weavedreamer.datatypes.WarpThread">
      <void property="color"> 
       <object idref="Color2"/> 
      </void> 
@@ -241,31 +241,14 @@
     </object> 
    </void> 
    <void method="add"> 
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpThread"> 
+    <object class="com.jenkins.weavedreamer.datatypes.WarpThread">
      <void property="color"> 
       <object idref="Color2"/> 
      </void> 
     </object> 
    </void> 
    <void method="add"> 
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpThread"> 
-     <void property="color"> 
-      <object idref="Color2"/> 
-     </void> 
-     <void property="harnessId"> 
-      <int>3</int> 
-     </void> 
-    </object> 
-   </void> 
-   <void method="add"> 
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpThread"> 
-     <void property="color"> 
-      <object idref="Color2"/> 
-     </void> 
-    </object> 
-   </void> 
-   <void method="add"> 
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpThread"> 
+    <object class="com.jenkins.weavedreamer.datatypes.WarpThread">
      <void property="color"> 
       <object idref="Color2"/> 
      </void> 
@@ -275,14 +258,14 @@
     </object> 
    </void> 
    <void method="add"> 
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpThread"> 
+    <object class="com.jenkins.weavedreamer.datatypes.WarpThread">
      <void property="color"> 
       <object idref="Color2"/> 
      </void> 
     </object> 
    </void> 
    <void method="add"> 
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpThread"> 
+    <object class="com.jenkins.weavedreamer.datatypes.WarpThread">
      <void property="color"> 
       <object idref="Color2"/> 
      </void> 
@@ -292,14 +275,31 @@
     </object> 
    </void> 
    <void method="add"> 
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpThread"> 
+    <object class="com.jenkins.weavedreamer.datatypes.WarpThread">
      <void property="color"> 
       <object idref="Color2"/> 
      </void> 
     </object> 
    </void> 
    <void method="add"> 
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpThread"> 
+    <object class="com.jenkins.weavedreamer.datatypes.WarpThread">
+     <void property="color"> 
+      <object idref="Color2"/> 
+     </void> 
+     <void property="harnessId"> 
+      <int>3</int> 
+     </void> 
+    </object> 
+   </void> 
+   <void method="add"> 
+    <object class="com.jenkins.weavedreamer.datatypes.WarpThread">
+     <void property="color"> 
+      <object idref="Color2"/> 
+     </void> 
+    </object> 
+   </void> 
+   <void method="add"> 
+    <object class="com.jenkins.weavedreamer.datatypes.WarpThread">
      <void property="color"> 
       <object idref="Color2"/> 
      </void> 
@@ -309,31 +309,14 @@
     </object> 
    </void> 
    <void method="add"> 
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpThread"> 
+    <object class="com.jenkins.weavedreamer.datatypes.WarpThread">
      <void property="color"> 
       <object idref="Color2"/> 
      </void> 
     </object> 
    </void> 
    <void method="add"> 
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpThread"> 
-     <void property="color"> 
-      <object idref="Color2"/> 
-     </void> 
-     <void property="harnessId"> 
-      <int>1</int> 
-     </void> 
-    </object> 
-   </void> 
-   <void method="add"> 
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpThread"> 
-     <void property="color"> 
-      <object idref="Color2"/> 
-     </void> 
-    </object> 
-   </void> 
-   <void method="add"> 
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpThread"> 
+    <object class="com.jenkins.weavedreamer.datatypes.WarpThread">
      <void property="color"> 
       <object idref="Color2"/> 
      </void> 
@@ -343,7 +326,24 @@
     </object> 
    </void> 
    <void method="add"> 
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpThread"> 
+    <object class="com.jenkins.weavedreamer.datatypes.WarpThread">
+     <void property="color"> 
+      <object idref="Color2"/> 
+     </void> 
+    </object> 
+   </void> 
+   <void method="add"> 
+    <object class="com.jenkins.weavedreamer.datatypes.WarpThread">
+     <void property="color"> 
+      <object idref="Color2"/> 
+     </void> 
+     <void property="harnessId"> 
+      <int>1</int> 
+     </void> 
+    </object> 
+   </void> 
+   <void method="add"> 
+    <object class="com.jenkins.weavedreamer.datatypes.WarpThread">
      <void property="color"> 
       <object idref="Color2"/> 
      </void> 
@@ -353,7 +353,7 @@
     </object> 
    </void> 
    <void method="add"> 
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpThread"> 
+    <object class="com.jenkins.weavedreamer.datatypes.WarpThread">
      <void property="color"> 
       <object idref="Color2"/> 
      </void> 
@@ -363,7 +363,7 @@
     </object> 
    </void> 
    <void method="add"> 
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpThread"> 
+    <object class="com.jenkins.weavedreamer.datatypes.WarpThread">
      <void property="color"> 
       <object idref="Color2"/> 
      </void> 
@@ -373,7 +373,7 @@
     </object> 
    </void> 
    <void method="add"> 
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpThread"> 
+    <object class="com.jenkins.weavedreamer.datatypes.WarpThread">
      <void property="color"> 
       <object idref="Color2"/> 
      </void> 
@@ -383,7 +383,7 @@
     </object> 
    </void> 
    <void method="add"> 
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpThread"> 
+    <object class="com.jenkins.weavedreamer.datatypes.WarpThread">
      <void property="color"> 
       <object idref="Color2"/> 
      </void> 
@@ -393,7 +393,7 @@
     </object> 
    </void> 
    <void method="add"> 
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpThread"> 
+    <object class="com.jenkins.weavedreamer.datatypes.WarpThread">
      <void property="color"> 
       <object idref="Color2"/> 
      </void> 
@@ -403,14 +403,14 @@
     </object> 
    </void> 
    <void method="add"> 
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpThread"> 
+    <object class="com.jenkins.weavedreamer.datatypes.WarpThread">
      <void property="color"> 
       <object idref="Color2"/> 
      </void> 
     </object> 
    </void> 
    <void method="add"> 
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpThread"> 
+    <object class="com.jenkins.weavedreamer.datatypes.WarpThread">
      <void property="color"> 
       <object idref="Color2"/> 
      </void> 
@@ -420,14 +420,14 @@
     </object> 
    </void> 
    <void method="add"> 
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpThread"> 
+    <object class="com.jenkins.weavedreamer.datatypes.WarpThread">
      <void property="color"> 
       <object idref="Color2"/> 
      </void> 
     </object> 
    </void> 
    <void method="add"> 
-    <object class="com.jenkins.weavingsimulator.datatypes.WarpThread"> 
+    <object class="com.jenkins.weavedreamer.datatypes.WarpThread">
      <void property="color"> 
       <object idref="Color2"/> 
      </void> 
@@ -439,13 +439,13 @@
   </void> 
   <void property="treadles"> 
    <void method="add"> 
-    <object class="com.jenkins.weavingsimulator.datatypes.Treadle"/> 
+    <object class="com.jenkins.weavedreamer.datatypes.Treadle"/>
    </void> 
    <void method="add"> 
-    <object class="com.jenkins.weavingsimulator.datatypes.Treadle"/> 
+    <object class="com.jenkins.weavedreamer.datatypes.Treadle"/>
    </void> 
    <void method="add"> 
-    <object class="com.jenkins.weavingsimulator.datatypes.Treadle"> 
+    <object class="com.jenkins.weavedreamer.datatypes.Treadle">
      <void method="add"> 
       <int>3</int> 
      </void> 
@@ -455,7 +455,7 @@
     </object> 
    </void> 
    <void method="add"> 
-    <object class="com.jenkins.weavingsimulator.datatypes.Treadle"> 
+    <object class="com.jenkins.weavedreamer.datatypes.Treadle">
      <void method="add"> 
       <int>0</int> 
      </void> 
@@ -465,7 +465,7 @@
     </object> 
    </void> 
    <void method="add"> 
-    <object class="com.jenkins.weavingsimulator.datatypes.Treadle"> 
+    <object class="com.jenkins.weavedreamer.datatypes.Treadle">
      <void method="add"> 
       <int>1</int> 
      </void> 
@@ -475,7 +475,7 @@
     </object> 
    </void> 
    <void method="add"> 
-    <object class="com.jenkins.weavingsimulator.datatypes.Treadle"> 
+    <object class="com.jenkins.weavedreamer.datatypes.Treadle">
      <void method="add"> 
       <int>3</int> 
      </void> 

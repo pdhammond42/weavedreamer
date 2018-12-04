@@ -4,11 +4,11 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.jenkins.weavingsimulator</groupId>
-    <artifactId>weavingSimulator</artifactId>
+    <groupId>com.jenkins.weavedreamer</groupId>
+    <artifactId>weavedreamer</artifactId>
     <packaging>jar</packaging>
     <version>0.2.8-PRERELEASE</version>
-    <name>weavingSimulator</name>
+    <name>WeaveDreamer</name>
     <url>https://sourceforge.net/projects/weavingsim/</url>
     <scm>
         <connection>scm:git:.</connection>
@@ -26,11 +26,22 @@
                 </configuration>
             </plugin>
             <plugin>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>lib/</classpathPrefix>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
                     <descriptor>src/assembly/bin.xml</descriptor>
-                    <finalName>freeweave-${pom.version}</finalName>
+                    <finalName>weavedreamer-${project.version}</finalName>
                 </configuration>
                 <executions>
                     <execution>
@@ -83,20 +94,22 @@
                         <phase>verify</phase>
                         <configuration>
                             <target name="guitest">
-                                <unzip src="target/freeweave-${pom.version}-bin.zip" dest="temp"/>
+                                <unzip src="target/weavedreamer-${project.version}-bin.zip" dest="temp"/>
                                 <junit fork="yes" printsummary="withOutAndErr" haltonfailure="true">
                                     <formatter type="xml"/>
                                     <batchtest>
                                         <fileset dir="src/test/java" casesensitive="yes">
-                                            <include name="**/uat/**/*Test.java"/>
+                                            <include name="**/uat/*Test.java"/>
                                         </fileset>
                                     </batchtest>
                                     <classpath>
                                         <path id="GUITest.classpath">
-                                            <pathelement location="temp/freeweave-${pom.version}/WeavingSimulator.jar"/>
                                             <pathelement
-                                                    location="temp/freeweave-${pom.version}/lib/commons-lang-2.6.jar"/>
-                                            <pathelement location="temp/freeweave-${pom.version}/lib/ini4j-0.5.1.jar"/>
+                                                    location="temp/weavedreamer-${project.version}/WeaveDreamer.jar"/>
+                                            <pathelement
+                                                    location="temp/weavedreamer-${project.version}/lib/commons-lang-2.6.jar"/>
+                                            <pathelement
+                                                    location="temp/weavedreamer-${project.version}/lib/ini4j-0.5.1.jar"/>
                                             <pathelement location="target/test-classes"/>
                                             <pathelement location="${junit:junit:jar}"/>
                                             <pathelement location="${org.hamcrest:hamcrest-all:jar}"/>
@@ -124,6 +137,11 @@
                         <artifactId>ant-junit</artifactId>
                         <version>1.9.4</version>
                     </dependency>
+                    <dependency>
+                        <groupId>org.apache.ant</groupId>
+                        <artifactId>ant-junit4</artifactId>
+                        <version>1.9.4</version>
+                    </dependency>
                 </dependencies>
             </plugin>
 
@@ -134,7 +152,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>com.jenkins.weavingsimulator.WeavingSimulatorApp</mainClass>
+                            <mainClass>com.jenkins.weavedreamer.WeaveDreamerApp</mainClass>
                             <classpathPrefix>lib/</classpathPrefix>
                         </manifest>
                     </archive>
@@ -154,12 +172,12 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <file>src/main/resources/com/jenkins/weavingsimulator/about.txt</file>
-                    <outputFile>target/classes/com/jenkins/weavingsimulator/about.txt</outputFile>
+                    <file>src/main/resources/com/jenkins/weavedreamer/about.txt</file>
+                    <outputFile>target/classes/com/jenkins/weavedreamer/about.txt</outputFile>
                     <replacements>
                         <replacement>
                             <token>VERSION</token>
-                            <value>${pom.version}</value>
+                            <value>${project.version}</value>
                         </replacement>
                     </replacements>
                 </configuration>
@@ -207,3 +225,4 @@
         </dependency>
     </dependencies>
 </project>
+
