@@ -20,6 +20,24 @@ Unpack the zip archive. Either
 - or right click the .jar file and select the option along the lines of 
 "Open with Java runtime".
 
+Changes in 0.2.9
+----------------
+Rebreanding/Renaming.
+
+Changes in 0.2.8
+----------------
+- Add repeat to Paste Special
+- Moved palette to staus bar
+- Bug fixes.
+- Improved tile view
+- Getting Started window.
+
+Changes in 0.2.7
+---------------
+
+- Network drafts
+- Bug fixes
+
 Changes in 0.2.6
 ----------------
 
