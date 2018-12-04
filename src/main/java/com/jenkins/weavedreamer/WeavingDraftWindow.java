@@ -56,6 +56,7 @@ import static java.awt.GridBagConstraints.*;
 	public WeavingDraftWindow(EditingSession session) {
 		super(session);
 		initComponents();
+		setFrameIcon(new ImageIcon(getClass().getResource("icon-24.png")));
 
 		jScrollPane1.getVerticalScrollBar().setUnitIncrement(16);
 		jScrollPane1.getHorizontalScrollBar().setUnitIncrement(16);

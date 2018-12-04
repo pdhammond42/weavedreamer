@@ -7,7 +7,7 @@
     <groupId>com.jenkins.weavedreamer</groupId>
     <artifactId>weavedreamer</artifactId>
     <packaging>jar</packaging>
-    <version>0.2.8-PRERELEASE</version>
+    <version>0.2.10-PRERELEASE</version>
     <name>WeaveDreamer</name>
     <url>https://sourceforge.net/projects/weavingsim/</url>
     <scm>

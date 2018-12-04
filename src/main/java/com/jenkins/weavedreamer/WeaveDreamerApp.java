@@ -326,11 +326,11 @@ public class WeaveDreamerApp extends javax.swing.JFrame {
     	try {
     		BufferedReader reader = new BufferedReader(new InputStreamReader (this.getClass().getResourceAsStream("about.txt")));
             String about = reader.lines().collect(Collectors.joining("\n"));
-			JOptionPane.showMessageDialog(this, about.toString(), "About", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(this,  about, "About", JOptionPane.INFORMATION_MESSAGE);
 		} catch (HeadlessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} 
+		}
     };
 
     private void helpContentsActionPerformed(ActionEvent evt) {

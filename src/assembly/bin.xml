@@ -38,7 +38,7 @@
             <scope>runtime</scope>
             <outputDirectory>lib</outputDirectory>
             <excludes>
-                <exclude>weavedreamer*</exclude>
+                <exclude>com.jenkins.weavedreamer:weavedreamer</exclude>
             </excludes>
         </dependencySet>
     </dependencySets>
