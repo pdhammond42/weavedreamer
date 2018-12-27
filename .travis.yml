@@ -1,4 +1,4 @@
 language: java
 install: true
 before_script: sudo pip install bs4
-script: xvfb run mvn verify
+script: xvfb-run mvn verify
