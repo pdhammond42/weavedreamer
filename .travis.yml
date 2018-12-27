@@ -1,3 +1,5 @@
 language: java
-script: mvn verify
+script:
+  pip install bs4
+  mvn verify
 
