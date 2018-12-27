@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 from urllib2 import urlopen
 from urllib import unquote
+import os
 
 html_template = """<html>
 <head>
@@ -24,6 +25,11 @@ print "Writing text"
 tags = soup.find_all("div", attrs={"class": "markdown_content"})
 with open ("help.html", "w") as html_file:
     html_file.write(html_template % tags[0])
+
+try:
+    os.mkdir ("attachment")
+except(OSError):
+    pass
 
 for img in soup.find_all("img"):
     name = img["src"]
