@@ -1,5 +1,11 @@
-WeavingSim Release Notes
+WeaveDreamer Release Notes
 ========================
+
+WeaveDreamer is a fabric design software, to aid hand weavers in creating textile weaving 
+patterns. It supports any number of warp and weft threads, treadles, and harnesses. 
+For more details see the [user guide](https://sourceforge.net/p/weavingsim/wiki/User%20Guide/).
+
+This software is a fork of the [FreeWeave Weaving Simulator](https://sourceforge.net/projects/freeweave/) application. 
 
 Installing on Windows
 ---------------------

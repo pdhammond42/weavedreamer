@@ -1,6 +1,5 @@
 language: java
-before-script:
+before-install:
   sudo pip install bs4
-script:
-  mvn verify
+
 
