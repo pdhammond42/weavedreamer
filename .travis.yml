@@ -1,5 +1,4 @@
 language: java
-before-install:
-  sudo pip install bs4
-
+before-install:  sudo pip install bs4
+install: true
 
