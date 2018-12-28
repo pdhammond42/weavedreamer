@@ -22,8 +22,11 @@ abstract class WeavingTestCase extends AssertJSwingJUnitTestCase {
 	@Override
 	public void onSetUp() {
 		if (ui == null) {
-			WeaveDreamerApp frame = GuiActionRunner.execute(() -> new WeaveDreamerApp());
-			frame.setVisible(true);
+			WeaveDreamerApp frame = GuiActionRunner.execute(() -> {
+				WeaveDreamerApp f = new WeaveDreamerApp();
+				f.setVisible(true);
+				return f;
+			});
 			ui = new AppDriver(new FrameFixture(robot(), frame));
 		}
     }
