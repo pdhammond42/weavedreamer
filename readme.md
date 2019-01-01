@@ -1,3 +1,5 @@
+Travis CI: [![][Travis CI Img]][Travis CI]
+
 WeaveDreamer Release Notes
 ========================
 
@@ -6,6 +8,10 @@ patterns. It supports any number of warp and weft threads, treadles, and harness
 For more details see the [user guide](https://sourceforge.net/p/weavingsim/wiki/User%20Guide/).
 
 This software is a fork of the [FreeWeave Weaving Simulator](https://sourceforge.net/projects/freeweave/) application. 
+
+
+[Travis CI Img]:https://travis-ci.com/pdhammond42/weavedreamer.svg?branch=master
+[Travis CI]:https://travis-ci.com/pdhammond42/weavedreamer
 
 Installing on Windows
 ---------------------
