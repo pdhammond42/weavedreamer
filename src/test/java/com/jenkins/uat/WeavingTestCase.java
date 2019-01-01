@@ -27,7 +27,11 @@ abstract class WeavingTestCase extends AssertJSwingJUnitTestCase {
 				f.setVisible(true);
 				return f;
 			});
+			robot().settings().delayBetweenEvents(100);
+			robot().settings().eventPostingDelay(100);
+			robot().settings().timeoutToBeVisible(200);
 			ui = new AppDriver(new FrameFixture(robot(), frame));
+
 		}
     }
 }

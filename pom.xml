@@ -95,7 +95,7 @@
                         <configuration>
                             <target name="guitest">
                                 <unzip src="target/weavedreamer-${project.version}-bin.zip" dest="temp"/>
-                                <junit fork="yes" printsummary="withOutAndErr" haltonfailure="true">
+                                <junit fork="yes" printsummary="withOutAndErr" haltonfailure="false">
                                     <formatter type="xml"/>
                                     <batchtest>
                                         <fileset dir="src/test/java" casesensitive="yes">
