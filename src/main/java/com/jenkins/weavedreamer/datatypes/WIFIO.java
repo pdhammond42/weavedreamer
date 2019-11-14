@@ -169,15 +169,16 @@ public class WIFIO {
     }
     
     private Color readWeftColor(WIFFile wif, List<Color> palette, String pickId)  throws RuntimeException {
-		Color color = Color.white; 
+		int colorIdx = 0;
 		if (wif.hasField("WEFT COLORS", pickId)) {
-			int colorIdx = wif.getIntField("WEFT COLORS", pickId) - 1;
-			color = palette.get(colorIdx);
+			colorIdx = wif.getIntField("WEFT COLORS", pickId);
 		}
 		else if (wif.hasField("WEFT", "COLOR")) {
-			int colorIdx = wif.getIntField("WEFT", "COLOR") - 1;
-			color = palette.get(colorIdx);            
+			colorIdx = wif.getIntField("WEFT", "COLOR");
 		}
-		return color;
+		if (colorIdx == 0) {
+		    return Color.white;
+        }
+        return palette.get(colorIdx-1);
     }
 }

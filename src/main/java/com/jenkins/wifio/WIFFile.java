@@ -131,6 +131,9 @@ public class WIFFile {
 
 	public int getIntField(String section, String key) {
 		String value = getKey(section, key);
+		if (value.isEmpty()) {
+			return 0;
+		}
 		try {
 			return Integer.parseInt(value);
 		} catch (NumberFormatException numberFormatException) {
@@ -144,7 +147,9 @@ public class WIFFile {
 
 		List<Integer> ints = new ArrayList<Integer>(vals.length);
 		for (String val : vals) {
-			ints.add(Integer.valueOf(val));
+			if (!val.isEmpty()) {
+				ints.add(Integer.valueOf(val));
+			}
 		}
 
 		return ints;

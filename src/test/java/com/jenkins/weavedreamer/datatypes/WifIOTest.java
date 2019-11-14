@@ -4,6 +4,8 @@ import com.jenkins.weavingsimulator.datatypes.Treadle;
 import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
 import com.jenkins.weavingsimulator.datatypes.WeftPick;
 import junit.framework.*;
+
+
 import static org.apache.commons.lang.ArrayUtils.toObject;
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -385,4 +387,53 @@ public class WifIOTest extends TestCase {
     	WeavingDraft draft = io.readWeavingDraft(new StringReader(nocolours));
     	assertThat(draft.getPalette().getNumColors(), is(2));
     }
+
+    public void testNullValuesIsNotAnError() throws IOException {
+		String nulls= minimal +
+				"Color palette=yes\n"+
+				"Color Table=yes\n"+
+				"Weaving=yes\n"+
+				"Warp=yes\n"+
+				"Weft=yes\n"+
+				"Weft Colors=yes\n"+
+				"Threading=yes\n"+
+				"Liftplan=yes\n"+
+				"[COLOR PALETTE]\n"+
+				"Range=0,255\n"+
+				"Entries=200\n"+
+				"[COLOR TABLE]\n"+
+				"1=255,0,0\n"+
+				"2=0,255,0\n"+
+				"3=\n"+
+				"[WEAVING]\n"+
+				"Shafts=4\n"+
+				"Treadles=4\n"+
+				"[WARP]\n"+
+				"Threads=4\n"+
+				"[WEFT]\n"+
+				"Threads=6\n"+
+				"[THREADING]\n"+
+				"1=1\n"+
+				"2=2\n"+
+				"3=\n"+
+				"4=\n"+
+				"[WEFT COLORS]\n"+
+				"1=1\n"+
+				"2=2\n"+
+				"3=1\n"+
+				"4=2\n"+
+				"5=\n"+
+				"6=\n"+
+				"[LIFTPLAN]\n"+
+				"1=1,3\n"+
+				"2=2,4\n"+
+				"3=1,3,4\n"+
+				"4=1,2,3\n"+
+				"5=\n"+
+				"6=\n";
+		WIFIO io = new WIFIO();
+		WeavingDraft draft = io.readWeavingDraft(new StringReader(nulls));
+		assertThat(draft.getTreadles().get(2).toArray(), equalTo(new int[]{1}));
+		assertThat(draft.getPicks().get(2).getTreadles()[0], equalTo(true));
+	}
 };
