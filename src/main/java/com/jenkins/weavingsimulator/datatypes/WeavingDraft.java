@@ -445,7 +445,7 @@ public class WeavingDraft {
        		    		p.setTreadle(oldTreadle,  false);
        		    		p.setTreadleCount(numTreadles);
        		    		for (int t : treadles.get(oldTreadle)) {
-       		    			p.setTreadle(t,  true);
+       		    			p.setTreadle(numTreadles - t - 1,  true);
        		    		}
        		    	}
        		    }

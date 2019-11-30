@@ -426,15 +426,17 @@ public class WeavingDraftTest extends TestCase {
     }
     
     public void testPropertyChangePreservesDraftToLiftplan() {
-    	draft.setProperties (3, 2, 8, 8, false, false);
+    	draft.setProperties (3, 4, 8, 8, false, false);
     	/* Set up a draft like this:
-    	 *  .*
-    	 *  **  treadle
-    	 *  *.
+    	 *  .***  <- shaft 0
+    	 *  **..  treadle
+    	 *  *..*
+    	 *  ^-0
+    	 *     ^-3
     	 * 
-    	 *  *.
-    	 *  .*  pick
-    	 *  *.
+    	 *  *..  <- 0
+    	 *  .*.  pick
+    	 *  ..*  <- 2
     	 *  
     	 *  Convert to liftplan and check it looks like
     	 *  ..*
@@ -443,17 +445,22 @@ public class WeavingDraftTest extends TestCase {
     	 *  
     	 *  **.
     	 *  .**  pick
-    	 *  **.
+    	 *  ..*
     	*/
-    	draft.getTreadles().get(0).add(0);
     	draft.getTreadles().get(0).add(1);
+    	draft.getTreadles().get(0).add(2);
+    	draft.getTreadles().get(1).add(0);
     	draft.getTreadles().get(1).add(1);
-    	draft.getTreadles().get(1).add(2);
-    	draft.getPicks().get(0).setTreadleId(0);
+        draft.getTreadles().get(2).add(0);
+        draft.getTreadles().get(3).add(0);
+        draft.getTreadles().get(3).add(2);
+
+
+        draft.getPicks().get(0).setTreadleId(0);
     	draft.getPicks().get(1).setTreadleId(1);
-    	draft.getPicks().get(2).setTreadleId(0);
+    	draft.getPicks().get(2).setTreadleId(2);
     	
-    	draft.setProperties(3, 2, 8, 8, true, false);
+    	draft.setProperties(3, 4, 8, 8, true, false);
     	assertThat(draft.getIsLiftplan(), is(true));
     	assertThat(draft.getTreadles().get(0), contains(2));
     	assertThat(draft.getTreadles().get(1), contains(1));
@@ -463,7 +470,7 @@ public class WeavingDraftTest extends TestCase {
     	assertThat(toObject(draft.getPicks().get(1).getTreadles()), 
     			arrayContaining(false, true, true));
     	assertThat(toObject(draft.getPicks().get(2).getTreadles()), 
-    			arrayContaining(true, true, false));
+    			arrayContaining(false, false, true));
     }
     
     public void testPersistence() throws IOException {
