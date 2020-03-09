@@ -32,6 +32,12 @@ Unpack the zip archive. Either
 - or right click the .jar file and select the option along the lines of 
 "Open with Java runtime".
 
+Installing on macOS
+----
+Download the zip file. Open the download, this should expand the archive and open Finder.
+Right click (or two finger tap) the WeaveDreamer file, select Open, and Open on the confirm page.
+
+
 Changes in 0.2.9
 ----------------
 Rebreanding/Renaming.
