@@ -18,8 +18,8 @@ Installing on Windows
 
 The application does not need to be specially installed, just unpack the files 
 from the zip archive and double-click the WeaveDreamer file. If this does 
-not work you probably don't have Java installed, you can get 
-[Java here](http://www.java.com/en/download/index.jsp).
+not work you probably don't have a suitable Java installed, version 8 or higher is required.
+You can get [Java here](http://www.java.com/en/). Registration may be necessary.
 
 Installing on Linux
 -------------------
@@ -27,15 +27,18 @@ Unpack the zip archive. Either
 
 - from a command line, type 
 
-    java -jar WeaveDreamer.jar
+    `java -jar WeaveDreamer.jar`
 
 - or right click the .jar file and select the option along the lines of 
-"Open with Java runtime".
+"Open with Java runtime". Requires Java runtime 8 or above.
 
 Installing on macOS
 ----
 Download the zip file. Open the download, this should expand the archive and open Finder.
 Right click (or two finger tap) the WeaveDreamer file, select Open, and Open on the confirm page.
+
+If it fails to run, you may not have a suitable Java installed, version 8 is required. You can get [Java here](https://java.com/en/). 
+Registration may be necessary.
 
 
 Changes in 0.2.9
