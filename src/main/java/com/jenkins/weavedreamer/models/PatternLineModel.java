@@ -1,6 +1,7 @@
 package com.jenkins.weavedreamer.models;
 
 import com.jenkins.weavingsimulator.datatypes.NetworkDraft;
+import java.awt.Rectangle;
 
 public class PatternLineModel extends AbstractWeavingDraftModel {
 
@@ -25,6 +26,20 @@ public class PatternLineModel extends AbstractWeavingDraftModel {
         });
 	}
 
+        private int getharnessId(int row){
+            return getRowCount()- row-1;
+        
+        //return row;
+        }
+        
+        public Rectangle getCurrentDisplayCell() {
+            Rectangle cursorSelection;
+            cursorSelection= this.getCurrentCell();
+
+            return new Rectangle(cursorSelection.x,this.getharnessId(cursorSelection.y),cursorSelection.width,cursorSelection.height);
+    }
+        
+        
 	public int getRowCount() {
 		return network.getPatternLineRows();	
 	}
@@ -34,7 +49,9 @@ public class PatternLineModel extends AbstractWeavingDraftModel {
 	}
 
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		return network.getPatternLine(columnIndex) == rowIndex;
+                int r= getharnessId(rowIndex);
+                
+		return network.getPatternLine(columnIndex) == r;
 	}
 
 	@Override
@@ -42,7 +59,7 @@ public class PatternLineModel extends AbstractWeavingDraftModel {
 		// Value is ignored. A click sets the cell. Undo restores the previous
 		// value in that column.
 		final int c = column;
-		final int r = row;
+		final int r = getharnessId(row);
 		final int old_row = network.getPatternLine(column);
 		return new Command (){
 			public void execute() {

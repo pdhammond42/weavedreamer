@@ -95,18 +95,20 @@ public class TreadlingDraftModelTest extends TestCase {
     public void testGetValueWithSelection() {
     	model.showSelection(0, 0, 2, 2);
 
-    	draft.getPicks().get(0).setTreadle(0, true);
-    	draft.getPicks().get(1).setTreadle(1, true);
-    	draft.getPicks().get(2).setTreadle(0, true);
+    	draft.getPicks().get(0).setTreadle(1, true);
+    	draft.getPicks().get(1).setTreadle(0, true);
+    	draft.getPicks().get(2).setTreadle(1, true);
 
-    	assertThat((Color)model.getValueAt(0, 0), equalTo(Color.BLACK));
-    	assertThat((Color)model.getValueAt(0, 1), equalTo(Color.LIGHT_GRAY));
+    	assertThat((Color)model.getValueAt(0, 0), equalTo(Color.DARK_GRAY));
+    	assertThat((Color)model.getValueAt(0, 1), equalTo(Color.DARK_GRAY));
     	assertThat((Color)model.getValueAt(0, 2), equalTo(Color.WHITE));
-    	assertThat((Color)model.getValueAt(1, 0), equalTo(Color.LIGHT_GRAY));
-    	assertThat((Color)model.getValueAt(1, 1), equalTo(Color.BLACK));
+        
+    	assertThat((Color)model.getValueAt(1, 0), equalTo(Color.DARK_GRAY));
+    	assertThat((Color)model.getValueAt(1, 1), equalTo(Color.DARK_GRAY));
     	assertThat((Color)model.getValueAt(1, 2), equalTo(Color.WHITE));
+        
     	assertThat((Color)model.getValueAt(2, 0), equalTo(Color.BLACK));    	
-    	assertThat((Color)model.getValueAt(2, 1), equalTo(Color.WHITE));    	
+    	assertThat((Color)model.getValueAt(2, 1), equalTo(Color.BLACK));    	
     	assertThat((Color)model.getValueAt(2, 2), equalTo(Color.WHITE));    	
     }
 

@@ -36,7 +36,7 @@ public class StatusBarModel implements TableModelListener {
 		if (e.getType() == AbstractWeavingDraftModel.CURSOR) {
 			String oldText = text;
 			AbstractWeavingDraftModel model = (AbstractWeavingDraftModel)e.getSource();
-			Rectangle rect = model.getCurrentCell();
+			Rectangle rect = model.getCurrentDisplayCell();
 			if (model.getColumnCount() == 1) {
 				text = format1d(rect.y, rect.height);
 			} else if (model.getRowCount() == 1) {

@@ -9,7 +9,9 @@ import java.io.IOException;
 public class NetworkTest  extends WeavingTestCase {
 	@Test
 	public void testCreateSaveAndLoad() throws IOException {
-		ui.newNetwork(12, 20, 20, "Monochrome");
+                int endcount=12;
+                
+		ui.newNetwork(endcount, 20, 20, "Monochrome");
 		ui.setInitial(1,1);
 		ui.setInitial(2,2);
 		ui.setInitial(3,3);
@@ -24,14 +26,14 @@ public class NetworkTest  extends WeavingTestCase {
 		ui.setKey2(3,2);
 		ui.setKey2(3,3);
 		
-		ui.setPatternLine (3,5);
+		ui.setPatternLine (16-3,5);
 		
-		ui.endIs(0, 0, Color.BLACK);
-		ui.endIs(1, 1, Color.BLACK);
-		ui.endIs(2, 2, Color.BLACK);
-		ui.endIs(3, 3, Color.BLACK);
-		ui.endIs(0, 4, Color.BLACK);
-		ui.endIs(5, 5, Color.BLACK);
+		ui.harnessIs(0, 0, Color.BLACK);
+		ui.harnessIs(1, 1, Color.BLACK);
+		ui.harnessIs(2, 2, Color.BLACK);
+		ui.harnessIs(3, 3, Color.BLACK);
+		ui.harnessIs(0, 4, Color.BLACK);
+		ui.harnessIs(5, 5, Color.BLACK);
 
 		ui.pickIs(0, 0, Color.BLACK);
 		ui.pickIs(0, 1, Color.BLACK);

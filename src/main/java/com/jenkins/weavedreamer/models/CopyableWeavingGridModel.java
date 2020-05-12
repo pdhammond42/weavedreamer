@@ -61,7 +61,13 @@ public abstract class CopyableWeavingGridModel extends AbstractWeavingDraftModel
      */
     public Object getValueAt(int rowIndex, int columnIndex) {
         if (getBooleanValueAt(rowIndex, columnIndex)) {
-        	return Color.BLACK;
+                if (isSelected(rowIndex, columnIndex)){
+                    return Color.DARK_GRAY;
+                }
+                else{
+                    return Color.BLACK;
+                }
+                
         } else if (isSelected(rowIndex, columnIndex)) {
         	return Color.LIGHT_GRAY;
         } else {

@@ -10,6 +10,9 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
 import com.jenkins.weavedreamer.models.AbstractWeavingDraftModel;
+import java.awt.Font;
+import javax.swing.border.Border;
+import javax.swing.border.StrokeBorder;
 
 /**
  * This class is a specialization of GridControl that implements editing
@@ -178,4 +181,23 @@ public class WeavingGridControl extends GridControl {
     	new PasteMenu(model, p.row, p.column)
     		.show(this, e.getX(), e.getY());	
     }	
+        @Override
+    public void print(Graphics g){
+
+        Color origColor = getGridColor();
+        Border origBorder = getBorder();
+
+        this.setGridColor(Color.BLACK);
+        this.setBorder(new StrokeBorder(new BasicStroke()));
+
+         // wrap in try/finally so that we always restore the state
+         try {
+             super.print(g);
+         } finally {
+             setBackground(origColor);
+             setBorder(origBorder);
+ 
+         }
+     
+    }
 }

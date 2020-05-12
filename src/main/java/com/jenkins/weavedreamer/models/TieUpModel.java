@@ -28,6 +28,7 @@ package com.jenkins.weavedreamer.models;
 import java.beans.IndexedPropertyChangeEvent;
 
 import com.jenkins.weavingsimulator.datatypes.Treadle;
+import java.awt.Rectangle;
 
 /** A TableModel class for representing the treadle tie up part of the
  * weaving draft.
@@ -60,6 +61,12 @@ public class TieUpModel extends AbstractWeavingDraftModel {
         });
     }
     
+    private int getHarnessId(int row){
+        return draft.getNumHarnesses()- row-1;
+        //return row;
+    }
+    
+    
     /** Sets the value in the cell at <code>columnIndex</code> and
      * <code>rowIndex</code> to <code>aValue</code>.
      *
@@ -70,10 +77,16 @@ public class TieUpModel extends AbstractWeavingDraftModel {
      * @see #isCellEditable
      *
      */
+    
+    
     private void doSetValueAt(Object aValue, int rowIndex, int columnIndex) {
-    	if (isCellEditable(rowIndex, columnIndex)) {
+        int harnessId ;
+        //harnessId = getHarnessId(rowIndex);
+        harnessId = (rowIndex);
+        
+    	if (isCellEditable(harnessId, columnIndex)) {
 	        Treadle treadle = draft.getTreadles().get(columnIndex);
-	        int harnessId = rowIndex;
+
 	        if (treadle.contains(harnessId))
 	            // need to wrap harnessId in Integer, otherwise the remove(index) method is called 
 	            // instead of the remove(Object) version.
@@ -85,18 +98,29 @@ public class TieUpModel extends AbstractWeavingDraftModel {
     
 	@Override
 	protected Command getSetValueCommand(final Object aValue, final int row, final int column) {
+                int harnessId = getHarnessId(row);
 		return new Command (){
 			public void execute() {
-		        doSetValueAt(aValue, row, column);
+		        doSetValueAt(aValue, harnessId, column);
 			}
 
 			public void undo() {
-		        doSetValueAt(aValue, row, column);
+		        doSetValueAt(aValue, harnessId, column);
 			}
 		};
 	}
 	
-    /** Returns true if the cell at <code>rowIndex</code> and
+    public Rectangle getCurrentDisplayCell() {
+        Rectangle cursorSelection;
+        cursorSelection= this.getCurrentCell();
+        return new Rectangle(cursorSelection.x,this.getHarnessId(cursorSelection.y),cursorSelection.width,cursorSelection.height);
+    }
+    
+        
+        
+        
+        
+        /** Returns true if the cell at <code>rowIndex</code> and
      * <code>columnIndex</code>
      * is editable.  Otherwise, <code>setValueAt</code> on the cell will not
      * change the value of that cell.
@@ -145,8 +169,9 @@ public class TieUpModel extends AbstractWeavingDraftModel {
      *
      */
     public Object getValueAt(int rowIndex, int columnIndex) {
+        int harnessId = getHarnessId(rowIndex);
         Treadle treadle = draft.getTreadles().get(columnIndex);
-        if (treadle.contains(rowIndex))
+        if (treadle.contains(harnessId))
             return Boolean.TRUE;
         else
             return Boolean.FALSE;

@@ -83,22 +83,27 @@ public class ThreadingDraftModelTest extends TestCase {
     	model.showSelection (0,1,2,2);
     	draft.getEnds().get(0).setHarnessId(1);
     	draft.getEnds().get(1).setHarnessId(0);
-    	
-    	assertThat ((Color)model.getValueAt(0, 0), equalTo(Color.WHITE));
-    	assertThat ((Color)model.getValueAt(0, 1), equalTo(Color.BLACK));    	
-    	assertThat ((Color)model.getValueAt(1, 0), equalTo(Color.BLACK));
-    	assertThat ((Color)model.getValueAt(1, 1), equalTo(Color.LIGHT_GRAY));
+        
+    	//  * *.
+        //  * .* 
+        
+        
+    	assertThat ((Color)model.getValueAt(0, 0), equalTo(Color.BLACK));
+    	assertThat ((Color)model.getValueAt(0, 1), equalTo(Color.LIGHT_GRAY));    	
+    	assertThat ((Color)model.getValueAt(1, 0), equalTo(Color.WHITE));
+    	assertThat ((Color)model.getValueAt(1, 1), equalTo(Color.DARK_GRAY));
     }
 
     public void testSetValueAt() {
         assertEquals(0, draft.getEnds().get(0).getHarnessId());
-        model.setValueAt((Object)true, 1, 0);
+        //model.setValueAt((Object)true, 1, 0);
+        model.setValueAt((Object)true, 0, 0);
         assertEquals(1, draft.getEnds().get(0).getHarnessId());
     }
 
     public void testSetValueAtIsUndoable() {
         assertEquals(0, draft.getEnds().get(0).getHarnessId());
-        model.setValueAt((Object)true, 1, 0);
+        model.setValueAt((Object)true, 0, 0);  // was 1,0
         assertEquals(1, draft.getEnds().get(0).getHarnessId());
         session.undo();
         assertEquals(0, draft.getEnds().get(0).getHarnessId());    
@@ -124,7 +129,7 @@ public class ThreadingDraftModelTest extends TestCase {
     
     /// Test if tableListener is notified when a setValueAt is called
     public void testNotifyListenerOnSet() {
-        model.setValueAt((Object)true, 1, 0);
+        model.setValueAt((Object)true, 0, 0); // was 1,0
         TableModelTestUtils.assertTableColumnUpdateEvent(listener.event, model, 0);
     }
     
@@ -157,19 +162,40 @@ public class ThreadingDraftModelTest extends TestCase {
         draft.setTreadles(Arrays.asList(new Treadle(), new Treadle(), 
     			new Treadle(), new Treadle()));
     	draft.setEnds(Arrays.asList(
-                new WarpEnd(Color.BLACK, 0), 
-                new WarpEnd(Color.WHITE, 1),
-                new WarpEnd(Color.WHITE, 0),
-                new WarpEnd(Color.WHITE, 1),
-                new WarpEnd(Color.WHITE, 0),
-                new WarpEnd(Color.BLUE, 1)));
-
+                new WarpEnd(Color.BLACK, 3), 
+                new WarpEnd(Color.WHITE, 2),
+                new WarpEnd(Color.WHITE, 3),
+                new WarpEnd(Color.WHITE, 2),
+                new WarpEnd(Color.WHITE, 3),
+                new WarpEnd(Color.BLUE, 2)));
+        Color T;
     	/* Start with
     	 *  *.*.*.
-    	 *  .*.*.*
-    	 *  copy from r,c 0, 0 .. 2, 2, paste to 0, 1, should get
+    	 *  .*.*.* 
+         *  ......
+         *  ......
+        */
+        
+        T= (Color)model.getValueAt(1, 1);
+        assertThat((Color)model.getValueAt(0, 0), is(Color.BLACK));
+        assertThat((Color)model.getValueAt(1, 0), is(Color.WHITE));
+        
+        assertThat((Color)model.getValueAt(2, 0), is(Color.WHITE));
+        assertThat((Color)model.getValueAt(3, 0), is(Color.WHITE));
+    	
+        assertThat((Color)model.getValueAt(1, 1), is(Color.BLACK));
+        assertThat((Color)model.getValueAt(0, 2), is(Color.BLACK));
+        assertThat((Color)model.getValueAt(1, 3), is(Color.BLACK));
+        assertThat((Color)model.getValueAt(0, 4), is(Color.BLACK));
+        assertThat((Color)model.getValueAt(1, 5), is(Color.BLACK));
+        
+        
+    	 /* 
+        *  copy from r,c 0, 0 .. 2, 2, paste to 0, 1, should get
     	 *  **..*.
     	 *  ..**.*
+         *  ......
+         *  ......
     	 */	
     	session.setSelectedCells(new PasteGrid(model, new GridSelection(0, 0, 2, 2)));
     	
@@ -192,12 +218,12 @@ public class ThreadingDraftModelTest extends TestCase {
         draft.setTreadles(Arrays.asList(new Treadle(), new Treadle(),
                 new Treadle(), new Treadle()));
         draft.setEnds(Arrays.asList(
-                new WarpEnd(Color.BLACK, 0),
-                new WarpEnd(Color.WHITE, 1),
-                new WarpEnd(Color.WHITE, 0),
-                new WarpEnd(Color.WHITE, 1),
-                new WarpEnd(Color.WHITE, 0),
-                new WarpEnd(Color.BLUE, 1)));
+                new WarpEnd(Color.BLACK, 3),
+                new WarpEnd(Color.WHITE, 2),
+                new WarpEnd(Color.WHITE, 3),
+                new WarpEnd(Color.WHITE, 2),
+                new WarpEnd(Color.WHITE, 3),
+                new WarpEnd(Color.BLUE, 2)));
 
         session.setSelectedCells(new PasteGrid(model, new GridSelection(1, 1, -1, -1)));
 
@@ -236,13 +262,22 @@ public class ThreadingDraftModelTest extends TestCase {
     	draft.setTreadles(Arrays.asList(new Treadle(), new Treadle(), 
     			new Treadle(), new Treadle()));
     	draft.setEnds(Arrays.asList(
-                new WarpEnd(Color.BLACK, 0), 
+                /*new WarpEnd(Color.BLACK, 0), 
                 new WarpEnd(Color.WHITE, 1),
                 new WarpEnd(Color.WHITE, 0),
                 new WarpEnd(Color.WHITE, 0),
                 new WarpEnd(Color.WHITE, 0),
                 new WarpEnd(Color.BLUE, 1)));
-
+*/
+                new WarpEnd(Color.BLACK, 1), 
+                new WarpEnd(Color.WHITE, 0),
+                new WarpEnd(Color.WHITE, 1),
+                new WarpEnd(Color.WHITE, 1),
+                new WarpEnd(Color.WHITE, 1),
+                new WarpEnd(Color.BLUE, 0)));
+        
+        
+        
     	/* Start with
     	 *  *.***.
     	 *  .*...*
@@ -262,6 +297,8 @@ public class ThreadingDraftModelTest extends TestCase {
     	assertThat((Color)model.getValueAt(0, 3), is(Color.WHITE));
     	assertThat((Color)model.getValueAt(1, 3), is(Color.BLACK));  
     	
+       
+        
     	session.undo();
     	assertThat(session.canUndo(), is(false));
     	assertThat((Color)model.getValueAt(0, 0), is(Color.BLACK));

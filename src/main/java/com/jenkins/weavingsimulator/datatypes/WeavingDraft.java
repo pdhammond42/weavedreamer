@@ -93,6 +93,7 @@ public class WeavingDraft {
     
     private boolean isLiftplan;
     
+
     /** Holds value of property doValidation.   If this property is false, then
      * certain validations in property set functions, that depend on the value
      * of other properties, won't be done.  This is to support XMLDecode, since
@@ -169,6 +170,7 @@ public class WeavingDraft {
         return this.picks;
     }
     
+        
     /** Setter for property picks.
      * @param picks New value of property picks.
      *
@@ -420,7 +422,9 @@ public class WeavingDraft {
 		    	treadles = new ObservableList<Treadle>();
 		    	for (int i=0; i != numHarnesses; ++i) {
 		    		treadles.add(new Treadle());
-		    		treadles.get(i).add(numHarnesses-i-1);
+		    		//treadles.get(i).add(numHarnesses-i-1)
+                                //treadles.get(i).add(i-1);
+                                treadles.get(i).add(i);
 		        }
 		    }
     	}
@@ -445,7 +449,7 @@ public class WeavingDraft {
        		    		p.setTreadle(oldTreadle,  false);
        		    		p.setTreadleCount(numTreadles);
        		    		for (int t : treadles.get(oldTreadle)) {
-       		    			p.setTreadle(numTreadles - t - 1,  true);
+       		    			p.setTreadle(t,  true);
        		    		}
        		    	}
        		    }
@@ -487,7 +491,9 @@ public class WeavingDraft {
         if (isLiftplan) {
         	for (int i=0; i != numTreadles; ++i) {
         		treadles.get(i).clear();
-        		treadles.get(i).add(numTreadles-i-1);
+        		//treadles.get(i).add(numTreadles-i-1);
+                        treadles.get(i).add(i);
+                        //treadles.get(i).add(i-1);
         	}	
         }
         
@@ -561,8 +567,8 @@ public class WeavingDraft {
         if (doValidation) {
             if (newEnd.getHarnessId() < -1 ||
                 newEnd.getHarnessId() >= numHarnesses)
-                throw new IllegalArgumentException("Illegal harness value in end " +
-                    newEnd.getHarnessId());
+                throw new IllegalArgumentException("Illegal harness value  " +
+                    (newEnd.getHarnessId()+1) + " found");  
         }
     }
     

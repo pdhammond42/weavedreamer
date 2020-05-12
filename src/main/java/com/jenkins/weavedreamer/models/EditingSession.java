@@ -59,11 +59,14 @@ public class EditingSession {
      * Holds value of property draft.
      */
     private WeavingDraft draft;
+    
 
     /**
      * Holds value of property file.
      */
     private File file;
+    
+    private boolean saveIsDraftFile = true;
 
     /**
      * Holds value of property draftModified.
@@ -74,6 +77,16 @@ public class EditingSession {
 	private List<View> views = new ArrayList<View>();
 	
     public EditingSession(WeavingDraft draft) {
+        initEditingSession(draft);
+    }
+        
+    public EditingSession(WeavingDraft draft,boolean fileIsDraftType){
+        saveIsDraftFile = fileIsDraftType;
+        initEditingSession(draft);
+    }
+        
+        
+    public void initEditingSession(WeavingDraft draft) {
         propertySupport = new PropertyChangeSupport(this);
 
         this.draft = draft;
@@ -103,7 +116,7 @@ public class EditingSession {
     	public abstract String getViewName();
     }
     
-	public void addPropertyChangeListener(PropertyChangeListener listener) {
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
         propertySupport.addPropertyChangeListener(listener);
     }
 
@@ -178,14 +191,26 @@ public class EditingSession {
         return this.draft;
     }
 
+    public void setSaveasDraft(boolean saveIsDraftFile){
+        this.saveIsDraftFile=saveIsDraftFile;
+    }
+    
+    
+    public boolean getSaveasDraft(){
+        return saveIsDraftFile;
+    }
+    
     /**
      * Getter for property file.
      * @return Value of property file.
      */
+    
+
+    
     public File getFile() {
         return this.file;
     }
-
+    
     /**
      * Setter for property file.
      * @param file New value of property file.

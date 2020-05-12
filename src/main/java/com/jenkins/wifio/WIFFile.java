@@ -8,6 +8,7 @@ package com.jenkins.wifio;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,11 +26,14 @@ import org.ini4j.Ini;
 public class WIFFile {
 	private Ini wif;
 
+
 	public WIFFile(Reader reader) throws WIFException, IOException {
 		wif = normalizeWif(new Ini(reader));
 		checkFormat();
 	}
-
+        public WIFFile(){
+                 wif = new Ini();
+        }
 	public WIFFile(InputStream ins) throws WIFException, IOException {
 		wif = normalizeWif(new Ini(ins));
 		checkFormat();
@@ -55,9 +59,9 @@ public class WIFFile {
 			throw new WIFException("No section '" + sectionName + "'");
 		} else {
 			String value = section.get(key.toLowerCase());
-			if (value == null)
-				throw new WIFException("Section '" + sectionName + "' "
-						+ "does not contain key '" + key + "'");
+			if (value == null  ){
+				throw new WIFNoValueException("<"+sectionName + ">:<"+key+"> is empty");
+                        }
 			if (stripTrailingComment) {
 				int idx = value.indexOf(';');
 				if (idx != -1)
@@ -74,11 +78,13 @@ public class WIFFile {
 	private void setKey(String sectionName, String key, String value) {
 		sectionName = sectionName.toLowerCase();
 		key = key.toLowerCase();
-		Ini.Section section = wif.get(sectionName);
-		if (section == null) {
-			section = wif.add(sectionName);
-		}
-		section.put(key, value);
+                if (!hasField("CONTENTS", sectionName)  && !("wif".equalsIgnoreCase(sectionName))){
+                    wif.put("contents",sectionName,"true");
+        
+        }
+                // add check to add sectionname to contents
+                
+		wif.put(sectionName,key, value);
 	}
 
 	public String getStringField(String section, String key) {
@@ -122,6 +128,8 @@ public class WIFFile {
 	
 	public double getDoubleField(String section, String key) {
 		String value = getKey(section, key);
+                if (value.length()==0)
+                {throw new WIFNoValueException("Value '" + key + "' is empty"); }
 		try {
 			return Double.parseDouble(value);
 		} catch (NumberFormatException numberFormatException) {
@@ -131,10 +139,9 @@ public class WIFFile {
 
 	public int getIntField(String section, String key) {
 		String value = getKey(section, key);
-		if (value.isEmpty()) {
-			return 0;
-		}
-		try {
+		if (value.length()==0)
+                {throw new WIFNoValueException("Value '" + key + "' is empty"); }
+                try {
 			return Integer.parseInt(value);
 		} catch (NumberFormatException numberFormatException) {
 			throw new WIFException("Value '" + value + "' is not a integer");
@@ -143,20 +150,28 @@ public class WIFFile {
 
 	public List<Integer> getIntListField(String section, String key) {
 		String value = getKey(section, key);
+                if (value.length()==0)
+                {throw new WIFNoValueException("Value '" + key + "' is empty"); }
 		String[] vals = value.split(",");
 
 		List<Integer> ints = new ArrayList<Integer>(vals.length);
-		for (String val : vals) {
-			if (!val.isEmpty()) {
-				ints.add(Integer.valueOf(val));
-			}
-		}
-
+                if (vals.length>0){
+                    for (String val : vals) {
+                            try{
+                            ints.add(Integer.valueOf(val));}
+                            catch (Exception e)
+                            
+                            {   }
+                            
+                    }
+                }
 		return ints;
 	}
 
 	public char getSymbolField(String section, String key) {
 		String value = getKey(section, key);
+                if (value.length()==0)
+                {throw new WIFNoValueException("Value '" + key + "' is empty"); }
 
 		// a symbol can be a bare character, a character surrounded by single
 		// quotes, or a #CODE. So these are equivalent: a, 'a', #97
@@ -172,11 +187,24 @@ public class WIFFile {
 	}
 	
 	public int countEntriesInSection(String section) {
+            try{
 		return wif.get(section.toLowerCase()).size();
+            }
+            catch (Exception e){
+                    return 0;}
+            
 	}
 
 	public java.awt.Color getColorField(String section, String key, Integer min, Integer max) {
-        List<Integer> rgb = getIntListField(section, key);
+        List <Integer> rgb;
+            try {
+             rgb = getIntListField(section, key);
+        }
+        catch(WIFNoValueException e){
+            throw new WIFException("Value is not a color");
+        }
+        
+        
         if (rgb.size() != 3) {
             throw new WIFException("Value '"+ rgb + "' is not a color");
         }
@@ -187,6 +215,7 @@ public class WIFFile {
         		normalizeColor(rgb.get(2), min, max));
     }
 
+ 
 	public void setBooleanField(String section, String key, boolean val) {
 		setKey(section, key, String.valueOf(val));
 	}
@@ -208,7 +237,33 @@ public class WIFFile {
 	public void setIntListField(String section, String key, List<Integer> rgb) {
 		setKey(section, key, StringUtils.join(rgb.toArray(), ','));
 	}
-
+        public void setIntListFieldOneBased(String section, String key, List<Integer> rgb) {
+                Object rgbarray[];
+                rgbarray = rgb.toArray();
+                for (int i=0;i<rgbarray.length;i++){
+                    rgbarray[i] = (int)rgbarray[i]+1;
+ 
+                }
+		setKey(section, key, StringUtils.join(rgbarray, ','));
+	}
+        
+        
+        public void setBoolArrayField(String section, String key, boolean rgb[]) {
+            String value="";
+            int c;
+            for (c=0;c<rgb.length;c++)
+                if (rgb[c]){
+                    if(""==value){
+                        value = Integer.toString(c+1);
+                    }
+                    else{
+                        value += "," + Integer.toString(c+1);
+                    }
+                }
+            setKey(section, key, value);
+	}
+        
+        
 	public void setStringField(String section, String key, String val) {
 		setKey(section, key, val);
 	}
@@ -236,4 +291,9 @@ public class WIFFile {
 		return (c - min) * 255 / max;
 	}
 
+        public void WriteWif(OutputStream OutStream) throws IOException{
+            
+            wif.store(OutStream);
+        
+        }
 }

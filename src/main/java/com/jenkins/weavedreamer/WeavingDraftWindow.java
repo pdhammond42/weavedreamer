@@ -184,6 +184,10 @@ import static java.awt.GridBagConstraints.*;
 		}
 	}
 	
+        public JPanel getdraftPanel(){
+            return draftPanel;
+        }
+        
 	// Nasty code alert: these are protected so the derived class can
 	// put them into the correct place in the grid layout.
 	protected JPanel draftPanel;

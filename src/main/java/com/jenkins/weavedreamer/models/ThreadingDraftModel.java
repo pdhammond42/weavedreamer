@@ -29,6 +29,7 @@ import java.awt.Color;
 import java.beans.IndexedPropertyChangeEvent;
 
 import com.jenkins.weavingsimulator.datatypes.WarpEnd;
+import java.awt.Rectangle;
 
 
 /** This TableModel represents the threading draft part of a weaving draft. 
@@ -67,6 +68,17 @@ public class ThreadingDraftModel extends CopyableWeavingGridModel {
         });
     }
     
+    private int getHarnessId(int row){
+        return draft.getNumHarnesses()- row-1;
+        //return row;
+    }
+    
+    public Rectangle getCurrentDisplayCell() {
+        Rectangle cursorSelection;
+        cursorSelection= this.getCurrentCell();
+        return new Rectangle(cursorSelection.x,this.getHarnessId(cursorSelection.y),cursorSelection.width,cursorSelection.height);
+    }
+    
     /** Returns the number of columns in the model. A
      * <code>JTable</code> uses this method to determine how many columns it
      * should create and display by default.
@@ -91,15 +103,22 @@ public class ThreadingDraftModel extends CopyableWeavingGridModel {
     public int getRowCount() {
         return draft.getNumHarnesses();
     }
-        
+    
+    private int getharnessId(int row){
+        return draft.getNumHarnesses()- row-1;
+        //return row;
+    }
+    
     public boolean getBooleanValueAt (int row, int column) {
-    	return draft.getEnds().get(column).getHarnessId() == row;
+        int harnessId = getharnessId(row);
+    	return draft.getEnds().get(column).getHarnessId() == harnessId;
     }
 
     public void setBooleanValueAt (boolean value, int row, int column) {
     	final WarpEnd end = draft.getEnds().get(column);
-    	if (value && row != end.getHarnessId()) {
-    		end.setHarnessId(row);
+        int harnessId = getharnessId(row);
+    	if (value && harnessId != end.getHarnessId()) {
+    		end.setHarnessId(harnessId);
     	}    	
     }
     
@@ -118,12 +137,13 @@ public class ThreadingDraftModel extends CopyableWeavingGridModel {
 	@Override
 	protected Command getSetValueCommand(final Object aValue, final int row, final int column) {
 		final WarpEnd end = draft.getEnds().get(column);
+                int harnessId = getharnessId(row);
 		final int oldHarness = end.getHarnessId();
 
 		return new Command () {	        
 			public void execute() {
-		        if ((Boolean)aValue && row != end.getHarnessId()) {
-		            end.setHarnessId(row);
+		        if ((Boolean)aValue && harnessId != end.getHarnessId()) {
+		            end.setHarnessId(harnessId);
 		        }
 			}
 			public void undo() {

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<java version="1.8.0_161" class="java.beans.XMLDecoder">
+<java version="1.8.0_51" class="java.beans.XMLDecoder">
  <object class="com.jenkins.weavingsimulator.datatypes.WeavingDraft" id="WeavingDraft0">
   <void property="ends">
    <void method="add">
@@ -262,7 +262,7 @@
     </void>
     <void property="patternLine">
      <void index="5">
-      <int>3</int>
+      <int>2</int>
      </void>
     </void>
    </object>
@@ -651,70 +651,7 @@
    <void method="add">
     <object class="com.jenkins.weavingsimulator.datatypes.Treadle">
      <void method="add">
-      <int>11</int>
-     </void>
-    </object>
-   </void>
-   <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.Treadle">
-     <void method="add">
-      <int>10</int>
-     </void>
-    </object>
-   </void>
-   <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.Treadle">
-     <void method="add">
-      <int>9</int>
-     </void>
-    </object>
-   </void>
-   <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.Treadle">
-     <void method="add">
-      <int>8</int>
-     </void>
-    </object>
-   </void>
-   <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.Treadle">
-     <void method="add">
-      <int>7</int>
-     </void>
-    </object>
-   </void>
-   <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.Treadle">
-     <void method="add">
-      <int>6</int>
-     </void>
-    </object>
-   </void>
-   <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.Treadle">
-     <void method="add">
-      <int>5</int>
-     </void>
-    </object>
-   </void>
-   <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.Treadle">
-     <void method="add">
-      <int>4</int>
-     </void>
-    </object>
-   </void>
-   <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.Treadle">
-     <void method="add">
-      <int>3</int>
-     </void>
-    </object>
-   </void>
-   <void method="add">
-    <object class="com.jenkins.weavingsimulator.datatypes.Treadle">
-     <void method="add">
-      <int>2</int>
+      <object idref="Integer0"/>
      </void>
     </object>
    </void>
@@ -728,7 +665,70 @@
    <void method="add">
     <object class="com.jenkins.weavingsimulator.datatypes.Treadle">
      <void method="add">
-      <object idref="Integer0"/>
+      <int>2</int>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.jenkins.weavingsimulator.datatypes.Treadle">
+     <void method="add">
+      <int>3</int>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.jenkins.weavingsimulator.datatypes.Treadle">
+     <void method="add">
+      <int>4</int>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.jenkins.weavingsimulator.datatypes.Treadle">
+     <void method="add">
+      <int>5</int>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.jenkins.weavingsimulator.datatypes.Treadle">
+     <void method="add">
+      <int>6</int>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.jenkins.weavingsimulator.datatypes.Treadle">
+     <void method="add">
+      <int>7</int>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.jenkins.weavingsimulator.datatypes.Treadle">
+     <void method="add">
+      <int>8</int>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.jenkins.weavingsimulator.datatypes.Treadle">
+     <void method="add">
+      <int>9</int>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.jenkins.weavingsimulator.datatypes.Treadle">
+     <void method="add">
+      <int>10</int>
+     </void>
+    </object>
+   </void>
+   <void method="add">
+    <object class="com.jenkins.weavingsimulator.datatypes.Treadle">
+     <void method="add">
+      <int>11</int>
      </void>
     </object>
    </void>

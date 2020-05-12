@@ -170,11 +170,15 @@ public abstract class AbstractWeavingDraftModel
     }
 
     /**
-     * Gets the current cursor location, as a starting cell and width & height of any drag in progress.
+     * Gets the current cursor location, as a starting cell and width and height of any drag in progress.
      * If no drag is in progress reports -1, -1 for the dimensions.
      * @return
      * 
      */
+    public Rectangle getCurrentDisplayCell() {
+    	return cursorSelection;
+    }
+    
     public Rectangle getCurrentCell() {
     	return cursorSelection;
     }

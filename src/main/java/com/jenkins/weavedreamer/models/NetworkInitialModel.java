@@ -1,6 +1,7 @@
 package com.jenkins.weavedreamer.models;
 
 import com.jenkins.weavingsimulator.datatypes.NetworkDraft;
+import java.awt.Rectangle;
 
 public class NetworkInitialModel extends AbstractWeavingDraftModel {
 
@@ -24,7 +25,8 @@ public class NetworkInitialModel extends AbstractWeavingDraftModel {
             }
         });
 	}
-
+        
+        
 	public int getRowCount() {
 		return network.getInitialRows();
 	}

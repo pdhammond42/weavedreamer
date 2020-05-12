@@ -115,7 +115,8 @@ public class AppDriver{
     	return new TiledView (findFrame(TiledViewFrame.name).using(mainWindow.robot()));
     }
 
-    void toggleTieup(final int r, final int c) {
+    void toggleTieup(final int h, final int c) {
+        int r= tieUpGrid().rowCount()-h-1;
     	tieUpGrid().cell(row(r).column(c)).click();
     }
 
@@ -143,7 +144,13 @@ public class AppDriver{
     	paletteGrid().cell(row(0).column(colour)).click();
     }
 
-    void setThreading (final int r, final int c){
+    void setThreading (final int h, final int c){
+        int r;
+        r=threadingDraftGrid().rowCount()-h-1;
+    	threadingDraftGrid().cell(row(r).column(c)).click();
+    }
+    
+    void setThreadingCell (final int r, final int c){
     	threadingDraftGrid().cell(row(r).column(c)).click();
     }
 
@@ -293,9 +300,15 @@ public class AppDriver{
 	}
 
 	public void endIs(final int r, final int c, final Color expected) {
-		threadingDraftGrid().cell(row(r).column(c)).background().requireEqualTo(expected);
+          threadingDraftGrid().cell(row(r).column(c)).background().requireEqualTo(expected);
 	}
-
+        public void harnessIs(final int h, final int c, final Color expected) {
+            int r = threadingDraftGrid().rowCount()-1-h;
+            threadingDraftGrid().cell(row(r).column(c)).background().requireEqualTo(expected);
+	}
+        
+        
+        
 	public void paletteIs(int index, Color color) {
 		paletteGrid().cell(row(0).column(index)).background().requireEqualTo(color);
 	}
