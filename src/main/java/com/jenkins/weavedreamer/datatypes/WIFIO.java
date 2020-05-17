@@ -74,19 +74,19 @@ public class WIFIO {
         outpalette = new ColorTableList();
         wif = new WIFFile();
         this.draft = draft;
-        
-            if (draft != null) {
-                writeWIFheader();
-                writetWeavingInfo();
-                getDrafttPalette();
-                writetieup();
-                writeWarp();
-                writeWeft();
-                writeColorTable();
 
-                wif.WriteWif(outs);
-            }
-        
+        if (draft != null) {
+            writeWIFheader();
+            writeWeavingInfo();
+            getDraftPalette();
+            writeTieup();
+            writeWarp();
+            writeWeft();
+            writeColorTable();
+
+            wif.WriteWif(outs);
+        }
+
     }
 
     private List<Color> readPalette(WIFFile wif) throws RuntimeException {
@@ -138,19 +138,17 @@ public class WIFIO {
         int numEnds;
         int numThreadingThreads = wif.countEntriesInSection("THREADING");
         int numWarpThreads = wif.getIntField("WARP", "Threads");
-        
+
         // shoud do somehting to pick the bigger one and leave blank threads 
         /* Changed to agree with standard which allows for sparse data in the WIF File
         
-        */
-
+         */
         //numEnds = numThreadingThreads;
-        numEnds=numWarpThreads;
-        
-        
+        numEnds = numWarpThreads;
+
         List<WarpEnd> ends = new ArrayList<WarpEnd>(numEnds);
         int harnessId = -1;
-        String endId="";
+        String endId = "";
         for (int i = 0; i < numEnds; i++) {
             // the wif file uses 1 based indices
             endId = String.valueOf(i + 1);
@@ -159,28 +157,25 @@ public class WIFIO {
             } catch (WIFNoValueException e) {
                 harnessId = -1;
             }
-  
+
             ends.add(new WarpEnd(readWarpColor(wif, palette, endId), harnessId));
-            
+
         }
 
         return ends;
     }
 
-
     private List<WeftPick> readWeft(WIFFile wif, List<Color> palette, int treadles, String WeftDataSection) {
         int numPicks;
-        
+
         int numWeftElements = wif.countEntriesInSection(WeftDataSection);
-        
+
         int numWeftThreads = wif.getIntField("WEFT", "Threads");
-        
+
         // should check to see if there is a discrpancy here 
-        
         /* Changed to agree with standard which allows for sparse data in the WIF File
         
-        */
-        
+         */
         //numPicks = numWeftElements;
         numPicks = numWeftThreads;
         List<WeftPick> picks = new ArrayList<WeftPick>(numPicks);
@@ -203,78 +198,74 @@ public class WIFIO {
     }
 
     private Color readWeftColor(WIFFile wif, List<Color> palette, String pickId) throws RuntimeException {
-        
+
         Color color = Color.white;
-        
-        
+
         if (wif.hasField("WEFT", "COLOR")) {
             try {
                 int colorIdx = wif.getIntListField("WEFT", "COLOR").get(0) - 1;
                 color = palette.get(colorIdx);
-            } catch (WIFNoValueException | IndexOutOfBoundsException e ) {
+            } catch (WIFNoValueException | IndexOutOfBoundsException e) {
                 // leave it at white
             }
         }
-        
+
         if (wif.hasField("WEFT COLORS", pickId)) {
             try {
                 int colorIdx = wif.getIntListField("WEFT COLORS", pickId).get(0) - 1;
                 color = palette.get(colorIdx);
-            } catch (WIFNoValueException | IndexOutOfBoundsException e ) {
+            } catch (WIFNoValueException | IndexOutOfBoundsException e) {
                 //default to the one read from WEFT               
             }
         }
 
-        
-        
         return color;
     }
-    
-private Color readWarpColor(WIFFile wif, List<Color> palette, String EndId) throws RuntimeException {
-        
+
+    private Color readWarpColor(WIFFile wif, List<Color> palette, String EndId) throws RuntimeException {
+
         Color color = Color.BLACK;
-        
-        
+
         if (wif.hasField("WARP", "COLOR")) {
             try {
                 int colorIdx = wif.getIntListField("WARP", "COLOR").get(0) - 1;
                 color = palette.get(colorIdx);
-            } catch (WIFNoValueException | IndexOutOfBoundsException e ) {
+            } catch (WIFNoValueException | IndexOutOfBoundsException e) {
                 // leave it at white
             }
         }
-        
+
         if (wif.hasField("WARP COLORS", EndId)) {
             try {
                 int colorIdx = wif.getIntListField("WARP COLORS", EndId).get(0) - 1;
                 color = palette.get(colorIdx);
-            } catch (WIFNoValueException | IndexOutOfBoundsException e ) {
+            } catch (WIFNoValueException | IndexOutOfBoundsException e) {
                 //default to the one read from WEFT               
             }
         }
 
-        
-        
         return color;
     }
-
-    
 
     private void writeWIFheader() throws IOException {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm");
         LocalDateTime now = LocalDateTime.now();
-        String versionString = "VERSION";
-        
+        String versionString ;
+
         versionString = this.getClass().getPackage().getImplementationVersion();
+        if (versionString==null) {
+            versionString = "Unknown";
+        
+        }
 
         wif.setStringField("WIF", "Version", "1.1");
         wif.setStringField("WIF", "Date", dtf.format(now));
-        wif.setStringField("WIF", "Davelopers", "1.1");
+        wif.setStringField("WIF", "Developers", "1.1");
         wif.setStringField("WIF", "Source Program", "WeaveDreamer");
-        wif.setStringField("WIF", "Source Version",versionString) ;
+        wif.setStringField("WIF", "Source Version", versionString);
     }
 
-    private void writetieup() {
+    private void writeTieup() {
         Treadle ittreadle;
         int tcounter = 0;
         String Tstr;
@@ -290,7 +281,7 @@ private Color readWarpColor(WIFFile wif, List<Color> palette, String EndId) thro
 
     }
 
-    private void writetWeavingInfo() {
+    private void writeWeavingInfo() {
         //wif.put("CONTENTS", "WEAVING", "true");
         wif.setIntField("WEAVING", "Shafts", draft.getNumHarnesses());
         wif.setIntField("WEAVING", "Treadles", draft.getTreadles().size());
@@ -312,11 +303,14 @@ private Color readWarpColor(WIFFile wif, List<Color> palette, String EndId) thro
 
     }
 
-    private void getDrafttPalette() {
-        for (int i = 0; i < draft.getPalette().getNumColors(); i++) {
-            outpalette.add(draft.getPalette().getColor(i));
+    private void getDraftPalette() {
+        List <Color> cols;
+        if (draft.getPalette() != null) {
+             cols = draft.getPalette().getColors();
+            for (int i = 0; i < cols.size(); i++) {
+                outpalette.add((cols.get(i)));
+            }
         }
-
     }
 
     private void writeWarp() {
@@ -330,14 +324,18 @@ private Color readWarpColor(WIFFile wif, List<Color> palette, String EndId) thro
         Iterator<WarpEnd> WarpEndIterator = EndList.iterator();
         while (WarpEndIterator.hasNext()) {
             we = WarpEndIterator.next();
-            wif.setIntField("THREADING", Integer.toString(endcounter), (we.getHarnessId() + 1));
+            if (we.getHarnessId()!=-1){
+                wif.setIntField("THREADING", Integer.toString(endcounter), (we.getHarnessId() + 1));}
+            else{
+                wif.setStringField("THREADING", Integer.toString(endcounter), "");
+            } 
             wif.setIntField("WARP COLORS", Integer.toString(endcounter), outpalette.getindex(we.getColor()));
             endcounter++;
         }
     }
 
     private void writeTreadles() {
-        
+
         List PickList = draft.getPicks();
         WeftPick wp;
         Color pickcol;
@@ -360,8 +358,8 @@ private Color readWarpColor(WIFFile wif, List<Color> palette, String EndId) thro
         List PickList = draft.getPicks();
         WeftPick wp;
         String lifttype;
-        int pickcounter = 0; 
-        
+        int pickcounter = 0;
+
         wif.setIntField("WEFT", "Threads", draft.getPicks().size());
         wif.setBooleanField("WEFT", "Palette", true);
 

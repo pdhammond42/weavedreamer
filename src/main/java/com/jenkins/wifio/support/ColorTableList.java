@@ -13,42 +13,57 @@ import java.util.ArrayList;
  * @author David
  */
 public class ColorTableList {
-    public ArrayList colortable = new ArrayList();
-    
-    public ColorTableList(){
 
+    public ArrayList<Color> colortable;
+
+    public ColorTableList() {
+        this.colortable = new <Color> ArrayList();
     }
-    public void add(Color color){
-        if (!colorinlist(color)){
-            colortable.add(colortable.size(),color);
+
+    public void add(Color color) {
+        //System.out.printf("Check for %s\n",  color);
+        if (!colorinlist(color)) {
+            //System.out.printf("Add %s\n",  color);
+            colortable.add(color);
         }
     }
-       
-    private boolean colorinlist(Color color){
-    for (int i=0;i<colortable.size();i++ ){
-        if (colortable.get(i)==color){
-        return true;}
+
+    private boolean iscolorequal(Color C1, Color C2) {
+
+        if ((C1.getRed() == C2.getRed()) && (C1.getBlue() == C2.getBlue()) && (C1.getGreen() == C2.getGreen())) {
+            return true;
+        } else {
+            return false;
+        }
+
     }
-        
-    return false;
+
+    private boolean colorinlist(Color color) {
+        for (int i = 0; i < colortable.size(); i++) {
+            if (iscolorequal(color, colortable.get(i))) {
+                return true;
             }
-    
+        }
+
+        return false;
+    }
+
     /**
      *
      * @param color
-     * @return index in color table
-     * adds color to table if not present 
+     * @return index in color table adds color to table if not present
      */
-    public final int getindex(Color color){
-        
+    public final int getindex(Color color) {
+
         add(color);
-        
-        for (int i=0;i<colortable.size();i++ ){
-            if (colortable.get(i)==color){
-            return i+1;}
+
+        for (int i = 0; i < colortable.size(); i++) {
+            if (iscolorequal(color, colortable.get(i))) {
+                return i + 1;
+            }
+        }
+
+        return -1;
     }
-    
-    return -1;
-    }
-    
+
 }

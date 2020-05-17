@@ -1,0 +1,156 @@
+[wif]
+version = 1.1
+date = 2020/05/16 15:58
+davelopers = 1.1
+source program = WeaveDreamer
+
+[contents]
+weaving = true
+tieup = true
+warp = true
+threading = true
+warp colors = true
+weft = true
+treadling = true
+weft colors = true
+color table = true
+color palette = true
+
+[weaving]
+shafts = 4
+treadles = 6
+
+[tieup]
+1 = 1
+2 = 2
+3 = 3
+4 = 4
+5 = 4,3,2
+6 = 1
+
+[warp]
+threads = 24
+palette = true
+
+[threading]
+1 = 1
+2 = 2
+3 = 3
+4 = 4
+5 = 1
+6 = 2
+7 = 3
+8 = 4
+9 = 1
+10 = 2
+11 = 3
+12 = 4
+13 = 1
+14 = 2
+15 = 3
+16 = 4
+17 = 1
+18 = 2
+19 = 3
+20 = 4
+21 = 1
+22 = 2
+23 = 3
+24 = 4
+
+[warp colors]
+1 = 4
+2 = 4
+3 = 4
+4 = 4
+5 = 4
+6 = 4
+7 = 6
+8 = 6
+9 = 6
+10 = 6
+11 = 6
+12 = 6
+13 = 4
+14 = 4
+15 = 4
+16 = 4
+17 = 4
+18 = 4
+19 = 2
+20 = 2
+21 = 2
+22 = 2
+23 = 2
+24 = 2
+
+[weft]
+threads = 24
+palette = true
+
+[treadling]
+1 = 1
+2 = 2
+3 = 3
+4 = 4
+5 = 5
+6 = 6
+7 = 5
+8 = 4
+9 = 3
+10 = 2
+11 = 1
+12 = 1
+13 = 2
+14 = 3
+15 = 4
+16 = 5
+17 = 6
+18 = 5
+19 = 4
+20 = 3
+21 = 2
+22 = 1
+23 = 
+24 = 
+
+[weft colors]
+1 = 3
+2 = 3
+3 = 3
+4 = 3
+5 = 3
+6 = 3
+7 = 7
+8 = 7
+9 = 7
+10 = 7
+11 = 7
+12 = 7
+13 = 7
+14 = 8
+15 = 8
+16 = 8
+17 = 8
+18 = 8
+19 = 8
+20 = 8
+21 = 8
+22 = 8
+23 = 8
+24 = 8
+
+[color table]
+1 = 255,255,255
+2 = 255,0,0
+3 = 0,0,0
+4 = 0,255,0
+5 = 255,255,0
+6 = 0,0,255
+7 = 255,153,51
+8 = 255,255,255
+
+[color palette]
+range = 0,255
+entries = 8
+

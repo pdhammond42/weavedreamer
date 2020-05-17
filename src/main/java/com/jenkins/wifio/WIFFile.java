@@ -242,8 +242,8 @@ public class WIFFile {
                 rgbarray = rgb.toArray();
                 for (int i=0;i<rgbarray.length;i++){
                     rgbarray[i] = (int)rgbarray[i]+1;
- 
                 }
+                Arrays.sort(rgbarray);
 		setKey(section, key, StringUtils.join(rgbarray, ','));
 	}
         

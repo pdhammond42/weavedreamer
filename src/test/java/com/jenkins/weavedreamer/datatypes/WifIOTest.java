@@ -460,4 +460,25 @@ public class WifIOTest extends TestCase {
     	WeavingDraft draft = io.readWeavingDraft(new StringReader(nocolours));
     	assertThat(draft.getPalette().getNumColors(), is(2));
     }
+    
+    /**
+     *
+     * @throws IOException
+     */
+    public void testWriteheaderTest()throws IOException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        WeavingDraft draft = new WeavingDraft();
+                
+        WIFIO io = new WIFIO();
+                
+        io.writeWeavingDraft(draft,baos);
+               
+                   
+        assertThat( baos.size(), is(not(0)) );
+                
+                        
+    }
+    
+    
+    
 };
