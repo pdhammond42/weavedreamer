@@ -544,21 +544,21 @@ public class WeaveDreamerApp extends javax.swing.JFrame {
             return;
         }
         WeavingDraft draft = session.getDraft();
-        
+        OutputStream outs;
         try {
-            OutputStream outs = new java.io.FileOutputStream(file);
+            outs = new java.io.FileOutputStream(file);
             if (session.getSaveasDraft()) {
             writeWeavingDraft(draft, outs);
             } else {
                 writeWIF(draft, outs);
             }
-
+            outs.close();
             session.setDraftModified(false);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(this, "Failed to save " + file + ": " + e.getMessage(),
                 "Save Error", JOptionPane.ERROR_MESSAGE);
 
-        }
+        } 
     }
     
     private void saveAsWeavingDraft(EditingSession session) {

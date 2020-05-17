@@ -1,0 +1,156 @@
+[wif]
+version = 1.1
+date = 2020/05/17 17:33
+developers = 1.1
+source program = WeaveDreamer
+source version = Unknown
+
+[contents]
+weaving = true
+tieup = true
+warp = true
+threading = true
+warp colors = true
+weft = true
+treadling = true
+weft colors = true
+color table = true
+color palette = true
+
+[weaving]
+shafts = 8
+treadles = 8
+rising shed = true
+
+[tieup]
+1 = 1
+2 = 2
+3 = 3
+4 = 4
+5 = 5
+6 = 6
+7 = 7
+8 = 8
+
+[warp]
+threads = 24
+palette = true
+
+[threading]
+1 = 
+2 = 
+3 = 
+4 = 
+5 = 
+6 = 
+7 = 
+8 = 
+9 = 
+10 = 
+11 = 
+12 = 
+13 = 
+14 = 
+15 = 
+16 = 
+17 = 8
+18 = 7
+19 = 6
+20 = 5
+21 = 4
+22 = 3
+23 = 2
+24 = 1
+
+[warp colors]
+1 = 4
+2 = 4
+3 = 4
+4 = 4
+5 = 4
+6 = 4
+7 = 4
+8 = 4
+9 = 4
+10 = 4
+11 = 4
+12 = 4
+13 = 4
+14 = 4
+15 = 4
+16 = 4
+17 = 1
+18 = 1
+19 = 1
+20 = 1
+21 = 1
+22 = 1
+23 = 1
+24 = 1
+
+[weft]
+threads = 24
+palette = true
+
+[treadling]
+1 = 1
+2 = 2
+3 = 3
+4 = 4
+5 = 5
+6 = 6
+7 = 7
+8 = 8
+9 = 
+10 = 
+11 = 
+12 = 
+13 = 
+14 = 
+15 = 
+16 = 
+17 = 
+18 = 
+19 = 
+20 = 
+21 = 
+22 = 
+23 = 
+24 = 
+
+[weft colors]
+1 = 4
+2 = 4
+3 = 4
+4 = 4
+5 = 4
+6 = 4
+7 = 4
+8 = 4
+9 = 4
+10 = 4
+11 = 4
+12 = 4
+13 = 4
+14 = 4
+15 = 4
+16 = 4
+17 = 4
+18 = 4
+19 = 4
+20 = 4
+21 = 4
+22 = 4
+23 = 4
+24 = 4
+
+[color table]
+1 = 0,0,0
+2 = 64,64,64
+3 = 192,192,192
+4 = 255,255,255
+
+[color palette]
+range = 0,255
+entries = 4
+

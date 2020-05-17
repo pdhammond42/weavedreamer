@@ -285,6 +285,7 @@ public class WIFIO {
         //wif.put("CONTENTS", "WEAVING", "true");
         wif.setIntField("WEAVING", "Shafts", draft.getNumHarnesses());
         wif.setIntField("WEAVING", "Treadles", draft.getTreadles().size());
+        wif.setBooleanField("Weaving","Rising Shed" , true);
     }
 
     private void writeColorTable() {
