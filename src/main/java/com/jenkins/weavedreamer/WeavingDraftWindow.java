@@ -57,6 +57,8 @@ import static java.awt.GridBagConstraints.*;
 		super(session);
 		initComponents();
 		setFrameIcon(new ImageIcon(getClass().getResource("icon-24.png")));
+                // stop auto closing 
+                setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 
 		jScrollPane1.getVerticalScrollBar().setUnitIncrement(16);
 		jScrollPane1.getHorizontalScrollBar().setUnitIncrement(16);
@@ -141,6 +143,7 @@ import static java.awt.GridBagConstraints.*;
 		setClosable(true);
 		setMaximizable(true);
 		setResizable(true);
+                
 
 		draftPanel.setLayout(new java.awt.GridBagLayout());
 		insertComponent(warpEndColorGrid, 1, 0);

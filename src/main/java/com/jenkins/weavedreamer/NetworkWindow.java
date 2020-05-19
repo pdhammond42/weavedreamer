@@ -1,5 +1,6 @@
 package com.jenkins.weavedreamer;
 
+import static com.jenkins.weavedreamer.WeavingDraftPropertiesDialog.name;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -59,7 +60,7 @@ public class NetworkWindow extends EditingSessionWindow {
 		setResizable(true);
 		
 		initComponents();
-		
+                		
 		initialRows.addFocusListener(new FocusListener() {	
 			public void focusLost(FocusEvent e) {
 				try {

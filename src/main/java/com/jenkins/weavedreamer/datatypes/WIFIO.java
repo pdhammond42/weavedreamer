@@ -199,7 +199,7 @@ public class WIFIO {
 
     private Color readWeftColor(WIFFile wif, List<Color> palette, String pickId) throws RuntimeException {
 
-        Color color = Color.white;
+        Color color = Color.BLACK;
 
         if (wif.hasField("WEFT", "COLOR")) {
             try {
@@ -207,6 +207,7 @@ public class WIFIO {
                 color = palette.get(colorIdx);
             } catch (WIFNoValueException | IndexOutOfBoundsException e) {
                 // leave it at white
+                ;
             }
         }
 
@@ -224,7 +225,7 @@ public class WIFIO {
 
     private Color readWarpColor(WIFFile wif, List<Color> palette, String EndId) throws RuntimeException {
 
-        Color color = Color.BLACK;
+        Color color = Color.WHITE;
 
         if (wif.hasField("WARP", "COLOR")) {
             try {

@@ -30,6 +30,7 @@ import java.beans.IndexedPropertyChangeEvent;
 
 import com.jenkins.weavingsimulator.datatypes.WarpEnd;
 import java.awt.Rectangle;
+import javax.swing.event.TableModelEvent;
 
 
 /** This TableModel represents the threading draft part of a weaving draft. 
@@ -73,10 +74,18 @@ public class ThreadingDraftModel extends CopyableWeavingGridModel {
         //return row;
     }
     
+        @Override
+    	public void pasteSelection(int rowIndex, int columnIndex,
+			CellSelectionTransform transform) {
+    	super.pasteSelection(rowIndex, columnIndex, transform);
+    	session.execute(new ThreadingGridPasteCommand(this, pasteGridSelection));
+	}
+    
+    
     public Rectangle getCurrentDisplayCell() {
         Rectangle cursorSelection;
         cursorSelection= this.getCurrentCell();
-        return new Rectangle(cursorSelection.x,this.getHarnessId(cursorSelection.y),cursorSelection.width,cursorSelection.height);
+        return new Rectangle(draft.getEnds().size()-1-cursorSelection.x,this.getHarnessId(cursorSelection.y),cursorSelection.width,cursorSelection.height);
     }
     
     /** Returns the number of columns in the model. A
@@ -91,6 +100,11 @@ public class ThreadingDraftModel extends CopyableWeavingGridModel {
         return draft.getEnds().size();
     }
     
+    @Override
+    public void fireTableColumnUpdated(int column) {
+        fireTableChanged(new TableModelEvent(this, 
+            0, getRowCount() - 1,draft.getEnds().size()-1- column));
+    }
     /** Returns the number of rows in the model. A
      * <code>JTable</code> uses this method to determine how many rows it
      * should display.  This method should be quick, as it
@@ -111,11 +125,17 @@ public class ThreadingDraftModel extends CopyableWeavingGridModel {
     
     public boolean getBooleanValueAt (int row, int column) {
         int harnessId = getharnessId(row);
-    	return draft.getEnds().get(column).getHarnessId() == harnessId;
+    	return draft.getEnds().get(draft.getEnds().size()-1 - column).getHarnessId() == harnessId;
     }
 
     public void setBooleanValueAt (boolean value, int row, int column) {
-    	final WarpEnd end = draft.getEnds().get(column);
+    	final WarpEnd end = draft.getEnds().get(draft.getEnds().size()-1-column);
+        if (row==-1 && !value)  //allows for clearing  without needing to know num harnesses
+        {   
+            end.setHarnessId(-1);
+            return;
+                    
+        }
         int harnessId = getharnessId(row);
     	if (value && harnessId != end.getHarnessId()) {
     		end.setHarnessId(harnessId);
@@ -136,7 +156,7 @@ public class ThreadingDraftModel extends CopyableWeavingGridModel {
 
 	@Override
 	protected Command getSetValueCommand(final Object aValue, final int row, final int column) {
-		final WarpEnd end = draft.getEnds().get(column);
+		final WarpEnd end = draft.getEnds().get(draft.getEnds().size()-1-column);
                 int harnessId = getharnessId(row);
 		final int oldHarness = end.getHarnessId();
 

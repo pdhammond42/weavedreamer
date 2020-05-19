@@ -14,8 +14,9 @@ public abstract class CopyableWeavingGridModel extends AbstractWeavingDraftModel
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private EditingSession session;
-    private GridSelection selection;
+	protected EditingSession session;
+        private GridSelection selection;
+        protected PasteGrid pasteGridSelection; 
 	private boolean thisObjectSettingSelection = false;
 
 	public CopyableWeavingGridModel (EditingSession session) {
@@ -46,9 +47,9 @@ public abstract class CopyableWeavingGridModel extends AbstractWeavingDraftModel
 
 	public void pasteSelection(int rowIndex, int columnIndex,
 			CellSelectionTransform transform) {
-    	PasteGrid selection = transform.Transform(session.getSelectedCells());
-    	selection.setOrigin(rowIndex, columnIndex);
-    	session.execute(new PasteCommand(this, selection));
+    	pasteGridSelection = transform.Transform(session.getSelectedCells());
+    	pasteGridSelection.setOrigin(rowIndex, columnIndex);
+    	//session.execute(new PasteCommand(this, selection));
 	}
     
     /** Returns the value for the cell at <code>columnIndex</code> and

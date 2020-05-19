@@ -103,6 +103,22 @@ class TableModelTestUtils {
         Assert.assertEquals("event type is UPDATE",
                 TableModelEvent.UPDATE, event.getType());
     }
+
+    public static void assertTableColumnsUpdateEvent(
+            TableModelEvent event, TableModel model, int col) 
+    {
+        Assert.assertNotNull("event not null", event);
+        Assert.assertTrue("column "+col, 
+                (event.getColumn() == col) ||
+                (event.getColumn() == col-1) ||   // allows for warp/weft float drawing        
+                (event.getColumn() == TableModelEvent.ALL_COLUMNS));
+        Assert.assertTrue("rows", 
+                event.getFirstRow() == TableModelEvent.HEADER_ROW ||
+                (event.getFirstRow() == 0 && 
+                 event.getLastRow() >= model.getRowCount() - 1));
+        Assert.assertEquals("event type is UPDATE",
+                TableModelEvent.UPDATE, event.getType());
+    }
     
     /**
      * Assert that on and only one row of model is included in event.

@@ -29,6 +29,8 @@ import java.awt.Color;
 import java.beans.IndexedPropertyChangeEvent;
 
 import com.jenkins.weavingsimulator.datatypes.WarpEnd;
+import java.awt.Rectangle;
+import javax.swing.event.TableModelEvent;
 
 /** A TableModel for editing warp thread colors.  It has a single row, and 
  * a column for each thread.
@@ -58,6 +60,12 @@ public class WarpEndColorModel extends AbstractWeavingDraftModel {
         });
     }
     
+        public Rectangle getCurrentDisplayCell() {
+        Rectangle cursorSelection;
+        cursorSelection= this.getCurrentCell();
+        return new Rectangle(draft.getEnds().size()-1-cursorSelection.x,cursorSelection.y,cursorSelection.width,cursorSelection.height);
+    }
+ 
     /** Returns the number of columns in the model. A
      * <code>JTable</code> uses this method to determine how many columns it
      * should create and display by default.
@@ -83,6 +91,7 @@ public class WarpEndColorModel extends AbstractWeavingDraftModel {
         return 1;
     }
     
+       
     /** Returns the value for the cell at <code>columnIndex</code> and
      * <code>rowIndex</code>.
      *
@@ -92,18 +101,20 @@ public class WarpEndColorModel extends AbstractWeavingDraftModel {
      *
      */
     public Object getValueAt(int rowIndex, int columnIndex) {
-        WarpEnd end = draft.getEnds().get(columnIndex);
+        WarpEnd end = draft.getEnds().get(draft.getEnds().size()-1-columnIndex);
         return end.getColor();
     }
 
     @Override
     protected Command getSetValueCommand(final Object aValue, final int row, final int column) {
     	return new Command (){
-    		WarpEnd end = draft.getEnds().get(column);
+    		WarpEnd end = draft.getEnds().get(draft.getEnds().size()-1-column);
     		Color oldColor = end.getColor();
     		public void execute() {
 
     			end.setColor((Color)aValue);
+                        fireTableColumnUpdated(column);
+                        
     		}
 
     		public void undo() {

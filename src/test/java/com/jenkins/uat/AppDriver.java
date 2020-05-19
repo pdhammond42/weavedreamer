@@ -1,5 +1,6 @@
 package com.jenkins.uat;
 
+import com.jenkins.weavedreamer.NetworkWindow;
 import com.jenkins.weavedreamer.PasteSpecialWindow;
 import com.jenkins.weavedreamer.TiledViewFrame;
 import com.jenkins.weavedreamer.WeavingDraftPropertiesDialog;
@@ -116,8 +117,7 @@ public class AppDriver {
         return new TiledView(findFrame(TiledViewFrame.name).using(mainWindow.robot()));
     }
 
-    void toggleTieup(final int h, final int c) {
-        int r = tieUpGrid().rowCount() - h - 1;
+    void toggleTieup(final int r, final int c) {
         tieUpGrid().cell(row(r).column(c)).click();
     }
 
@@ -145,10 +145,8 @@ public class AppDriver {
         paletteGrid().cell(row(0).column(colour)).click();
     }
 
-    void setThreading(final int h, final int c) {
-        int r;
-        r = threadingDraftGrid().rowCount() - h - 1;
-        threadingDraftGrid().cell(row(r).column(c)).click();
+    void setThreading(final int r, final int c) {
+         threadingDraftGrid().cell(row(r).column(c)).click();
     }
 
     void setThreadingCell(final int r, final int c) {
@@ -233,6 +231,14 @@ public class AppDriver {
         patternLineGrid().cell(row(r).column(c)).click();
     }
 
+    public void setPatternGridSize(int r,int c){
+        patternLineRows().setText(Integer.toString(r));
+        patternLineCols().setText(Integer.toString(c));
+        patternLineRows().click();
+    }
+            
+    
+    
     class TiledView {
 
         FrameFixture window;
@@ -360,8 +366,9 @@ public class AppDriver {
         threadingDraftGrid().cell(row(r).column(c)).background().requireEqualTo(expected);
     }
 
-    public void harnessIs(final int h, final int c, final Color expected) {
-        int r = threadingDraftGrid().rowCount() - 1 - h;
+    public void harnessIs(final int r, final int c, final Color expected) {
+        //int r = threadingDraftGrid().rowCount() - 1 - h;
+        
         threadingDraftGrid().cell(row(r).column(c)).background().requireEqualTo(expected);
     }
 
@@ -384,7 +391,7 @@ public class AppDriver {
         return mainWindow.table("weavingPatternGrid");
     }
 
-    private JTableFixture threadingDraftGrid() {
+    public JTableFixture threadingDraftGrid() {
         return mainWindow.table("threadingDraftGrid");
     }
 
@@ -423,6 +430,12 @@ public class AppDriver {
     private JTableFixture patternLineGrid() {
         return mainWindow.table("patternLineGrid");
     }
+    
+    private JTextComponentFixture patternLineRows(){
+     return mainWindow.textBox("patternLineRows");}
+    
+        private JTextComponentFixture patternLineCols(){
+     return mainWindow.textBox("patternLineCols");}
     //
     // Helpers
     //

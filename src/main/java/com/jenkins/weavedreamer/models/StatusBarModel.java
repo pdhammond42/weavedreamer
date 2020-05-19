@@ -67,7 +67,7 @@ public class StatusBarModel implements TableModelListener {
 
     private String format2d(Rectangle rect) {
 		return String.format("%d, %d (%dx%d)",
-				rect.x + 1, rect.y + 1, rect.width + 1, rect.height + 1);
+				rect.x + 1, rect.y + 1, rect.width<0?0:rect.width, rect.height<0?0:rect.height);
 	}
 
 	private String format1d(int start, int count) {

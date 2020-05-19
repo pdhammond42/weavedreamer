@@ -54,7 +54,6 @@ import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
 import com.jenkins.weavedreamer.models.EditingSession;
 import com.jenkins.wifio.WIFException;
 
-
 import static java.util.Arrays.asList;
 
 /**
@@ -64,12 +63,12 @@ import static java.util.Arrays.asList;
 public class WeaveDreamerApp extends javax.swing.JFrame {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	public static final String WIF_EXTENSION = ".wif";
+     *
+     */
+    private static final long serialVersionUID = 1L;
+    public static final String WIF_EXTENSION = ".wif";
     private static final String DRAFT_EXTENSION = ".wsml";
-    
+
     /**
      * Creates new form WeaveDreamerApp
      */
@@ -79,9 +78,9 @@ public class WeaveDreamerApp extends javax.swing.JFrame {
         setName("Weaving Simulator");
         Preferences prefs = Preferences.userNodeForPackage(this.getClass());
         setBounds(prefs.getInt("x", getX()),
-        		prefs.getInt("y", getY()),
-        		prefs.getInt("w", getWidth()),
-        		prefs.getInt("h", getHeight()));
+                prefs.getInt("y", getY()),
+                prefs.getInt("w", getWidth()),
+                prefs.getInt("h", getHeight()));
 
         if (prefs.getBoolean("showGettingStarted", true)) {
             gettingStartedWindow = new GettingStartedWindow();
@@ -101,7 +100,7 @@ public class WeaveDreamerApp extends javax.swing.JFrame {
         } catch (IOException e) {
         }
     }
-    
+
     private void initComponents() {
         mainDesktop = new javax.swing.JDesktopPane();
         menuBar = new javax.swing.JMenuBar();
@@ -132,7 +131,7 @@ public class WeaveDreamerApp extends javax.swing.JFrame {
         fileMenu.setMnemonic('f');
         fileMenu.setText("File");
         newMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N,
-            Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+                Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
         newMenuItem.setMnemonic('n');
         newMenuItem.setText("New");
         newMenuItem.addActionListener(this::newMenuItemActionPerformed);
@@ -140,7 +139,7 @@ public class WeaveDreamerApp extends javax.swing.JFrame {
         fileMenu.add(newMenuItem);
 
         openMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O,
-            Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+                Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
         openMenuItem.setMnemonic('o');
         openMenuItem.setText("Open");
         openMenuItem.addActionListener(this::openMenuItemActionPerformed);
@@ -148,7 +147,7 @@ public class WeaveDreamerApp extends javax.swing.JFrame {
         fileMenu.add(openMenuItem);
 
         saveMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,
-            Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+                Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
         saveMenuItem.setMnemonic('s');
         saveMenuItem.setText("Save");
         saveMenuItem.addActionListener(this::saveMenuItemActionPerformed);
@@ -160,7 +159,7 @@ public class WeaveDreamerApp extends javax.swing.JFrame {
         saveAsMenuItem.addActionListener(this::saveAsMenuItemActionPerformed);
 
         fileMenu.add(saveAsMenuItem);
-        
+
         printMenuItem.setMnemonic('p');
         printMenuItem.setText("Print");
         printMenuItem.addActionListener(this::printMenuItemActionPerformed);
@@ -178,7 +177,7 @@ public class WeaveDreamerApp extends javax.swing.JFrame {
         editMenu.setMnemonic('e');
         editMenu.setText("Edit");
         propertiesMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P,
-            Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+                Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
         propertiesMenuItem.setMnemonic('p');
         propertiesMenuItem.setText("Edit Properties");
         propertiesMenuItem.addActionListener(this::propertiesMenuItemActionPerformed);
@@ -187,7 +186,7 @@ public class WeaveDreamerApp extends javax.swing.JFrame {
         undoMenuItem.setText("Undo");
         undoMenuItem.setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_Z, ActionEvent.CTRL_MASK));
-        
+
         undoMenuItem.addActionListener(this::undoItemActionPerformed);
         editMenu.add(undoMenuItem);
 
@@ -195,10 +194,10 @@ public class WeaveDreamerApp extends javax.swing.JFrame {
         redoMenuItem.setText("Redo");
         redoMenuItem.setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_Y, ActionEvent.CTRL_MASK));
-        
+
         redoMenuItem.addActionListener(this::redoItemActionPerformed);
         editMenu.add(redoMenuItem);
-        
+
         editMenu.add(propertiesMenuItem);
 
         savePaletteMenuItem = new javax.swing.JMenuItem();
@@ -207,55 +206,55 @@ public class WeaveDreamerApp extends javax.swing.JFrame {
         savePaletteMenuItem.addActionListener(this::savePaletteItemActionPerformed);
         editMenu.add(savePaletteMenuItem);
         menuBar.add(editMenu);
-        
+
         javax.swing.JMenu viewMenu = new javax.swing.JMenu();
-    	viewMenu.setMnemonic('v');
+        viewMenu.setMnemonic('v');
         viewMenu.setText("View");
-        
+
         javax.swing.JMenuItem zoomInMenuItem = new javax.swing.JMenuItem();
         zoomInMenuItem.setText("Zoom In");
         zoomInMenuItem.addActionListener(this::zoomInItemActionPerformed);
         viewMenu.add(zoomInMenuItem);
-        
+
         javax.swing.JMenuItem zoomOutMenuItem = new javax.swing.JMenuItem();
         zoomOutMenuItem.setText("Zoom Out");
         zoomOutMenuItem.addActionListener(this::zoomOutItemActionPerformed);
         viewMenu.add(zoomOutMenuItem);
-        
+
         viewMenu.addMenuListener(new MenuListener() {
-			public void menuSelected(MenuEvent e) {
-	        	boolean enabled = mainDesktop.getSelectedFrame() instanceof WeavingDraftWindow;
-	        	zoomInMenuItem.setEnabled(enabled);
-	        	zoomOutMenuItem.setEnabled(enabled);
-			}
+            public void menuSelected(MenuEvent e) {
+                boolean enabled = mainDesktop.getSelectedFrame() instanceof WeavingDraftWindow;
+                zoomInMenuItem.setEnabled(enabled);
+                zoomOutMenuItem.setEnabled(enabled);
+            }
 
-			public void menuDeselected(MenuEvent e) {
-			}
+            public void menuDeselected(MenuEvent e) {
+            }
 
-			public void menuCanceled(MenuEvent e) {
-			}
+            public void menuCanceled(MenuEvent e) {
+            }
         });
 
         tiledViewMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_T,
-            Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+                Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
         tiledViewMenuItem.setMnemonic('t');
         tiledViewMenuItem.setText("Tiled View");
         tiledViewMenuItem.addActionListener(this::tiledViewMenuItemActionPerformed);
         viewMenu.add(tiledViewMenuItem);
         menuBar.add(viewMenu);
-        
+
         windowMenu.setText("Windows");
         windowMenu.setMnemonic('w');
         windowMenu.addMenuListener(new MenuListener() {
-			public void menuSelected(MenuEvent e) {
-				windowMenuSelected(e);
-			}
+            public void menuSelected(MenuEvent e) {
+                windowMenuSelected(e);
+            }
 
-			public void menuDeselected(MenuEvent e) {
-			}
+            public void menuDeselected(MenuEvent e) {
+            }
 
-			public void menuCanceled(MenuEvent e) {
-			}
+            public void menuCanceled(MenuEvent e) {
+            }
         });
         menuBar.add(windowMenu);
 
@@ -280,57 +279,57 @@ public class WeaveDreamerApp extends javax.swing.JFrame {
         setSize(new java.awt.Dimension(400, 400));
         setLocation((screenSize.width - 400) / 2, (screenSize.height - 400) / 2);
     }
-    
+
     protected void windowMenuSelected(MenuEvent e) {
-    	windowMenu.removeAll();
+        windowMenu.removeAll();
         // Prevent the task bar's view of the window causing a duplicate entry.
-    	for (JInternalFrame w : new HashSet<>(asList(mainDesktop.getAllFrames()))) {
-    		JMenuItem item = new JMenuItem(w.getTitle());
-    		item.addActionListener(evt -> {
+        for (JInternalFrame w : new HashSet<>(asList(mainDesktop.getAllFrames()))) {
+            JMenuItem item = new JMenuItem(w.getTitle());
+            item.addActionListener(evt -> {
                 try {
                     w.setSelected(true);
                 } catch (PropertyVetoException ex) {
                 }
                 w.setVisible(true);
             });
-    		windowMenu.add(item);
-    	}
-	}
+            windowMenu.add(item);
+        }
+    }
 
-	protected void savePaletteItemActionPerformed(ActionEvent evt) {
-    	String name = javax.swing.JOptionPane.showInputDialog("Name your palette", this);
-    	if (name != null) {
-    		savePalette(name, getCurrentSession().getPalette());
-    	}
-	}
+    protected void savePaletteItemActionPerformed(ActionEvent evt) {
+        String name = javax.swing.JOptionPane.showInputDialog("Name your palette", this);
+        if (name != null) {
+            savePalette(name, getCurrentSession().getPalette());
+        }
+    }
 
-	protected void zoomInItemActionPerformed(ActionEvent evt) {
+    protected void zoomInItemActionPerformed(ActionEvent evt) {
         WeavingDraftWindow curFrame
                 = (WeavingDraftWindow) mainDesktop.getSelectedFrame();
         if (curFrame == null) {
             return;
         }
         curFrame.zoomIn();
-	}
+    }
 
-	protected void zoomOutItemActionPerformed(ActionEvent evt) {
+    protected void zoomOutItemActionPerformed(ActionEvent evt) {
         WeavingDraftWindow curFrame
                 = (WeavingDraftWindow) mainDesktop.getSelectedFrame();
         if (curFrame == null) {
             return;
         }
         curFrame.zoomOut();
-	}
-	
-	private void undoItemActionPerformed(ActionEvent evt) {
-		getCurrentSession().undo();
-	}
+    }
 
-	private void redoItemActionPerformed(ActionEvent evt) {
-		getCurrentSession().redo();
-	}	
+    private void undoItemActionPerformed(ActionEvent evt) {
+        getCurrentSession().undo();
+    }
 
-	private void tiledViewMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tiledViewMenuItemActionPerformed
+    private void redoItemActionPerformed(ActionEvent evt) {
+        getCurrentSession().redo();
+    }
+
+    private void tiledViewMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tiledViewMenuItemActionPerformed
         EditingSessionWindow curFrame
                 = (EditingSessionWindow) mainDesktop.getSelectedFrame();
         if (curFrame == null) {
@@ -338,16 +337,16 @@ public class WeaveDreamerApp extends javax.swing.JFrame {
         }
         curFrame.displayTiledView();
     }//GEN-LAST:event_tiledViewMenuItemActionPerformed
-    
+
     private void helpAboutMenuItemActionPerformed() {
-    	try {
+        try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream("about.txt")));
             String about = reader.lines().collect(Collectors.joining("\n"));
             JOptionPane.showMessageDialog(this, about, "About", JOptionPane.INFORMATION_MESSAGE);
-		} catch (HeadlessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+        } catch (HeadlessException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
     ;
@@ -369,32 +368,30 @@ public class WeaveDreamerApp extends javax.swing.JFrame {
         WeavingDraftPropertiesDialog dlg
                 = new WeavingDraftPropertiesDialog(this, true);
         dlg.editProperties(session, loadPalettes());
-        
+
     }//GEN-LAST:event_propertiesMenuItemActionPerformed
-    
+
     private void saveAsMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveAsMenuItemActionPerformed
         EditingSession session = getCurrentSession();
         if (session != null) {
             saveAsWeavingDraft(session);
         }
     }//GEN-LAST:event_saveAsMenuItemActionPerformed
-    
+
     private void printMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveAsMenuItemActionPerformed
-        WeaveDreamerPrintSelect dlg = new WeaveDreamerPrintSelect(this,true);
+        WeaveDreamerPrintSelect dlg = new WeaveDreamerPrintSelect(this, true);
         WeavingDraftWindow curFrame = null;
-        
+
         EditingSession session = getCurrentSession();
-        try{
-             curFrame  = (WeavingDraftWindow) mainDesktop.getSelectedFrame();
-        }
-        catch (ClassCastException e){ 
+        try {
+            curFrame = (WeavingDraftWindow) mainDesktop.getSelectedFrame();
+        } catch (ClassCastException e) {
             JOptionPane.showMessageDialog(this,
-                "Cannot Print Network Information Directly","Print Error" , JOptionPane.ERROR_MESSAGE);
+                    "Cannot Print Network Information Directly", "Print Error", JOptionPane.ERROR_MESSAGE);
         }
-        
-        
-        if (session != null && curFrame != null ) {
-            dlg.PrintWeavingDraft(session,curFrame);
+
+        if (session != null && curFrame != null) {
+            dlg.PrintWeavingDraft(session, curFrame);
 
             //printWeavingDraft(session);
         }
@@ -406,7 +403,7 @@ public class WeaveDreamerApp extends javax.swing.JFrame {
             saveWeavingToFile(session);
         }
     }//GEN-LAST:event_saveMenuItemActionPerformed
-    
+
     private void openMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openMenuItemActionPerformed
         try {
             openWeavingDraft(null);
@@ -417,12 +414,12 @@ public class WeaveDreamerApp extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Failed to read file");
         }
     }//GEN-LAST:event_openMenuItemActionPerformed
-    
+
     private void newMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newMenuItemActionPerformed
         WeavingDraft draft = new WeavingDraft("*New Draft " + newFileNum++);
         WeavingDraftPropertiesDialog dlg
                 = new WeavingDraftPropertiesDialog(this, true);
-        
+
         EditingSession session = new EditingSession(draft);
         if (!dlg.editProperties(session, loadPalettes())) {
             return;
@@ -431,32 +428,32 @@ public class WeaveDreamerApp extends javax.swing.JFrame {
         //getCurrentSession().setPalette(dlg.getSelectedPalette());
         openWeavingDraftWindow(session, null);
     }//GEN-LAST:event_newMenuItemActionPerformed
-    
+
     private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
-        closeAllFrames();
-        System.exit(0);
+        if(closeAllFrames()){
+        System.exit(0);}
     }//GEN-LAST:event_exitMenuItemActionPerformed
-    
+
     /**
      * Exit the Application
      */
     private void exitForm(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_exitForm
-    	Preferences prefs = Preferences.userNodeForPackage(this.getClass());
-    	if (fileChooser.getSelectedFile() != null && fileChooser.getSelectedFile().getParent() != null) {  
-    		prefs.put("last_browse", fileChooser.getSelectedFile().getParent());
-    	}
-    	prefs.putInt("x", getX());
-    	prefs.putInt("y", getY());
-    	prefs.putInt("w", getWidth());
-    	prefs.putInt("h", getHeight());
+        Preferences prefs = Preferences.userNodeForPackage(this.getClass());
+        if (fileChooser.getSelectedFile() != null && fileChooser.getSelectedFile().getParent() != null) {
+            prefs.put("last_browse", fileChooser.getSelectedFile().getParent());
+        }
+        prefs.putInt("x", getX());
+        prefs.putInt("y", getY());
+        prefs.putInt("w", getWidth());
+        prefs.putInt("h", getHeight());
         if (gettingStartedWindow != null) {
             prefs.putBoolean("showGettingStarted", gettingStartedWindow.getShow());
         }
         if (closeAllFrames()) {
-        	System.exit(0);
+            System.exit(0);
         }
     }//GEN-LAST:event_exitForm
-    
+
     private EditingSession getCurrentSession() {
         EditingSessionWindow curFrame
                 = (EditingSessionWindow) mainDesktop.getSelectedFrame();
@@ -464,51 +461,53 @@ public class WeaveDreamerApp extends javax.swing.JFrame {
             return null;
         } else {
             return curFrame.getSession();
+        }
     }
-    }
-    
+
     private boolean closeAllFrames() {
         /* close all internal frames, so that close event will be called
          * on them. Returns false if the close was cancelled.*/
         JInternalFrame[] wins = mainDesktop.getAllFrames();
         for (int i = 0; i < wins.length; i++) {
-            try { 
-            	wins[i].setClosed(true);
-            } catch (java.beans.PropertyVetoException e) {
+            try {
+                wins[i].doDefaultCloseAction();
+                //wins[i].setClosed(true);
+            } catch (Exception e  ) {
+                
             }
-        }
-        return true;
+        }  
+        return mainDesktop.getAllFrames().length==0;
     }
-    
+
     private List<Palette> loadPalettes() {
-    	List<Palette> palettes = null;
-    	try {
-    		palettes = Palette.loadPalettes(Preferences.userNodeForPackage(this.getClass()).node("Palettes"));
-    	} catch (IOException e) {
+        List<Palette> palettes = null;
+        try {
+            palettes = Palette.loadPalettes(Preferences.userNodeForPackage(this.getClass()).node("Palettes"));
+        } catch (IOException e) {
         } catch (BackingStoreException e) {
-    	}
-    	if (palettes == null || palettes.size() == 0) {
-    		palettes = Palette.getDefaultPalettes();
-    	}
-    	return palettes;
+        }
+        if (palettes == null || palettes.size() == 0) {
+            palettes = Palette.getDefaultPalettes();
+        }
+        return palettes;
     }
-    
-	private void savePalette(String name, Palette palette) {
-		Preferences prefs = Preferences.userNodeForPackage(this.getClass()).node("Palettes");
-		List<Palette> palettes = loadPalettes();
-		// Save a clone, since the most likely case is we are saving 
-		// a palette from an existing draft which may have no name or
-		// a different name.
-		palettes.add(new Palette(palette.getColors(), name));
-		
-		try {
-			Palette.savePalettes(palettes, prefs);
-		} catch (BackingStoreException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+
+    private void savePalette(String name, Palette palette) {
+        Preferences prefs = Preferences.userNodeForPackage(this.getClass()).node("Palettes");
+        List<Palette> palettes = loadPalettes();
+        // Save a clone, since the most likely case is we are saving 
+        // a palette from an existing draft which may have no name or
+        // a different name.
+        palettes.add(new Palette(palette.getColors(), name));
+
+        try {
+            Palette.savePalettes(palettes, prefs);
+        } catch (BackingStoreException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -536,7 +535,7 @@ public class WeaveDreamerApp extends javax.swing.JFrame {
         }
         app.setVisible(true);
     }
-    
+
     private void saveWeavingToFile(EditingSession session) {
         File file = session.getFile();
         if (file == null) { // hasn't been saved yet
@@ -548,7 +547,7 @@ public class WeaveDreamerApp extends javax.swing.JFrame {
         try {
             outs = new java.io.FileOutputStream(file);
             if (session.getSaveasDraft()) {
-            writeWeavingDraft(draft, outs);
+                writeWeavingDraft(draft, outs);
             } else {
                 writeWIF(draft, outs);
             }
@@ -556,14 +555,14 @@ public class WeaveDreamerApp extends javax.swing.JFrame {
             session.setDraftModified(false);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(this, "Failed to save " + file + ": " + e.getMessage(),
-                "Save Error", JOptionPane.ERROR_MESSAGE);
+                    "Save Error", JOptionPane.ERROR_MESSAGE);
 
-        } 
+        }
     }
-    
+
     private void saveAsWeavingDraft(EditingSession session) {
         fileChooser.setAcceptAllFileFilterUsed(false);
-    	fileChooser.setSelectedFile(new File(""));
+        fileChooser.setSelectedFile(new File(""));
         int res = fileChooser.showSaveDialog(this);
         if (res == JFileChooser.APPROVE_OPTION) {
             if (fileChooser.getFileFilter().getClass() == WifFileFilter.class) {
@@ -580,7 +579,7 @@ public class WeaveDreamerApp extends javax.swing.JFrame {
             saveWeavingToFile(session);
         }
     }
-    
+
     private void openWeavingDraft(File file) throws IOException {
 
         if (file == null) {
@@ -590,24 +589,24 @@ public class WeaveDreamerApp extends javax.swing.JFrame {
                 file = fileChooser.getSelectedFile();
             } else {
                 return;
+            }
         }
-        }
-                
+
         WeavingDraft draft = null;
         try {
             InputStream ins = new java.io.FileInputStream(file);
             if (file.getName().toLowerCase().endsWith(WIF_EXTENSION)) {
                 WIFIO io = new WIFIO();
                 try {
-                	draft = io.readWeavingDraft(ins);
-                	draft.setName(file.getName());
+                    draft = io.readWeavingDraft(ins);
+                    draft.setName(file.getName());
 
                 } catch (WIFException e) {
                     reportWifFailure(file);
                     return;
                 } catch (NullPointerException e) {
-                	reportWifFailure(file);
-                	return;
+                    reportWifFailure(file);
+                    return;
                 }
             } else {
                 draft = readWeavingDraft(ins);
@@ -618,41 +617,43 @@ public class WeaveDreamerApp extends javax.swing.JFrame {
                     + ": " + e.getMessage(), "Open Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
+
         openWeavingDraftWindow(new EditingSession(draft, !file.getName().toLowerCase().endsWith(WIF_EXTENSION)), file);
     }
-    
+
     private void reportWifFailure(File file) {
-        JOptionPane.showMessageDialog(this, 
+        JOptionPane.showMessageDialog(this,
                 "The file could not be opened.\n"
                 + "This may be because it uses features of WIF that are not yet\n"
                 + "supported. Please send a copy of the file to \n"
                 + "peterhammond@users.sf.net so we can investigate the problem.",
-        		"Save Error", JOptionPane.ERROR_MESSAGE);
+                "Save Error", JOptionPane.ERROR_MESSAGE);
     }
-    
+
     /**
      * Opens a new WeavingDraftWindow displaying draft. If file is not null,
      * uses the filename as the window title.
      */
-    private void openWeavingDraftWindow(EditingSession session, File file) {
+    private void openWeavingDraftWindow(EditingSession session, File file)  {
 
         if (file != null) {
-        	session.setFile(file);
+            session.setFile(file);
         }
         session.setDraftModified(false);
-        
+
         EditingSessionWindow win = new WeavingDraftWindow(session);
         mainDesktop.add(win);
         try {
             win.setMaximum(true);
         } catch (java.beans.PropertyVetoException e) {
         }
-       
-        win.addInternalFrameListener(new InternalFrameAdapter() {
+
+        win.addInternalFrameListener(new InternalFrameAdapter()   {
+            @Override
             public void internalFrameClosing(InternalFrameEvent e) {
                 EditingSessionWindow w = (EditingSessionWindow) e.getInternalFrame();
                 EditingSession session = w.getSession();
+                boolean canclose = false;
                 String name = w.getTitle();
                 if (session.getFile() != null) {
                     name = session.getFile().getName();
@@ -660,32 +661,58 @@ public class WeaveDreamerApp extends javax.swing.JFrame {
                 
                 if (session.isDraftModified()) {
                     int res = JOptionPane.showConfirmDialog(WeaveDreamerApp.this,
-                    "Save " + name + "?", "Save Draft",
-                    JOptionPane.YES_NO_OPTION,
-                    JOptionPane.QUESTION_MESSAGE);
+                            "Save " + name + "?", "Save Draft",
+                            JOptionPane.YES_NO_OPTION,
+                            JOptionPane.QUESTION_MESSAGE);
                     if (res == JOptionPane.YES_OPTION) {
+                        canclose=true;
                         saveWeavingToFile(session);
+                        if (session.isDraftModified()) {
+                            canclose=false;
+                            ;
+                        }
+                    }
+                    else{
+                        canclose=true;
+                    }
                 }
+                else{
+                    canclose=true;
                 }
-                for (EditingSession.View v : session.getViews()) {
-                    if (v != e.getSource()) {
-                		v.closeView();
+                    
+            
+            for (EditingSession.View v : session.getViews () ) {
+                    if (v != e.getSource() ) {
+                    v.closeView();
                 }
             }
-            }
-        });
-        
-        win.show();
-        
-        if (session.getDraft().getNetwork() != null) { 
-        	NetworkWindow nwWin = new NetworkWindow(session);
-	        
-	        mainDesktop.add(nwWin);
-	        nwWin.show();    
+            if (canclose){
+                try {
+                    w.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+                    w.dispose();
+                }
+                catch(Exception f){}
+                
+                
+                //throw new PropertyVetoException("File Not Saved", new PropertyChangeEvent(null,"",null,null));
+                }
         }
     }
-    
-    private void writeWeavingDraft(WeavingDraft draft, OutputStream outs)
+
+    );
+        
+    win.show ();
+
+    if (session.getDraft () 
+        .getNetwork() != null) { 
+        	NetworkWindow nwWin = new NetworkWindow(session);
+
+        mainDesktop.add(nwWin);
+        nwWin.show();
+    }
+}
+
+private void writeWeavingDraft(WeavingDraft draft, OutputStream outs)
     throws IOException {
         XMLEncoder enc = new XMLEncoder(outs);
         enc.writeObject(draft);
@@ -707,55 +734,57 @@ public class WeaveDreamerApp extends javax.swing.JFrame {
         }
         draft.validate();
         return draft;
-    }
+    
+
+}
     
 
     private class DraftFileFilter extends javax.swing.filechooser.FileFilter {
-        
-        /**
-         * Whether the given file is accepted by this filter.
-         *
-         */
-        public boolean accept(File f) {
-            String name = f.getName().toLowerCase();
-            return f.isDirectory() || name.endsWith(DRAFT_EXTENSION);
-        }
-        
-        /**
-         * The description of this filter. For example: "JPG and GIF Images"
-         *
-         * @see FileView#getName
-         *
-         */
-        public String getDescription() {
-            return "Weaving Draft Files";
-        }
+
+    /**
+     * Whether the given file is accepted by this filter.
+     *
+     */
+    public boolean accept(File f) {
+        String name = f.getName().toLowerCase();
+        return f.isDirectory() || name.endsWith(DRAFT_EXTENSION);
     }
-    
-    private class WifFileFilter extends javax.swing.filechooser.FileFilter {
-        
-        /**
-         * Whether the given file is accepted by this filter.
-         *
-         */
-        public boolean accept(File f) {
-            String name = f.getName().toLowerCase();
-            return f.isDirectory() || name.endsWith(WIF_EXTENSION);
-        }
-        
-        /**
-         * The description of this filter. For example: "JPG and GIF Images"
-         *
-         * @see FileView#getName
-         *
-         */
-        public String getDescription() {
-            return "Weaving Interchange Files";
-        }
+
+    /**
+     * The description of this filter. For example: "JPG and GIF Images"
+     *
+     * @see FileView#getName
+     *
+     */
+    public String getDescription() {
+        return "Weaving Draft Files";
     }
-    
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem newMenuItem;
+}
+
+private class WifFileFilter extends javax.swing.filechooser.FileFilter {
+
+    /**
+     * Whether the given file is accepted by this filter.
+     *
+     */
+    public boolean accept(File f) {
+        String name = f.getName().toLowerCase();
+        return f.isDirectory() || name.endsWith(WIF_EXTENSION);
+    }
+
+    /**
+     * The description of this filter. For example: "JPG and GIF Images"
+     *
+     * @see FileView#getName
+     *
+     */
+    public String getDescription() {
+        return "Weaving Interchange Files";
+    }
+}
+
+// Variables declaration - do not modify//GEN-BEGIN:variables
+private javax.swing.JMenuItem newMenuItem;
     private javax.swing.JMenuItem tiledViewMenuItem;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JDesktopPane mainDesktop;

@@ -62,8 +62,8 @@ public class WifIOTest extends TestCase {
     	WIFIO io = new WIFIO();
     	WeavingDraft draft = io.readWeavingDraft(new StringReader(twill));
     	assertEquals(draft.getPicks().size(), 2);
-    	assertEquals(draft.getPicks().get(0).getColor(), Color.white);
-    	assertEquals(draft.getEnds().get(0).getColor(), Color.black);
+    	assertEquals(draft.getPicks().get(0).getColor(), Color.black);
+    	assertEquals(draft.getEnds().get(0).getColor(), Color.white);
     }
     
     public void testColorCanBeReadFromWarpAndWeft () throws IOException {
@@ -362,9 +362,9 @@ public class WifIOTest extends TestCase {
     	assertThat(draft.getEnds().size(), is(3));
     	assertThat(draft.getEnds().get(0).getColor(), is(Color.red));
         assertThat(draft.getPalette().getColors(), contains(Color.red, Color.green));
-        // test bad entries handled 
-        assertThat(draft.getEnds().get(1).getColor(), is(Color.black));
-        assertThat(draft.getEnds().get(2).getColor(), is(Color.black));
+        // test bad entries handled  warp defaults to white 
+        assertThat(draft.getEnds().get(1).getColor(), is(Color.white));
+        assertThat(draft.getEnds().get(2).getColor(), is(Color.white));
     	
     }
     

@@ -70,8 +70,8 @@ public class SaveAndLoadTest extends WeavingTestCase {
 		ui.open(wif);
                 // swapped red and white readbacks 
 
-		ui.draftIs(0, 0, white);
-		ui.draftIs(0, 127, red);
+		ui.draftIs(0, 0, red);
+		ui.draftIs(0, 127, white);
 		ui.draftIs(295, 127, red);
 		ui.pickIs(0, 0, Color.BLACK);
 		ui.pickIs (2, 2, Color.WHITE);
@@ -82,8 +82,8 @@ public class SaveAndLoadTest extends WeavingTestCase {
 		ui.close();
 
 		ui.open(wsml);
-		ui.draftIs(0, 0, white);
-		ui.draftIs(0, 127, red);
+		ui.draftIs(0, 0, red);
+		ui.draftIs(0, 127, white);
 		ui.draftIs(295, 127, red);			
 		ui.pickIs(0, 0, Color.BLACK);
 		ui.pickIs (2, 2, Color.WHITE);

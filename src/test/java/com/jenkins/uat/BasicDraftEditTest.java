@@ -72,10 +72,10 @@ public class BasicDraftEditTest extends WeavingTestCase {
 		ui.draftIs(0, 1, Color.darkGray);
 		ui.draftIs(0, 2, Color.lightGray);
 		ui.draftIs(0, 3, Color.lightGray);
-		ui.draftIs(0, 4, Color.lightGray);
-		ui.draftIs(0, 5, Color.lightGray);
-		ui.draftIs(0, 6, Color.darkGray);
-		ui.draftIs(0, 7, Color.darkGray);	
+		ui.draftIs(0, 4, Color.darkGray);
+		ui.draftIs(0, 5, Color.darkGray);
+		ui.draftIs(0, 6, Color.lightGray);
+		ui.draftIs(0, 7, Color.lightGray);	
 
 		ui.draftIs(0, 0, Color.darkGray);
 		ui.draftIs(1, 0, Color.lightGray);

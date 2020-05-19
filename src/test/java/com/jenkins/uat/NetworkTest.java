@@ -5,13 +5,22 @@ import org.junit.Test;
 import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
+import static org.assertj.swing.data.TableCell.row;
 
 public class NetworkTest  extends WeavingTestCase {
 	@Test
 	public void testCreateSaveAndLoad() throws IOException {
-                int endcount=12;
+                int harnesses=12;
+                int ends = 20;
+                int picks = 20;
                 
-		ui.newNetwork(endcount, 20, 20, "Monochrome");
+                int pgrows=16;
+                int pgcols=20;
+                
+		ui.newNetwork(harnesses, ends, picks, "Monochrome");
+                
+                ui.setPatternGridSize(pgrows, pgcols);
+                
 		ui.setInitial(1,1);
 		ui.setInitial(2,2);
 		ui.setInitial(3,3);
@@ -26,14 +35,16 @@ public class NetworkTest  extends WeavingTestCase {
 		ui.setKey2(3,2);
 		ui.setKey2(3,3);
 		
-		ui.setPatternLine (16-3,5);
-		
-		ui.harnessIs(0, 0, Color.BLACK);
-		ui.harnessIs(1, 1, Color.BLACK);
-		ui.harnessIs(2, 2, Color.BLACK);
-		ui.harnessIs(3, 3, Color.BLACK);
-		ui.harnessIs(0, 4, Color.BLACK);
-		ui.harnessIs(5, 5, Color.BLACK);
+		ui.setPatternLine (pgrows-1-3,pgcols-1-5);
+		// thise in grid coordinates
+                System.out.println("Test");
+                //ui.harnessIs(0, 0, Color.BLACK);
+		ui.harnessIs(harnesses-1-0, ends-1-0, Color.BLACK);
+		ui.harnessIs(harnesses-1-1, ends-1-1, Color.BLACK);
+		ui.harnessIs(harnesses-1-2, ends-1-2, Color.BLACK);
+		ui.harnessIs(harnesses-1-3, ends-1-3, Color.BLACK);
+		ui.harnessIs(harnesses-1-0, ends-1-4, Color.BLACK);
+		ui.harnessIs(harnesses-1-5, ends-1-5, Color.BLACK);
 
 		ui.pickIs(0, 0, Color.BLACK);
 		ui.pickIs(0, 1, Color.BLACK);

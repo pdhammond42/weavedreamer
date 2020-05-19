@@ -127,12 +127,28 @@ public class TreadlingDraftModel extends CopyableWeavingGridModel {
     	return draft.getPicks().get(row).isTreadleSelected(column);
     }
     
+    
+        @Override
+    	public void pasteSelection(int rowIndex, int columnIndex,
+			CellSelectionTransform transform) {
+    	super.pasteSelection(rowIndex, columnIndex, transform);
+        if (session.getDraft().getIsLiftplan()){
+    	session.execute(new PasteCommand(this, pasteGridSelection));
+        }
+        else{
+            session.execute(new TreadlingGridPasteCommand(this, pasteGridSelection));
+        } 
+            
+	}
+    
+    
     public void setBooleanValueAt (boolean value, int row, int column) {
 		final WeftPick pick = draft.getPicks().get(row);
 		if (draft.getIsLiftplan()) {
 			pick.setTreadle(column, value);
 		} else {
-			if (value) pick.setTreadleId(column);
+                        if (value==true) pick.setTreadleId(column);
+                        if (value == false && column==-1)pick.setTreadleId(column); 
 		}    	
     }
     

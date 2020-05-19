@@ -66,16 +66,19 @@ public class UndoTest extends WeavingTestCase {
 		
 		ui.setPick (0, 0);
 		ui.selectPick(0, 0, 3, 3);
+
 		ui.pasteTreadling(4, 0);
+            
+                
 		ui.pickIs(4, 0, Color.black);
 		ui.undo();	// this appears not to work	
-		// ui.pickIs(4, 0, Color.white);
+		 ui.pickIs(4, 0, Color.white);
 		
 		ui.setThreading(3, 0);
 		ui.selectThreading(0, 0, 3, 3);
 		ui.pasteThreading(0, 4);
-		ui.harnessIs(3, 4, Color.black);
+		ui.harnessIs(3, 0, Color.black);
 		ui.undo(); // this appears not to work
-		//ui.endIs(3, 4, Color.white);		
+		ui.endIs(3, 4, Color.white);		
 	}
 }

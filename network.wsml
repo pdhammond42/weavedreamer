@@ -261,8 +261,66 @@
      <int>12</int>
     </void>
     <void property="patternLine">
-     <void index="5">
-      <int>2</int>
+     <void method="clear"/>
+     <void method="add">
+      <object idref="Integer0"/>
+     </void>
+     <void method="add">
+      <object idref="Integer0"/>
+     </void>
+     <void method="add">
+      <object idref="Integer0"/>
+     </void>
+     <void method="add">
+      <object idref="Integer0"/>
+     </void>
+     <void method="add">
+      <object idref="Integer0"/>
+     </void>
+     <void method="add">
+      <int>3</int>
+     </void>
+     <void method="add">
+      <object idref="Integer0"/>
+     </void>
+     <void method="add">
+      <object idref="Integer0"/>
+     </void>
+     <void method="add">
+      <object idref="Integer0"/>
+     </void>
+     <void method="add">
+      <object idref="Integer0"/>
+     </void>
+     <void method="add">
+      <object idref="Integer0"/>
+     </void>
+     <void method="add">
+      <object idref="Integer0"/>
+     </void>
+     <void method="add">
+      <object idref="Integer0"/>
+     </void>
+     <void method="add">
+      <object idref="Integer0"/>
+     </void>
+     <void method="add">
+      <object idref="Integer0"/>
+     </void>
+     <void method="add">
+      <object idref="Integer0"/>
+     </void>
+     <void method="add">
+      <object idref="Integer0"/>
+     </void>
+     <void method="add">
+      <object idref="Integer0"/>
+     </void>
+     <void method="add">
+      <object idref="Integer0"/>
+     </void>
+     <void method="add">
+      <object idref="Integer0"/>
      </void>
     </void>
    </object>

@@ -82,6 +82,15 @@ public class WeavingPatternModelTest extends TestCase {
         return suite;
     }
 
+        private int gridCol(int col){
+        return draft.getEnds().size()-col-1;
+    }
+    
+          private int gridRow(int row){
+        return draft.getNumHarnesses()-row-1;
+    }
+        
+    
     public void testGetColumnCount() {
         assertEquals(draft.getEnds().size(), model.getColumnCount());
     }
@@ -93,7 +102,7 @@ public class WeavingPatternModelTest extends TestCase {
     public void testGetValueAt() {
        for (int r = 0; r < 3; r++) {
            for (int c = 0; c < 6; c++) {
-               assertEquals("row="+r+",col="+c, draft.getVisibleColor(c, r), ((WeavingPatternCellModel)model.getValueAt(r, c)).color());
+               assertEquals("row="+r+",col="+c, draft.getVisibleColor(c, r), ((WeavingPatternCellModel)model.getValueAt(r, gridCol(c))).color());
            }
        }
     }
@@ -128,11 +137,14 @@ public class WeavingPatternModelTest extends TestCase {
         // try adding an end
         draft.getEnds().add(new WarpEnd(Color.RED, 1));
         TableModelTestUtils.assertTableColumnUpdateEvent(listener.event, model, 6);
+        // and the other side sees it too
+        draft.getEnds().add(new WarpEnd(Color.RED, 1));
+        TableModelTestUtils.assertTableColumnUpdateEvent(listener.event, model, 0);
         
         // try changing an end
         listener.event = null;
-        draft.getEnds().get(1).setHarnessId(2);
-        TableModelTestUtils.assertTableColumnUpdateEvent(listener.event, model, 1);
+        draft.getEnds().get(1).setHarnessId(2);      
+        TableModelTestUtils.assertTableColumnsUpdateEvent(listener.event, model, gridCol(1));
         
         // try replacing ends
         listener.event = null;
