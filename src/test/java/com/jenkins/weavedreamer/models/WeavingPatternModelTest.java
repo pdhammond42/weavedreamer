@@ -49,7 +49,7 @@ public class WeavingPatternModelTest extends TestCase {
         super(testName);
     }
 
-    protected void setUp() throws java.lang.Exception {
+    protected void setUp() {
         /* Make sure sample draft tests boundary conditions: elements where
          * warp end is not attached to a harness, a WeftPick which doesn't
          * specify any treadle, and both together. */

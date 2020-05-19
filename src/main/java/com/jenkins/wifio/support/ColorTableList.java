@@ -5,11 +5,10 @@
  */
 package com.jenkins.wifio.support;
 
-import java.awt.Color;
+import java.awt.*;
 import java.util.ArrayList;
 
 /**
- *
  * @author David
  */
 public class ColorTableList {
@@ -17,7 +16,7 @@ public class ColorTableList {
     public ArrayList<Color> colortable;
 
     public ColorTableList() {
-        this.colortable = new <Color> ArrayList();
+        this.colortable = new <Color>ArrayList();
     }
 
     public void add(Color color) {
@@ -30,11 +29,7 @@ public class ColorTableList {
 
     private boolean iscolorequal(Color C1, Color C2) {
 
-        if ((C1.getRed() == C2.getRed()) && (C1.getBlue() == C2.getBlue()) && (C1.getGreen() == C2.getGreen())) {
-            return true;
-        } else {
-            return false;
-        }
+        return (C1.getRed() == C2.getRed()) && (C1.getBlue() == C2.getBlue()) && (C1.getGreen() == C2.getGreen());
 
     }
 
@@ -49,7 +44,6 @@ public class ColorTableList {
     }
 
     /**
-     *
      * @param color
      * @return index in color table adds color to table if not present
      */

@@ -48,7 +48,7 @@ public class WifFileWriteTest extends TestCase{
         super(testName);
     }  
     
-       protected void setUp() throws java.lang.Exception {
+       protected void setUp() {
         
     }
 

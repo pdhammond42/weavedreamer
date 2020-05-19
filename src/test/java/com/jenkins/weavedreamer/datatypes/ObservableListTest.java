@@ -42,7 +42,7 @@ public class ObservableListTest extends TestCase {
         super(testName);
     }
 
-    protected void setUp() throws Exception {
+    protected void setUp() {
         theList = new ObservableList<String>();
         listener = new TestListChangeListener();
         theList.addListChangeListener(listener);

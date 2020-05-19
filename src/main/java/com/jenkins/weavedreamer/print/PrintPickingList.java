@@ -8,12 +8,12 @@ package com.jenkins.weavedreamer.print;
 import com.jenkins.weavedreamer.WeavingDraftWindow;
 import com.jenkins.weavedreamer.models.EditingSession;
 import com.jenkins.weavingsimulator.datatypes.WeftPick;
+
 import java.awt.*;
-import java.awt.print.*;
-import org.apache.commons.lang.StringUtils;
+import java.awt.print.PageFormat;
+import java.awt.print.Printable;
 
 /**
- *
  * @author David
  */
 public class PrintPickingList extends AbstractWeaveDreamerPrintable {
@@ -33,8 +33,7 @@ public class PrintPickingList extends AbstractWeaveDreamerPrintable {
     }
 
     @Override
-    public int print(Graphics g, PageFormat pf, int pageIndex)
-            throws PrinterException {
+    public int print(Graphics g, PageFormat pf, int pageIndex) {
 
         try {
             // For catching IOException      

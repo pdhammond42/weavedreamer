@@ -34,7 +34,7 @@ public class StausBarModelTest extends TestCase {
 		sbmodel.addPropertyChangeListener(handler);
 		tm.setCurrentCell(3, 2);
 		assertThat (handler.event, is(notNullValue()));
-		assertThat ((String)handler.event.getNewValue(), is("3, 4 (0x0)"));
+		assertThat (handler.event.getNewValue(), is("3, 4 (0x0)"));
 	}
 
 	public void testColumnNumberNotSHownWithOneColumn() {

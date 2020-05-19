@@ -1,21 +1,21 @@
 package com.jenkins.weavedreamer.datatypes;
 
-import java.awt.Color;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.Reader;
-import java.util.ArrayList;
-import java.util.List;
-
 import com.jenkins.weavingsimulator.datatypes.*;
 import com.jenkins.wifio.WIFException;
 import com.jenkins.wifio.WIFFile;
 import com.jenkins.wifio.WIFNoValueException;
 import com.jenkins.wifio.support.ColorTableList;
+
+import java.awt.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.Reader;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * Implements reading and writing WeavingDrafts in WIF format
@@ -38,7 +38,7 @@ public class WIFIO {
         return readWeavingDraft();
     }
 
-    public WeavingDraft readWeavingDraft() throws IOException {
+    public WeavingDraft readWeavingDraft() {
         draft = new WeavingDraft("New Draft");
 
         if (wif.hasField("WEAVING", "Shafts")) {
@@ -141,7 +141,7 @@ public class WIFIO {
 
         // shoud do somehting to pick the bigger one and leave blank threads 
         /* Changed to agree with standard which allows for sparse data in the WIF File
-        
+
          */
         //numEnds = numThreadingThreads;
         numEnds = numWarpThreads;
@@ -174,7 +174,7 @@ public class WIFIO {
 
         // should check to see if there is a discrpancy here 
         /* Changed to agree with standard which allows for sparse data in the WIF File
-        
+
          */
         //numPicks = numWeftElements;
         numPicks = numWeftThreads;
@@ -207,7 +207,6 @@ public class WIFIO {
                 color = palette.get(colorIdx);
             } catch (WIFNoValueException | IndexOutOfBoundsException e) {
                 // leave it at white
-                ;
             }
         }
 
@@ -248,15 +247,15 @@ public class WIFIO {
         return color;
     }
 
-    private void writeWIFheader() throws IOException {
+    private void writeWIFheader() {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm");
         LocalDateTime now = LocalDateTime.now();
-        String versionString ;
+        String versionString;
 
         versionString = this.getClass().getPackage().getImplementationVersion();
-        if (versionString==null) {
+        if (versionString == null) {
             versionString = "Unknown";
-        
+
         }
 
         wif.setStringField("WIF", "Version", "1.1");
@@ -286,7 +285,7 @@ public class WIFIO {
         //wif.put("CONTENTS", "WEAVING", "true");
         wif.setIntField("WEAVING", "Shafts", draft.getNumHarnesses());
         wif.setIntField("WEAVING", "Treadles", draft.getTreadles().size());
-        wif.setBooleanField("Weaving","Rising Shed" , true);
+        wif.setBooleanField("Weaving", "Rising Shed", true);
     }
 
     private void writeColorTable() {
@@ -306,9 +305,9 @@ public class WIFIO {
     }
 
     private void getDraftPalette() {
-        List <Color> cols;
+        List<Color> cols;
         if (draft.getPalette() != null) {
-             cols = draft.getPalette().getColors();
+            cols = draft.getPalette().getColors();
             for (int i = 0; i < cols.size(); i++) {
                 outpalette.add((cols.get(i)));
             }
@@ -326,11 +325,11 @@ public class WIFIO {
         Iterator<WarpEnd> WarpEndIterator = EndList.iterator();
         while (WarpEndIterator.hasNext()) {
             we = WarpEndIterator.next();
-            if (we.getHarnessId()!=-1){
-                wif.setIntField("THREADING", Integer.toString(endcounter), (we.getHarnessId() + 1));}
-            else{
+            if (we.getHarnessId() != -1) {
+                wif.setIntField("THREADING", Integer.toString(endcounter), (we.getHarnessId() + 1));
+            } else {
                 wif.setStringField("THREADING", Integer.toString(endcounter), "");
-            } 
+            }
             wif.setIntField("WARP COLORS", Integer.toString(endcounter), outpalette.getindex(we.getColor()));
             endcounter++;
         }

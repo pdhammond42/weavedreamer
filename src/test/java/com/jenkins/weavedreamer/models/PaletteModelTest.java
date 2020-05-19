@@ -46,7 +46,7 @@ public class PaletteModelTest extends TestCase {
         super(testName);
     }
 
-    protected void setUp() throws java.lang.Exception {
+    protected void setUp() {
         palette = new Palette(
                 Arrays.asList(Color.RED, Color.GREEN, Color.BLUE), "");
         model = new PaletteModel(palette);

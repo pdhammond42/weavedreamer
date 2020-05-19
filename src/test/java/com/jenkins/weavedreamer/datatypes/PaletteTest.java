@@ -56,7 +56,7 @@ public class PaletteTest extends TestCase {
         super(testName);
     }
 
-    protected void setUp() throws java.lang.Exception {
+    protected void setUp() {
         palette = new Palette(10);
         listener = new TestPropertyChangeListener();
         palette.addPropertyChangeListener(listener);

@@ -13,7 +13,7 @@ public class ThreadingGridPasteCommand implements Command {
      * model, and the treadling model in non-liftplan, need more than jsut the
      * pasted area to be able to undo.
      *
-     * @param model The model to act on
+     * @param model     The model to act on
      * @param selection The selection to paste
      */
     public ThreadingGridPasteCommand(CopyableWeavingGridModel model, PasteGrid selection) {
@@ -35,13 +35,12 @@ public class ThreadingGridPasteCommand implements Command {
         final int colcount = Math.min(cells.getColumns(), model.getColumnCount() - cells.getStartColumn());
 
         for (int col = 0; col != colcount; col++) {
-             model.setBooleanValueAt(false,
-                        -1,
-                        col + cells.getStartColumn());
+            model.setBooleanValueAt(false,
+                    -1,
+                    col + cells.getStartColumn());
 
             for (int row = 0; row != rowcount; row++) {
-                   
-                
+
 
                 model.setBooleanValueAt(cells.getValue(row, col),
                         row + cells.getStartRow(),

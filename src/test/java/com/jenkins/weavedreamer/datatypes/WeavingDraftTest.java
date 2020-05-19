@@ -67,7 +67,7 @@ public class WeavingDraftTest extends TestCase {
         junit.textui.TestRunner.run(suite());
     }
     
-    protected void setUp() throws java.lang.Exception {
+    protected void setUp() {
         draft = new WeavingDraft("Test Draft");
         listener = new TestPropertyChangeListener();
         draft.addPropertyChangeListener(listener);

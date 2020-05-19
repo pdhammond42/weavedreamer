@@ -48,7 +48,7 @@ public class WarpThreadColorModelTest extends TestCase {
         super(testName);
     }
 
-    protected void setUp() throws java.lang.Exception {
+    protected void setUp() {
         draft = new WeavingDraft("TestDraft");
         draft.setNumHarnesses(2);
         draft.setEnds(Arrays.asList(

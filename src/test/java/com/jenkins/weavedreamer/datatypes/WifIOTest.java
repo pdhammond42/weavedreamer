@@ -30,8 +30,8 @@ public class WifIOTest extends TestCase {
     public void testMinimalWif () throws IOException {
     	WIFIO io = new WIFIO();
     	io.readWeavingDraft(new StringReader(minimal));
-    };
-    
+    }
+
     // A minimal usable WIF file can be read. Specifically,
     // the standard does not require WARP COLORS, WEFT COLORS or COLOR PALETE
     // entries.
@@ -481,4 +481,4 @@ public class WifIOTest extends TestCase {
     
     
     
-};
+}

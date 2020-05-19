@@ -49,7 +49,7 @@ public class AbstractWeavingDraftModelTest extends TestCase {
         super(testName);
     }
 
-    protected void setUp() throws java.lang.Exception {
+    protected void setUp() {
         draft = new WeavingDraft("TestDraft");
         session = new EditingSession(draft);
         model = new AbstractWeavingDraftModelImpl(session);

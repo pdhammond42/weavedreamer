@@ -6,27 +6,27 @@
 package com.jenkins.weavedreamer.print;
 
 /**
- *
  * @author David
  */
+
 import com.jenkins.weavedreamer.WeavingDraftWindow;
 import com.jenkins.weavedreamer.models.EditingSession;
+
+import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
-import javax.swing.*;
-import java.awt.print.*;
+import java.awt.print.PageFormat;
 
 public class PrintUIWindow extends AbstractWeaveDreamerPrintable {
 
     //JInternalFrame frameToPrint;
     JPanel frameToPrint;
-   private Font headerFont = new Font("Arial", Font.BOLD, 12);
-    
+    private Font headerFont = new Font("Arial", Font.BOLD, 12);
+
     private Font textFont = new Font("Arial", Font.PLAIN, 8);
 
     @Override
-    public int print(Graphics g, PageFormat pf, int page) throws
-            PrinterException {
+    public int print(Graphics g, PageFormat pf, int page) {
 
         if (page > 0) {
             /* We have only one page, and 'page' is zero-based */
@@ -39,7 +39,7 @@ public class PrintUIWindow extends AbstractWeaveDreamerPrintable {
         float scale;
         float headerheight = 20;
 
-        
+
         Font fnt = new Font("Courier", Font.PLAIN, 10);
 
         Point componentLocation = null;

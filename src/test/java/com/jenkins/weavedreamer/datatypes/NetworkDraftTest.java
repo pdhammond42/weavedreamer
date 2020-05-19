@@ -274,9 +274,9 @@ public class NetworkDraftTest extends TestCase {
 			notified = true;
 			event = evt;
 		}
-	};
-	
-	public void testNotifyKeyChange() {
+	}
+
+    public void testNotifyKeyChange() {
 		NetworkDraft draft = new NetworkDraft();
 		draft.setInitialRows (4);
 		draft.setInitialCols(4);

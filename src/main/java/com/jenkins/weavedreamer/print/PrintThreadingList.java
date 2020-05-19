@@ -5,29 +5,24 @@
  */
 package com.jenkins.weavedreamer.print;
 
-import com.jenkins.weavedreamer.WeaveDreamerPrintSelect;
 import com.jenkins.weavedreamer.WeavingDraftWindow;
 import com.jenkins.weavedreamer.models.EditingSession;
 import com.jenkins.weavingsimulator.datatypes.WarpEnd;
-import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
-import com.jenkins.weavingsimulator.datatypes.WeftPick;
-import java.awt.*;
-import java.awt.print.*;
-import java.io.*;
-import java.lang.reflect.Array;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.apache.commons.lang.StringUtils;
 
+import java.awt.*;
+import java.awt.print.PageFormat;
+import java.awt.print.Printable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
- * 
- *
  * @author David
  */
 public class PrintThreadingList extends AbstractWeaveDreamerPrintable {
 
-     private Font headerFont = new Font("Arial", Font.BOLD, 12);
-    
+    private Font headerFont = new Font("Arial", Font.BOLD, 12);
+
     private Font textFont = new Font("Arial", Font.PLAIN, 8);
     private int rememberedPageIndex = -1;
     private int rememberedThread = 0;
@@ -40,8 +35,7 @@ public class PrintThreadingList extends AbstractWeaveDreamerPrintable {
     }
 
     @Override
-    public int print(Graphics g, PageFormat pf, int pageIndex)
-            throws PrinterException {
+    public int print(Graphics g, PageFormat pf, int pageIndex) {
 
         try {
             // For catching IOException      
@@ -60,7 +54,7 @@ public class PrintThreadingList extends AbstractWeaveDreamerPrintable {
 
             g.setColor(Color.black);
             g.setFont(headerFont);
-            
+
             int x = (int) pf.getImageableX() + 10;
             int y = (int) pf.getImageableY() + 12;
             // Title lineif (currentpick>= draft.getPicks().size()){

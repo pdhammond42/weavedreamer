@@ -38,7 +38,7 @@ public class GettingStartedWindow extends JInternalFrame {
             // and the size is known. Then, it packs height first so we get a window that is tall
             // enough for the content rendered in a narrow width, but also wide enough to render the lines
             // as expected, so large grey bands top and bottom., The second pack shrinks the height to fit.
-            p.addPropertyChangeListener("page", e-> {
+            p.addPropertyChangeListener("page", e -> {
                 pack();
                 pack();
             });
@@ -86,6 +86,6 @@ public class GettingStartedWindow extends JInternalFrame {
     }
 
     public boolean getShow() {
-        return ! dontShow;
+        return !dontShow;
     }
 }

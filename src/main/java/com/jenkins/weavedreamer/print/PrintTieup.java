@@ -7,17 +7,18 @@ package com.jenkins.weavedreamer.print;
 
 import com.jenkins.weavedreamer.WeavingDraftWindow;
 import com.jenkins.weavedreamer.models.EditingSession;
+
 import java.awt.*;
-import java.awt.print.*;
+import java.awt.print.PageFormat;
+import java.awt.print.Printable;
 
 /**
- *
  * @author David
  */
 public class PrintTieup extends AbstractWeaveDreamerPrintable {
 
     private int fontHeight = 8;
-    
+
     private Font headerFont = new Font("Arial", Font.BOLD, 12);
     private Font textFont = new Font("Arial", Font.PLAIN, 8);
 
@@ -26,8 +27,7 @@ public class PrintTieup extends AbstractWeaveDreamerPrintable {
     }
 
     @Override
-    public int print(Graphics g, PageFormat pf, int pageIndex)
-            throws PrinterException {
+    public int print(Graphics g, PageFormat pf, int pageIndex) {
 
         if (pageIndex > 0) {
             return Printable.NO_SUCH_PAGE;

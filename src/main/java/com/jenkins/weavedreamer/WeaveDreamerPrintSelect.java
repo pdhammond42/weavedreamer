@@ -6,13 +6,8 @@
 package com.jenkins.weavedreamer;
 
 import com.jenkins.weavedreamer.models.EditingSession;
-import com.jenkins.weavedreamer.print.AbstractWeaveDreamerPrintable;
-import com.jenkins.weavedreamer.print.PrintPattern;
-import com.jenkins.weavedreamer.print.PrintPickingList;
-import com.jenkins.weavedreamer.print.PrintThreadingList;
-import com.jenkins.weavedreamer.print.PrintTieup;
-import com.jenkins.weavedreamer.print.PrintUIWindow;
-import java.awt.event.WindowEvent;
+import com.jenkins.weavedreamer.print.*;
+
 import java.awt.print.PrinterJob;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -20,7 +15,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
  * @author David
  */
 public class WeaveDreamerPrintSelect extends java.awt.Dialog {
@@ -36,7 +30,7 @@ public class WeaveDreamerPrintSelect extends java.awt.Dialog {
         //PrintFormatter = PrintPickingList.class;
 
     }
-                       
+
     private void initComponents() {
         this.setTitle("Select Print Item");
         javax.swing.ButtonGroup buttonGroup1 = new javax.swing.ButtonGroup();
@@ -58,7 +52,7 @@ public class WeaveDreamerPrintSelect extends java.awt.Dialog {
                 closeDialog(evt);
             }
         });
-        
+
         jButtonPrint.setText("Print");
         jButtonPrint.setName("Print");
         jButtonPrint.addActionListener(evt -> jButtonPrintActionPerformed(evt));
@@ -98,79 +92,79 @@ public class WeaveDreamerPrintSelect extends java.awt.Dialog {
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jRadioButtonPrintPattern, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jRadioButtonPrintDraft, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jRadioButtonPrintPicking, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jRadioButtonPrintThreading, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jRadioButtonPrintTieup, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 12, Short.MAX_VALUE))
+                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(jRadioButtonPrintPattern, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jRadioButtonPrintDraft, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(jRadioButtonPrintPicking, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(jRadioButtonPrintThreading, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(jRadioButtonPrintTieup, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 12, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addComponent(jRadioButtonPrintPattern)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jRadioButtonPrintDraft)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jRadioButtonPrintThreading)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jRadioButtonPrintPicking)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jRadioButtonPrintTieup))
+                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jRadioButtonPrintPattern)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jRadioButtonPrintDraft)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jRadioButtonPrintThreading)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jRadioButtonPrintPicking)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jRadioButtonPrintTieup))
         );
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jRadioButtonPrintPattern, jRadioButtonPrintPicking, jRadioButtonPrintThreading, jRadioButtonPrintTieup});
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, jRadioButtonPrintPattern, jRadioButtonPrintPicking, jRadioButtonPrintThreading, jRadioButtonPrintTieup);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addComponent(jButtonPrint)
-                        .addGap(30, 30, 30)
-                        .addComponent(jButtonCancel))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(22, Short.MAX_VALUE))
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGap(26, 26, 26)
+                                                .addComponent(jButtonPrint)
+                                                .addGap(30, 30, 30)
+                                                .addComponent(jButtonCancel))
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGap(22, 22, 22)
+                                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addContainerGap(22, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonPrint)
-                    .addComponent(jButtonCancel))
-                .addGap(22, 22, 22))
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(21, 21, 21)
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jButtonPrint)
+                                        .addComponent(jButtonCancel))
+                                .addGap(22, 22, 22))
         );
 
         pack();
-    }                        
+    }
 
     /**
      * Closes the dialog
      */
-    private void closeDialog(java.awt.event.WindowEvent evt) {                             
+    private void closeDialog(java.awt.event.WindowEvent evt) {
         setVisible(false);
         dispose();
-    }                            
+    }
 
-    private void jRadioButtonPrintTieupActionPerformed(java.awt.event.ActionEvent evt) {                                                       
+    private void jRadioButtonPrintTieupActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
         PrintFormatter = PrintTieup.class;
 
-    }                                                      
+    }
 
-    private void jButtonPrintActionPerformed(java.awt.event.ActionEvent evt) {                                             
+    private void jButtonPrintActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
         PrinterJob job = PrinterJob.getPrinterJob();
         AbstractWeaveDreamerPrintable pf2 = null;
@@ -183,8 +177,7 @@ public class WeaveDreamerPrintSelect extends java.awt.Dialog {
             pf2 = (AbstractWeaveDreamerPrintable) ct.newInstance(session, draftWindow);
         } catch (NoSuchMethodException | SecurityException ex) {
             //Logger.getLogger(WeaveDreamerPrintSelect.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
+        } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
             Logger.getLogger(WeaveDreamerPrintSelect.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -206,36 +199,35 @@ public class WeaveDreamerPrintSelect extends java.awt.Dialog {
         //this.setVisible(false);
         //this.dispose();
 
-    }                                            
+    }
 
     private void jButtonCancelActionPerformed(java.awt.event.ActionEvent evt) {
         this.setVisible(false);
         this.dispose();
 
-    }                                             
+    }
 
     private void jRadioButtonPrintPatternActionPerformed(java.awt.event.ActionEvent evt) {
         PrintFormatter = PrintPattern.class;
 
-    }                                                        
+    }
 
     private void jRadioButtonPrintPickingActionPerformed(java.awt.event.ActionEvent evt) {
         PrintFormatter = PrintPickingList.class;
 
 
-    }                                                        
+    }
 
     private void jRadioButtonPrintThreadingActionPerformed(java.awt.event.ActionEvent evt) {
         PrintFormatter = PrintThreadingList.class;
-    }                                                          
+    }
 
     private void jRadioButtonPrintDraftActionPerformed(java.awt.event.ActionEvent evt) {
         PrintFormatter = PrintUIWindow.class;
     }
-    
+
 
     public int PrintWeavingDraft(EditingSession session, WeavingDraftWindow draftWindow) {
-
         this.session = session;
         this.draftWindow = draftWindow;
 

@@ -1,33 +1,33 @@
 /*
  * WeftPick.java
- * 
+ *
  * Created on April 23, 2003, 10:49 PM
- *  
+ *
  * Copyright 2003 Adam P. Jenkins
- * 
+ *
  * This file is part of WeavingSimulator
- * 
+ *
  * WeavingSimulator is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * WeavingSimulator is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with WeavingSimulator; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 package com.jenkins.weavingsimulator.datatypes;
 
-import java.awt.Color;
-import java.util.Arrays;
-
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
+
+import java.awt.*;
+import java.util.Arrays;
 
 /**
  * This bean represents a single weft thread in a weaving pattern. It contains
@@ -81,7 +81,6 @@ public class WeftPick {
      * Adds a PropertyChangeListener to the listener list.
      *
      * @param l The listener to add.
-     *
      */
     public void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
         propertyChangeSupport.addPropertyChangeListener(l);
@@ -91,7 +90,6 @@ public class WeftPick {
      * Removes a PropertyChangeListener from the listener list.
      *
      * @param l The listener to remove.
-     *
      */
     public void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
         propertyChangeSupport.removePropertyChangeListener(l);
@@ -101,7 +99,6 @@ public class WeftPick {
      * Getter for property treadleId.
      *
      * @return Value of property treadleId.
-     *
      */
     public boolean isTreadleSelected(int treadleId) {
         return treadleId < treadles.length && this.treadles[treadleId];
@@ -109,7 +106,6 @@ public class WeftPick {
 
     /**
      * Returns the first selected treadle ID, or -1 for no selection
-     *
      */
     public int getSelection() {
         for (int i = 0; i != treadles.length; ++i) {
@@ -122,7 +118,6 @@ public class WeftPick {
 
     /**
      * Getter for property treadles
-     *
      */
     public boolean[] getTreadles() {
         return treadles;
@@ -141,8 +136,7 @@ public class WeftPick {
      * Setter for property treadleId.
      *
      * @param treadleId Treadle to set.
-     * @param value value to set it to
-     *
+     * @param value     value to set it to
      */
     public void setTreadle(int treadleId, boolean value) {
         boolean[] oldTreadles = this.treadles.clone();
@@ -181,7 +175,6 @@ public class WeftPick {
      * Getter for property color.
      *
      * @return Value of property color.
-     *
      */
     public Color getColor() {
         return this.color;
@@ -191,7 +184,6 @@ public class WeftPick {
      * Setter for property color.
      *
      * @param color New value of property color.
-     *
      */
     public void setColor(Color color) {
         Color oldColor = this.color;

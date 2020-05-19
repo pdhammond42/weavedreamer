@@ -1,30 +1,30 @@
 /*
  * WeavingPatternModel.java
- * 
+ *
  * Created on April 11, 2003, 12:59 AM
- *  
+ *
  * Copyright 2003 Adam P. Jenkins
- * 
+ *
  * This file is part of WeavingSimulator
- * 
+ *
  * WeavingSimulator is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * WeavingSimulator is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with WeavingSimulator; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 package com.jenkins.weavedreamer.models;
 
-import java.beans.IndexedPropertyChangeEvent;
 import javax.swing.event.TableModelEvent;
+import java.beans.IndexedPropertyChangeEvent;
 
 /**
  * TableModel representing the fabric resulting from a weaving pattern. Each row
@@ -69,11 +69,11 @@ public class WeavingPatternModel extends AbstractWeavingDraftModel {
                     // number of rows changed
                     fireTableDataChanged();
                 } else // just pick row changed
-                if (0 == iev.getIndex()) {
-                    fireTableRowsUpdated(iev.getIndex(), iev.getIndex());
-                } else {
-                    fireTableRowsUpdated(iev.getIndex() - 1, iev.getIndex());
-                }
+                    if (0 == iev.getIndex()) {
+                        fireTableRowsUpdated(iev.getIndex(), iev.getIndex());
+                    } else {
+                        fireTableRowsUpdated(iev.getIndex() - 1, iev.getIndex());
+                    }
             } else if (propName.equals("treadles")) {
                 // a treadle changing can change all rows whose pick uses
                 // this treadle,
@@ -90,7 +90,6 @@ public class WeavingPatternModel extends AbstractWeavingDraftModel {
      *
      * @return the number of columns in the model
      * @see #getRowCount
-     *
      */
     public int getColumnCount() {
         return draft.getEnds().size();
@@ -108,7 +107,6 @@ public class WeavingPatternModel extends AbstractWeavingDraftModel {
      *
      * @return the number of rows in the model
      * @see #getColumnCount
-     *
      */
     public int getRowCount() {
         return draft.getPicks().size();
@@ -118,10 +116,9 @@ public class WeavingPatternModel extends AbstractWeavingDraftModel {
      * Returns the value for the cell at <code>columnIndex</code> and
      * <code>rowIndex</code>.
      *
-     * @param rowIndex the row whose value is to be queried
+     * @param rowIndex    the row whose value is to be queried
      * @param columnIndex the column whose value is to be queried
      * @return the value Object at the specified cell
-     *
      */
     public Object getValueAt(int rowIndex, int columnIndex) {
         int endId = draft.getEnds().size() - 1 - columnIndex;

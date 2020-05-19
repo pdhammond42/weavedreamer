@@ -13,7 +13,7 @@ public class PasteCommand implements Command {
      * model, and the treadling model in non-liftplan, need more than jsut the
      * pasted area to be able to undo.
      *
-     * @param model The model to act on
+     * @param model     The model to act on
      * @param selection The selection to paste
      */
     public PasteCommand(CopyableWeavingGridModel model, PasteGrid selection) {
