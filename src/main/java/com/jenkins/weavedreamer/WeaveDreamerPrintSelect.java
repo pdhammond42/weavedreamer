@@ -39,15 +39,15 @@ public class WeaveDreamerPrintSelect extends java.awt.Dialog {
                        
     private void initComponents() {
         this.setTitle("Select Print Item");
-        buttonGroup1 = new javax.swing.ButtonGroup();
-        jButtonPrint = new javax.swing.JButton();
-        jButtonCancel = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
-        jRadioButtonPrintThreading = new javax.swing.JRadioButton();
-        jRadioButtonPrintDraft = new javax.swing.JRadioButton();
-        jRadioButtonPrintTieup = new javax.swing.JRadioButton();
-        jRadioButtonPrintPicking = new javax.swing.JRadioButton();
-        jRadioButtonPrintPattern = new javax.swing.JRadioButton();
+        javax.swing.ButtonGroup buttonGroup1 = new javax.swing.ButtonGroup();
+        javax.swing.JButton jButtonPrint = new javax.swing.JButton();
+        javax.swing.JButton jButtonCancel = new javax.swing.JButton();
+        javax.swing.JPanel jPanel1 = new javax.swing.JPanel();
+        javax.swing.JRadioButton jRadioButtonPrintThreading = new javax.swing.JRadioButton();
+        javax.swing.JRadioButton jRadioButtonPrintDraft = new javax.swing.JRadioButton();
+        javax.swing.JRadioButton jRadioButtonPrintTieup = new javax.swing.JRadioButton();
+        javax.swing.JRadioButton jRadioButtonPrintPicking = new javax.swing.JRadioButton();
+        javax.swing.JRadioButton jRadioButtonPrintPattern = new javax.swing.JRadioButton();
 
         setBackground(java.awt.SystemColor.control);
         setLocation(new java.awt.Point(100, 100));
@@ -61,67 +61,39 @@ public class WeaveDreamerPrintSelect extends java.awt.Dialog {
         
         jButtonPrint.setText("Print");
         jButtonPrint.setName("Print");
-        jButtonPrint.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonPrintActionPerformed(evt);
-            }
-        });
+        jButtonPrint.addActionListener(evt -> jButtonPrintActionPerformed(evt));
 
         jButtonCancel.setText("Cancel");
         jButtonCancel.setName("Cancel");
-        jButtonCancel.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonCancelActionPerformed(evt);
-            }
-        });
+        jButtonCancel.addActionListener(evt -> jButtonCancelActionPerformed(evt));
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Print Selection"));
 
         buttonGroup1.add(jRadioButtonPrintThreading);
         jRadioButtonPrintThreading.setText("Threading");
         jRadioButtonPrintThreading.setName("Threading");
-        jRadioButtonPrintThreading.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButtonPrintThreadingActionPerformed(evt);
-            }
-        });
+        jRadioButtonPrintThreading.addActionListener(this::jRadioButtonPrintThreadingActionPerformed);
 
         buttonGroup1.add(jRadioButtonPrintDraft);
         jRadioButtonPrintDraft.setText("Draft");
         jRadioButtonPrintDraft.setName("Draft");
-        jRadioButtonPrintDraft.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButtonPrintDraftActionPerformed(evt);
-            }
-        });
+        jRadioButtonPrintDraft.addActionListener(this::jRadioButtonPrintDraftActionPerformed);
 
         buttonGroup1.add(jRadioButtonPrintTieup);
         jRadioButtonPrintTieup.setText("TieUp");
         jRadioButtonPrintTieup.setName("TieUp");
-        jRadioButtonPrintTieup.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButtonPrintTieupActionPerformed(evt);
-            }
-        });
+        jRadioButtonPrintTieup.addActionListener(this::jRadioButtonPrintTieupActionPerformed);
 
         buttonGroup1.add(jRadioButtonPrintPicking);
         jRadioButtonPrintPicking.setText("Picking");
         jRadioButtonPrintPicking.setName("Picking");
-        jRadioButtonPrintPicking.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButtonPrintPickingActionPerformed(evt);
-            }
-        });
+        jRadioButtonPrintPicking.addActionListener(this::jRadioButtonPrintPickingActionPerformed);
 
         buttonGroup1.add(jRadioButtonPrintPattern);
         jRadioButtonPrintPattern.setSelected(true);
         jRadioButtonPrintPattern.setText("Pattern");
         jRadioButtonPrintPattern.setName("Pattern");
-        jRadioButtonPrintPattern.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButtonPrintPatternActionPerformed(evt);
-            }
-        });
+        jRadioButtonPrintPattern.addActionListener(this::jRadioButtonPrintPatternActionPerformed);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -211,7 +183,7 @@ public class WeaveDreamerPrintSelect extends java.awt.Dialog {
             pf2 = (AbstractWeaveDreamerPrintable) ct.newInstance(session, draftWindow);
         } catch (NoSuchMethodException | SecurityException ex) {
             //Logger.getLogger(WeaveDreamerPrintSelect.class.getName()).log(Level.SEVERE, null, ex);
-        } //Logger.getLogger(WeaveDreamerPrintSelect.class.getName()).log(Level.SEVERE, null, ex);
+        }
         catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
             Logger.getLogger(WeaveDreamerPrintSelect.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -236,39 +208,30 @@ public class WeaveDreamerPrintSelect extends java.awt.Dialog {
 
     }                                            
 
-    private void jButtonCancelActionPerformed(java.awt.event.ActionEvent evt) {                                              
-        // TODO add your handling code here:
+    private void jButtonCancelActionPerformed(java.awt.event.ActionEvent evt) {
         this.setVisible(false);
         this.dispose();
 
     }                                             
 
-    private void jRadioButtonPrintPatternActionPerformed(java.awt.event.ActionEvent evt) {                                                         
-        // TODO add your handling code here:
+    private void jRadioButtonPrintPatternActionPerformed(java.awt.event.ActionEvent evt) {
         PrintFormatter = PrintPattern.class;
 
     }                                                        
 
-    private void jRadioButtonPrintPickingActionPerformed(java.awt.event.ActionEvent evt) {                                                         
-        // TODO add your handling code here:
+    private void jRadioButtonPrintPickingActionPerformed(java.awt.event.ActionEvent evt) {
         PrintFormatter = PrintPickingList.class;
 
 
     }                                                        
 
-    private void jRadioButtonPrintThreadingActionPerformed(java.awt.event.ActionEvent evt) {                                                           
-        // TODO add your handling code here:
+    private void jRadioButtonPrintThreadingActionPerformed(java.awt.event.ActionEvent evt) {
         PrintFormatter = PrintThreadingList.class;
     }                                                          
 
-    private void jRadioButtonPrintDraftActionPerformed(java.awt.event.ActionEvent evt) {                                                       
-        // TODO add your handling code here:
+    private void jRadioButtonPrintDraftActionPerformed(java.awt.event.ActionEvent evt) {
         PrintFormatter = PrintUIWindow.class;
-    }                                                      
-
-    /**
-     * @param args the command line arguments
-     */
+    }
     
 
     public int PrintWeavingDraft(EditingSession session, WeavingDraftWindow draftWindow) {
@@ -280,17 +243,7 @@ public class WeaveDreamerPrintSelect extends java.awt.Dialog {
         this.setVisible(true);
         return 1;
     }
-                      
-    private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JButton jButtonCancel;
-    private javax.swing.JButton jButtonPrint;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JRadioButton jRadioButtonPrintDraft;
-    private javax.swing.JRadioButton jRadioButtonPrintPattern;
-    private javax.swing.JRadioButton jRadioButtonPrintPicking;
-    private javax.swing.JRadioButton jRadioButtonPrintThreading;
-    private javax.swing.JRadioButton jRadioButtonPrintTieup;
-                     
+
 
     private EditingSession session;
     //private AbstractWeaveDreamerPrintable PrintFormatter; 
