@@ -10,7 +10,7 @@ public class PaletteColorChangeCommand implements Command {
     private final Color previousColor;
     private final Color newColor;
 
-    public PaletteColorChangeCommand (Palette palette, Color newColor) {
+    public PaletteColorChangeCommand(Palette palette, Color newColor) {
         this.newColor = newColor;
         this.palette = palette;
         this.index = palette.getSelection();

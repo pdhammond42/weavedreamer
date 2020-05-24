@@ -181,10 +181,10 @@ public class BasicDraftEditTest extends WeavingTestCase {
 	public void testPasteEndToPick() {
 		ui.newDraft(4, 6, 20, 20, "Monochrome");
 		
-		ui.setThreading(0, 0);
-		ui.setThreading (1, 1);
-		ui.setThreading (2, 2);
-		ui.setThreading (3, 3);
+		ui.setThreadingCell(0, 0);
+		ui.setThreadingCell (1, 1);
+		ui.setThreadingCell (2, 2);
+		ui.setThreadingCell (3, 3);
 		ui.selectThreading(0, 0, 4, 4);
 		
 		ui.pasteTreadling (0,0);

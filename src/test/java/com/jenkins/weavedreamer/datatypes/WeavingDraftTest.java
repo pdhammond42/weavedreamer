@@ -67,7 +67,7 @@ public class WeavingDraftTest extends TestCase {
         junit.textui.TestRunner.run(suite());
     }
     
-    protected void setUp() throws java.lang.Exception {
+    protected void setUp() {
         draft = new WeavingDraft("Test Draft");
         listener = new TestPropertyChangeListener();
         draft.addPropertyChangeListener(listener);
@@ -426,17 +426,15 @@ public class WeavingDraftTest extends TestCase {
     }
     
     public void testPropertyChangePreservesDraftToLiftplan() {
-    	draft.setProperties (3, 4, 8, 8, false, false);
+    	draft.setProperties (3, 2, 8, 8, false, false);
     	/* Set up a draft like this:
-    	 *  .***  <- shaft 0
-    	 *  **..  treadle
-    	 *  *..*
-    	 *  ^-0
-    	 *     ^-3
+    	 *  .*
+    	 *  **  treadle
+    	 *  *.
     	 * 
-    	 *  *..  <- 0
-    	 *  .*.  pick
-    	 *  ..*  <- 2
+    	 *  *.
+    	 *  .*  pick
+    	 *  *.
     	 *  
     	 *  Convert to liftplan and check it looks like
     	 *  ..*
@@ -445,32 +443,28 @@ public class WeavingDraftTest extends TestCase {
     	 *  
     	 *  **.
     	 *  .**  pick
-    	 *  ..*
+    	 *  **.
     	*/
+    	draft.getTreadles().get(0).add(0);
     	draft.getTreadles().get(0).add(1);
-    	draft.getTreadles().get(0).add(2);
-    	draft.getTreadles().get(1).add(0);
     	draft.getTreadles().get(1).add(1);
-        draft.getTreadles().get(2).add(0);
-        draft.getTreadles().get(3).add(0);
-        draft.getTreadles().get(3).add(2);
-
-
-        draft.getPicks().get(0).setTreadleId(0);
+    	draft.getTreadles().get(1).add(2);
+    	draft.getPicks().get(0).setTreadleId(0);
     	draft.getPicks().get(1).setTreadleId(1);
-    	draft.getPicks().get(2).setTreadleId(2);
+    	draft.getPicks().get(2).setTreadleId(0);
     	
-    	draft.setProperties(3, 4, 8, 8, true, false);
+    	draft.setProperties(3, 2, 8, 8, true, false);
     	assertThat(draft.getIsLiftplan(), is(true));
-    	assertThat(draft.getTreadles().get(0), contains(2));
+        // changed order 
+    	assertThat(draft.getTreadles().get(0), contains(0));
     	assertThat(draft.getTreadles().get(1), contains(1));
-    	assertThat(draft.getTreadles().get(2), contains(0));
+    	assertThat(draft.getTreadles().get(2), contains(2));
     	assertThat(toObject(draft.getPicks().get(0).getTreadles()), 
     			arrayContaining(true, true, false));
     	assertThat(toObject(draft.getPicks().get(1).getTreadles()), 
     			arrayContaining(false, true, true));
     	assertThat(toObject(draft.getPicks().get(2).getTreadles()), 
-    			arrayContaining(false, false, true));
+    			arrayContaining(true, true, false));
     }
     
     public void testPersistence() throws IOException {

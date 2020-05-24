@@ -49,7 +49,7 @@ public class TieUpModelTest extends TestCase {
         super(testName);
     }
 
-    protected void setUp() throws java.lang.Exception {
+    protected void setUp() {
         draft = new WeavingDraft("TestDraft");
         draft.setNumHarnesses(3);
         draft.getTreadles().add(new Treadle(Arrays.asList(0, 2)));

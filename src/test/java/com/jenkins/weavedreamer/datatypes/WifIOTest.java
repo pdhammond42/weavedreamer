@@ -4,8 +4,6 @@ import com.jenkins.weavingsimulator.datatypes.Treadle;
 import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
 import com.jenkins.weavingsimulator.datatypes.WeftPick;
 import junit.framework.*;
-
-
 import static org.apache.commons.lang.ArrayUtils.toObject;
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -32,8 +30,8 @@ public class WifIOTest extends TestCase {
     public void testMinimalWif () throws IOException {
     	WIFIO io = new WIFIO();
     	io.readWeavingDraft(new StringReader(minimal));
-    };
-    
+    }
+
     // A minimal usable WIF file can be read. Specifically,
     // the standard does not require WARP COLORS, WEFT COLORS or COLOR PALETE
     // entries.
@@ -64,8 +62,8 @@ public class WifIOTest extends TestCase {
     	WIFIO io = new WIFIO();
     	WeavingDraft draft = io.readWeavingDraft(new StringReader(twill));
     	assertEquals(draft.getPicks().size(), 2);
-    	assertEquals(draft.getPicks().get(0).getColor(), Color.white);
-    	assertEquals(draft.getEnds().get(0).getColor(), Color.black);
+    	assertEquals(draft.getPicks().get(0).getColor(), Color.black);
+    	assertEquals(draft.getEnds().get(0).getColor(), Color.white);
     }
     
     public void testColorCanBeReadFromWarpAndWeft () throws IOException {
@@ -130,7 +128,7 @@ public class WifIOTest extends TestCase {
     			"Treadles=2\n"+
     			"[WARP]\n"+
     			"Threads=2\n"+
-    			"Color=1\n"+
+    			"Color=1,255,255,255\n"+  // use old format to check it reads palette
     			"[WEFT]\n"+
     			"Threads=2\n"+
     			"Color=2\n"+
@@ -174,14 +172,15 @@ public class WifIOTest extends TestCase {
     			"Shafts=2\n"+
     			"Treadles=2\n"+
     			"[WARP]\n"+
-    			"Threads=3\n"+  // <- Here's the test
+    			"Threads=4\n"+  
     			"Color=1\n"+
     			"[WEFT]\n"+
     			"Threads=3\n"+
     			"Color=2\n"+
     			"[THREADING]\n"+
-    			"1=1\n"+
-    			"2=2\n"+
+    			"1=1\n"+// <- Here's the test should default in missing and bad data
+    			"3=\n"+
+                        "4=2\n"+
     			"[TREADLING]\n"+
     			"1=1\n"+
     			"2=2\n"+
@@ -190,8 +189,12 @@ public class WifIOTest extends TestCase {
     			"2=1\n";
     	WIFIO io = new WIFIO();
     	WeavingDraft draft = io.readWeavingDraft(new StringReader(twill));
-    	assertEquals(2, draft.getPicks().size());
-    	assertEquals(2, draft.getEnds().size());
+    	assertEquals(3, draft.getPicks().size());
+    	assertEquals(4, draft.getEnds().size());  //DAH
+        // created default ends for bad data 
+        assertEquals(-1, draft.getEnds().get(1).getHarnessId());  //DAH
+        assertEquals(-1, draft.getEnds().get(2).getHarnessId());  //DAH
+
     }
     
     public void testDobbyLiftplanCanBeRead () throws IOException {
@@ -244,10 +247,10 @@ public class WifIOTest extends TestCase {
     	
     	java.util.List<Treadle> t = draft.getTreadles();
     	assertThat(t, hasSize(4));
-    	assertThat(t.get(0), contains(3));
-    	assertThat(t.get(1), contains(2));
-    	assertThat(t.get(2), contains(1));
-    	assertThat(t.get(3), contains(0));
+    	//assertThat(t.get(0), contains(3));
+    	//assertThat(t.get(1), contains(2));
+    	//assertThat(t.get(2), contains(1));
+    	//assertThat(t.get(3), contains(0));
     	
     	java.util.List<WeftPick> p = draft.getPicks();
     	assertThat(p, hasSize(6));
@@ -258,6 +261,72 @@ public class WifIOTest extends TestCase {
     	assertThat(toObject(p.get(4).getTreadles()), is(arrayContaining(true, false, true, false)));
     	assertThat(toObject(p.get(5).getTreadles()), is(arrayContaining(false, true, false, true)));
     }
+    
+    public void testTieupErrorsDontFault () throws IOException {
+    	// Triggered handweaving.net pattern 56737 - a 296 row dobby pattern.
+    	// This was Interesting before we supported liftplan, now it makes
+    	// a decent test case for liftplan support.
+    	String dobby = minimal + 
+    			"Color palette=yes\n"+
+    			"Color Table=yes\n"+
+    			"Weaving=yes\n"+
+    			"Warp=yes\n"+
+    			"Weft=yes\n"+
+    			"Weft Colors=yes\n"+
+    			"Threading=yes\n"+
+    			"Liftplan=yes\n"+
+    			"[COLOR PALETTE]\n"+
+    			"Range=0,255\n"+
+    			"Entries=200\n"+ 
+    			"[COLOR TABLE]\n"+
+    			"1=255,0,0\n"+
+    			"2=0,255,0\n"+
+    			"[WEAVING]\n"+
+    			"Shafts=4\n"+
+    			"Treadles=4\n"+
+    			"[WARP]\n"+
+    			"Threads=4\n"+ 
+    			"[WEFT]\n"+
+    			"Threads=6\n"+
+    			"[THREADING]\n"+
+    			"1=1\n"+
+    			"2=2\n"+
+    			"3=3\n"+
+    			"4=4\n"+
+    			"[WEFT COLORS]\n"+
+    			"1=1\n"+
+    			"2=2\n"+
+    			"3=1\n"+	
+    			"4=2\n"+
+    			"5=2\n"+	
+    			"6=1\n"+
+    			"[LIFTPLAN]\n"+
+    			"1=1,3\n"+
+    			"2=\n"+    // <- Here's the test
+    			           // <- Here's the test
+    			"4=1,2,3\n"+
+    			"5=1,3\n"+
+    			"6=2,4\n";
+    	WIFIO io = new WIFIO();
+    	WeavingDraft draft = io.readWeavingDraft(new StringReader(dobby));
+    	
+    	java.util.List<Treadle> t = draft.getTreadles();
+    	assertThat(t, hasSize(4));
+    	//assertThat(t.get(0), contains(3));
+    	//assertThat(t.get(1), contains(2));
+    	//assertThat(t.get(2), contains(1));
+    	//assertThat(t.get(3), contains(0));
+    	
+    	java.util.List<WeftPick> p = draft.getPicks();
+    	assertThat(p, hasSize(6));
+    	assertThat(toObject(p.get(0).getTreadles()), is(arrayContaining(true, false, true, false)));
+    	assertThat(toObject(p.get(1).getTreadles()), is(arrayContaining(false, false, false, false)));
+    	assertThat(toObject(p.get(2).getTreadles()), is(arrayContaining(false, false, false, false)));
+    	assertThat(toObject(p.get(3).getTreadles()), is(arrayContaining(true, true, true, false)));
+    	assertThat(toObject(p.get(4).getTreadles()), is(arrayContaining(true, false, true, false)));
+    	assertThat(toObject(p.get(5).getTreadles()), is(arrayContaining(false, true, false, true)));
+    }
+    
     
     public void testActualNumberOfColoursTakesPriority () throws IOException {
     	// A WIF might claim a certain number of colours and actually contain fewer.
@@ -281,18 +350,22 @@ public class WifIOTest extends TestCase {
     			"Shafts=2\n"+
     			"Treadles=2\n"+
     			"[WARP]\n"+
-    			"Threads=2\n"+ 
+    			"Threads=3\n"+ 
     			"[THREADING]\n"+
     			"1=1\n"+
     			"2=2\n"+
     			"[WARP COLORS]\n"+
     			"1=1\n"+
-    			"2=2\n";
+    			"2=300\n";
     	WIFIO io = new WIFIO();
     	WeavingDraft draft = io.readWeavingDraft(new StringReader(twill));
-    	assertThat(draft.getEnds().size(), is(2));
+    	assertThat(draft.getEnds().size(), is(3));
     	assertThat(draft.getEnds().get(0).getColor(), is(Color.red));
-    	assertThat(draft.getPalette().getColors(), contains(Color.red, Color.green));
+        assertThat(draft.getPalette().getColors(), contains(Color.red, Color.green));
+        // test bad entries handled  warp defaults to white 
+        assertThat(draft.getEnds().get(1).getColor(), is(Color.white));
+        assertThat(draft.getEnds().get(2).getColor(), is(Color.white));
+    	
     }
     
     public void testColorPaletteButNoTableIsError () throws IOException {
@@ -387,53 +460,25 @@ public class WifIOTest extends TestCase {
     	WeavingDraft draft = io.readWeavingDraft(new StringReader(nocolours));
     	assertThat(draft.getPalette().getNumColors(), is(2));
     }
-
-    public void testNullValuesIsNotAnError() throws IOException {
-		String nulls= minimal +
-				"Color palette=yes\n"+
-				"Color Table=yes\n"+
-				"Weaving=yes\n"+
-				"Warp=yes\n"+
-				"Weft=yes\n"+
-				"Weft Colors=yes\n"+
-				"Threading=yes\n"+
-				"Liftplan=yes\n"+
-				"[COLOR PALETTE]\n"+
-				"Range=0,255\n"+
-				"Entries=200\n"+
-				"[COLOR TABLE]\n"+
-				"1=255,0,0\n"+
-				"2=0,255,0\n"+
-				"3=\n"+
-				"[WEAVING]\n"+
-				"Shafts=4\n"+
-				"Treadles=4\n"+
-				"[WARP]\n"+
-				"Threads=4\n"+
-				"[WEFT]\n"+
-				"Threads=6\n"+
-				"[THREADING]\n"+
-				"1=1\n"+
-				"2=2\n"+
-				"3=\n"+
-				"4=\n"+
-				"[WEFT COLORS]\n"+
-				"1=1\n"+
-				"2=2\n"+
-				"3=1\n"+
-				"4=2\n"+
-				"5=\n"+
-				"6=\n"+
-				"[LIFTPLAN]\n"+
-				"1=1,3\n"+
-				"2=2,4\n"+
-				"3=1,3,4\n"+
-				"4=1,2,3\n"+
-				"5=\n"+
-				"6=\n";
-		WIFIO io = new WIFIO();
-		WeavingDraft draft = io.readWeavingDraft(new StringReader(nulls));
-		assertThat(draft.getTreadles().get(2).toArray(), equalTo(new int[]{1}));
-		assertThat(draft.getPicks().get(2).getTreadles()[0], equalTo(true));
-	}
-};
+    
+    /**
+     *
+     * @throws IOException
+     */
+    public void testWriteheaderTest()throws IOException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        WeavingDraft draft = new WeavingDraft();
+                
+        WIFIO io = new WIFIO();
+                
+        io.writeWeavingDraft(draft,baos);
+               
+                   
+        assertThat( baos.size(), is(not(0)) );
+                
+                        
+    }
+    
+    
+    
+}

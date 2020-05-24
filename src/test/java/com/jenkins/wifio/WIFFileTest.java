@@ -83,58 +83,58 @@ public class WIFFileTest extends TestCase {
         assertGoodFormat(contents);
     }
 
-    public void testGetStringField() throws Exception {
+    public void testGetStringField() {
         assertEquals("Handweaving.net Pattern Digitizer", wif.getStringField("WIF", "Source Program"));
     }
 
-    public void testGetTrueBooleanField() throws Exception {
+    public void testGetTrueBooleanField() {
         assertEquals("true", true, wif.getBooleanField(PRIVSECTION, "booltrue"));
         assertEquals("on", true, wif.getBooleanField(PRIVSECTION, "boolon"));
         assertEquals("yes", true, wif.getBooleanField(PRIVSECTION, "boolyes"));
         assertEquals("1", true, wif.getBooleanField(PRIVSECTION, "bool1"));
     }
 
-    public void testGetFalseBooleanField() throws Exception {
+    public void testGetFalseBooleanField() {
         assertEquals("false", false, wif.getBooleanField(PRIVSECTION, "boolfalse"));
         assertEquals("off", false, wif.getBooleanField(PRIVSECTION, "booloff"));
         assertEquals("no", false, wif.getBooleanField(PRIVSECTION, "boolno"));
         assertEquals("0", false, wif.getBooleanField(PRIVSECTION, "bool0"));
     }
 
-    public void testGetBooleanWithComment() throws Exception {
+    public void testGetBooleanWithComment() {
         assertEquals(false, wif.getBooleanField(PRIVSECTION, "boolcomment"));
     }
 
-    public void testGetRealNumberField() throws Exception {
+    public void testGetRealNumberField() {
         assertEquals(1.1, wif.getDoubleField("WIF", "Version"));
     }
 
-    public void testGetRealNumberWtihComment() throws Exception {
+    public void testGetRealNumberWtihComment() {
         assertEquals(4.2, wif.getDoubleField(PRIVSECTION, "realcomment"));
     }
 
-    public void testGetIntField() throws Exception {
+    public void testGetIntField() {
         assertEquals(4, wif.getIntField("COLOR PALETTE", "Entries"));
     }
 
-    public void testGetIntList() throws Exception {
+    public void testGetIntList() {
         List<Integer> expected = Arrays.asList(16, 14, 10, 8, 2);
         assertEquals(expected, wif.getIntListField("TIEUP", "16"));
     }
 
-    public void testGetSymbol() throws Exception {
+    public void testGetSymbol() {
         char expected = 'a';
         assertEquals(expected, wif.getSymbolField(PRIVSECTION, "symbolcode"));
         assertEquals(expected, wif.getSymbolField(PRIVSECTION, "symbolchar"));
         assertEquals(expected, wif.getSymbolField(PRIVSECTION, "symbolquotedchar"));
     }
     
-    public void testGetColor() throws Exception {
+    public void testGetColor() {
         Color expected = new Color(160, 9, 16);
         assertEquals(expected, wif.getColorField("COLOR TABLE", "1", 0, 255));
     }
     
-    public void testCaseInsensitive() throws Exception {
+    public void testCaseInsensitive() {
         Color expected = new Color(160, 9, 16);
         // test with section name different case
         assertEquals(expected, wif.getColorField("color table", "1", 0, 255));

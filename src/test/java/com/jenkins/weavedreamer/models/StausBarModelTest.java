@@ -21,7 +21,7 @@ public class StausBarModelTest extends TestCase {
 		assertThat (sbmodel.getText(), is("3, 4 (0x0)")); // Presented 1-based.
 
 		tm.setCurrentCell(3, 2, 4, 5);
-		assertThat (sbmodel.getText(), is("3, 4 (4x2)")); // Presented 1-based.
+		assertThat (sbmodel.getText(), is("3, 4 (3x1)")); // now shows highlighted ares size 
 	}
 	
 	public void testModelNotifiesChanges () {
@@ -34,7 +34,7 @@ public class StausBarModelTest extends TestCase {
 		sbmodel.addPropertyChangeListener(handler);
 		tm.setCurrentCell(3, 2);
 		assertThat (handler.event, is(notNullValue()));
-		assertThat ((String)handler.event.getNewValue(), is("3, 4 (0x0)"));
+		assertThat (handler.event.getNewValue(), is("3, 4 (0x0)"));
 	}
 
 	public void testColumnNumberNotSHownWithOneColumn() {
@@ -50,11 +50,14 @@ public class StausBarModelTest extends TestCase {
 	public void testRowNumberNotShownWithOneRow() {
 		StatusBarModel sbmodel = new StatusBarModel();
 		WeavingDraft draft = new WeavingDraft();
+                int numends = 20;
+
+                draft.setProperties(2, 2, numends, 2, false, true);
 		WarpEndColorModel tm = new WarpEndColorModel(new EditingSession(draft));
 		sbmodel.listen(tm);
-
-		tm.setCurrentCell(0, 3, 0, 5);
-		assertThat (sbmodel.getText(), is("4 (3)")); // Presented 1-based.
+                // need to invert ends 
+		tm.setCurrentCell(0, numends-6, 0, numends-4);
+		assertThat (sbmodel.getText(), is("6 (3)")); // Presented 1-based.
 	}
 
 	private class PropertyChangeHandler implements PropertyChangeListener {

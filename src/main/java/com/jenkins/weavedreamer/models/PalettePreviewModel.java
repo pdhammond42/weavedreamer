@@ -1,30 +1,31 @@
 package com.jenkins.weavedreamer.models;
 
-import java.awt.Color;
-
 import com.jenkins.weavingsimulator.datatypes.Palette;
 
+import java.awt.*;
+
 /**
- * Similar to the PaletteModel used for editing, but provides a Read-only view 
+ * Similar to the PaletteModel used for editing, but provides a Read-only view
  * of a palette and shows it row-oriented.
- * @author pete
  *
+ * @author pete
  */
-public class PalettePreviewModel  extends javax.swing.table.AbstractTableModel {
+public class PalettePreviewModel extends javax.swing.table.AbstractTableModel {
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	private Palette palette;
-    
+     *
+     */
+    private static final long serialVersionUID = 1L;
+    private Palette palette;
+
     /**
      * Creates a new instance of PalettePreviewModel
-     * @param palette The palette displayed by this model. 
+     *
+     * @param palette The palette displayed by this model.
      */
     public PalettePreviewModel(Palette palette) {
         this.palette = palette;
     }
-    
+
     public Object getValueAt(int row, int col) {
         if (row != 0)
             throw new IndexOutOfBoundsException("row out of bounds: " + row);
@@ -42,7 +43,7 @@ public class PalettePreviewModel  extends javax.swing.table.AbstractTableModel {
     public void setValueAt(Object value, int row, int col) {
         if (row != 0)
             throw new IndexOutOfBoundsException("row out of bounds: " + row);
-        palette.setColor(col, (Color)value);
+        palette.setColor(col, (Color) value);
     }
 
     public Class<?> getColumnClass(int columnIndex) {

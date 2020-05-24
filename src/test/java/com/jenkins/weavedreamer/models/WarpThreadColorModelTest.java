@@ -48,7 +48,7 @@ public class WarpThreadColorModelTest extends TestCase {
         super(testName);
     }
 
-    protected void setUp() throws java.lang.Exception {
+    protected void setUp() {
         draft = new WeavingDraft("TestDraft");
         draft.setNumHarnesses(2);
         draft.setEnds(Arrays.asList(
@@ -68,6 +68,11 @@ public class WarpThreadColorModelTest extends TestCase {
         return suite;
     }
 
+        private int gridCol(int col){
+        return draft.getEnds().size()-col-1;
+    }
+    
+
     public void testGetColumnCount() {
         assertEquals(draft.getEnds().size(), model.getColumnCount());
     }
@@ -79,7 +84,7 @@ public class WarpThreadColorModelTest extends TestCase {
     public void testGetValueAt() {
         for (int c = 0; c < model.getColumnCount(); c++) {
             assertEquals("col="+c, 
-                    draft.getEnds().get(c).getColor(), model.getValueAt(0, c));
+                    draft.getEnds().get(c).getColor(), model.getValueAt(0, gridCol(c)));
         }
     }
 

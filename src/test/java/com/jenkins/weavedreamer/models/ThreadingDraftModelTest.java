@@ -47,24 +47,33 @@ public class ThreadingDraftModelTest extends TestCase {
     private ThreadingDraftModel model;
     private TestTableModelListener listener;
     private EditingSession session;
-    
+       
     public ThreadingDraftModelTest(String testName) {
         super(testName);
     }
 
-    protected void setUp() throws java.lang.Exception {
+    protected void setUp() {
         draft = new WeavingDraft("TestDraft");
         draft.setNumHarnesses(2);
         draft.getEnds().add(new WarpEnd(Color.BLUE, 0));
         draft.getEnds().add(new WarpEnd(Color.GREEN, 1));
         session = new EditingSession(draft);
-        
+
         model = new ThreadingDraftModel(session);
        
         listener = new TestTableModelListener();
         model.addTableModelListener(listener);
     }
 
+    private int gridCol(int col){
+        return draft.getEnds().size()-col-1;
+    }
+    
+      private int gridRow(int row){
+        return draft.getNumHarnesses()-row-1;
+    }
+    
+    
     public static junit.framework.Test suite() {
         TestSuite suite = new TestSuite(ThreadingDraftModelTest.class);
         
@@ -81,24 +90,33 @@ public class ThreadingDraftModelTest extends TestCase {
 
     public void testGetValueAt() {
     	model.showSelection (0,1,2,2);
-    	draft.getEnds().get(0).setHarnessId(1);
-    	draft.getEnds().get(1).setHarnessId(0);
-    	
-    	assertThat ((Color)model.getValueAt(0, 0), equalTo(Color.WHITE));
-    	assertThat ((Color)model.getValueAt(0, 1), equalTo(Color.BLACK));    	
-    	assertThat ((Color)model.getValueAt(1, 0), equalTo(Color.BLACK));
-    	assertThat ((Color)model.getValueAt(1, 1), equalTo(Color.LIGHT_GRAY));
+    	draft.getEnds().get(gridCol(0)).setHarnessId(gridRow(0));
+    	draft.getEnds().get(gridCol(1)).setHarnessId(gridRow(1));
+        
+    	//  * *.
+        //  * .* 
+        
+        
+    	assertThat (model.getValueAt(0, 0), equalTo(Color.BLACK));
+    	assertThat (model.getValueAt(0, 1), equalTo(Color.LIGHT_GRAY));
+    	assertThat (model.getValueAt(1, 0), equalTo(Color.WHITE));
+    	assertThat (model.getValueAt(1, 1), equalTo(Color.DARK_GRAY));
     }
 
     public void testSetValueAt() {
-        assertEquals(0, draft.getEnds().get(0).getHarnessId());
-        model.setValueAt((Object)true, 1, 0);
-        assertEquals(1, draft.getEnds().get(0).getHarnessId());
+        int testrow=1;
+        int testcol=0;
+        assertEquals(0, draft.getEnds().get(testcol).getHarnessId());
+        //model.setValueAt((Object)true, 1, 0);
+        model.setValueAt(true, gridRow(testrow), gridCol(testcol));
+        assertEquals(1, draft.getEnds().get(testcol).getHarnessId());
     }
 
     public void testSetValueAtIsUndoable() {
+        int testrow=1;
+        int testcol=0;
         assertEquals(0, draft.getEnds().get(0).getHarnessId());
-        model.setValueAt((Object)true, 1, 0);
+        model.setValueAt(true,  gridRow(testrow), gridCol(testcol));
         assertEquals(1, draft.getEnds().get(0).getHarnessId());
         session.undo();
         assertEquals(0, draft.getEnds().get(0).getHarnessId());    
@@ -124,8 +142,8 @@ public class ThreadingDraftModelTest extends TestCase {
     
     /// Test if tableListener is notified when a setValueAt is called
     public void testNotifyListenerOnSet() {
-        model.setValueAt((Object)true, 1, 0);
-        TableModelTestUtils.assertTableColumnUpdateEvent(listener.event, model, 0);
+        model.setValueAt(true, gridRow(1), gridCol(0)); // was 1,0
+        TableModelTestUtils.assertTableColumnUpdateEvent(listener.event, model, gridCol(0));
     }
     
     /// Test that listener is notifed when number of harnesses changes
@@ -157,34 +175,60 @@ public class ThreadingDraftModelTest extends TestCase {
         draft.setTreadles(Arrays.asList(new Treadle(), new Treadle(), 
     			new Treadle(), new Treadle()));
     	draft.setEnds(Arrays.asList(
-                new WarpEnd(Color.BLACK, 0), 
-                new WarpEnd(Color.WHITE, 1),
-                new WarpEnd(Color.WHITE, 0),
-                new WarpEnd(Color.WHITE, 1),
-                new WarpEnd(Color.WHITE, 0),
-                new WarpEnd(Color.BLUE, 1)));
+                new WarpEnd(Color.BLUE, 2),
+                new WarpEnd(Color.BLACK, 3), 
+                new WarpEnd(Color.WHITE, 2),
+                new WarpEnd(Color.WHITE, 3),
+                new WarpEnd(Color.WHITE, 2),
+                new WarpEnd(Color.WHITE, 3)
+                ));
 
-    	/* Start with
+        Color T;
+    	/* Start with display Grid  
     	 *  *.*.*.
-    	 *  .*.*.*
-    	 *  copy from r,c 0, 0 .. 2, 2, paste to 0, 1, should get
+    	 *  .*.*.* 
+         *  ......
+         *  ......
+        */
+        
+        // display 
+        assertThat(model.getValueAt(0,0), is(Color.BLACK));
+        assertThat(model.getValueAt(1,0), is(Color.WHITE));
+
+        assertThat(model.getValueAt(0,1), is(Color.WHITE));
+        assertThat(model.getValueAt(1,1), is(Color.BLACK));
+        
+        assertThat(model.getValueAt(0,2), is(Color.BLACK));
+        assertThat(model.getValueAt(1,2), is(Color.WHITE));
+        
+        assertThat(model.getValueAt(0,3), is(Color.WHITE));
+        assertThat(model.getValueAt(1,3), is(Color.BLACK));
+              
+        
+    	 /* 
+        *  copy from r,c 0, 0 .. 2, 2, paste to 0, 1, should get
     	 *  **..*.
     	 *  ..**.*
+         *  ......
+         *  ......
     	 */	
     	session.setSelectedCells(new PasteGrid(model, new GridSelection(0, 0, 2, 2)));
     	
     	model.pasteSelection(0, 1, CellSelectionTransforms.Null());
-    	assertThat((Color)model.getValueAt(0, 0), is(Color.BLACK));
-    	assertThat((Color)model.getValueAt(1, 0), is(Color.WHITE));
-    	
-    	assertThat((Color)model.getValueAt(0, 1), is(Color.BLACK));
-    	assertThat((Color)model.getValueAt(1, 1), is(Color.WHITE));
-    	
-    	assertThat((Color)model.getValueAt(0, 2), is(Color.WHITE));
-    	assertThat((Color)model.getValueAt(1, 2), is(Color.BLACK));
-    	
-    	assertThat((Color)model.getValueAt(0, 3), is(Color.WHITE));
-    	assertThat((Color)model.getValueAt(1, 3), is(Color.BLACK));
+       
+        assertThat(model.getValueAt(0,0), is(Color.BLACK));
+        assertThat(model.getValueAt(1,0), is(Color.WHITE));
+
+        assertThat(model.getValueAt(0,1), is(Color.BLACK));
+        assertThat(model.getValueAt(1,1), is(Color.WHITE));
+        
+        assertThat(model.getValueAt(0,2), is(Color.WHITE));
+        assertThat(model.getValueAt(1,2), is(Color.BLACK));
+        
+        assertThat(model.getValueAt(0,3), is(Color.WHITE));
+        assertThat(model.getValueAt(1,3), is(Color.BLACK));
+        
+
     }
 
     public void testSelectionLeftUpIsPastedFromSession() {
@@ -192,27 +236,28 @@ public class ThreadingDraftModelTest extends TestCase {
         draft.setTreadles(Arrays.asList(new Treadle(), new Treadle(),
                 new Treadle(), new Treadle()));
         draft.setEnds(Arrays.asList(
-                new WarpEnd(Color.BLACK, 0),
-                new WarpEnd(Color.WHITE, 1),
-                new WarpEnd(Color.WHITE, 0),
-                new WarpEnd(Color.WHITE, 1),
-                new WarpEnd(Color.WHITE, 0),
-                new WarpEnd(Color.BLUE, 1)));
+                new WarpEnd(Color.BLUE, 2),
+                new WarpEnd(Color.BLACK, 3),
+                new WarpEnd(Color.WHITE, 2),
+                new WarpEnd(Color.WHITE, 3),
+                new WarpEnd(Color.WHITE, 2),
+                new WarpEnd(Color.WHITE, 3)
+                ));
 
         session.setSelectedCells(new PasteGrid(model, new GridSelection(1, 1, -1, -1)));
 
         model.pasteSelection(0, 1, CellSelectionTransforms.Null());
-        assertThat((Color)model.getValueAt(0, 0), is(Color.BLACK));
-        assertThat((Color)model.getValueAt(1, 0), is(Color.WHITE));
+        assertThat(model.getValueAt(0, 0), is(Color.BLACK));
+        assertThat(model.getValueAt(1, 0), is(Color.WHITE));
 
-        assertThat((Color)model.getValueAt(0, 1), is(Color.BLACK));
-        assertThat((Color)model.getValueAt(1, 1), is(Color.WHITE));
+        assertThat(model.getValueAt(0, 1), is(Color.BLACK));
+        assertThat(model.getValueAt(1, 1), is(Color.WHITE));
 
-        assertThat((Color)model.getValueAt(0, 2), is(Color.WHITE));
-        assertThat((Color)model.getValueAt(1, 2), is(Color.BLACK));
+        assertThat(model.getValueAt(0, 2), is(Color.WHITE));
+        assertThat(model.getValueAt(1, 2), is(Color.BLACK));
 
-        assertThat((Color)model.getValueAt(0, 3), is(Color.WHITE));
-        assertThat((Color)model.getValueAt(1, 3), is(Color.BLACK));
+        assertThat(model.getValueAt(0, 3), is(Color.WHITE));
+        assertThat(model.getValueAt(1, 3), is(Color.BLACK));
     }
 
     public void testPasteTooBigIsTruncated() {
@@ -238,12 +283,14 @@ public class ThreadingDraftModelTest extends TestCase {
     	draft.setEnds(Arrays.asList(
                 new WarpEnd(Color.BLACK, 0), 
                 new WarpEnd(Color.WHITE, 1),
-                new WarpEnd(Color.WHITE, 0),
-                new WarpEnd(Color.WHITE, 0),
+                new WarpEnd(Color.WHITE, 1),
+                new WarpEnd(Color.WHITE, 1),
                 new WarpEnd(Color.WHITE, 0),
                 new WarpEnd(Color.BLUE, 1)));
 
-    	/* Start with
+        
+        
+    	/* Start with display 
     	 *  *.***.
     	 *  .*...*
     	 *  Copy/paste one row to get
@@ -253,34 +300,36 @@ public class ThreadingDraftModelTest extends TestCase {
     	 */	
     	session.setSelectedCells(new PasteGrid(model, new GridSelection(0, 2, 1, 5)));
     	model.pasteSelection(1, 2, CellSelectionTransforms.Null());
-    	assertThat((Color)model.getValueAt(0, 0), is(Color.BLACK));
-    	assertThat((Color)model.getValueAt(1, 0), is(Color.WHITE));
-    	assertThat((Color)model.getValueAt(0, 1), is(Color.WHITE));
-    	assertThat((Color)model.getValueAt(1, 1), is(Color.BLACK));
-    	assertThat((Color)model.getValueAt(0, 2), is(Color.WHITE));
-    	assertThat((Color)model.getValueAt(1, 2), is(Color.BLACK));
-    	assertThat((Color)model.getValueAt(0, 3), is(Color.WHITE));
-    	assertThat((Color)model.getValueAt(1, 3), is(Color.BLACK));  
+    	assertThat(model.getValueAt(0, 0), is(Color.BLACK));
+    	assertThat(model.getValueAt(1, 0), is(Color.WHITE));
+    	assertThat(model.getValueAt(0, 1), is(Color.WHITE));
+    	assertThat(model.getValueAt(1, 1), is(Color.BLACK));
+    	assertThat(model.getValueAt(0, 2), is(Color.WHITE));
+    	assertThat(model.getValueAt(1, 2), is(Color.BLACK));
+    	assertThat(model.getValueAt(0, 3), is(Color.WHITE));
+    	assertThat(model.getValueAt(1, 3), is(Color.BLACK));
     	
+       
+        
     	session.undo();
     	assertThat(session.canUndo(), is(false));
-    	assertThat((Color)model.getValueAt(0, 0), is(Color.BLACK));
-    	assertThat((Color)model.getValueAt(1, 0), is(Color.WHITE));
-    	assertThat((Color)model.getValueAt(0, 1), is(Color.WHITE));
-    	assertThat((Color)model.getValueAt(1, 1), is(Color.BLACK));
-    	assertThat((Color)model.getValueAt(0, 2), is(Color.BLACK));
-    	assertThat((Color)model.getValueAt(1, 2), is(Color.WHITE));
-    	assertThat((Color)model.getValueAt(0, 3), is(Color.BLACK));
-    	assertThat((Color)model.getValueAt(1, 3), is(Color.WHITE));
+    	assertThat(model.getValueAt(0, 0), is(Color.BLACK));
+    	assertThat(model.getValueAt(1, 0), is(Color.WHITE));
+    	assertThat(model.getValueAt(0, 1), is(Color.WHITE));
+    	assertThat(model.getValueAt(1, 1), is(Color.BLACK));
+    	assertThat(model.getValueAt(0, 2), is(Color.BLACK));
+    	assertThat(model.getValueAt(1, 2), is(Color.WHITE));
+    	assertThat(model.getValueAt(0, 3), is(Color.BLACK));
+    	assertThat(model.getValueAt(1, 3), is(Color.WHITE));
     	
     	session.redo();
-    	assertThat((Color)model.getValueAt(0, 0), is(Color.BLACK));
-    	assertThat((Color)model.getValueAt(1, 0), is(Color.WHITE));
-    	assertThat((Color)model.getValueAt(0, 1), is(Color.WHITE));
-    	assertThat((Color)model.getValueAt(1, 1), is(Color.BLACK));
-    	assertThat((Color)model.getValueAt(0, 2), is(Color.WHITE));
-    	assertThat((Color)model.getValueAt(1, 2), is(Color.BLACK));
-    	assertThat((Color)model.getValueAt(0, 3), is(Color.WHITE));
-    	assertThat((Color)model.getValueAt(1, 3), is(Color.BLACK));   	
-    }
+    	assertThat(model.getValueAt(0, 0), is(Color.BLACK));
+    	assertThat(model.getValueAt(1, 0), is(Color.WHITE));
+    	assertThat(model.getValueAt(0, 1), is(Color.WHITE));
+    	assertThat(model.getValueAt(1, 1), is(Color.BLACK));
+    	assertThat(model.getValueAt(0, 2), is(Color.WHITE));
+    	assertThat(model.getValueAt(1, 2), is(Color.BLACK));
+    	assertThat(model.getValueAt(0, 3), is(Color.WHITE));
+    	assertThat(model.getValueAt(1, 3), is(Color.BLACK));
+    } 
 }

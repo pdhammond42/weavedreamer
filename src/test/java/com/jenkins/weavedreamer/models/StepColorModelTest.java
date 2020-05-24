@@ -51,7 +51,7 @@ public class StepColorModelTest extends TestCase {
         super(testName);
     }
 
-    protected void setUp() throws java.lang.Exception {
+    protected void setUp() {
         draft = new WeavingDraft("TestDraft");
         draft.getTreadles().add(new Treadle());
         draft.getTreadles().add(new Treadle());
