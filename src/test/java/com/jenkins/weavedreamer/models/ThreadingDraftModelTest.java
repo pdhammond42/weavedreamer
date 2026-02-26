@@ -57,7 +57,7 @@ public class ThreadingDraftModelTest extends TestCase {
         draft.setNumHarnesses(2);
         draft.getEnds().add(new WarpEnd(Color.BLUE, 0));
         draft.getEnds().add(new WarpEnd(Color.GREEN, 1));
-        session = new EditingSession(draft);
+        session = new EditingSession(draft, new FakeApp());
 
         model = new ThreadingDraftModel(session);
        

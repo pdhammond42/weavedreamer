@@ -24,7 +24,9 @@
 package com.jenkins.weavedreamer;
 
 import com.jenkins.weavedreamer.datatypes.WIFIO;
+import com.jenkins.weavedreamer.models.AbstractApp;
 import com.jenkins.weavedreamer.models.EditingSession;
+import com.jenkins.weavedreamer.models.PasteGrid;
 import com.jenkins.weavingsimulator.datatypes.Palette;
 import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
 import com.jenkins.wifio.WIFException;
@@ -53,7 +55,7 @@ import static java.util.Arrays.asList;
 /**
  * @author ajenkins
  */
-public class WeaveDreamerApp extends javax.swing.JFrame {
+public class WeaveDreamerApp extends javax.swing.JFrame implements AbstractApp {
 
     /**
      *
@@ -409,7 +411,7 @@ public class WeaveDreamerApp extends javax.swing.JFrame {
         WeavingDraftPropertiesDialog dlg
                 = new WeavingDraftPropertiesDialog(this, true);
 
-        EditingSession session = new EditingSession(draft);
+        EditingSession session = new EditingSession(draft, this);
         if (!dlg.editProperties(session, loadPalettes())) {
             return;
         }
@@ -608,7 +610,7 @@ public class WeaveDreamerApp extends javax.swing.JFrame {
             return;
         }
 
-        openWeavingDraftWindow(new EditingSession(draft, !file.getName().toLowerCase().endsWith(WIF_EXTENSION)), file);
+        openWeavingDraftWindow(new EditingSession(draft, !file.getName().toLowerCase().endsWith(WIF_EXTENSION), this), file);
     }
 
     private void reportWifFailure(File file) {
@@ -764,6 +766,16 @@ public class WeaveDreamerApp extends javax.swing.JFrame {
         public String getDescription() {
             return "Weaving Interchange Files";
         }
+    }
+
+    private PasteGrid selection = new PasteGrid();
+
+    public void setSelectedCells(PasteGrid selectedCells) {
+        selection = selectedCells;
+    }
+
+    public PasteGrid getSelectedCells() {
+        return selection;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

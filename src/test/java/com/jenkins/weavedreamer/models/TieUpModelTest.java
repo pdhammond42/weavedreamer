@@ -55,7 +55,7 @@ public class TieUpModelTest extends TestCase {
         draft.getTreadles().add(new Treadle(Arrays.asList(0, 2)));
         draft.getTreadles().add(new Treadle(Arrays.asList(1)));
 
-        model = new TieUpModel(new EditingSession(draft));
+        model = new TieUpModel(new EditingSession(draft, new FakeApp()));
         listener = new TestTableModelListener();
         model.addTableModelListener(listener);
     }

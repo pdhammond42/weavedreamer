@@ -26,6 +26,7 @@
 
 package com.jenkins.weavedreamer.models;
 
+import com.jenkins.weavedreamer.WeaveDreamerApp;
 import com.jenkins.weavingsimulator.datatypes.WeftPick;
 import com.jenkins.weavingsimulator.datatypes.Treadle;
 import com.jenkins.weavingsimulator.datatypes.WarpEnd;
@@ -70,7 +71,7 @@ public class WeavingPatternModelTest extends TestCase {
                 new WeftPick(Color.WHITE, 2, 1),
                 new WeftPick(Color.DARK_GRAY, 2)));
         
-        model = new WeavingPatternModel(new EditingSession(draft));
+        model = new WeavingPatternModel(new EditingSession(draft, new FakeApp()));
         
         listener = new TestTableModelListener();
         model.addTableModelListener(listener);

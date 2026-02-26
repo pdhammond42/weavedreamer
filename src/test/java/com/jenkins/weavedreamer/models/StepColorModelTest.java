@@ -64,7 +64,7 @@ public class StepColorModelTest extends TestCase {
         
         draft.setPicks(picks);
 
-        model = new StepColorModel(new EditingSession(draft));
+        model = new StepColorModel(new EditingSession(draft, new FakeApp()));
         
         listener = new TestTableModelListener();
         model.addTableModelListener(listener);

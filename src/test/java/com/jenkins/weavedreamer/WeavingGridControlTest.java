@@ -27,6 +27,7 @@ package com.jenkins.weavedreamer;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 
+import com.jenkins.weavedreamer.models.FakeApp;
 import junit.framework.TestCase;
 
 import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
@@ -222,7 +223,7 @@ public class WeavingGridControlTest extends TestCase {
 		boolean isCopied;
 
 		public TestDraftModel() {
-			super(new EditingSession(new WeavingDraft()));
+			super(new EditingSession(new WeavingDraft(), new FakeApp()));
 		}
 
 		public Object getValueAt(int rowIndex, int columnIndex) {

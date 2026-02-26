@@ -14,7 +14,7 @@ public class StausBarModelTest extends TestCase {
 	public void testModelObservesDraftSelection () {
 		StatusBarModel sbmodel = new StatusBarModel();
 		WeavingDraft draft = new WeavingDraft();
-		TreadlingDraftModel tm = new TreadlingDraftModel(new EditingSession(draft));
+		TreadlingDraftModel tm = new TreadlingDraftModel(new EditingSession(draft, new FakeApp()));
 		
 		sbmodel.listen(tm);
 		tm.setCurrentCell(3, 2);
@@ -27,7 +27,7 @@ public class StausBarModelTest extends TestCase {
 	public void testModelNotifiesChanges () {
 		StatusBarModel sbmodel = new StatusBarModel();
 		WeavingDraft draft = new WeavingDraft();
-		TreadlingDraftModel tm = new TreadlingDraftModel(new EditingSession(draft));
+		TreadlingDraftModel tm = new TreadlingDraftModel(new EditingSession(draft, new FakeApp()));
 		sbmodel.listen(tm);
 
 		PropertyChangeHandler handler = new PropertyChangeHandler();
@@ -40,7 +40,7 @@ public class StausBarModelTest extends TestCase {
 	public void testColumnNumberNotSHownWithOneColumn() {
 		StatusBarModel sbmodel = new StatusBarModel();
 		WeavingDraft draft = new WeavingDraft();
-		StepColorModel tm = new StepColorModel(new EditingSession(draft));
+		StepColorModel tm = new StepColorModel(new EditingSession(draft, new FakeApp()));
 		sbmodel.listen(tm);
 
 		tm.setCurrentCell(3, 0, 5, 0);
@@ -53,7 +53,7 @@ public class StausBarModelTest extends TestCase {
                 int numends = 20;
 
                 draft.setProperties(2, 2, numends, 2, false, true);
-		WarpEndColorModel tm = new WarpEndColorModel(new EditingSession(draft));
+		WarpEndColorModel tm = new WarpEndColorModel(new EditingSession(draft, new FakeApp()));
 		sbmodel.listen(tm);
                 // need to invert ends 
 		tm.setCurrentCell(0, numends-6, 0, numends-4);

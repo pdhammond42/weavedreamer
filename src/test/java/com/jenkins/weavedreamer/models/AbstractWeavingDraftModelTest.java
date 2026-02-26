@@ -51,7 +51,7 @@ public class AbstractWeavingDraftModelTest extends TestCase {
 
     protected void setUp() {
         draft = new WeavingDraft("TestDraft");
-        session = new EditingSession(draft);
+        session = new EditingSession(draft, new FakeApp());
         model = new AbstractWeavingDraftModelImpl(session);
         listener = new TestTableModelListener();
     }

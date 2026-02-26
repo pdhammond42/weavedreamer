@@ -56,7 +56,7 @@ public class WarpThreadColorModelTest extends TestCase {
                 new WarpEnd(Color.GREEN, 1),
                 new WarpEnd(Color.BLUE, 0)));
         
-        model = new WarpEndColorModel(new EditingSession(draft));
+        model = new WarpEndColorModel(new EditingSession(draft, new FakeApp()));
         
         listener = new TestTableModelListener();
         model.addTableModelListener(listener);

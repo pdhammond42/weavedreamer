@@ -25,6 +25,7 @@
 
 package com.jenkins.weavedreamer.models;
 
+import com.jenkins.weavedreamer.WeaveDreamerApp;
 import com.jenkins.weavingsimulator.datatypes.Palette;
 import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
 
@@ -56,6 +57,8 @@ public class EditingSession {
 
     private PropertyChangeSupport propertySupport;
 
+    private final AbstractApp app;
+
     /**
      * Holds value of property draft.
      */
@@ -74,14 +77,15 @@ public class EditingSession {
      */
     private boolean draftModified;
 
-    private PasteGrid selection;
     private List<View> views = new ArrayList<View>();
 
-    public EditingSession(WeavingDraft draft) {
+    public EditingSession(WeavingDraft draft, AbstractApp app) {
+        this.app = app;
         initEditingSession(draft);
     }
 
-    public EditingSession(WeavingDraft draft, boolean fileIsDraftType) {
+    public EditingSession(WeavingDraft draft, boolean fileIsDraftType, WeaveDreamerApp app) {
+        this.app = app;
         saveIsDraftFile = fileIsDraftType;
         initEditingSession(draft);
     }
@@ -103,7 +107,6 @@ public class EditingSession {
             if (!isDraftModified())
                 setDraftModified(true);
         });
-        selection = new PasteGrid();
     }
 
     /**
@@ -255,19 +258,19 @@ public class EditingSession {
     /**
      * Returns the current selection. If nothing is selected, returns an object
      * with zero size.
-     *
-     * @return
-     */
+     * Although the selection is set and retrieed on the Session, it is i fact shared
+     * across the app.
+     **/
     public PasteGrid getSelectedCells() {
-        return selection;
+        return app.getSelectedCells();
     }
 
 
     public void setSelectedCells(PasteGrid selectedCells) {
-        PasteGrid oldSelection = selection;
-        selection = selectedCells;
+        PasteGrid oldSelection = app.getSelectedCells();
+        app.setSelectedCells(selectedCells);
         propertySupport.firePropertyChange(SELECTION_PROPERTY,
-                oldSelection, selection);
+                oldSelection, app.getSelectedCells());
     }
 
     public List<View> getViews() {
