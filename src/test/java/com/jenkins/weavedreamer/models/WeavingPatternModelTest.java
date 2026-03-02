@@ -26,7 +26,6 @@
 
 package com.jenkins.weavedreamer.models;
 
-import com.jenkins.weavedreamer.WeaveDreamerApp;
 import com.jenkins.weavingsimulator.datatypes.WeftPick;
 import com.jenkins.weavingsimulator.datatypes.Treadle;
 import com.jenkins.weavingsimulator.datatypes.WarpEnd;
