@@ -120,30 +120,6 @@ public class WeavingDraftWindow extends EditingSessionWindow {
 
         pack();
         palettePanel.setSession(getSession());
-
-        /*
-        getContentPane().addComponentListener(new ComponentAdapter() {
-
-            public void componentResized(ComponentEvent e) {
-                var border = 200;
-                var gridSize = weavingPatternGrid.getBounds();
-                var winSize = getContentPane().getBounds();
-                var size = new Dimension(gridSize.width, gridSize.height);
-                if (gridSize.height > winSize.height - border) {
-                    size.height = winSize.height - border;
-                }
-                if (gridSize.width > winSize.width - border) {
-                    size.width = winSize.width - border;
-                }
-                centreView.setExtentSize(size);
-                topView.setExtentSize(new Dimension(size.width, topView.getHeight()));
-                rightView.setExtentSize(new Dimension(rightView.getWidth(), size.height));
-            }
-
-
-        });
-
-         */
     }
 
     /**
@@ -162,6 +138,15 @@ public class WeavingDraftWindow extends EditingSessionWindow {
         pickColorGrid = new WeavingGridControl();
         palettePanel = new PalettePanel();
 
+        grids = new GridControl[]{
+                warpEndColorGrid,
+                threadingDraftGrid,
+                tieUpGrid,
+                weavingPatternGrid,
+                treadlingDraftGrid,
+                pickColorGrid,
+        };
+
         setClosable(true);
         setMaximizable(true);
         setResizable(true);
@@ -172,27 +157,14 @@ public class WeavingDraftWindow extends EditingSessionWindow {
         topView = new JViewport() {
             @Override
             public Dimension getPreferredSize() {
-                var border = tieUpGrid.getWidth() * 2;
-
-                var s = super.getPreferredSize();
-                var w = this.getParent().getWidth();
-                if (s.width > w - border) {
-                    s.width = w - border;
-                }
-                return s;
+                return viewportWidth(super.getPreferredSize());
             }
         };
 
         rightView = new JViewport() {
             @Override
             public Dimension getPreferredSize() {
-                var border = tieUpGrid.getHeight() *2;
-                var s = super.getPreferredSize();
-                var h = this.getParent().getHeight();
-                if (s.height > h - border) {
-                    s.height = h - border;
-                }
-                return s;
+                return viewportHeight(super.getPreferredSize());
             }
         };
 
@@ -200,23 +172,12 @@ public class WeavingDraftWindow extends EditingSessionWindow {
             @Override
             public Dimension getPreferredSize() {
                 var s = super.getPreferredSize();
-                var border = tieUpGrid.getWidth() * 2;
-                var w = this.getParent().getWidth();
-                if (s.width > w - border) {
-                    s.width = w - border;
-                    hscroll.setEnabled(true);
-                } else {
-                    hscroll.setEnabled(false);
-                }
-                border = tieUpGrid.getHeight() *2;
-                var h = this.getParent().getHeight();
-                if (s.height > h - border) {
-                    s.height = h - border;
-                    vscroll.setEnabled(true);
-                } else {
-                    vscroll.setEnabled(false);
-                }
-                return s;
+                var v = viewportWidth(viewportHeight(s));
+
+                // I'm pretty sure this having side effects is evil. But effective.
+                vscroll.setEnabled(s.height != v.height);
+                hscroll.setEnabled(s.width != v.width);
+                return v;
             }
         };
 
@@ -266,31 +227,51 @@ public class WeavingDraftWindow extends EditingSessionWindow {
         insertComponent(draftPanel, topView, 0, 1);
         insertComponent(draftPanel, centreView, 0, 2);
 
-        insertComponent(draftPanel, tieUpGrid, 1, 1);
+        insertComponent(draftPanel, tieUpGrid, 1, 1,
+                new Insets(30, 5, 5, 30));
         insertComponent(draftPanel, rightView, 1, 2);
         insertComponent(draftPanel, vscroll, 2, 2);
 
         getContentPane().add(draftPanel, BorderLayout.CENTER);
     }
 
+    private Dimension viewportWidth(Dimension s) {
+        var border = tieUpGrid.getWidth() + 90;
+        var w = draftPanel.getWidth();
+        return new Dimension(Math.min(s.width, w-border), s.height);
+    }
+
+    private Dimension viewportHeight(Dimension s) {
+        var border = tieUpGrid.getHeight() + 90;
+        var h = draftPanel.getHeight();
+        return new Dimension(s.width,Math.min(s.height, h - border));
+    }
+
+
     // Inserts the given component into the control grid on the main scroll panel.
     private void insertComponent(JPanel where, Component comp, int gridX, int gridY) {
+        insertComponent(where, comp, gridX, gridY,
+                new java.awt.Insets(5, 5, 5, 5));
+    }
+
+    private void insertComponent(JPanel where, Component comp, int gridX, int gridY, java.awt.Insets insets ) {
         var gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = gridX;
         gridBagConstraints.gridy = gridY;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+        gridBagConstraints.insets = insets;
         where.add(comp, gridBagConstraints);
     }
 
+
     public void zoomIn() {
-        int square = grids.get(0).getSquareWidth() * 2;
+        int square = grids[0].getSquareWidth() * 2;
         for (GridControl g : grids) {
             g.setSquareWidth(square);
         }
     }
 
     public void zoomOut() {
-        int square = grids.get(0).getSquareWidth() / 2;
+        int square = grids[0].getSquareWidth() / 2;
         for (GridControl g : grids) {
             g.setSquareWidth(square);
         }
@@ -319,10 +300,7 @@ public class WeavingDraftWindow extends EditingSessionWindow {
 
     private StatusBarControl statusBar;
 
-    //private javax.swing.JFrame tiledViewFrame = null;
-    //private WeavingPatternPanel wpanel = null;
-
-    private ArrayList<GridControl> grids = new ArrayList<GridControl>();
+    private GridControl[] grids;
 
     @Override
     public String getViewName() {
