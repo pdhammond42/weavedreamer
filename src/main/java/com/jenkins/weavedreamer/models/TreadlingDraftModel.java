@@ -62,8 +62,7 @@ public class TreadlingDraftModel extends CopyableWeavingGridModel {
                 }
             } else if (propName.equals("picks")) {
                 // each pick represents a row
-                if (ev instanceof IndexedPropertyChangeEvent) {
-                    IndexedPropertyChangeEvent iev = (IndexedPropertyChangeEvent) ev;
+                if (ev instanceof IndexedPropertyChangeEvent iev) {
                     fireTableRowsUpdated(iev.getIndex(), iev.getIndex());
                 } else {
                     fireTableDataChanged();
@@ -153,8 +152,8 @@ public class TreadlingDraftModel extends CopyableWeavingGridModel {
         if (draft.getIsLiftplan()) {
             pick.setTreadle(column, value);
         } else {
-            if (value == true) pick.setTreadleId(column);
-            if (value == false && column == -1) pick.setTreadleId(column);
+            if (value) pick.setTreadleId(column);
+            if (!value && column == -1) pick.setTreadleId(column);
         }
     }
 

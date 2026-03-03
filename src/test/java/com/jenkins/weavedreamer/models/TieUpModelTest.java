@@ -31,6 +31,7 @@ import com.jenkins.weavingsimulator.datatypes.WarpEnd;
 import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
 import java.awt.Color;
 import java.util.Arrays;
+import java.util.List;
 import javax.swing.table.TableModel;
 import junit.framework.TestCase;
 
@@ -53,7 +54,7 @@ public class TieUpModelTest extends TestCase {
         draft = new WeavingDraft("TestDraft");
         draft.setNumHarnesses(3);
         draft.getTreadles().add(new Treadle(Arrays.asList(0, 2)));
-        draft.getTreadles().add(new Treadle(Arrays.asList(1)));
+        draft.getTreadles().add(new Treadle(List.of(1)));
 
         model = new TieUpModel(new EditingSession(draft, new FakeApp()));
         listener = new TestTableModelListener();

@@ -405,7 +405,7 @@ public class WifIOTest extends TestCase {
     	try
     	{
     		io.readWeavingDraft(new StringReader(twill));
-    		assertTrue(false);
+            fail();
     	} catch (WIFException e) {
     	
     	}

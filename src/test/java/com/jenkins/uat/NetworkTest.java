@@ -39,11 +39,11 @@ public class NetworkTest  extends WeavingTestCase {
 		// thise in grid coordinates
                 System.out.println("Test");
                 //ui.harnessIs(0, 0, Color.BLACK);
-		ui.harnessIs(harnesses-1-0, ends-1-0, Color.BLACK);
+		ui.harnessIs(harnesses - 1, ends - 1, Color.BLACK);
 		ui.harnessIs(harnesses-1-1, ends-1-1, Color.BLACK);
 		ui.harnessIs(harnesses-1-2, ends-1-2, Color.BLACK);
 		ui.harnessIs(harnesses-1-3, ends-1-3, Color.BLACK);
-		ui.harnessIs(harnesses-1-0, ends-1-4, Color.BLACK);
+		ui.harnessIs(harnesses - 1, ends-1-4, Color.BLACK);
 		ui.harnessIs(harnesses-1-5, ends-1-5, Color.BLACK);
 
 		ui.pickIs(0, 0, Color.BLACK);

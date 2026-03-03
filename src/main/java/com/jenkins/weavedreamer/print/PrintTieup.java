@@ -17,10 +17,10 @@ import java.awt.print.Printable;
  */
 public class PrintTieup extends AbstractWeaveDreamerPrintable {
 
-    private int fontHeight = 8;
+    private final int fontHeight = 8;
 
-    private Font headerFont = new Font("Arial", Font.BOLD, 12);
-    private Font textFont = new Font("Arial", Font.PLAIN, 8);
+    private final Font headerFont = new Font("Arial", Font.BOLD, 12);
+    private final Font textFont = new Font("Arial", Font.PLAIN, 8);
 
     public PrintTieup(EditingSession session, WeavingDraftWindow draftWindow) {
         super(session, draftWindow);

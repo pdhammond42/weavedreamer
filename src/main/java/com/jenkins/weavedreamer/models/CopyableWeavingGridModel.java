@@ -109,8 +109,8 @@ public abstract class CopyableWeavingGridModel extends AbstractWeavingDraftModel
                 session.getSelectedCells().getRows() != 0;
     }
 
-    protected class ToggleEditProvider implements EditedValueProvider {
-        private CopyableWeavingGridModel model;
+    protected static class ToggleEditProvider implements EditedValueProvider {
+        private final CopyableWeavingGridModel model;
 
         public ToggleEditProvider(CopyableWeavingGridModel model) {
             this.model = model;

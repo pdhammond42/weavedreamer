@@ -42,7 +42,7 @@ public class WarpEnd {
     /**
      * Utility field used by bound properties.
      */
-    private transient java.beans.PropertyChangeSupport propertyChangeSupport =
+    private final transient java.beans.PropertyChangeSupport propertyChangeSupport =
             new java.beans.PropertyChangeSupport(this);
 
     public WarpEnd() {

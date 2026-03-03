@@ -43,7 +43,7 @@ public class TiledTableModelAdapter extends javax.swing.table.AbstractTableModel
      */
     private static final long serialVersionUID = 1L;
 
-    private TableModel model;
+    private final TableModel model;
 
     /**
      * Holds value of property tiledRowCount.

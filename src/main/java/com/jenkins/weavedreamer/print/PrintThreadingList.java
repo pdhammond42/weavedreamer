@@ -21,9 +21,9 @@ import java.util.logging.Logger;
  */
 public class PrintThreadingList extends AbstractWeaveDreamerPrintable {
 
-    private Font headerFont = new Font("Arial", Font.BOLD, 12);
+    private final Font headerFont = new Font("Arial", Font.BOLD, 12);
 
-    private Font textFont = new Font("Arial", Font.PLAIN, 8);
+    private final Font textFont = new Font("Arial", Font.PLAIN, 8);
     private int rememberedPageIndex = -1;
     private int rememberedThread = 0;
     private int currentThread = 0;
@@ -71,7 +71,7 @@ public class PrintThreadingList extends AbstractWeaveDreamerPrintable {
                 if (currentThread < draft.getEnds().size()) {
                     WarpEnd currentend = draft.getEnds().get(currentThread);
                     int numharnesses = draft.getNumHarnesses();
-                    String Picklist[] = new String[numharnesses];
+                    String[] Picklist = new String[numharnesses];
 
                     for (int j = 0; j < numharnesses; j++) {
                         Picklist[j] = (Integer.toString((j + 1) * (currentend.getHarnessId() == j ? 1 : 0)));

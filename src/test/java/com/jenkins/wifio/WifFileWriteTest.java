@@ -334,8 +334,8 @@ public void testWriteWarp()throws IOException {
 
         ArrayList <Treadle> newTreadles = new <Treadle> ArrayList();
         newTreadles.add(new Treadle(Arrays.asList(0, 2)));
-        newTreadles.add(new Treadle(Arrays.asList(1)));
-        newTreadles.add(new Treadle(Arrays.asList()));
+        newTreadles.add(new Treadle(List.of(1)));
+        newTreadles.add(new Treadle(List.of()));
         draft.setTreadles(newTreadles);
         
         

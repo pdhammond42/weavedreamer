@@ -28,9 +28,9 @@ public class PrintPreview extends JScrollPane {
     private static final long serialVersionUID = 1L;
     private Pageable mPageable = null;
     private double mScale = 1.0;
-    private Page mPages[] = null;
-    private CardLayout mCardLayout = new CardLayout();
-    private JPanel mMainPanel = new JPanel(mCardLayout);
+    private Page[] mPages = null;
+    private final CardLayout mCardLayout = new CardLayout();
+    private final JPanel mMainPanel = new JPanel(mCardLayout);
     private int mCurrentPage = 1;
 
     private JPanel mControls = null;

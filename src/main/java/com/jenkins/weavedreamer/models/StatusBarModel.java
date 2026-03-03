@@ -16,8 +16,8 @@ import java.beans.PropertyChangeListener;
  */
 public class StatusBarModel implements TableModelListener {
 
-    private String text = new String();
-    private EventListenerList listeners = new EventListenerList();
+    private String text = "";
+    private final EventListenerList listeners = new EventListenerList();
 
     public String getText() {
         return text;

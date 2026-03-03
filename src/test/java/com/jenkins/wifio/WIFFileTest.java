@@ -26,7 +26,7 @@ public class WIFFileTest extends TestCase {
     // A valid WIF section for use in test cases
     private static final String WIF_SECTION = "[WIF]\n" + "Version=1.1 ; the version\n" + "Date=April 20, 1997  ; the date\n" + "Developers=adam@thejenkins.org ; an email address\n" + "Source Program=Weaving Simulator\n";
 
-    private String PRIVSECTION = "PRIVATE WEAVESIM TEST";
+    private final String PRIVSECTION = "PRIVATE WEAVESIM TEST";
 
     public WIFFileTest(String testName) {
         super(testName);
@@ -88,21 +88,21 @@ public class WIFFileTest extends TestCase {
     }
 
     public void testGetTrueBooleanField() {
-        assertEquals("true", true, wif.getBooleanField(PRIVSECTION, "booltrue"));
-        assertEquals("on", true, wif.getBooleanField(PRIVSECTION, "boolon"));
-        assertEquals("yes", true, wif.getBooleanField(PRIVSECTION, "boolyes"));
-        assertEquals("1", true, wif.getBooleanField(PRIVSECTION, "bool1"));
+        assertTrue("true", wif.getBooleanField(PRIVSECTION, "booltrue"));
+        assertTrue("on", wif.getBooleanField(PRIVSECTION, "boolon"));
+        assertTrue("yes", wif.getBooleanField(PRIVSECTION, "boolyes"));
+        assertTrue("1", wif.getBooleanField(PRIVSECTION, "bool1"));
     }
 
     public void testGetFalseBooleanField() {
-        assertEquals("false", false, wif.getBooleanField(PRIVSECTION, "boolfalse"));
-        assertEquals("off", false, wif.getBooleanField(PRIVSECTION, "booloff"));
-        assertEquals("no", false, wif.getBooleanField(PRIVSECTION, "boolno"));
-        assertEquals("0", false, wif.getBooleanField(PRIVSECTION, "bool0"));
+        assertFalse("false", wif.getBooleanField(PRIVSECTION, "boolfalse"));
+        assertFalse("off", wif.getBooleanField(PRIVSECTION, "booloff"));
+        assertFalse("no", wif.getBooleanField(PRIVSECTION, "boolno"));
+        assertFalse("0", wif.getBooleanField(PRIVSECTION, "bool0"));
     }
 
     public void testGetBooleanWithComment() {
-        assertEquals(false, wif.getBooleanField(PRIVSECTION, "boolcomment"));
+        assertFalse(wif.getBooleanField(PRIVSECTION, "boolcomment"));
     }
 
     public void testGetRealNumberField() {

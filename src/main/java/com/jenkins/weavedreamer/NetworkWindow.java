@@ -33,7 +33,7 @@ public class NetworkWindow extends EditingSessionWindow {
 
     NetworkDraft network;
 
-    private NonNegativeIntFormatter formatter = new NonNegativeIntFormatter();
+    private final NonNegativeIntFormatter formatter = new NonNegativeIntFormatter();
 
     public NetworkWindow(EditingSession session) {
         super(session);

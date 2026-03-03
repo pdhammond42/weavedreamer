@@ -21,12 +21,12 @@ import java.text.MessageFormat;
  * @author David
  */
 public class PrintPattern extends AbstractWeaveDreamerPrintable {
-    private WeavingGridControl weavingPatternGrid;
+    private final WeavingGridControl weavingPatternGrid;
 
-    private Font headerFont = new Font("Arial", Font.BOLD, 12);
+    private final Font headerFont = new Font("Arial", Font.BOLD, 12);
 
-    private Font textFont = new Font("Arial", Font.PLAIN, 8);
-    private Printable weavingGridPrintable;
+    private final Font textFont = new Font("Arial", Font.PLAIN, 8);
+    private final Printable weavingGridPrintable;
 
 
     public PrintPattern(EditingSession session, WeavingDraftWindow draftWindow) {

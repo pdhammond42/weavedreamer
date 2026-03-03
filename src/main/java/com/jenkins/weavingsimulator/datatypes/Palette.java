@@ -57,7 +57,7 @@ public class Palette implements Serializable {
     private int selection = -1; // index into colors
     private String name;
 
-    private PropertyChangeSupport propertyChangeSupport =
+    private final PropertyChangeSupport propertyChangeSupport =
             new PropertyChangeSupport(this);
 
     /**

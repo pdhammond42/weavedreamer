@@ -38,7 +38,7 @@ import java.util.List;
  * @author ajenkins
  */
 public class ObservableList<E> extends AbstractList<E> {
-    private List<E> contents = new ArrayList<E>();
+    private final List<E> contents = new ArrayList<E>();
 
     /**
      * Utility field holding list of ListChangeListeners.

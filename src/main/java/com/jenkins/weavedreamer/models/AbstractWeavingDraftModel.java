@@ -42,7 +42,7 @@ public abstract class AbstractWeavingDraftModel
      *
      */
     private static final long serialVersionUID = 1L;
-    private EditingSession session;
+    private final EditingSession session;
     /**
      * Holds value of property draft.
      */
@@ -247,7 +247,7 @@ public abstract class AbstractWeavingDraftModel
             }
         }
 
-        private EditingSession session;
+        private final EditingSession session;
     }
 
 }

@@ -21,9 +21,9 @@ public class PrintUIWindow extends AbstractWeaveDreamerPrintable {
 
     //JInternalFrame frameToPrint;
     JPanel frameToPrint;
-    private Font headerFont = new Font("Arial", Font.BOLD, 12);
+    private final Font headerFont = new Font("Arial", Font.BOLD, 12);
 
-    private Font textFont = new Font("Arial", Font.PLAIN, 8);
+    private final Font textFont = new Font("Arial", Font.PLAIN, 8);
 
     @Override
     public int print(Graphics g, PageFormat pf, int page) {

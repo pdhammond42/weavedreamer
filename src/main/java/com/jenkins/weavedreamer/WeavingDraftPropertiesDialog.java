@@ -294,7 +294,7 @@ public class WeavingDraftPropertiesDialog extends javax.swing.JDialog {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         final WeavingDraftPropertiesDialog dlg =
                 new WeavingDraftPropertiesDialog(new javax.swing.JFrame(), true);
         dlg.okButton.addActionListener(e -> {
@@ -328,8 +328,8 @@ public class WeavingDraftPropertiesDialog extends javax.swing.JDialog {
     // used to communicate between button handlers, and editProperties() function
     private boolean editFinished;
     // used by JFormattedTextFields.
-    private NonNegativeIntFormatter formatter = new NonNegativeIntFormatter();
-    private Vector<Palette> palettes = new Vector<Palette>();
+    private final NonNegativeIntFormatter formatter = new NonNegativeIntFormatter();
+    private final Vector<Palette> palettes = new Vector<Palette>();
     private javax.swing.JComboBox<Palette> palettes_combo;
     private javax.swing.JCheckBox liftplanCheck;
     private javax.swing.JCheckBox networkCheck;

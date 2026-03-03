@@ -28,7 +28,6 @@ import com.jenkins.weavedreamer.models.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 
 import static java.awt.GridBagConstraints.HORIZONTAL;
 
@@ -94,7 +93,7 @@ public class WeavingDraftWindow extends EditingSessionWindow {
         statusPanel = new JPanel();
         statusPanel.setLayout(new java.awt.GridBagLayout());
 
-        statusBar = new StatusBarControl(sbModel);
+        var statusBar = new StatusBarControl(sbModel);
         statusBar.setName("statusBar");
         java.awt.GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -132,48 +131,140 @@ public class WeavingDraftWindow extends EditingSessionWindow {
         pickColorGrid = new WeavingGridControl();
         palettePanel = new PalettePanel();
 
+        grids = new GridControl[]{
+                warpEndColorGrid,
+                threadingDraftGrid,
+                tieUpGrid,
+                weavingPatternGrid,
+                treadlingDraftGrid,
+                pickColorGrid,
+        };
+
         setClosable(true);
         setMaximizable(true);
         setResizable(true);
 
+        JScrollBar vscroll = new JScrollBar();
+        JScrollBar hscroll = new JScrollBar(JScrollBar.HORIZONTAL);
+
+        topView = new JViewport() {
+            @Override
+            public Dimension getPreferredSize() {
+                return viewportWidth(super.getPreferredSize());
+            }
+        };
+
+        rightView = new JViewport() {
+            @Override
+            public Dimension getPreferredSize() {
+                return viewportHeight(super.getPreferredSize());
+            }
+        };
+
+        centreView = new JViewport() {
+            @Override
+            public Dimension getPreferredSize() {
+                var s = super.getPreferredSize();
+                var v = viewportWidth(viewportHeight(s));
+
+                // I'm pretty sure this having side effects is evil. But effective.
+                vscroll.setEnabled(s.height != v.height);
+                hscroll.setEnabled(s.width != v.width);
+                return v;
+            }
+        };
+
+        vscroll.addAdjustmentListener(e -> {
+            rightView.setViewPosition(new Point(
+                    0,
+                    centreView.getHeight() * vscroll.getValue() / vscroll.getMaximum()
+            ));
+            centreView.setViewPosition(new Point(
+                    centreView.getViewPosition().x,
+                    centreView.getHeight() * vscroll.getValue() / vscroll.getMaximum()
+            ));
+        });
+
+        hscroll.addAdjustmentListener(e -> {
+            topView.setViewPosition(new Point(
+                    centreView.getWidth() * hscroll.getValue() / hscroll.getMaximum(),
+                    0
+            ));
+            centreView.setViewPosition(new Point(
+                    centreView.getWidth() * hscroll.getValue() / hscroll.getMaximum(),
+                    centreView.getViewPosition().y
+            ));
+        });
+
+
+        JPanel right = new JPanel();
+        right.setLayout(new java.awt.GridBagLayout());
+        insertComponent(right, pickColorGrid, 1, 0);
+        insertComponent(right, treadlingDraftGrid, 0, 0);
+        rightView.setView(right);
+
+        JPanel centrePanel = new JPanel();
+        centrePanel.setLayout(new java.awt.BorderLayout());
+        centrePanel.add(weavingPatternGrid);
+        centreView.setView(centrePanel);
+
+        JPanel top = new JPanel();
+        top.setLayout(new java.awt.GridBagLayout());
+        insertComponent(top, warpEndColorGrid, 0, 0);
+        insertComponent(top, threadingDraftGrid, 0, 1);
+        topView.setView(top);
 
         draftPanel.setLayout(new java.awt.GridBagLayout());
-        insertComponent(warpEndColorGrid, 1, 0);
-        insertComponent(threadingDraftGrid, 1, 1);
-        insertComponent(tieUpGrid, 2, 1);
-        insertComponent(weavingPatternGrid, 1, 2);
-        insertComponent(treadlingDraftGrid, 2, 2);
-        insertComponent(pickColorGrid, 3, 2);
 
-        jScrollPane1.setViewportView(draftPanel);
+        insertComponent(draftPanel, hscroll, 0, 0);
+        insertComponent(draftPanel, topView, 0, 1);
+        insertComponent(draftPanel, centreView, 0, 2);
 
-        getContentPane().add(jScrollPane1, BorderLayout.CENTER);
+        insertComponent(draftPanel, tieUpGrid, 1, 1,
+                new Insets(30, 5, 5, 30));
+        insertComponent(draftPanel, rightView, 1, 2);
+        insertComponent(draftPanel, vscroll, 2, 2);
+
+        getContentPane().add(draftPanel, BorderLayout.CENTER);
     }
+
+    private Dimension viewportWidth(Dimension s) {
+        var border = tieUpGrid.getWidth() + 90;
+        var w = draftPanel.getWidth();
+        return new Dimension(Math.min(s.width, w-border), s.height);
+    }
+
+    private Dimension viewportHeight(Dimension s) {
+        var border = tieUpGrid.getHeight() + 90;
+        var h = draftPanel.getHeight();
+        return new Dimension(s.width,Math.min(s.height, h - border));
+    }
+
 
     // Inserts the given component into the control grid on the main scroll panel.
-    private void insertComponent(Component comp, int gridX, int gridY) {
-        java.awt.GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
+    private void insertComponent(JPanel where, Component comp, int gridX, int gridY) {
+        insertComponent(where, comp, gridX, gridY,
+                new java.awt.Insets(5, 5, 5, 5));
+    }
+
+    private void insertComponent(JPanel where, Component comp, int gridX, int gridY, java.awt.Insets insets ) {
+        var gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = gridX;
         gridBagConstraints.gridy = gridY;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-        draftPanel.add(comp, gridBagConstraints);
+        gridBagConstraints.insets = insets;
+        where.add(comp, gridBagConstraints);
     }
 
-    // Overload to ensure the control gets added to the list of zoomable grids.
-    private void insertComponent(GridControl comp, int gridX, int gridY) {
-        insertComponent((Component) comp, gridX, gridY);
-        grids.add(comp);
-    }
 
     public void zoomIn() {
-        int square = grids.get(0).getSquareWidth() * 2;
+        int square = grids[0].getSquareWidth() * 2;
         for (GridControl g : grids) {
             g.setSquareWidth(square);
         }
     }
 
     public void zoomOut() {
-        int square = grids.get(0).getSquareWidth() / 2;
+        int square = grids[0].getSquareWidth() / 2;
         for (GridControl g : grids) {
             g.setSquareWidth(square);
         }
@@ -196,12 +287,11 @@ public class WeavingDraftWindow extends EditingSessionWindow {
     protected WeavingGridControl warpEndColorGrid;
     protected GridControl weavingPatternGrid;
 
-    private StatusBarControl statusBar;
+    private JViewport topView;
+    private JViewport rightView;
+    private JViewport centreView;
 
-    //private javax.swing.JFrame tiledViewFrame = null;
-    //private WeavingPatternPanel wpanel = null;
-
-    private ArrayList<GridControl> grids = new ArrayList<GridControl>();
+    private GridControl[] grids;
 
     @Override
     public String getViewName() {

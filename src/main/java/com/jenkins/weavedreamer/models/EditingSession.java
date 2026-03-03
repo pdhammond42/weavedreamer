@@ -52,8 +52,8 @@ public class EditingSession {
     public static final String PALETTE_PROPERTY = "palette";
     public static final String SELECTION_PROPERTY = "selection";
 
-    private Deque<Command> undoList = new ArrayDeque<Command>();
-    private Deque<Command> redoList = new ArrayDeque<Command>();
+    private final Deque<Command> undoList = new ArrayDeque<Command>();
+    private final Deque<Command> redoList = new ArrayDeque<Command>();
 
     private PropertyChangeSupport propertySupport;
 
@@ -77,7 +77,7 @@ public class EditingSession {
      */
     private boolean draftModified;
 
-    private List<View> views = new ArrayList<View>();
+    private final List<View> views = new ArrayList<View>();
 
     public EditingSession(WeavingDraft draft, AbstractApp app) {
         this.app = app;

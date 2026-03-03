@@ -51,9 +51,8 @@ public class TieUpModel extends AbstractWeavingDraftModel {
         setDraftListener(ev -> {
             String propName = ev.getPropertyName();
             if (propName.equals("treadles")) {
-                if (ev instanceof IndexedPropertyChangeEvent) {
+                if (ev instanceof IndexedPropertyChangeEvent iev) {
                     // Each treadle is a column, so a single table column has changed
-                    IndexedPropertyChangeEvent iev = (IndexedPropertyChangeEvent) ev;
                     fireTableColumnUpdated(iev.getIndex());
                 } else {
                     fireTableStructureChanged();
