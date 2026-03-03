@@ -27,14 +27,7 @@ package com.jenkins.weavedreamer;
 import com.jenkins.weavedreamer.models.*;
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.*;
-import java.awt.event.AdjustmentEvent;
-import java.awt.event.AdjustmentListener;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.util.ArrayList;
 
 import static java.awt.GridBagConstraints.HORIZONTAL;
 
@@ -100,7 +93,7 @@ public class WeavingDraftWindow extends EditingSessionWindow {
         statusPanel = new JPanel();
         statusPanel.setLayout(new java.awt.GridBagLayout());
 
-        statusBar = new StatusBarControl(sbModel);
+        var statusBar = new StatusBarControl(sbModel);
         statusBar.setName("statusBar");
         java.awt.GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -297,8 +290,6 @@ public class WeavingDraftWindow extends EditingSessionWindow {
     private JViewport topView;
     private JViewport rightView;
     private JViewport centreView;
-
-    private StatusBarControl statusBar;
 
     private GridControl[] grids;
 

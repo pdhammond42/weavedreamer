@@ -504,7 +504,7 @@ public class WeaveDreamerApp extends javax.swing.JFrame implements AbstractApp {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (UnsupportedLookAndFeelException e) {
@@ -804,7 +804,7 @@ public class WeaveDreamerApp extends javax.swing.JFrame implements AbstractApp {
     private WifFileFilter wifFilter;
     DraftFileFilter draftFilter;
     private int newFileNum = 0;
-    private JFileChooser fileChooser;
+    private final JFileChooser fileChooser;
 
-    private File helpFile;
+    private final File helpFile;
 }

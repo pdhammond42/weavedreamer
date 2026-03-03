@@ -16,7 +16,7 @@ public abstract class EditingSessionWindow extends JInternalFrame implements Edi
      *
      */
     private static final long serialVersionUID = 1L;
-    private EditingSession session;
+    private final EditingSession session;
 
     public EditingSessionWindow(EditingSession session) {
         this.session = session;

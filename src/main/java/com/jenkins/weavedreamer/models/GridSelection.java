@@ -7,10 +7,10 @@ package com.jenkins.weavedreamer.models;
  * @author pete
  */
 public class GridSelection {
-    private int startRow;
-    private int startColumn;
-    private int endRow;
-    private int endColumn;
+    private final int startRow;
+    private final int startColumn;
+    private final int endRow;
+    private final int endColumn;
 
     GridSelection() {
         startRow = 0;

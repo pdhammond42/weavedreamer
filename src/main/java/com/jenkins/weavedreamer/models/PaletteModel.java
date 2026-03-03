@@ -42,7 +42,7 @@ public class PaletteModel extends javax.swing.table.AbstractTableModel {
      *
      */
     private static final long serialVersionUID = 1L;
-    private Palette palette;
+    private final Palette palette;
 
     /**
      * Creates a new instance of PaletteModel

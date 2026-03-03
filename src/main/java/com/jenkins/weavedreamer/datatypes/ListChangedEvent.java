@@ -43,17 +43,17 @@ public class ListChangedEvent<E> extends java.util.EventObject {
     /**
      * Holds value of property itemIndex.
      */
-    private int itemIndex;
+    private final int itemIndex;
 
     /**
      * Holds value of property oldValue.
      */
-    private E oldValue;
+    private final E oldValue;
 
     /**
      * Holds value of property newValue.
      */
-    private E newValue;
+    private final E newValue;
 
     /**
      * Creates a new instance of ListChangedEvent

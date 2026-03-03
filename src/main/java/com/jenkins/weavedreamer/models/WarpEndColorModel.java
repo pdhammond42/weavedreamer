@@ -41,7 +41,7 @@ public class WarpEndColorModel extends AbstractWeavingDraftModel {
      *
      */
     private static final long serialVersionUID = 1L;
-    private EditingSession session;
+    private final EditingSession session;
 
     /**
      * Creates a new instance of WarpEndColorModel
@@ -51,8 +51,7 @@ public class WarpEndColorModel extends AbstractWeavingDraftModel {
         this.session = session;
         setDraftListener(ev -> {
             if (ev.getPropertyName().equals("ends")) {
-                if (ev instanceof IndexedPropertyChangeEvent) {
-                    IndexedPropertyChangeEvent iev = (IndexedPropertyChangeEvent) ev;
+                if (ev instanceof IndexedPropertyChangeEvent iev) {
                     fireTableCellUpdated(0, iev.getIndex());
                 } else {
                     fireTableStructureChanged();
@@ -109,8 +108,8 @@ public class WarpEndColorModel extends AbstractWeavingDraftModel {
     @Override
     protected Command getSetValueCommand(final Object aValue, final int row, final int column) {
         return new Command() {
-            WarpEnd end = draft.getEnds().get(draft.getEnds().size() - 1 - column);
-            Color oldColor = end.getColor();
+            final WarpEnd end = draft.getEnds().get(draft.getEnds().size() - 1 - column);
+            final Color oldColor = end.getColor();
 
             public void execute() {
 

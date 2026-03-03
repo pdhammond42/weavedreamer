@@ -59,9 +59,8 @@ public class ThreadingDraftModel extends CopyableWeavingGridModel {
         setDraftListener(ev -> {
             String propName = ev.getPropertyName();
             if (propName.equals("ends")) {
-                if (ev instanceof IndexedPropertyChangeEvent) {
+                if (ev instanceof IndexedPropertyChangeEvent iev) {
                     // Each end is a column, so a single table column has changed
-                    IndexedPropertyChangeEvent iev = (IndexedPropertyChangeEvent) ev;
                     fireTableColumnUpdated(iev.getIndex());
                 } else {
                     fireTableStructureChanged();

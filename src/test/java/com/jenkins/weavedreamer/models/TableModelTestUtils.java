@@ -80,8 +80,7 @@ class TableModelTestUtils {
                 event.getFirstRow() == TableModelEvent.HEADER_ROW ||
                 (event.getFirstRow() == 0 && 
                  event.getLastRow() >= model.getRowCount() - 1));
-        Assert.assertTrue("all columns",
-                event.getColumn() == TableModelEvent.ALL_COLUMNS);
+        Assert.assertEquals("all columns", TableModelEvent.ALL_COLUMNS, event.getColumn());
         Assert.assertEquals("event type is UPDATE",
                 TableModelEvent.UPDATE, event.getType());
     }

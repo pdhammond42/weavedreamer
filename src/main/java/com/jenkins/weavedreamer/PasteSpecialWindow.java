@@ -21,7 +21,7 @@ public class PasteSpecialWindow extends javax.swing.JDialog {
     private JButton ok;
     private JButton cancel;
 
-    private NonNegativeIntFormatter formatter = new NonNegativeIntFormatter();
+    private final NonNegativeIntFormatter formatter = new NonNegativeIntFormatter();
 
     private boolean okClicked = false;
 

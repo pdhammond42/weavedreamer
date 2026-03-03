@@ -32,6 +32,7 @@ import com.jenkins.weavingsimulator.datatypes.WarpEnd;
 import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
 import java.awt.Color;
 import java.util.Arrays;
+import java.util.List;
 import javax.swing.table.TableModel;
 import junit.framework.TestCase;
 
@@ -64,7 +65,7 @@ public class WeavingPatternModelTest extends TestCase {
                 new WarpEnd(Color.GRAY, -1)));
         draft.setTreadles(Arrays.asList(
                 new Treadle(Arrays.asList(0, 2)),
-                new Treadle(Arrays.asList(1))));
+                new Treadle(List.of(1))));
         draft.setPicks(Arrays.asList(
                 new WeftPick(Color.BLACK, 2, 0),
                 new WeftPick(Color.WHITE, 2, 1),
@@ -129,7 +130,7 @@ public class WeavingPatternModelTest extends TestCase {
         
         // change all picks
         listener.event = null;
-        draft.setPicks(Arrays.asList(new WeftPick(Color.BLUE, 2, 0)));
+        draft.setPicks(List.of(new WeftPick(Color.BLUE, 2, 0)));
         TableModelTestUtils.assertAllTableCellsUpdateEvent(listener.event, model);
     }
     
@@ -148,7 +149,7 @@ public class WeavingPatternModelTest extends TestCase {
         
         // try replacing ends
         listener.event = null;
-        draft.setEnds(Arrays.asList(new WarpEnd(Color.BLUE, 1)));
+        draft.setEnds(List.of(new WarpEnd(Color.BLUE, 1)));
         TableModelTestUtils.assertAllTableCellsUpdateEvent(listener.event, model);
     }
     

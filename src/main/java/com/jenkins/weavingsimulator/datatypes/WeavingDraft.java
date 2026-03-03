@@ -45,43 +45,43 @@ public class WeavingDraft {
     /**
      * Utility field used by bound properties.
      */
-    private PropertyChangeSupport propertyChangeSupport =
+    private final PropertyChangeSupport propertyChangeSupport =
             new PropertyChangeSupport(this);
 
     /**
      * will be registered with ends list
      */
-    private EndsChangedListener endsChangeListener =
+    private final EndsChangedListener endsChangeListener =
             new EndsChangedListener();
 
     /**
      * will be registered with each end
      */
-    private EndChangeListener endChangeListener =
+    private final EndChangeListener endChangeListener =
             new EndChangeListener();
 
     /**
      * will be registered with the treadles list
      */
-    private TreadlesChangedListener treadlesChangedListener =
+    private final TreadlesChangedListener treadlesChangedListener =
             new TreadlesChangedListener();
 
     /**
      * will be registered with each treadle
      */
-    private TreadleChangedListener treadleChangedListener =
+    private final TreadleChangedListener treadleChangedListener =
             new TreadleChangedListener();
 
     /**
      * will be registered with the picks list
      */
-    private PicksChangedListener picksChangedListner =
+    private final PicksChangedListener picksChangedListner =
             new PicksChangedListener();
 
     /**
      * will be registered with each pick
      */
-    private PickChangedListener pickChangedListener =
+    private final PickChangedListener pickChangedListener =
             new PickChangedListener();
 
     /**
@@ -593,7 +593,7 @@ public class WeavingDraft {
     // If a network has been set, but then removed, keep
     // persisting it in case it is returned.
     private NetworkDraft unusedNetwork;
-    private NetworkListener networkListener = new NetworkListener();
+    private final NetworkListener networkListener = new NetworkListener();
 
     /**
      * validates that newStep is in the correct range.

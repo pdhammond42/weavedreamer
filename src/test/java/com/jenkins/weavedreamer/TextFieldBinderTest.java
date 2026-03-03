@@ -12,7 +12,7 @@ import junit.framework.TestCase;
 public class TextFieldBinderTest extends TestCase {
 
 	public class ABean {
-	    private PropertyChangeSupport propertyChangeSupport =
+	    private final PropertyChangeSupport propertyChangeSupport =
 	            new PropertyChangeSupport(this);
 	    
 	    public void addPropertyChangeListener(String propertyName, 

@@ -23,7 +23,7 @@ import java.util.regex.Pattern;
  * @author ajenkins
  */
 public class WIFFile {
-    private Ini wif;
+    private final Ini wif;
 
 
     public WIFFile(Reader reader) throws WIFException, IOException {
@@ -90,9 +90,9 @@ public class WIFFile {
         return getKey(section, key);
     }
 
-    private static Pattern trueRx = Pattern.compile("true|on|yes|1",
+    private static final Pattern trueRx = Pattern.compile("true|on|yes|1",
             Pattern.CASE_INSENSITIVE);
-    private static Pattern falseRx = Pattern.compile("false|off|no|0",
+    private static final Pattern falseRx = Pattern.compile("false|off|no|0",
             Pattern.CASE_INSENSITIVE);
 
     public boolean hasField(String sectionName, String key) {
@@ -159,14 +159,12 @@ public class WIFFile {
         String[] vals = value.split(",");
 
         List<Integer> ints = new ArrayList<Integer>(vals.length);
-        if (vals.length > 0) {
-            for (String val : vals) {
-                try {
-                    ints.add(Integer.valueOf(val));
-                } catch (Exception e) {
-                }
-
+        for (String val : vals) {
+            try {
+                ints.add(Integer.valueOf(val));
+            } catch (Exception e) {
             }
+
         }
         return ints;
     }
@@ -242,7 +240,7 @@ public class WIFFile {
     }
 
     public void setIntListFieldOneBased(String section, String key, List<Integer> rgb) {
-        Object rgbarray[];
+        Object[] rgbarray;
         rgbarray = rgb.toArray();
         for (int i = 0; i < rgbarray.length; i++) {
             rgbarray[i] = (int) rgbarray[i] + 1;
@@ -252,7 +250,7 @@ public class WIFFile {
     }
 
 
-    public void setBoolArrayField(String section, String key, boolean rgb[]) {
+    public void setBoolArrayField(String section, String key, boolean[] rgb) {
         String value = "";
         int c;
         for (c = 0; c < rgb.length; c++)
@@ -260,7 +258,7 @@ public class WIFFile {
                 if ("" == value) {
                     value = Integer.toString(c + 1);
                 } else {
-                    value += "," + Integer.toString(c + 1);
+                    value += "," + (c + 1);
                 }
             }
         setKey(section, key, value);

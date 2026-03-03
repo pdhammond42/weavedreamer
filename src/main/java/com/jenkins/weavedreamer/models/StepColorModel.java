@@ -38,7 +38,7 @@ public class StepColorModel extends AbstractWeavingDraftModel {
      *
      */
     private static final long serialVersionUID = 1L;
-    private EditingSession session;
+    private final EditingSession session;
 
     /**
      * Creates a new instance of StepColorModel
@@ -49,8 +49,7 @@ public class StepColorModel extends AbstractWeavingDraftModel {
         setDraftListener(ev -> {
             if (!ev.getPropertyName().equals("picks"))
                 return;
-            if (ev instanceof IndexedPropertyChangeEvent) {
-                IndexedPropertyChangeEvent iev = (IndexedPropertyChangeEvent) ev;
+            if (ev instanceof IndexedPropertyChangeEvent iev) {
                 fireTableCellUpdated(iev.getIndex(), 0);
             } else {
                 fireTableDataChanged();
@@ -98,8 +97,8 @@ public class StepColorModel extends AbstractWeavingDraftModel {
     @Override
     protected Command getSetValueCommand(final Object aValue, final int row, final int column) {
         return new Command() {
-            WeftPick pick = draft.getPicks().get(row);
-            Color oldColor = pick.getColor();
+            final WeftPick pick = draft.getPicks().get(row);
+            final Color oldColor = pick.getColor();
 
             public void execute() {
                 pick.setColor((Color) aValue);

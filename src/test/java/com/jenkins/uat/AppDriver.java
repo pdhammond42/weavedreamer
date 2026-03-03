@@ -22,7 +22,7 @@ import static org.assertj.swing.finder.WindowFinder.findFrame;
 
 public class AppDriver {
 
-    private FrameFixture mainWindow;
+    private final FrameFixture mainWindow;
 
     public AppDriver(FrameFixture mainWindow) {
         this.mainWindow = mainWindow;

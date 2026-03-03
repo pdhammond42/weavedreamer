@@ -332,8 +332,8 @@ public class WeavingDraftTest extends TestCase {
         draft.setNumHarnesses(2);
         draft.getEnds().add(new WarpEnd(Color.WHITE, -1));
         draft.getEnds().add(new WarpEnd(Color.RED, 0));
-        draft.getTreadles().add(new Treadle(Arrays.asList(0)));
-        draft.getTreadles().add(new Treadle(Arrays.asList(1)));
+        draft.getTreadles().add(new Treadle(List.of(0)));
+        draft.getTreadles().add(new Treadle(List.of(1)));
         draft.getPicks().add(new WeftPick(Color.GREEN, 2));
         draft.getPicks().add(new WeftPick(Color.PINK, 2, 0));
         draft.getPicks().add(new WeftPick(Color.BLUE, 2, 1));
@@ -381,8 +381,8 @@ public class WeavingDraftTest extends TestCase {
     	draft.setNumHarnesses(2);
         draft.getEnds().add(new WarpEnd(Color.WHITE, 0));
         draft.getEnds().add(new WarpEnd(Color.RED, 1));
-        draft.getTreadles().add(new Treadle(Arrays.asList(0)));
-        draft.getTreadles().add(new Treadle(Arrays.asList(1)));
+        draft.getTreadles().add(new Treadle(List.of(0)));
+        draft.getTreadles().add(new Treadle(List.of(1)));
         draft.getPicks().add(new WeftPick(Color.PINK, 2, 0));
         draft.getPicks().add(new WeftPick(Color.BLUE, 2, 1));
         
@@ -395,8 +395,8 @@ public class WeavingDraftTest extends TestCase {
     
     public void testPaletteCanBeCreated() {
     	draft.setNumHarnesses(2);
-        draft.getTreadles().add(new Treadle(Arrays.asList(0)));
-        draft.getTreadles().add(new Treadle(Arrays.asList(1)));
+        draft.getTreadles().add(new Treadle(List.of(0)));
+        draft.getTreadles().add(new Treadle(List.of(1)));
         draft.getEnds().add(new WarpEnd(Color.WHITE, 0));
         draft.getEnds().add(new WarpEnd(Color.RED, 1));
         draft.getPicks().add(new WeftPick(Color.PINK, 2, 0));
@@ -471,8 +471,8 @@ public class WeavingDraftTest extends TestCase {
         draft.setNumHarnesses(2);
         draft.getEnds().add(new WarpEnd(Color.WHITE, -1));
         draft.getEnds().add(new WarpEnd(Color.RED, 0));
-        draft.getTreadles().add(new Treadle(Arrays.asList(0)));
-        draft.getTreadles().add(new Treadle(Arrays.asList(1)));
+        draft.getTreadles().add(new Treadle(List.of(0)));
+        draft.getTreadles().add(new Treadle(List.of(1)));
         draft.getPicks().add(new WeftPick(Color.GREEN, 2));
         draft.getPicks().add(new WeftPick(Color.PINK, 2, 0));
         draft.getPicks().add(new WeftPick(Color.BLUE, 2, 1));
@@ -498,8 +498,8 @@ public class WeavingDraftTest extends TestCase {
         draft.setNumHarnesses(2);
         draft.getEnds().add(new WarpEnd(Color.WHITE, -1));
         draft.getEnds().add(new WarpEnd(Color.RED, 0));
-        draft.getTreadles().add(new Treadle(Arrays.asList(0)));
-        draft.getTreadles().add(new Treadle(Arrays.asList(1)));
+        draft.getTreadles().add(new Treadle(List.of(0)));
+        draft.getTreadles().add(new Treadle(List.of(1)));
         draft.getPicks().add(new WeftPick(Color.GREEN, 2));
         draft.getPicks().add(new WeftPick(Color.PINK, 2, 0));
         draft.getPicks().add(new WeftPick(Color.BLUE, 2, 1));

@@ -35,7 +35,7 @@ public class NetworkDraft {
         setRibbonWidth(4);
     }
 
-    private PropertyChangeSupport propertyChangeSupport =
+    private final PropertyChangeSupport propertyChangeSupport =
             new PropertyChangeSupport(this);
 
     public void addPropertyChangeListener(String propertyName,
@@ -481,18 +481,16 @@ public class NetworkDraft {
     }
 
     public String toString() {
-        return new StringBuilder()
-                .append(initial)
-                .append(patternLine)
-                .append(key1)
-                .append(key2)
-                .append(isTelescoped)
-                .append(",")
-                .append(initialRows)
-                .append(",")
-                .append(patternLineRows)
-                .append(",")
-                .append(ribbonWidth)
-                .toString();
+        return String.valueOf(initial) +
+                patternLine +
+                key1 +
+                key2 +
+                isTelescoped +
+                "," +
+                initialRows +
+                "," +
+                patternLineRows +
+                "," +
+                ribbonWidth;
     }
 }
