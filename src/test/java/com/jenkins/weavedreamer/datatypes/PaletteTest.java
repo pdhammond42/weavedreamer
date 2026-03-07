@@ -28,8 +28,11 @@ package com.jenkins.weavedreamer.datatypes;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import static org.junit.runners.model.MultipleFailureException.assertEmpty;
 
 import java.awt.Color;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -178,5 +181,33 @@ public class PaletteTest extends TestCase {
     	List<Palette> defaults = Palette.getDefaultPalettes();
     	Palette.savePalettes(defaults, prefs);    	
     	assertThat(Palette.loadPalettes(prefs), equalTo(defaults));
+    }
+
+    public void testInsertAndDelete() {
+        var p = new Palette();
+        var l = new PropertyChangeListener() {
+            int count = 0;
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                count++;
+            }
+        };
+        p.addPropertyChangeListener(l);
+        p.insert(0, Color.RED);
+        assertEquals(Arrays.asList(Color.RED), p.getColors());
+
+        p.insert(1, Color.BLUE);
+        assertEquals(Arrays.asList(Color.RED, Color.BLUE), p.getColors());
+
+        p.insert(1, Color.WHITE);
+        assertEquals(Arrays.asList(Color.RED, Color.WHITE, Color.BLUE), p.getColors());
+
+        p.remove(1);
+        assertEquals(Arrays.asList(Color.RED, Color.BLUE), p.getColors());
+
+        p.remove(0);
+        assertEquals(Arrays.asList(Color.BLUE), p.getColors());
+
+        assertEquals(5, l.count);
     }
 }

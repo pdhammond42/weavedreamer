@@ -119,8 +119,7 @@
                                                     location="temp/weavedreamer-${project.version}/WeaveDreamer.jar"/>
                                             <pathelement
                                                     location="temp/weavedreamer-${project.version}/lib/commons-lang-2.6.jar"/>
-                                            <pathelement
-                                                    location="temp/weavedreamer-${project.version}/lib/ini4j-0.5.1.jar"/>
+                                            <pathelement location="temp/weavedreamer-${project.version}/lib/ini4j-0.5.4.jar"/>
                                             <pathelement location="target/test-classes"/>
                                             <pathelement location="${junit:junit:jar}"/>
                                             <pathelement location="${org.hamcrest:hamcrest-all:jar}"/>

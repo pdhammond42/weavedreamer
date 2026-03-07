@@ -27,6 +27,7 @@ package com.jenkins.weavedreamer;
 
 import com.jenkins.weavedreamer.models.EditingSession;
 import com.jenkins.weavedreamer.models.PaletteColorChangeCommand;
+import com.jenkins.weavedreamer.models.PaletteColorDeleteCommand;
 import com.jenkins.weavedreamer.models.PaletteModel;
 import com.jenkins.weavingsimulator.datatypes.Palette;
 
@@ -95,7 +96,6 @@ public class PalettePanel extends JPanel {
         paletteGrid.setSquareWidth(20);
 
         paletteGrid.getColumnModel().addColumnModelListener(new TableColumnModelListener() {
-
             @Override
             public void columnAdded(TableColumnModelEvent e) {
                 paletteGrid.changeSelection(0, paletteGrid.getModel().getColumnCount() - 1, false, false);
@@ -123,10 +123,13 @@ public class PalettePanel extends JPanel {
         paletteGrid.setEnabled(false);
         paletteGrid.addMouseListener(new MouseListener() {
             public void mouseClicked(MouseEvent e) {
-                if (e.getClickCount() == 2) {
+                if (e.getClickCount() == 2 && e.getButton() == 1) {
                     colorChooser.setColor(session.getPalette().getColor(
                             session.getPalette().getSelection()));
                     colorChooserDialog.setVisible(true);
+                }
+                if (e.getButton() == 3) {
+                    showMenu(e);
                 }
             }
 
@@ -142,8 +145,7 @@ public class PalettePanel extends JPanel {
             public void mouseReleased(MouseEvent e) {
             }
         });
-        paletteGrid.setToolTipText(
-                "Click to select color. Double click to change.");
+        paletteGrid.setToolTipText("Click to select color. Double click to change.");
         add(paletteGrid, BorderLayout.CENTER);
         add(addColorBtn, BorderLayout.EAST);
         paletteGrid.setName("paletteGrid");
@@ -164,5 +166,24 @@ public class PalettePanel extends JPanel {
                 ev -> paletteGrid.setModel(new PaletteModel((Palette) ev.getNewValue())));
         paletteGrid.changeSelection(0, 0, false, false);
         paletteGrid.setEnabled(true);
+    }
+
+    private void showMenu(MouseEvent e) {
+        var cell = paletteGrid.toCell(e.getPoint()).column;
+        var popup = new JPopupMenu();
+        var edit = new JMenuItem("Edit...");
+        edit.addActionListener(e2 -> {
+            session.getPalette().setSelection(cell);
+            colorChooser.setColor(session.getPalette().getColor(
+                    session.getPalette().getSelection()));
+            colorChooserDialog.setVisible(true);
+        });
+        popup.add(edit);
+        var delete = new JMenuItem("Remove");
+        delete.addActionListener(e2->{
+            session.execute(new PaletteColorDeleteCommand(session.getPalette(), cell));
+        });
+        popup.add(delete);
+        popup.show(this, e.getX(), e.getX());
     }
 }
