@@ -40,6 +40,14 @@ Right click (or two finger tap) the WeaveDreamer file, select Open, and Open on 
 If it fails to run, you may not have a suitable Java installed, version 8 is required. You can get [Java here](https://java.com/en/). 
 Registration may be necessary.
 
+Changes in 0.2.10
+----
+- Scrolling the draft now keeps the threading and treadling in view.
+- Draft can be printed for offline use.
+- Colour can be removed from a palette.
+- Files can be saved as WIF as well as read in that format.
+- Selection can be pasted into a different draft
+- Refresh build environment to Java 21.
 
 Changes in 0.2.9
 ----------------
