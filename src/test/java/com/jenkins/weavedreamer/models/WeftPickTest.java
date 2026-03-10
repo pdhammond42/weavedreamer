@@ -7,7 +7,7 @@ import java.beans.PropertyChangeListener;
 import junit.framework.TestCase;
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.MatcherAssert.*;
-import static org.apache.commons.lang.ArrayUtils.*;
+import static org.apache.commons.lang3.ArrayUtils.*;
 import com.jenkins.weavingsimulator.datatypes.WeftPick;
 
 public class WeftPickTest extends TestCase {

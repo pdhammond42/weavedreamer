@@ -6,88 +6,71 @@
 
 package com.jenkins.wifio;
 
-import org.apache.commons.lang.StringUtils;
-import org.ini4j.Ini;
+import org.apache.commons.configuration2.ex.ConfigurationException;
+import org.apache.commons.configuration2.tree.ImmutableNode;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.configuration2.INIConfiguration;
+import org.apache.commons.lang3.tuple.ImmutablePair;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.Reader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.io.*;
+import java.util.*;
 import java.util.regex.Pattern;
 
 /**
  * @author ajenkins
  */
 public class WIFFile {
-    private final Ini wif;
+    private final INIConfiguration wif;
 
 
     public WIFFile(Reader reader) throws WIFException, IOException {
-        wif = normalizeWif(new Ini(reader));
+        var ini = new INIConfiguration();
+        try {
+            ini.read(reader);
+        } catch (ConfigurationException e) {
+            throw new WIFException(e.toString());
+        }
+        wif = normalizeWif(ini);
         checkFormat();
     }
 
     public WIFFile() {
-        wif = new Ini();
+        wif = new INIConfiguration();
     }
 
     public WIFFile(InputStream ins) throws WIFException, IOException {
-        wif = normalizeWif(new Ini(ins));
-        checkFormat();
+        this(new InputStreamReader(ins));
     }
 
     private void checkFormat() throws WIFException {
         // A WIF file must contain WIF and CONTENTS sections.
-        if (wif.get("contents") == null) {
+        var sections = wif.getSections();
+        if (!sections.contains("contents")) {
             throw new WIFException("No CONTENTS section");
         }
-        if (wif.get("wif") == null) {
+        if (!sections.contains("wif")) {
             throw new WIFException("No WIF section");
         }
-
-    }
-
-    private String getKey(String sectionName, String key,
-                          boolean stripTrailingComment) {
-        Ini.Section section = wif.get(sectionName.toLowerCase());
-        if (section == null) {
-            throw new WIFException("No section '" + sectionName + "'");
-        } else {
-            String value = section.get(key.toLowerCase());
-            if (value == null) {
-                throw new WIFNoValueException("<" + sectionName + ">:<" + key + "> is empty");
-            }
-            if (stripTrailingComment) {
-                int idx = value.indexOf(';');
-                if (idx != -1)
-                    value = value.substring(0, idx);
-            }
-            return value.trim();
-        }
-    }
-
-    private String getKey(String sectionName, String key) {
-        return getKey(sectionName, key, true);
     }
 
     private void setKey(String sectionName, String key, String value) {
         sectionName = sectionName.toLowerCase();
         key = key.toLowerCase();
         if (!hasField("CONTENTS", sectionName) && !("wif".equalsIgnoreCase(sectionName))) {
-            wif.put("contents", sectionName, "true");
+            wif.setProperty("contents." + sectionName, "true");
 
         }
         // add check to add sectionname to contents
 
-        wif.put(sectionName, key, value);
+        wif.setProperty(sectionName + "." + key, value);
+    }
+
+    private String getKey(String section, String key) {
+        return section.toLowerCase() + "." + key.toLowerCase();
     }
 
     public String getStringField(String section, String key) {
-        return getKey(section, key);
+        return wif.getString(getKey(section, key));
     }
 
     private static final Pattern trueRx = Pattern.compile("true|on|yes|1",
@@ -96,19 +79,11 @@ public class WIFFile {
             Pattern.CASE_INSENSITIVE);
 
     public boolean hasField(String sectionName, String key) {
-        Ini.Section section = wif.get(sectionName.toLowerCase());
-        return section != null && section.get(key.toLowerCase()) != null;
+        return wif.containsKey(getKey(sectionName, key));
     }
 
     public boolean getBooleanField(String section, String key) {
-        String value = getKey(section, key);
-
-        if (trueRx.matcher(value).matches())
-            return true;
-        else if (falseRx.matcher(value).matches())
-            return false;
-        else
-            throw new WIFException("Value '" + value + "' is not a boolean");
+        return wif.getBoolean(getKey(section, key));
     }
 
     /**
@@ -122,26 +97,16 @@ public class WIFFile {
      * @return The value, or deflt.
      */
     public boolean getBooleanField(String section, String key, boolean deflt) {
-        if (hasField(section, key))
-            return getBooleanField(section, key);
-        return deflt;
+        return wif.getBoolean(getKey(section, key), deflt);
     }
 
     public double getDoubleField(String section, String key) {
-        String value = getKey(section, key);
-        if (value.length() == 0) {
-            throw new WIFNoValueException("Value '" + key + "' is empty");
-        }
-        try {
-            return Double.parseDouble(value);
-        } catch (NumberFormatException numberFormatException) {
-            throw new WIFException("Value '" + value + "' is not a double");
-        }
+        return wif.getDouble(getKey(section, key));
     }
 
     public int getIntField(String section, String key) {
-        String value = getKey(section, key);
-        if (value.length() == 0) {
+        String value = wif.getString(getKey(section, key));
+        if (value == null || value.isEmpty()) {
             throw new WIFNoValueException("Value '" + key + "' is empty");
         }
         try {
@@ -152,8 +117,8 @@ public class WIFFile {
     }
 
     public List<Integer> getIntListField(String section, String key) {
-        String value = getKey(section, key);
-        if (value.length() == 0) {
+        String value = wif.getString(getKey(section, key));
+        if (value == null || value.isEmpty()) {
             throw new WIFNoValueException("Value '" + key + "' is empty");
         }
         String[] vals = value.split(",");
@@ -190,7 +155,7 @@ public class WIFFile {
 
     public int countEntriesInSection(String section) {
         try {
-            return wif.get(section.toLowerCase()).size();
+            return wif.getSection(section.toLowerCase()).size();
         } catch (Exception e) {
             return 0;
         }
@@ -273,14 +238,18 @@ public class WIFFile {
         setKey(section, key, "#" + (int) val);
     }
 
-    private Ini normalizeWif(Ini ini) {
+    private INIConfiguration normalizeWif(INIConfiguration ini) {
         // make all section and field names lower case
-        Ini normIni = new Ini();
-        for (Map.Entry<String, Ini.Section> e : ini.entrySet()) {
-            Ini.Section normSec = normIni.add(e.getKey().toLowerCase());
-            for (Map.Entry<String, String> e2 : e.getValue().entrySet()) {
-                normSec.put(e2.getKey().toLowerCase(), e2.getValue());
-            }
+        INIConfiguration normIni = new INIConfiguration();
+        for (var sec : ini.getSections()) {
+            var entries = ini.getSection(sec).entrySet().stream().map(
+                    e -> new ImmutableNode.Builder()
+                            .name(e.getKey().toLowerCase())
+                            .value(e.getValue())
+                            .create()
+            ).toList();
+
+            normIni.addNodes(sec.toLowerCase(), entries);
         }
         return normIni;
     }
@@ -291,9 +260,7 @@ public class WIFFile {
         return (c - min) * 255 / max;
     }
 
-    public void WriteWif(OutputStream OutStream) throws IOException {
-
-        wif.store(OutStream);
-
+    public void WriteWif(OutputStream OutStream) throws IOException, ConfigurationException {
+        wif.write(new OutputStreamWriter(OutStream));
     }
 }

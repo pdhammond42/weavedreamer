@@ -30,6 +30,7 @@ import com.jenkins.weavedreamer.models.PasteGrid;
 import com.jenkins.weavingsimulator.datatypes.Palette;
 import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
 import com.jenkins.wifio.WIFException;
+import org.apache.commons.configuration2.ex.ConfigurationException;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -545,7 +546,7 @@ public class WeaveDreamerApp extends javax.swing.JFrame implements AbstractApp {
             }
             outs.close();
             session.setDraftModified(false);
-        } catch (IOException e) {
+        } catch (IOException | ConfigurationException e) {
             JOptionPane.showMessageDialog(this, "Failed to save " + file + ": " + e.getMessage(),
                     "Save Error", JOptionPane.ERROR_MESSAGE);
 
@@ -709,7 +710,7 @@ public class WeaveDreamerApp extends javax.swing.JFrame implements AbstractApp {
     }
 
     private void writeWIF(WeavingDraft draft, OutputStream outs)
-            throws IOException {
+            throws IOException, ConfigurationException {
         WIFIO WifWrite = new WIFIO();
         WifWrite.writeWeavingDraft(draft, outs);
     }

@@ -44,7 +44,7 @@ import junit.framework.TestSuite;
 
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.apache.commons.lang.ArrayUtils.toObject;
+import static org.apache.commons.lang3.ArrayUtils.toObject;
 
 /**
  *

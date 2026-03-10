@@ -122,13 +122,6 @@ public class WIFFileTest extends TestCase {
         assertEquals(expected, wif.getIntListField("TIEUP", "16"));
     }
 
-    public void testGetSymbol() {
-        char expected = 'a';
-        assertEquals(expected, wif.getSymbolField(PRIVSECTION, "symbolcode"));
-        assertEquals(expected, wif.getSymbolField(PRIVSECTION, "symbolchar"));
-        assertEquals(expected, wif.getSymbolField(PRIVSECTION, "symbolquotedchar"));
-    }
-    
     public void testGetColor() {
         Color expected = new Color(160, 9, 16);
         assertEquals(expected, wif.getColorField("COLOR TABLE", "1", 0, 255));

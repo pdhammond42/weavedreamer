@@ -5,6 +5,7 @@ import com.jenkins.wifio.WIFException;
 import com.jenkins.wifio.WIFFile;
 import com.jenkins.wifio.WIFNoValueException;
 import com.jenkins.wifio.support.ColorTableList;
+import org.apache.commons.configuration2.ex.ConfigurationException;
 
 import java.awt.*;
 import java.io.IOException;
@@ -39,7 +40,7 @@ public class WIFIO {
     }
 
     public WeavingDraft readWeavingDraft() {
-        draft = new WeavingDraft("New Draft");
+        draft = new WeavingDraft("New file");
 
         if (wif.hasField("WEAVING", "Shafts")) {
             draft.setNumHarnesses(wif.getIntField("WEAVING", "Shafts"));
@@ -70,7 +71,7 @@ public class WIFIO {
         return draft;
     }
 
-    public void writeWeavingDraft(WeavingDraft draft, OutputStream outs) throws IOException {
+    public void writeWeavingDraft(WeavingDraft draft, OutputStream outs) throws IOException, ConfigurationException {
         outpalette = new ColorTableList();
         wif = new WIFFile();
         this.draft = draft;

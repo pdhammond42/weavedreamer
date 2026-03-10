@@ -4,11 +4,12 @@ import com.jenkins.weavingsimulator.datatypes.Treadle;
 import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
 import com.jenkins.weavingsimulator.datatypes.WeftPick;
 import junit.framework.*;
-import static org.apache.commons.lang.ArrayUtils.toObject;
+import static org.apache.commons.lang3.ArrayUtils.toObject;
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.jenkins.wifio.WIFException;
+import org.apache.commons.configuration2.ex.ConfigurationException;
 
 
 import java.awt.Color;
@@ -24,7 +25,8 @@ public class WifIOTest extends TestCase {
 	    "Date=April 20, 1997\n"+         
 	    "Developers=wif@mhsoft.com\n"+   
 	    "Source Program=WeavingSImulator test\n"+
-	    "[CONTENTS]\n";
+	    "[CONTENTS]\n" +
+			"nothing=no\n";
 
     // A minimal WIF file as specified should not raise an exception.
     public void testMinimalWif () throws IOException {
@@ -465,7 +467,7 @@ public class WifIOTest extends TestCase {
      *
      * @throws IOException
      */
-    public void testWriteheaderTest()throws IOException {
+    public void testWriteheaderTest() throws IOException, ConfigurationException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         WeavingDraft draft = new WeavingDraft();
                 

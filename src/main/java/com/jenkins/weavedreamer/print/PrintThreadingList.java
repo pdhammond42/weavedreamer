@@ -8,7 +8,7 @@ package com.jenkins.weavedreamer.print;
 import com.jenkins.weavedreamer.WeavingDraftWindow;
 import com.jenkins.weavedreamer.models.EditingSession;
 import com.jenkins.weavingsimulator.datatypes.WarpEnd;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.awt.*;
 import java.awt.print.PageFormat;

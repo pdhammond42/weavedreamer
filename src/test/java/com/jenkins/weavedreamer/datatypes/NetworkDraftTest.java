@@ -7,7 +7,7 @@ import java.beans.PropertyChangeListener;
 import com.jenkins.weavingsimulator.datatypes.NetworkDraft;
 import com.jenkins.weavingsimulator.datatypes.WarpEnd;
 import com.jenkins.weavingsimulator.datatypes.WeavingDraft;
-import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang3.ArrayUtils;
 import java.util.Arrays;
 import java.util.List;
 
