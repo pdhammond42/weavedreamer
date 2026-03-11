@@ -1,4 +1,4 @@
-module weavedreamer {
+module com.jenkins.weavedreamer {
     requires org.apache.commons.lang3;
     requires java.datatransfer;
     requires java.desktop;

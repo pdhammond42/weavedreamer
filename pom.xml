@@ -6,7 +6,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.jenkins.weavedreamer</groupId>
     <artifactId>weavedreamer</artifactId>
-    <packaging>jlink</packaging>
+    <packaging>jar</packaging>
     <version>0.2.10.02-PRERELEASE</version>
     <name>WeaveDreamer</name>
     <url>https://sourceforge.net/projects/weavingsim/</url>
@@ -145,9 +145,9 @@
             </plugin>
 
             <plugin>
-                    <artifactId>maven-jlink-plugin</artifactId>
-                    <version>3.2.0</version>
-                    <extensions>true</extensions>
+                <artifactId>maven-jlink-plugin</artifactId>
+                <version>3.2.0</version>
+                <extensions>true</extensions>
                 <groupId>org.apache.maven.plugins</groupId>
                 <configuration>
                 </configuration>
