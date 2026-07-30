@@ -86,7 +86,7 @@ public class WeaveDreamerApp extends javax.swing.JFrame implements AbstractApp {
             gettingStartedWindow.show();
         }
 
-        fileChooser = new JFileChooser(prefs.get("last_browse", ""));
+        fileChooser = new SelectedFileChooser(prefs.get("last_browse", ""));
         fileChooser.setAcceptAllFileFilterUsed(false);
 
         InputStream imgStream = getClass().getResourceAsStream("icon.png");
