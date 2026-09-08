@@ -1,0 +1,43 @@
+<component xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/component/1.1.2"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/component/1.1.2 http://maven.apache.org/xsd/component-1.1.2.xsd">
+    <!-- Files common to every platform bundle. Each src/assembly/bin-<arch>.xml
+         pulls this in and adds only its own runtime/ fileSet. -->
+    <files>
+        <file>
+            <source>${project.build.directory}/weavedreamer-${pom.version}.jar</source>
+            <outputDirectory>/</outputDirectory>
+            <destName>WeaveDreamer.jar</destName>
+        </file>
+    </files>
+    <fileSets>
+        <fileSet>
+            <directory>${project.basedir}</directory>
+            <outputDirectory>/</outputDirectory>
+            <includes>
+                <include>README*</include>
+                <include>LICENSE*</include>
+                <include>NOTICE*</include>
+                <include>COPYING*</include>
+                <include>help.html</include>
+            </includes>
+        </fileSet>
+        <fileSet>
+            <directory>${project.basedir}/attachment</directory>
+            <outputDirectory>/attachment</outputDirectory>
+            <includes>
+                <include>*</include>
+            </includes>
+        </fileSet>
+    </fileSets>
+    <dependencySets>
+        <dependencySet>
+            <unpack>false</unpack>
+            <scope>runtime</scope>
+            <outputDirectory>lib</outputDirectory>
+            <excludes>
+                <exclude>com.jenkins.weavedreamer:weavedreamer</exclude>
+            </excludes>
+        </dependencySet>
+    </dependencySets>
+</component>
