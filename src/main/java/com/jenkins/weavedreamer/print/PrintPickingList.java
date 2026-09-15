@@ -21,6 +21,7 @@ public class PrintPickingList extends AbstractWeaveDreamerPrintable {
     private final int squaresize = 7;
     private final int pickTextSpacing = 13;
     private final Font headerFont = new Font("Arial", Font.BOLD, 12);
+    private final Font tensLineFont = new Font("Arial", Font.BOLD, 8);
     private final Font textFont = new Font("Arial", Font.PLAIN, 8);
 
     private int rememberedPageIndex = -1;
@@ -68,25 +69,31 @@ public class PrintPickingList extends AbstractWeaveDreamerPrintable {
             while (y + 12 < pf.getImageableY() + pf.getImageableHeight()) {
                 if (currentpick < draft.getPicks().size()) {
                     WeftPick pick = draft.getPicks().get(currentpick);
+                    if (currentpick % 10 == 9 ) {
+                    	g.setFont(tensLineFont);  
+                    }
+                    g.drawString(Integer.toString(currentpick+1),x,y);
+                    g.setFont(textFont);  
+                    //x+=20;
                     int numtreadles = pick.getTreadles().length;
                     for (int j = 0; j < numtreadles; j++) {
                         if (pick.isTreadleSelected(j)) {
                             g.setColor(Color.GRAY);
-                            g.fillRect(x + 15 + squaresize * j, y - squaresize, squaresize, squaresize);
+                            g.fillRect(x + 45 + squaresize * j, y - squaresize, squaresize, squaresize);
                         }
                         g.setColor(Color.BLACK);
-                        g.drawRect(x + 15 + squaresize * j, y - squaresize, squaresize, squaresize);
+                        g.drawRect(x + 45 + squaresize * j, y - squaresize, squaresize, squaresize);
                         g.drawString((pick.isTreadleSelected(j) ? Integer.toString(j + 1) : "."),
-                                x + 15 + (numtreadles + 1) * squaresize + j * pickTextSpacing, y);
+                                x + 45 + (numtreadles + 1) * squaresize + j * pickTextSpacing, y);
                     }
 
                     g.setColor(pick.getColor());
-                    g.fillRect(x, y - squaresize, squaresize, squaresize);
+                    g.fillRect(x+30, y - squaresize, squaresize, squaresize);
                     g.setColor(Color.BLACK);
-                    g.drawRect(x, y - squaresize, squaresize, squaresize);
+                    g.drawRect(x+30, y - squaresize, squaresize, squaresize);
 
                     if (currentpick % 10 == 9) {
-                        y += 12;
+                        y += 6;
                     }
                     y += 12;
                     currentpick++;
